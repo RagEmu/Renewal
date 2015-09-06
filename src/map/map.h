@@ -34,6 +34,7 @@
 
 /* Forward Declarations */
 struct Sql; // common/sql.h
+struct config_t; // common/conf.h
 struct mob_data;
 struct npc_data;
 struct channel_data;
@@ -1201,7 +1202,9 @@ END_ZEROED_BLOCK;
 	int (*config_read) (char *cfgName);
 	int (*config_read_sub) (char *cfgName);
 	void (*reloadnpc_sub) (char *cfgName);
-	int (*inter_config_read) (char *cfgName);
+	bool (*inter_config_read) (const char *filename, bool imported);
+	bool (*inter_config_read_database_names) (const char *filename, const struct config_t *config, bool imported);
+	bool (*inter_config_read_connection) (const char *filename, const struct config_t *config, bool imported);
 	int (*sql_init) (void);
 	int (*sql_close) (void);
 	bool (*zone_mf_cache) (int m, char *flag, char *params);

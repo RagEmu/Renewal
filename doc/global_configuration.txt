@@ -1,4 +1,4 @@
-//===== Hercules Documentation ===============================
+//===== RagEmu Documentation ===============================
 //= Global configuration reference
 //===== By: ==================================================
 //= Panikon (Hercules Dev. Team)

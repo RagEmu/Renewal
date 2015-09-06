@@ -26,6 +26,8 @@
 #include "common/ragemu.h"
 #include "common/db.h"
 
+/* Forward Declarations */
+struct config_setting_t; // common/conf.h
 struct eri;
 
 /** Container for a mapreg value */
@@ -62,7 +64,7 @@ struct mapreg_interface {
 	int (*save_timer) (int tid, int64 tick, int id, intptr_t data);
 	int (*destroyreg) (union DBKey key, struct DBData *data, va_list ap);
 	void (*reload) (void);
-	bool (*config_read) (const char *w1, const char *w2);
+	bool (*config_read) (const char *filename, const struct config_setting_t *config, bool imported);
 };
 
 #ifdef RAGEMU_CORE
