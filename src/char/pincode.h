@@ -24,7 +24,9 @@
 
 #include "common/ragemu.h"
 
+/* Forward Declarations */
 struct char_session_data;
+struct config_t; // common/conf.h
 
 enum PincodeResponseCode {
 	PINCODE_OK      = 0,
@@ -56,7 +58,7 @@ struct pincode_interface {
 	void (*change) (int fd, struct char_session_data* sd);
 	int  (*compare) (int fd, struct char_session_data* sd, char* pin);
 	void (*check) (int fd, struct char_session_data* sd);
-	bool (*config_read) (char *w1, char *w2);
+	bool (*config_read) (const char *filename, const struct config_t *config, bool imported);
 };
 
 #ifdef RAGEMU_CORE
