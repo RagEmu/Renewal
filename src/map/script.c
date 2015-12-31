@@ -804,18 +804,13 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 	char *arg = NULL;
 	char null_arg = '\0';
 	int func;
-	bool nested_call = false, macro = false;
+	bool macro = false;
 
 	// is need add check for arg null pointer below?
 	func = script->add_word(p);
-	if( script->str_data[func].type == C_FUNC ) {
-		/** only when unset (-1), valid values are >= 0 **/
-		if( script->syntax.last_func == -1 )
-			script->syntax.last_func = script->str_data[func].val;
-		else { //Nested function call
-			script->syntax.nested_call++;
-			nested_call = true;
-
+	if (script->str_data[func].type == C_FUNC) {
+		script->syntax.nested_call++;
+		if (script->syntax.last_func != -1) {
 			if( script->str_data[func].val == script->buildin_lang_macro_offset ) {
 				script->syntax.lang_macro_active = true;
 				macro = true;
@@ -824,6 +819,7 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 
 		if( !macro ) {
 			// buildin function
+			script->syntax.last_func = script->str_data[func].val;
 			script->addl(func);
 			script->addc(C_ARG);
 		}
@@ -916,14 +912,11 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 			script->syntax.lang_macro_active = false;
 	}
 
-	if( nested_call )
-		script->syntax.nested_call--;
-
-	if( !script->syntax.nested_call )
-		script->syntax.last_func = -1;
-
-	if( !macro )
+	if (!macro) {
+		if (0 == --script->syntax.nested_call)
+			script->syntax.last_func = -1;
 		script->addc(C_FUNC);
+	}
 	return p;
 }
 
@@ -1059,6 +1052,8 @@ const char* parse_variable(const char* p)
 	}
 
 	// push the set function onto the stack
+	script->syntax.nested_call++;
+	script->syntax.last_func = script->str_data[script->buildin_set_ref].val;
 	script->addl(script->buildin_set_ref);
 	script->addc(C_ARG);
 
@@ -1110,6 +1105,8 @@ const char* parse_variable(const char* p)
 
 	// close the script by appending the function operator
 	script->addc(C_FUNC);
+	if (--script->syntax.nested_call == 0)
+		script->syntax.last_func = -1;
 
 	// push the buffer from the method
 	return p;
@@ -1296,7 +1293,7 @@ const char* parse_simpleexpr(const char *p)
 
 		if( script->lang_export_fp && !duplicate &&
 			( ( ( script->syntax.last_func == script->buildin_mes_offset ||
-				 script->syntax.last_func == script->buildin_select_offset ) && !script->syntax.nested_call
+				 script->syntax.last_func == script->buildin_select_offset )
 				) || script->syntax.lang_macro_active ) ) {
 			const char *line_start = start_point;
 			const char *line_end = start_point;
