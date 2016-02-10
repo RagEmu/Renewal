@@ -30,7 +30,7 @@ unsigned long loginlog_failedattempts(uint32 ip, unsigned int minutes);
 void login_log(uint32 ip, const char* username, int rcode, const char* message);
 bool loginlog_init(void);
 bool loginlog_final(void);
-bool loginlog_config_read(const char* w1, const char* w2);
+bool loginlog_config_read(const char *filename, bool imported);
 #endif // RAGEMU_CORE
 
 #endif /* LOGIN_LOGINLOG_H */

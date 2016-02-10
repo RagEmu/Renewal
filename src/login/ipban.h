@@ -24,6 +24,9 @@
 
 #include "common/cbasetypes.h"
 
+/* Forward Declarations */
+struct config_t; // common/conf.h
+
 #ifdef RAGEMU_CORE
 // TODO: Interface
 // initialize
@@ -38,8 +41,8 @@ bool ipban_check(uint32 ip);
 // increases failure count for the specified IP
 void ipban_log(uint32 ip);
 
-// parses configuration option
-bool ipban_config_read(const char *key, const char* value);
+// parses configuration options
+bool ipban_config_read(const char *filename, struct config_t *config, bool imported);
 #endif // RAGEMU_CORE
 
 #endif /* LOGIN_IPBAN_H */
