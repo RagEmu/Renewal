@@ -6366,7 +6366,7 @@ int do_init(int argc, char *argv[])
 	map->MAP_CONF_NAME           = aStrdup("conf/map/map-server.conf");
 	map->BATTLE_CONF_FILENAME    = aStrdup("conf/battle.conf");
 	map->ATCOMMAND_CONF_FILENAME = aStrdup("conf/atcommand.conf");
-	map->SCRIPT_CONF_NAME        = aStrdup("conf/script.conf");
+	map->SCRIPT_CONF_NAME        = aStrdup("conf/map/script.conf");
 	map->MSG_CONF_NAME           = aStrdup("conf/messages.conf");
 	map->GRF_PATH_FILENAME       = aStrdup("conf/grf-files.txt");
 
@@ -6397,6 +6397,7 @@ int do_init(int argc, char *argv[])
 		CHECK_OLD_LOCAL_CONF("conf/import/map_conf.txt", "conf/import/map-server.conf");
 		CHECK_OLD_LOCAL_CONF("conf/import/inter_conf.txt", "conf/import/inter-server.conf");
 		CHECK_OLD_LOCAL_CONF("conf/import/log_conf.txt", "conf/import/logs.conf");
+		CHECK_OLD_LOCAL_CONF("conf/import/script_conf.txt", "conf/import/script.conf");
 
 #undef CHECK_OLD_LOCAL_CONF
 		}
@@ -6432,7 +6433,7 @@ int do_init(int argc, char *argv[])
 		map->inter_config_read(map->INTER_CONF_NAME, false);
 		logs->config_read(map->LOG_CONF_NAME, false);
 	}
-	script->config_read(map->SCRIPT_CONF_NAME);
+	script->config_read(map->SCRIPT_CONF_NAME, false);
 
 	map->id_db     = idb_alloc(DB_OPT_BASE);
 	map->pc_db     = idb_alloc(DB_OPT_BASE); //Added for reliable map->id2sd() use. [Skotlex]
@@ -6593,7 +6594,7 @@ void map_defaults(void) {
 	map->MAP_CONF_NAME = "conf/map/map-server.conf";
 	map->BATTLE_CONF_FILENAME = "conf/battle.conf";
 	map->ATCOMMAND_CONF_FILENAME = "conf/atcommand.conf";
-	map->SCRIPT_CONF_NAME = "conf/script.conf";
+	map->SCRIPT_CONF_NAME = "conf/map/script.conf";
 	map->MSG_CONF_NAME = "conf/messages.conf";
 	map->GRF_PATH_FILENAME = "conf/grf-files.txt";
 
