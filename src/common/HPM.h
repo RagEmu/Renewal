@@ -66,7 +66,9 @@
 
 #endif // WIN32
 
+/* Forward Declarations */
 struct HPMHooking_core_interface;
+struct config_t;
 
 struct hplugin {
 	DLL dll;
@@ -156,6 +158,7 @@ struct HPM_interface {
 	void *(*import_symbol) (char *name, unsigned int pID);
 	void (*share) (void *value, const char *name);
 	void (*config_read) (void);
+	bool (*parse_battle_conf) (const struct config_t *config, const char *filename, bool imported);
 	char *(*pid2name) (unsigned int pid);
 	unsigned char (*parse_packets) (int fd, int packet_id, enum HPluginPacketHookingPoints point);
 	void (*load_sub) (struct hplugin *plugin);

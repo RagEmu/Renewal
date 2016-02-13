@@ -677,10 +677,11 @@ struct battle_interface {
 	int (*adjust_skill_damage) (int m, unsigned short skill_id);
 	int64 (*add_mastery) (struct map_session_data *sd,struct block_list *target,int64 dmg,int type);
 	int (*calc_drain) (int64 damage, int rate, int per);
-	/* - battle_config                           */
-	int (*config_read) (const char *cfgName);
+	/* battle_config */
+	bool (*config_read) (const char *filename, bool imported);
 	void (*config_set_defaults) (void);
-	int (*config_set_value) (const char *w1, const char *w2);
+	bool (*config_set_value_sub) (int index, int value);
+	bool (*config_set_value) (const char *param, const char *value);
 	bool (*config_get_value) (const char *w1, int *value);
 	void (*config_adjust) (void);
 	/* ----------------------------------------- */
