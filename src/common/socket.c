@@ -1060,17 +1060,17 @@ int do_sockets(int next)
 //////////////////////////////
 // IP rules and DDoS protection
 
-typedef struct connect_history {
+struct connect_history {
 	uint32 ip;
 	int64 tick;
 	int count;
 	unsigned ddos : 1;
-} ConnectHistory;
+};
 
-typedef struct access_control {
+struct access_control {
 	uint32 ip;
 	uint32 mask;
-} AccessControl;
+};
 
 enum aco {
 	ACO_DENY_ALLOW,
@@ -1078,8 +1078,8 @@ enum aco {
 	ACO_MUTUAL_FAILURE
 };
 
-static AccessControl* access_allow = NULL;
-static AccessControl* access_deny = NULL;
+static struct access_control *access_allow = NULL;
+static struct access_control *access_deny = NULL;
 static int access_order    = ACO_DENY_ALLOW;
 static int access_allownum = 0;
 static int access_denynum  = 0;
@@ -1107,7 +1107,7 @@ static int connect_check(uint32 ip)
 ///  1 or 2 : Connection Accepted
 static int connect_check_(uint32 ip)
 {
-	ConnectHistory* hist = NULL;
+	struct connect_history *hist = NULL;
 	int i;
 	int is_allowip = 0;
 	int is_denyip = 0;
@@ -1188,7 +1188,7 @@ static int connect_check_(uint32 ip)
 		}
 	}
 	// IP not found, add to history
-	CREATE(hist, ConnectHistory, 1);
+	CREATE(hist, struct connect_history, 1);
 	hist->ip   = ip;
 	hist->tick = timer->gettick();
 	uidb_put(connect_history, ip, hist);
@@ -1200,7 +1200,7 @@ static int connect_check_(uint32 ip)
 static int connect_check_clear(int tid, int64 tick, int id, intptr_t data) {
 	int clear = 0;
 	int list  = 0;
-	ConnectHistory *hist = NULL;
+	struct connect_history *hist = NULL;
 	struct DBIterator *iter;
 
 	if( !db_size(connect_history) )
@@ -1228,7 +1228,7 @@ static int connect_check_clear(int tid, int64 tick, int id, intptr_t data) {
 
 /// Parses the ip address and mask and puts it into acc.
 /// Returns 1 is successful, 0 otherwise.
-int access_ipmask(const char* str, AccessControl* acc)
+int access_ipmask(const char *str, struct access_control *acc)
 {
 	uint32 ip;
 	uint32 mask;
@@ -1316,13 +1316,13 @@ int socket_config_read(const char* cfgName)
 			else if (!strcmpi(w2, "mutual-failure"))
 				access_order = ACO_MUTUAL_FAILURE;
 		} else if (!strcmpi(w1, "allow")) {
-			RECREATE(access_allow, AccessControl, access_allownum+1);
+			RECREATE(access_allow, struct access_control, access_allownum+1);
 			if (access_ipmask(w2, &access_allow[access_allownum]))
 				++access_allownum;
 			else
 				ShowError("socket_config_read: Invalid ip or ip range '%s'!\n", line);
 		} else if (!strcmpi(w1, "deny")) {
-			RECREATE(access_deny, AccessControl, access_denynum+1);
+			RECREATE(access_deny, struct access_control, access_denynum+1);
 			if (access_ipmask(w2, &access_deny[access_denynum]))
 				++access_denynum;
 			else
