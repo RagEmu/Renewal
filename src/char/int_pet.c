@@ -86,7 +86,7 @@ int inter_pet_tosql(const struct s_pet *p)
 		pet_id = p->pet_id;
 	}
 
-	if (save_log)
+	if (chr->show_save_log)
 		ShowInfo("Pet saved %d - %s.\n", pet_id, p->name);
 
 	return pet_id;
@@ -131,7 +131,7 @@ int inter_pet_fromsql(int pet_id, struct s_pet* p)
 		p->hungry = cap_value(p->hungry, 0, 100);
 		p->intimate = cap_value(p->intimate, 0, 1000);
 
-		if( save_log )
+		if (chr->show_save_log)
 			ShowInfo("Pet loaded (%d - %s).\n", pet_id, p->name);
 	}
 	return 0;

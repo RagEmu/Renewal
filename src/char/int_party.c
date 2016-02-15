@@ -191,7 +191,7 @@ int inter_party_tosql(struct party *p, int flag, int index)
 			Sql_ShowDebug(inter->sql_handle);
 	}
 
-	if( save_log )
+	if (chr->show_save_log)
 		ShowInfo("Party Saved (%d - %s)\n", party_id, p->name);
 	return 1;
 }
@@ -258,7 +258,7 @@ struct party_data *inter_party_fromsql(int party_id)
 	}
 	SQL->FreeResult(inter->sql_handle);
 
-	if( save_log )
+	if (chr->show_save_log)
 		ShowInfo("Party loaded (%d - %s).\n", party_id, p->party.name);
 	//Add party to memory.
 	CREATE(p, struct party_data, 1);

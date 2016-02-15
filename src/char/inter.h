@@ -34,6 +34,7 @@ struct Sql; // common/sql.h
  * inter interface
  **/
 struct inter_interface {
+	bool enable_logs; ///< Whether to log inter-server operations.
 	struct Sql *sql_handle;
 	const char* (*msg_txt) (int msg_number);
 	bool (*msg_config_read) (const char *cfg_name, bool allow_override);

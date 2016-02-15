@@ -111,12 +111,15 @@ struct char_interface {
 	uint32 ip;
 	uint16 port;
 	int server_type;
-	int new_display;
+	int16 new_display; ///< Display 'New' in the server list.
 
 	char *CHAR_CONF_NAME;
 	char *NET_CONF_NAME; ///< Network config filename
 	char *SQL_CONF_NAME;
 	char *INTER_CONF_NAME;
+
+	bool show_save_log; ///< Show loading/saving messages.
+	bool enable_logs;   ///< Whether to log char server operations.
 
 	int (*waiting_disconnect) (int tid, int64 tick, int id, intptr_t data);
 	int (*delete_char_sql) (int char_id);
@@ -283,7 +286,6 @@ extern int char_name_option;
 extern char char_name_letters[];
 extern bool char_gm_read;
 extern int autosave_interval;
-extern int save_log;
 extern char db_path[];
 extern char char_db[256];
 extern char scdata_db[256];
@@ -320,7 +322,6 @@ extern char char_reg_str_db[32];
 extern char char_reg_num_db[32];
 
 extern int guild_exp_rate;
-extern int log_inter;
 
 void char_load_defaults(void);
 void char_defaults(void);

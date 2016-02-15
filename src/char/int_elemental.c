@@ -135,7 +135,7 @@ bool mapif_elemental_load(int ele_id, int char_id, struct s_elemental *ele)
 	SQL->GetData(inter->sql_handle, 12, &data, NULL); ele->hit = atoi(data);
 	SQL->GetData(inter->sql_handle, 13, &data, NULL); ele->life_time = atoi(data);
 	SQL->FreeResult(inter->sql_handle);
-	if (save_log)
+	if (chr->show_save_log)
 		ShowInfo("Elemental loaded (%d - %d).\n", ele->elemental_id, ele->char_id);
 
 	return true;
