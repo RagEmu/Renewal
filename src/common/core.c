@@ -42,6 +42,7 @@
 #	include "common/conf.h"
 #	include "common/ers.h"
 #	include "common/md5calc.h"
+#	include "common/mutex.h"
 #	include "common/socket.h"
 #	include "common/sql.h"
 #	include "common/thread.h"
@@ -258,6 +259,7 @@ void core_defaults(void) {
 	cmdline_defaults();
 	des_defaults();
 #ifndef MINICORE
+	mutex_defaults();
 	libconfig_defaults();
 	sql_defaults();
 	timer_defaults();

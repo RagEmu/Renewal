@@ -22,91 +22,99 @@
 #ifndef COMMON_MUTEX_H
 #define COMMON_MUTEX_H
 
-#include "common/cbasetypes.h"
+#include "common/ragemu.h"
 
 typedef struct ramutex ramutex; // Mutex
 typedef struct racond racond; // Condition Var
 
+struct mutex_interface {
+	/**
+	 * Creates a Mutex
+	 *
+	 * @return The created mutex.
+	 */
+	ramutex *(*create) (void);
+
+	/**
+	 * Destroys a Mutex.
+	 *
+	 * @param m the mutex to destroy.
+	 */
+	void (*destroy) (ramutex *m);
+
+	/**
+	 * Gets a lock.
+	 *
+	 * @param m The mutex to lock.
+	 */
+	void (*lock) (ramutex *m);
+
+	/**
+	 * Tries to get a lock.
+	 *
+	 * @param m The mutex to try to lock.
+	 * @return success status.
+	 * @retval true if the lock was acquired.
+	 * @retval false if the mutex couldn't be locked.
+	 */
+	bool (*trylock) (ramutex *m);
+
+	/**
+	 * Unlocks a mutex.
+	 *
+	 * @param m The mutex to unlock.
+	 */
+	void (*unlock) (ramutex *m);
+
+
+	/**
+	 * Creates a Condition variable.
+	 *
+	 * @return the created condition variable.
+	 */
+	racond *(*cond_create) (void);
+
+	/**
+	 * Destroys a Condition variable.
+	 *
+	 * @param c the condition variable to destroy.
+	 */
+	void (*cond_destroy) (racond *c);
+
+	/**
+	 * Waits Until state is signaled.
+	 *
+	 * @param c             The condition var to wait for signaled state.
+	 * @param m             The mutex used for synchronization.
+	 * @param timeout_ticks Timeout in ticks (-1 = INFINITE)
+	 */
+	void (*cond_wait) (racond *c, ramutex *m, sysint timeout_ticks);
+
+	/**
+	 * Sets the given condition var to signaled state.
+	 *
+	 * @remark
+	 *   Only one waiter gets notified.
+	 *
+	 * @param c Condition var to set in signaled state.
+	 */
+	void (*cond_signal) (racond *c);
+
+	/**
+	 * Sets notifies all waiting threads thats signaled.
+	 *
+	 * @remark
+	 *   All Waiters getting notified.
+	 *
+	 * @param c Condition var to set in signaled state.
+	 */
+	void (*cond_broadcast) (racond *c);
+};
+
 #ifdef RAGEMU_CORE
-/**
- * Creates a Mutex
- *
- * @return not NULL
- */
-ramutex *ramutex_create(void);
-
-/**
- * Destroys a Mutex
- *
- * @param m - the mutex to destroy
- */
-void ramutex_destroy(ramutex *m);
-
-/**
- * Gets a lock
- *
- * @param m - the mutex to lock
- */
-void ramutex_lock(ramutex *m);
-
-/**
- * Trys to get the Lock
- *
- * @param m - the mutex try to lock
- *
- * @return boolean (true = got the lock)
- */
-bool ramutex_trylock(ramutex *m);
-
-/**
- * Unlocks a mutex
- *
- * @param m - the mutex to unlock
- */
-void ramutex_unlock(ramutex *m);
-
-
-/**
- * Creates a Condition variable
- *
- * @return not NULL
- */
-racond *racond_create(void);
-
-/**
- * Destroy a Condition variable
- *
- * @param c - the condition variable to destroy
- */
-void racond_destroy(racond *c);
-
-/**
- * Waits Until state is signaled
- *
- * @param c - the condition var to wait for signaled state
- * @param m - the mutex used for synchronization
- * @param timeout_ticks - timeout in ticks ( -1 = INFINITE )
- */
-void racond_wait(racond *c, ramutex *m, sysint timeout_ticks);
-
-/**
- * Sets the given condition var to signaled state
- *
- * @param c - condition var to set in signaled state.
- *
- * @note:
- *  Only one waiter gets notified.
- */
-void racond_signal(racond *c);
-
-/**
- * Sets notifies all waiting threads thats signaled.
- * @param c - condition var to set in signaled state
- *
- * @note:
- *  All Waiters getting notified.
- */
-void racond_broadcast(racond *c);
+void mutex_defaults(void);
 #endif // RAGEMU_CORE
+
+HPShared struct mutex_interface *mutex;
 
 #endif /* COMMON_MUTEX_H */
