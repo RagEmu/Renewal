@@ -87,7 +87,7 @@ enum parsefunc_rcode lclif_parse_CA_LOGIN(int fd, struct login_session_data *sd)
 	safestrncpy(sd->passwd, packet->password, PASSWD_LEN);
 
 	if (login->config->use_md5_passwds)
-		MD5_String(sd->passwd, sd->passwd);
+		md5->string(sd->passwd, sd->passwd);
 	sd->passwdenc = PWENC_NONE;
 
 	login->client_login(fd, sd);
@@ -161,7 +161,7 @@ enum parsefunc_rcode lclif_parse_CA_LOGIN_PCBANG(int fd, struct login_session_da
 	safestrncpy(sd->passwd, packet->password, PASSWD_LEN);
 
 	if (login->config->use_md5_passwds)
-		MD5_String(sd->passwd, sd->passwd);
+		md5->string(sd->passwd, sd->passwd);
 	sd->passwdenc = PWENC_NONE;
 
 	login->client_login(fd, sd);
@@ -184,7 +184,7 @@ enum parsefunc_rcode lclif_parse_CA_LOGIN_HAN(int fd, struct login_session_data 
 	safestrncpy(sd->passwd, packet->password, PASSWD_LEN);
 
 	if (login->config->use_md5_passwds)
-		MD5_String(sd->passwd, sd->passwd);
+		md5->string(sd->passwd, sd->passwd);
 	sd->passwdenc = PWENC_NONE;
 
 	login->client_login(fd, sd);
@@ -210,7 +210,7 @@ enum parsefunc_rcode lclif_parse_CA_SSO_LOGIN_REQ(int fd, struct login_session_d
 	safestrncpy(sd->passwd, packet->t1, min(tokenlen + 1, PASSWD_LEN)); // Variable-length field, don't copy more than necessary
 
 	if (login->config->use_md5_passwds)
-		MD5_String(sd->passwd, sd->passwd);
+		md5->string(sd->passwd, sd->passwd);
 	sd->passwdenc = PWENC_NONE;
 
 	login->client_login(fd, sd);
@@ -223,7 +223,7 @@ enum parsefunc_rcode lclif_parse_CA_REQ_HASH(int fd, struct login_session_data *
 {
 	memset(sd->md5key, '\0', sizeof(sd->md5key));
 	sd->md5keylen = (uint16)(12 + rnd() % 4);
-	MD5_Salt(sd->md5keylen, sd->md5key);
+	md5->salt(sd->md5keylen, sd->md5key);
 
 	lclif->coding_key(fd, sd);
 	return PACKET_VALID;

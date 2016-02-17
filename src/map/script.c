@@ -16067,7 +16067,7 @@ BUILDIN(md5)
 
 	tmpstr = script_getstr(st,2);
 	md5str = (char *)aMalloc((32+1)*sizeof(char));
-	MD5_String(tmpstr, md5str);
+	md5->string(tmpstr, md5str);
 	script_pushstr(st, md5str);
 	return true;
 }

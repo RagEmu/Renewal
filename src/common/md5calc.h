@@ -22,10 +22,18 @@
 #ifndef COMMON_MD5CALC_H
 #define COMMON_MD5CALC_H
 
+#include "common/ragemu.h"
+
+struct md5_interface {
+	void (*string) (const char *string, char *output);
+	void (*binary) (const char *string, unsigned char *output);
+	void (*salt) (unsigned int len, char *output);
+};
+
 #ifdef RAGEMU_CORE
-void MD5_String(const char * string, char * output);
-void MD5_Binary(const char * string, unsigned char * output);
-void MD5_Salt(unsigned int len, char * output);
+void md5_defaults(void);
 #endif // RAGEMU_CORE
+
+HPShared struct md5_interface *md5;
 
 #endif /* COMMON_MD5CALC_H */
