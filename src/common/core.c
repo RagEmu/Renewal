@@ -26,6 +26,7 @@
 
 #include "common/cbasetypes.h"
 #include "common/console.h"
+#include "common/des.h"
 #include "common/db.h"
 #include "common/memmgr.h"
 #include "common/mmo.h"
@@ -254,6 +255,7 @@ void core_defaults(void) {
 	malloc_defaults();
 	showmsg_defaults();
 	cmdline_defaults();
+	des_defaults();
 #ifndef MINICORE
 	libconfig_defaults();
 	sql_defaults();

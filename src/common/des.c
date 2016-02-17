@@ -25,6 +25,9 @@
 
 #include "common/cbasetypes.h"
 
+struct des_interface des_s;
+struct des_interface *des;
+
 /// DES (Data Encryption Standard) algorithm, modified version.
 /// @see http://www.eathena.ws/board/index.php?autocom=bugtracker&showbug=5099.
 /// @see http://en.wikipedia.org/wiki/Data_Encryption_Standard
@@ -233,5 +236,12 @@ void des_decrypt(unsigned char* data, size_t size)
 	size_t i;
 
 	for( i = 0; i*8 < size; i += 8 )
-		des_decrypt_block(p);
+		des->decrypt_block(p);
+}
+
+void des_defaults(void)
+{
+	des = &des_s;
+	des->decrypt = des_decrypt;
+	des->decrypt_block = des_decrypt_block;
 }
