@@ -69,6 +69,9 @@ struct rAthread {
 __thread int g_rathread_ID = -1;
 #endif
 
+struct thread_interface thread_s;
+struct thread_interface *thread;
+
 ///
 /// Subystem Code
 ///
@@ -101,7 +104,7 @@ void rathread_final(void) {
 	for(i = 1; i < RA_THREADS_MAX; i++){
 		if(l_threads[i].proc != NULL){
 			ShowWarning("rAthread_final: unterminated Thread (tid %u entryPoint %p) - forcing to terminate (kill)\n", i, l_threads[i].proc);
-			rathread_destroy(&l_threads[i]);
+			thread->destroy(&l_threads[i]);
 		}
 	}
 
@@ -160,7 +163,7 @@ static void *raThreadMainRedirector( void *p ){
 /// API Level
 ///
 rAthread *rathread_create(rAthreadProc entryPoint, void *param) {
-	return rathread_createEx( entryPoint, param,  (1<<23) /*8MB*/,  RAT_PRIO_NORMAL );
+	return thread->createEx(entryPoint, param,  (1<<23) /*8MB*/,  RAT_PRIO_NORMAL);
 }//end: rathread_create()
 
 rAthread *rathread_createEx(rAthreadProc entryPoint, void *param, size_t szStack, RATHREAD_PRIO prio) {
@@ -206,7 +209,7 @@ rAthread *rathread_createEx(rAthreadProc entryPoint, void *param, size_t szStack
 	pthread_attr_destroy(&attr);
 #endif
 
-	rathread_prio_set( handle,  prio );
+	thread->prio_set( handle,  prio );
 
 	return handle;
 }//end: rathread_createEx
@@ -302,3 +305,19 @@ void rathread_yield(void) {
 	sched_yield();
 #endif
 }//end: rathread_yield()
+
+void thread_defaults(void)
+{
+	thread = &thread_s;
+	thread->create = rathread_create;
+	thread->createEx = rathread_createEx;
+	thread->destroy = rathread_destroy;
+	thread->self = rathread_self;
+	thread->get_tid = rathread_get_tid;
+	thread->wait = rathread_wait;
+	thread->prio_set = rathread_prio_set;
+	thread->prio_get = rathread_prio_get;
+	thread->yield = rathread_yield;
+	thread->init = rathread_init;
+	thread->final = rathread_final;
+}
