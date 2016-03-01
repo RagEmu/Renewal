@@ -77,6 +77,9 @@ int gentry_maxentry = 0;
 // the path to the data directory
 char data_dir[1024] = "";
 
+struct grfio_interface grfio_s;
+struct grfio_interface *grfio;
+
 // little endian char array to uint conversion
 static unsigned int getlong(unsigned char* p)
 {
@@ -473,7 +476,7 @@ void *grfio_reads(const char *fname, int *size)
 				uLongf len;
 				grf_decode(buf, fsize, entry->type, entry->srclen);
 				len = entry->declen;
-				decode_zip(buf2, &len, buf, entry->srclen);
+				grfio->decode_zip(buf2, &len, buf, entry->srclen);
 				if (len != (uLong)entry->declen) {
 					ShowError("decode_zip size mismatch err: %d != %d\n", (int)len, entry->declen);
 					aFree(buf);
@@ -640,7 +643,7 @@ static int grfio_entryread(const char *grfname, int gentry)
 		}
 		fclose(fp);
 		grf_filelist = (unsigned char *)aMalloc(eSize); // Get a Extend Size
-		decode_zip(grf_filelist, &eSize, rBuf, rSize); // Decode function
+		grfio->decode_zip(grf_filelist, &eSize, rBuf, rSize); // Decode function
 		aFree(rBuf);
 
 		entrys = getlong(grf_header+0x26) - 7;
@@ -760,7 +763,7 @@ static void grfio_resourcecheck(void)
 	}
 
 	// read resnametable from loaded GRF's, only if it cannot be loaded from the data directory
-	buf = (char *)grfio_reads("data\\resnametable.txt", &size);
+	buf = grfio->reads("data\\resnametable.txt", &size);
 	if( buf != NULL )
 	{
 		char *ptr;
@@ -871,4 +874,16 @@ void grfio_init(const char* fname)
 
 	// Resource check
 	grfio_resourcecheck();
+}
+
+void grfio_defaults(void)
+{
+	grfio = &grfio_s;
+	grfio->init = grfio_init;
+	grfio->final = grfio_final;
+	grfio->reads = grfio_reads;
+	grfio->find_file = grfio_find_file;
+	grfio->crc32 = grfio_crc32;
+	grfio->decode_zip = decode_zip;
+	grfio->encode_zip = encode_zip;
 }
