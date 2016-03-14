@@ -3584,7 +3584,8 @@ void map_flags_init(void) {
 int map_waterheight(char* mapname)
 {
 	char fn[256];
-	char *rsw, *found;
+	char *rsw = NULL;
+	const char *found;
 
 	nullpo_retr(NO_WATER, mapname);
 	//Look up for the rsw
