@@ -1,7 +1,7 @@
 //============================================================
-//= Hercules Cache Folder Readme File
+//= RagEmu Cache Folder Readme File
 //===== By: ==================================================
-//= Hercules Dev Team
+//= RagEmu Dev Team
 //============================================================
 
 Don't touch these folders or files inside of them!
