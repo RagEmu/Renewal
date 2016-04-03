@@ -27,7 +27,7 @@
  * Base Author: Haru @ http://herc.ws
  */
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 struct sysinfo_private;
 

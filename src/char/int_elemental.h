@@ -19,7 +19,7 @@
 #ifndef CHAR_INT_ELEMENTAL_H
 #define CHAR_INT_ELEMENTAL_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 /**
  * inter_elemental_interface interface

@@ -19,7 +19,7 @@
 #ifndef CHAR_INTER_H
 #define CHAR_INTER_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 #include "common/sql.h"
 

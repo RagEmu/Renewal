@@ -19,7 +19,7 @@
 #ifndef MAP_BUYINGSTORE_H
 #define MAP_BUYINGSTORE_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/mmo.h" // MAX_SLOTS
 
 struct map_session_data;

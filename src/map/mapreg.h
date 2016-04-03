@@ -20,7 +20,7 @@
 #define MAP_MAPREG_H
 
 #include "map/script.h" // struct reg_db
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 
 struct eri;

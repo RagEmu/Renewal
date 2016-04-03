@@ -19,7 +19,7 @@
 #ifndef MAP_QUEST_H
 #define MAP_QUEST_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/mmo.h" // enum quest_state
 
 /* Forward Declarations */

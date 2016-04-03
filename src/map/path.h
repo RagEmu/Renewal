@@ -20,7 +20,7 @@
 #define MAP_PATH_H
 
 #include "map/map.h" // enum cell_chk
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 #define MOVE_COST 10
 #define MOVE_DIAGONAL_COST 14

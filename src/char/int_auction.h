@@ -19,7 +19,7 @@
 #ifndef CHAR_INT_AUCTION_H
 #define CHAR_INT_AUCTION_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 #include "common/mmo.h"
 

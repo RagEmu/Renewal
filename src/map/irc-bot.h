@@ -23,7 +23,7 @@
 #ifndef MAP_IRC_BOT_H
 #define MAP_IRC_BOT_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 #define IRC_NICK_LENGTH 40
 #define IRC_IDENT_LENGTH 40

@@ -21,7 +21,7 @@
 
 #include "map/map.h" // struct block_list
 #include "map/status.h" // enum sc_type
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 #include "common/mmo.h" // MAX_SKILL, struct square
 

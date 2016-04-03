@@ -20,7 +20,7 @@
 #define MAP_ATCOMMAND_H
 
 #include "map/pc_groups.h"
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 
 #include <stdarg.h>

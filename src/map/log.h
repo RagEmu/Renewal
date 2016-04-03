@@ -19,7 +19,7 @@
 #ifndef MAP_LOG_H
 #define MAP_LOG_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/sql.h"
 
 /**

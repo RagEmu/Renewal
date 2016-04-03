@@ -19,7 +19,7 @@
 #ifndef CHAR_PINCODE_H
 #define CHAR_PINCODE_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 struct char_session_data;
 

@@ -19,7 +19,7 @@
 #ifndef COMMON_SOCKET_H
 #define COMMON_SOCKET_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 
 #ifdef WIN32

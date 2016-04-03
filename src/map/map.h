@@ -20,7 +20,7 @@
 #define MAP_MAP_H
 
 #include "map/atcommand.h"
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/core.h" // CORE_ST_LAST
 #include "common/db.h"
 #include "common/mapindex.h"

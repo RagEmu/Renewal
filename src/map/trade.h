@@ -19,7 +19,7 @@
 #ifndef MAP_TRADE_H
 #define MAP_TRADE_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 //Max distance from traders to enable a trade to take place.
 //TODO: battle_config candidate?

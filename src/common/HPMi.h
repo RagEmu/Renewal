@@ -19,7 +19,7 @@
 #ifndef COMMON_HPMI_H
 #define COMMON_HPMI_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/console.h"
 #include "common/core.h"
 #include "common/showmsg.h"

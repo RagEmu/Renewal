@@ -18,7 +18,7 @@
  */
 #include "config/core.h"
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/cbasetypes.h"
 #include "common/conf.h"
 #include "common/memmgr.h"

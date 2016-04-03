@@ -19,7 +19,7 @@
 #ifndef COMMON_TIMER_H
 #define COMMON_TIMER_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 #define DIFF_TICK(a,b) ((a)-(b))
 #define DIFF_TICK32(a,b) ((int32)((a)-(b)))

@@ -22,7 +22,7 @@
 #include "map/map.h" // struct block_list
 #include "map/status.h" // struct status_change
 #include "map/unit.h" // struct unit_data
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 
 #include <pcre.h>

@@ -20,7 +20,7 @@
 #define MAP_GUILD_H
 
 #include "map/map.h" // EVENT_NAME_LENGTH
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 #include "common/mmo.h"
 

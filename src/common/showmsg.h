@@ -19,7 +19,7 @@
 #ifndef COMMON_SHOWMSG_H
 #define COMMON_SHOWMSG_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 #include <stdarg.h>
 

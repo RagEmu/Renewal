@@ -21,7 +21,7 @@
 
 #include "map/map.h"
 #include "map/packets_struct.h"
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/mmo.h"
 
 #include <stdarg.h>

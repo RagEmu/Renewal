@@ -19,7 +19,7 @@
 #ifndef MAP_PC_GROUPS_H
 #define MAP_PC_GROUPS_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 
 /* Forward Declarations */

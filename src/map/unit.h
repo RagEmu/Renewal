@@ -22,7 +22,7 @@
 #include "map/clif.h"  // clr_type
 #include "map/path.h" // struct walkpath_data
 #include "map/skill.h" // 'MAX_SKILLTIMERSKILL, struct skill_timerskill, struct skill_unit_group, struct skill_unit_group_tickset
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 struct map_session_data;
 struct block_list;

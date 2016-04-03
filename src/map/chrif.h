@@ -19,7 +19,7 @@
 #ifndef MAP_CHRIF_H
 #define MAP_CHRIF_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 #include "common/mmo.h"
 

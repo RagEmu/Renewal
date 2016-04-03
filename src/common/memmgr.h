@@ -19,7 +19,7 @@
 #ifndef COMMON_MEMMGR_H
 #define COMMON_MEMMGR_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 #define ALC_MARK __FILE__, __LINE__, __func__
 

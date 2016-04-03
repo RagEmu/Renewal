@@ -19,7 +19,7 @@
 #ifndef MAP_INTIF_H
 #define MAP_INTIF_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 /**
  * Declarations

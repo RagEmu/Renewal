@@ -19,7 +19,7 @@
 #ifndef COMMON_CONF_H
 #define COMMON_CONF_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 #include <libconfig/libconfig.h>
 

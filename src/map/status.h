@@ -19,7 +19,7 @@
 #ifndef MAP_STATUS_H
 #define MAP_STATUS_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/mmo.h" // NEW_CARTS
 
 struct block_list;

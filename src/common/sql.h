@@ -19,7 +19,7 @@
 #ifndef COMMON_SQL_H
 #define COMMON_SQL_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 #include <stdarg.h>// va_list
 

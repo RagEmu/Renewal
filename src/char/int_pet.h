@@ -19,7 +19,7 @@
 #ifndef CHAR_INT_PET_H
 #define CHAR_INT_PET_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 struct s_pet;
 

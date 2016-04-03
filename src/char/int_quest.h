@@ -19,7 +19,7 @@
 #ifndef CHAR_INT_QUEST_H
 #define CHAR_INT_QUEST_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 /**
  * inter_quest interface

@@ -19,7 +19,7 @@
 #ifndef CHAR_INT_MERCENARY_H
 #define CHAR_INT_MERCENARY_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 struct mmo_charstatus;
 

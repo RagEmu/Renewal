@@ -19,7 +19,7 @@
 #ifndef MAP_STORAGE_H
 #define MAP_STORAGE_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 
 struct guild_storage;

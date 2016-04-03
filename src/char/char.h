@@ -19,7 +19,7 @@
 #ifndef CHAR_CHAR_H
 #define CHAR_CHAR_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/core.h" // CORE_ST_LAST
 #include "common/db.h"
 #include "common/mmo.h"

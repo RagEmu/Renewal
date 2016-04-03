@@ -19,7 +19,7 @@
 #ifndef CHAR_INT_MAIL_H
 #define CHAR_INT_MAIL_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 struct item;
 struct mail_data;
