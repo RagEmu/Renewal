@@ -758,11 +758,7 @@ int itemdb_isidentified2(struct item_data *data) {
 void itemdb_read_groups(void) {
 	struct config_t item_group_conf;
 	struct config_setting_t *itg = NULL, *it = NULL;
-#ifdef RENEWAL
 	const char *config_filename = "db/re/item_group.conf"; // FIXME hardcoded name
-#else
-	const char *config_filename = "db/pre-re/item_group.conf"; // FIXME hardcoded name
-#endif
 	const char *itname;
 	int i = 0, count = 0, c;
 	unsigned int *gsize = NULL;
@@ -1048,11 +1044,7 @@ bool itemdb_read_cached_packages(const char *config_filename) {
 void itemdb_read_packages(void) {
 	struct config_t item_packages_conf;
 	struct config_setting_t *itg = NULL, *it = NULL, *t = NULL;
-#ifdef RENEWAL
 	const char *config_filename = "db/re/item_packages.conf"; // FIXME hardcoded name
-#else
-	const char *config_filename = "db/pre-re/item_packages.conf"; // FIXME hardcoded name
-#endif
 	const char *itname;
 	int i = 0, count = 0, c = 0, highest_gcount = 0;
 	unsigned int *must = NULL, *random = NULL, *rgroup = NULL, **rgroups = NULL;
@@ -1278,11 +1270,7 @@ void itemdb_read_packages(void) {
 void itemdb_read_chains(void) {
 	struct config_t item_chain_conf;
 	struct config_setting_t *itc = NULL;
-#ifdef RENEWAL
 	const char *config_filename = "db/re/item_chain.conf"; // FIXME hardcoded name
-#else
-	const char *config_filename = "db/pre-re/item_chain.conf"; // FIXME hardcoded name
-#endif
 	int i = 0, count = 0;
 
 	if (!libconfig->load_file(&item_chain_conf, config_filename))

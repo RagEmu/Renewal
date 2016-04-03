@@ -18,7 +18,7 @@
  */
 #define HERCULES_CORE
 
-#include "config/core.h" // DBPATH, GP_BOUND_ITEMS, MAX_SPIRITBALL, RENEWAL, RENEWAL_ASPD, RENEWAL_CAST, RENEWAL_DROP, RENEWAL_EXP, SECURE_NPCTIMEOUT
+#include "config/core.h" // DBPATH, GP_BOUND_ITEMS, MAX_SPIRITBALL, RENEWAL_DROP, RENEWAL_EXP, SECURE_NPCTIMEOUT
 #include "pc.h"
 
 #include "map/atcommand.h" // get_atcommand_level()
@@ -2266,22 +2266,13 @@ int pc_bonus(struct map_session_data *sd,int type,int val) {
 			break;
 		case SP_BASE_ATK:
 			if(sd->state.lr_flag != 2) {
-#ifdef RENEWAL
 				bst->equip_atk += val;
-#else
-				bonus = bst->batk + val;
-				bst->batk = cap_value(bonus, 0, USHRT_MAX);
-#endif
 			}
 			break;
 		case SP_DEF1:
 			if(sd->state.lr_flag != 2) {
 				bonus = bst->def + val;
-	#ifdef RENEWAL
 				bst->def = cap_value(bonus, SHRT_MIN, SHRT_MAX);
-	#else
-				bst->def = cap_value(bonus, CHAR_MIN, CHAR_MAX);
-	#endif
 			}
 			break;
 		case SP_DEF2:
@@ -2293,11 +2284,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val) {
 		case SP_MDEF1:
 			if(sd->state.lr_flag != 2) {
 				bonus = bst->mdef + val;
-	#ifdef RENEWAL
 				bst->mdef = cap_value(bonus, SHRT_MIN, SHRT_MAX);
-	#else
-				bst->mdef = cap_value(bonus, CHAR_MIN, CHAR_MAX);
-	#endif
 				if( sd->state.lr_flag == 3 ) {//Shield, used for royal guard
 					sd->bonus.shieldmdef += bonus;
 				}
@@ -2387,9 +2374,6 @@ int pc_bonus(struct map_session_data *sd,int type,int val) {
 			val += (int)bst->max_sp;
 			bst->max_sp = (unsigned int)val;
 			break;
-	#ifndef RENEWAL_CAST
-		case SP_VARCASTRATE:
-	#endif
 		case SP_CASTRATE:
 			if(sd->state.lr_flag != 2)
 				sd->castrate+=val;
@@ -2441,11 +2425,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val) {
 			break;
 		case SP_ASPD_RATE: //Stackable increase - Made it linear as per rodatazone
 			if(sd->state.lr_flag != 2)
-	#ifndef RENEWAL_ASPD
-				bst->aspd_rate -= 10*val;
-	#else
 				bst->aspd_rate2 += val;
-	#endif
 			break;
 		case SP_HP_RECOV_RATE:
 			if(sd->state.lr_flag != 2)
@@ -2863,7 +2843,6 @@ int pc_bonus(struct map_session_data *sd,int type,int val) {
 				sd->bonus.add_fixcast += val;
 
 			break;
-	#ifdef RENEWAL_CAST
 		case SP_VARCASTRATE:
 			if(sd->state.lr_flag != 2)
 				sd->bonus.varcastrate -= val;
@@ -2872,7 +2851,6 @@ int pc_bonus(struct map_session_data *sd,int type,int val) {
 			if(sd->state.lr_flag != 2)
 				sd->bonus.add_varcast += val;
 			break;
-	#endif
 		case SP_ADD_MONSTER_DROP_CHAINITEM:
 			if (sd->state.lr_flag != 2)
 				pc->bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), 0, val, map->race_id2mask(RC_ALL), 10000);
@@ -3334,9 +3312,6 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				sd->skillblown[i].val = val;
 			}
 			break;
-#ifndef RENEWAL_CAST
-		case SP_VARCASTRATE:
-#endif
 		case SP_CASTRATE:
 			if(sd->state.lr_flag == 2)
 				break;
@@ -3614,7 +3589,6 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				sd->skillvarcast[i].val = val;
 			}
 			break;
-	#ifdef RENEWAL_CAST
 		case SP_VARCASTRATE:
 			if(sd->state.lr_flag == 2)
 				break;
@@ -3631,7 +3605,6 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				sd->skillcast[i].val -= val;
 			}
 			break;
-	#endif
 		case SP_SKILL_USE_SP: //bonus2 bSkillUseSP,n,x;
 			if(sd->state.lr_flag == 2)
 				break;
@@ -3659,7 +3632,6 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				pc->bonus_item_drop(sd->add_drop, ARRAYLENGTH(sd->add_drop), 0, type2, race_mask, 10000);
 		}
 			break;
-#ifdef RENEWAL
 		case SP_RACE_TOLERANCE:
 		{
 			uint32 race_mask = map->race_id2mask(type2);
@@ -3673,7 +3645,6 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				sd->race_tolerance[i] += val;
 			}
 			break;
-#endif
 		default:
 			ShowWarning("pc_bonus2: unknown type %d %d %d!\n",type,type2,val);
 			Assert_report(0);
@@ -4856,13 +4827,8 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	while( 1 ) {
 		// Normal classes (no upper, no baby, no third classes)
 		if( item->class_upper&ITEMUPPER_NORMAL && !(sd->class_&(JOBL_UPPER|JOBL_THIRD|JOBL_BABY)) ) break;
-#ifdef RENEWAL
 		// Upper classes (no third classes)
 		if( item->class_upper&ITEMUPPER_UPPER && sd->class_&JOBL_UPPER && !(sd->class_&JOBL_THIRD) ) break;
-#else
-		//pre-re has no use for the extra, so we maintain the previous for backwards compatibility
-		if( item->class_upper&ITEMUPPER_UPPER && sd->class_&(JOBL_UPPER|JOBL_THIRD) ) break;
-#endif
 		// Baby classes (no third classes)
 		if( item->class_upper&ITEMUPPER_BABY && sd->class_&JOBL_BABY && !(sd->class_&JOBL_THIRD) ) break;
 		// Third classes (no upper, no baby classes)
@@ -4892,9 +4858,7 @@ int pc_useitem(struct map_session_data *sd,int n) {
 
 	if( sd->npc_id || sd->state.workinprogress&1 ){
 		/* TODO: add to clif->messages enum */
-#ifdef RENEWAL
 		clif->msgtable(sd, MSG_NPC_WORK_IN_PROGRESS); // TODO look for the client date that has this message.
-#endif
 		return 0;
 	}
 
@@ -5746,10 +5710,8 @@ int pc_checkallowskill(struct map_session_data *sd)
 		SC_ADRENALINE2,
 		SC_DANCING,
 		SC_GS_GATLINGFEVER,
-#ifdef RENEWAL
 		SC_LKCONCENTRATION,
 		SC_EDP,
-#endif
 		SC_FEARBREEZE,
 		SC_EXEEDBREAK,
 	};
@@ -6858,11 +6820,8 @@ int pc_need_status_point(struct map_session_data* sd, int type, int val)
 		swap(low, high);
 
 	for ( ; low < high; low++ )
-#ifdef RENEWAL // renewal status point cost formula
+	// renewal status point cost formula
 		sp += (low < 100) ? (2 + (low - 1) / 10) : (16 + 4 * ((low - 100) / 5));
-#else
-		sp += ( 1 + (low + 9) / 10 );
-#endif
 
 	return sp;
 }
@@ -6881,11 +6840,8 @@ int pc_maxparameterincrease(struct map_session_data* sd, int type) {
 	base = final = pc->getstat(sd, type);
 
 	while (final <= pc_maxparameter(sd) && status_points >= 0) {
-#ifdef RENEWAL // renewal status point cost formula
+	// renewal status point cost formula
 		status_points -= (final < 100) ? (2 + (final - 1) / 10) : (16 + 4 * ((final - 100) / 5));
-#else
-		status_points -= ( 1 + (final + 9) / 10 );
-#endif
 		final++;
 	}
 	final--;
@@ -7945,9 +7901,6 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_FLEE1:           val = sd->battle_status.flee; break;
 		case SP_FLEE2:           val = sd->battle_status.flee2; break;
 		case SP_DEFELE:          val = sd->battle_status.def_ele; break;
-#ifndef RENEWAL_CAST
-		case SP_VARCASTRATE:
-#endif
 		case SP_CASTRATE:
 				val = sd->castrate+=val;
 			break;
@@ -7957,11 +7910,7 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_SPEED_RATE:      val = sd->bonus.speed_rate; break;
 		case SP_SPEED_ADDRATE:   val = sd->bonus.speed_add_rate; break;
 		case SP_ASPD_RATE:
-#ifndef RENEWAL_ASPD
-			val = sd->battle_status.aspd_rate;
-#else
 			val = sd->battle_status.aspd_rate2;
-#endif
 			break;
 		case SP_HP_RECOV_RATE:   val = sd->hprecov_rate; break;
 		case SP_SP_RECOV_RATE:   val = sd->sprecov_rate; break;
@@ -8031,10 +7980,8 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_EMATK:           val = sd->bonus.ematk; break;
 		case SP_FIXCASTRATE:     val = sd->bonus.fixcastrate; break;
 		case SP_ADD_FIXEDCAST:   val = sd->bonus.add_fixcast; break;
-#ifdef RENEWAL_CAST
 		case SP_VARCASTRATE:     val = sd->bonus.varcastrate; break;
 		case SP_ADD_VARIABLECAST:val = sd->bonus.add_varcast; break;
-#endif
 	}
 
 	return val;
@@ -8292,10 +8239,8 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 			hp += hp / 10;
 			sp += sp / 10;
 		}
-#ifdef RENEWAL
 		if( sd->sc.data[SC_EXTREMITYFIST2] )
 			sp = 0;
-#endif
 	}
 
 	return status->heal(&sd->bl, hp, sp, 1);
@@ -11038,10 +10983,6 @@ int pc_readdb(void) {
 				while(*p==32 && *p>0)
 					p++;
 				battle->attr_fix_table[lv-1][i][j]=atoi(p);
-#ifndef RENEWAL
-				if(battle_config.attr_recover == 0 && battle->attr_fix_table[lv-1][i][j] < 0)
-					battle->attr_fix_table[lv-1][i][j] = 0;
-#endif
 				p=strchr(p,',');
 				if(p) *p++=0;
 			}

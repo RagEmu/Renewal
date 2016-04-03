@@ -3864,11 +3864,7 @@ void map_reloadnpc(bool clear) {
 	if (clear)
 		npc->addsrcfile("clear"); // this will clear the current script list
 
-#ifdef RENEWAL
 	map->reloadnpc_sub("npc/re/scripts_main.conf");
-#else
-	map->reloadnpc_sub("npc/pre-re/scripts_main.conf");
-#endif
 
 	// Append extra scripts
 	for( i = 0; i < map->extra_scripts_count; i++ ) {
@@ -4983,11 +4979,7 @@ void read_map_zone_db(void) {
 	struct config_t map_zone_db;
 	struct config_setting_t *zones = NULL;
 	/* TODO: #ifndef required for re/pre-re */
-#ifdef RENEWAL
 	const char *config_filename = "db/re/map_zone_db.conf"; // FIXME hardcoded name
-#else
-	const char *config_filename = "db/pre-re/map_zone_db.conf"; // FIXME hardcoded name
-#endif
 	if (!libconfig->load_file(&map_zone_db, config_filename))
 		return;
 

@@ -147,11 +147,7 @@ struct fame_list chemist_fame_list[MAX_FAME_LIST];
 struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 
 // Initial position (it's possible to set it in conf file)
-#ifdef RENEWAL
-	struct point start_point = { 0, 97, 90 };
-#else
-	struct point start_point = { 0, 53, 111 };
-#endif
+struct point start_point = { 0, 97, 90 };
 
 unsigned short skillid2idx[MAX_SKILL_ID];
 
@@ -5528,31 +5524,17 @@ int char_config_read(const char* cfgName)
 		} else if (strcmpi(w1, "save_log") == 0) {
 			save_log = config_switch(w2);
 		}
-		#ifdef RENEWAL
-			else if (strcmpi(w1, "start_point_re") == 0) {
-				char map[MAP_NAME_LENGTH_EXT];
-				int x, y;
-				if (sscanf(w2, "%15[^,],%d,%d", map, &x, &y) < 3)
-					continue;
-				start_point.map = mapindex->name2id(map);
-				if (!start_point.map)
-					ShowError("Specified start_point_re '%s' not found in map-index cache.\n", map);
-				start_point.x = x;
-				start_point.y = y;
-			}
-		#else
-			else if (strcmpi(w1, "start_point_pre") == 0) {
-				char map[MAP_NAME_LENGTH_EXT];
-				int x, y;
-				if (sscanf(w2, "%15[^,],%d,%d", map, &x, &y) < 3)
-					continue;
-				start_point.map = mapindex->name2id(map);
-				if (!start_point.map)
-					ShowError("Specified start_point_pre '%s' not found in map-index cache.\n", map);
-				start_point.x = x;
-				start_point.y = y;
-			}
-		#endif
+		else if (strcmpi(w1, "start_point_re") == 0) {
+			char map[MAP_NAME_LENGTH_EXT];
+			int x, y;
+			if (sscanf(w2, "%15[^,],%d,%d", map, &x, &y) < 3)
+				continue;
+			start_point.map = mapindex->name2id(map);
+			if (!start_point.map)
+				ShowError("Specified start_point_re '%s' not found in map-index cache.\n", map);
+			start_point.x = x;
+			start_point.y = y;
+		}
 		else if (strcmpi(w1, "start_items") == 0) {
 			int i;
 			char *split;
@@ -5780,11 +5762,7 @@ int do_init(int argc, char **argv) {
 	//Read map indexes
 	mapindex->init();
 
-	#ifdef RENEWAL
-		start_point.map = mapindex->name2id("iz_int");
-	#else
-		start_point.map = mapindex->name2id("new_1-1");
-	#endif
+	start_point.map = mapindex->name2id("iz_int");
 
 	cmdline->exec(argc, argv, CMDLINE_OPT_NORMAL);
 	chr->config_read(chr->CHAR_CONF_NAME);

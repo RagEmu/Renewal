@@ -3982,20 +3982,6 @@ int mob_db_validate_entry(struct mob_db *entry, int n, const char *source)
 	entry->status.hp = entry->status.max_hp;
 	entry->status.sp = entry->status.max_sp;
 
-	/*
-	 * Disabled for renewal since difference of 0 and 1 still has an impact in the formulas
-	 * Just in case there is a mishandled division by zero please let us know. [malufett]
-	 */
-#ifndef RENEWAL
-	//All status should be min 1 to prevent divisions by zero from some skills. [Skotlex]
-	if (entry->status.str < 1) entry->status.str = 1;
-	if (entry->status.agi < 1) entry->status.agi = 1;
-	if (entry->status.vit < 1) entry->status.vit = 1;
-	if (entry->status.int_< 1) entry->status.int_= 1;
-	if (entry->status.dex < 1) entry->status.dex = 1;
-	if (entry->status.luk < 1) entry->status.luk = 1;
-#endif
-
 	if (entry->range2 < 1)
 		entry->range2 = 1;
 

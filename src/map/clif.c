@@ -1483,24 +1483,15 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag) 
 	WBUFW(buf,29)=hd->homunculus.hunger;
 	WBUFW(buf,31)=(unsigned short) (hd->homunculus.intimacy / 100) ;
 	WBUFW(buf,33)=0; // equip id
-#ifdef RENEWAL
 	WBUFW(buf, 35) = cap_value(hstatus->rhw.atk2, 0, INT16_MAX);
-#else
-	WBUFW(buf,35)=cap_value(hstatus->rhw.atk2+hstatus->batk, 0, INT16_MAX);
-#endif
 	WBUFW(buf,37)=cap_value(hstatus->matk_max, 0, INT16_MAX);
 	WBUFW(buf,39)=hstatus->hit;
 	if (battle_config.hom_setting&0x10)
 		WBUFW(buf,41)=hstatus->luk/3 + 1; //crit is a +1 decimal value! Just display purpose.[Vicious]
 	else
 		WBUFW(buf,41)=hstatus->cri/10;
-#ifdef RENEWAL
 	WBUFW(buf, 43) = hstatus->def + hstatus->def2;
 	WBUFW(buf, 45) = hstatus->mdef + hstatus->mdef2;
-#else
-	WBUFW(buf,43)=hstatus->def + hstatus->vit ;
-	WBUFW(buf, 45) = hstatus->mdef;
-#endif
 	WBUFW(buf,47)=hstatus->flee;
 	WBUFW(buf,49)=(flag)?0:hstatus->amotion;
 	if (hstatus->max_hp > INT16_MAX) {
@@ -2912,13 +2903,7 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		case SP_MDEF2: {
 				//negative check (in case you have something like Berserk active)
 				int mdef2 = pc_rightside_mdef(sd);
-
-				WFIFOL(fd,4)=
-	#ifndef RENEWAL
-				( mdef2 < 0 ) ? 0 :
-	#endif
-				mdef2;
-
+				WFIFOL(fd,4)= mdef2;
 			}
 			break;
 		case SP_CRITICAL:
@@ -3280,11 +3265,7 @@ void clif_initialstatus(struct map_session_data *sd) {
 	WBUFW(buf,26) = pc_rightside_def(sd);
 	WBUFW(buf,28) = pc_leftside_mdef(sd);
 	mdef2 = pc_rightside_mdef(sd);
-	WBUFW(buf,30) =
-#ifndef RENEWAL
-		( mdef2 < 0 ) ? 0 : //Negative check for Frenzy'ed characters.
-#endif
-		mdef2;
+	WBUFW(buf,30) = mdef2;
 	WBUFW(buf,32) = sd->battle_status.hit;
 	WBUFW(buf,34) = sd->battle_status.flee;
 	WBUFW(buf,36) = sd->battle_status.flee2/10;
@@ -10473,9 +10454,7 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 		return;
 	}
 	if( sd->npc_id || sd->state.workinprogress&2 ){
-#ifdef RENEWAL
 		clif->msgtable(sd, MSG_NPC_WORK_IN_PROGRESS); // TODO look for the client date that has this message.
-#endif
 		return;
 	}
 	if ( pc_cant_act2(sd) || !(bl = map->id2bl(RFIFOL(fd,2))) || sd->state.vending )
@@ -10488,9 +10467,7 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 			break;
 		case BL_NPC:
 			if( sd->ud.skill_id < RK_ENCHANTBLADE && sd->ud.skilltimer != INVALID_TIMER ) {// TODO: should only work with none 3rd job skills
-#ifdef RENEWAL
 				clif->msgtable(sd, MSG_NPC_WORK_IN_PROGRESS);
-#endif
 				break;
 			}
 			if( bl->m != -1 )// the user can't click floating npcs directly (hack attempt)
@@ -10872,12 +10849,10 @@ void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
 	if( pc->checkskill(sd, MC_CHANGECART) < 1 )
 		return;
 
-#ifdef RENEWAL
 	if( sd->npc_id || sd->state.workinprogress&1 ){
 		clif->msgtable(sd, MSG_NPC_WORK_IN_PROGRESS);
 		return;
 	}
-#endif
 
 	type = RFIFOW(fd,2);
 #ifdef NEW_CARTS
@@ -11085,9 +11060,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	pc->update_idle_time(sd, BCIDLE_USESKILLTOID);
 
 	if( sd->npc_id || sd->state.workinprogress&1 ){
-#ifdef RENEWAL
 		clif->msgtable(sd, MSG_NPC_WORK_IN_PROGRESS); // TODO look for the client date that has this message.
-#endif
 		return;
 	}
 
@@ -11181,13 +11154,10 @@ void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, uint16 ski
 		return;
 	}
 
-#ifdef RENEWAL
 	if( sd->state.workinprogress&1 ){
 		clif->msgtable(sd, MSG_NPC_WORK_IN_PROGRESS); // TODO look for the client date that has this message.
 		return;
 	}
-#endif
-
 	//Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
 	pc->update_idle_time(sd, BCIDLE_USESKILLTOPOS);
 
@@ -15953,27 +15923,14 @@ void clif_mercenary_info(struct map_session_data *sd) {
 	WFIFOL(fd,2) = md->bl.id;
 
 	// Mercenary shows ATK as a random value between ATK ~ ATK2
-#ifdef RENEWAL
 	atk = status->get_weapon_atk(&md->bl, &mstatus->rhw, 0);
-#else
-	atk = rnd() % (mstatus->rhw.atk2 - mstatus->rhw.atk + 1) + mstatus->rhw.atk;
-#endif
 	WFIFOW(fd, 6) = cap_value(atk, 0, INT16_MAX);
-#ifdef RENEWAL
 	atk = status->base_matk(&md->bl, mstatus, status->get_lv(&md->bl));
 	WFIFOW(fd,8) = cap_value(atk, 0, INT16_MAX);
-#else
-	WFIFOW(fd,8) = cap_value(mstatus->matk_max, 0, INT16_MAX);
-#endif
 	WFIFOW(fd,10) = mstatus->hit;
 	WFIFOW(fd,12) = mstatus->cri/10;
-#ifdef RENEWAL
 	WFIFOW(fd, 14) = mstatus->def2;
 	WFIFOW(fd, 16) = mstatus->mdef2;
-#else
-	WFIFOW(fd,14) = mstatus->def;
-	WFIFOW(fd,16) = mstatus->mdef;
-#endif
 	WFIFOW(fd,18) = mstatus->flee;
 	WFIFOW(fd,20) = mstatus->amotion;
 	safestrncpy(WFIFOP(fd,22), md->db->name, NAME_LENGTH);
