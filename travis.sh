@@ -111,7 +111,7 @@ EOF
 		[ $? -eq 0 ] || aborterror "Unable to import configuration, aborting tests."
 		ARGS="--load-script npc/dev/test.txt "
 		ARGS="--load-plugin script_mapquit $ARGS --load-script npc/dev/ci_test.txt"
-		echo "Running Hercules with command line: ./map-server --run-once $ARGS"
+		echo "Running RagEmu with command line: ./map-server --run-once $ARGS"
 		./map-server --run-once $ARGS 2>runlog.txt
 		export errcode=$?
 		export teststr=$(cat runlog.txt)
