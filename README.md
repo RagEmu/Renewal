@@ -1,49 +1,35 @@
-Hercules
+RagEmu
 ========
 
 Build Status:  
-[![Build Status](https://travis-ci.org/HerculesWS/Hercules.svg)](https://travis-ci.org/HerculesWS/Hercules)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/cm9xbwurpbltqjop?svg=true)](https://ci.appveyor.com/project/Haru/hercules)
-[![Coverity Scan Build Status](https://scan.coverity.com/projects/3892/badge.svg)](https://scan.coverity.com/projects/herculesws-hercules)
-
-Issues and pull requests:  
-[![Open Issues](https://img.shields.io/github/issues-raw/HerculesWS/Hercules.svg?label=Open%20Issues)](https://github.com/HerculesWS/Hercules/issues)
-[![Issues in progress](https://badge.waffle.io/HerculesWS/Hercules.svg?label=status%3Aconfirmed&title=In%20Progress)](https://waffle.io/HerculesWS/Hercules)
-[![Ready PRs](https://badge.waffle.io/HerculesWS/Hercules.svg?label=status%3Aready&title=Ready%20PRs)](https://waffle.io/HerculesWS/Hercules)
-
-Development and Community:  
-[![GitHub Repository](https://img.shields.io/badge/github-HerculesWS/Hercules-green.svg)](https://github.com/HerculesWS/Hercules)
-[![Waffle Board](https://img.shields.io/badge/waffle-HerculesWS/Hercules-6699dd.svg)](https://waffle.io/HerculesWS/Hercules)  
-[![IRC](https://img.shields.io/badge/IRC-Rizon/Hercules-yellow.svg)](irc://rizon.net/Hercules)
-[![Community Forum](https://img.shields.io/badge/forum-herc.ws-orange.svg)](http://herc.ws)
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/HerculesWS/Hercules)  
-[![Twitter](https://img.shields.io/badge/twitter-@HerculesWS-blue.svg)](https://twitter.com/HerculesWS)
+[![Build Status](https://travis-ci.org/RagEmu/Renewal.svg)](https://travis-ci.org/RagEmu/Renewal)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/cm9xbwurpbltqjop?svg=true)](https://ci.appveyor.com/project/Haru/RagEmu)
 
 Project Info:  
 ![Language](https://img.shields.io/badge/language-C-yellow.svg)
-[![License](https://img.shields.io/badge/license-GPLv3-663399.svg)](https://github.com/HerculesWS/Hercules/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/license-GPLv3-663399.svg)](https://github.com/RagEmu/Renewal/blob/master/LICENSE)
 
 Table of Contents
 ---------
-* 1 What is Hercules?
+* 1 What is RagEmu?
 * 2 Prerequisites
 * 3 Installation
 * 4 Troubleshooting
 * 5 Helpful Links
 * 6 More Documentation
 
-What is Hercules?
+What is RagEmu?
 -----------------
-Hercules is a collaborative software development project revolving around the
+RagEmu is a collaborative software development project revolving around the
 creation of a robust massively multiplayer online role playing game (MMORPG)
 server package. Written in C, the program is very versatile and provides NPCs,
 warps and modifications. The project is jointly managed by a group of
 volunteers located around the world as well as a tremendous community providing
-QA and support. Hercules is a continuation of the original Athena project.
+QA and support. RagEmu is a continuation of the original Athena project.
 
 Prerequisites
 -------------
-Before installing Hercules there are certain tools and applications you will
+Before installing RagEmu there are certain tools and applications you will
 need.  This differs between the varying operating systems available, so the
 following is broken down into Windows and Unix (incl. Linux) prerequisites.
 
@@ -89,11 +75,11 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 
 #### Windows
   1. Install the prerequisites.
-  2. Clone the Hercules repository (see [GitHub](https://github.com/HerculesWS/Hercules)) using a git client, into a new folder.
+  2. Clone the RagEmu repository (see [GitHub](https://github.com/RagEmu/Renewal)) using a git client, into a new folder.
   3. Connect to the MySQL server as root:
-    - Create a database (hercules): `CREATE DATABASE hercules;`
-    - Create a user (hercules): `CREATE USER 'hercules'@'localhost' IDENTIFIED BY 'password';`.
-    - Give permissions (GRANT SELECT,INSERT,UPDATE,DELETE) to the user: `GRANT SELECT,INSERT,UPDATE,DELETE ON \`hercules\`.* TO 'hercules'@'localhost';`
+    - Create a database (RagEmu): `CREATE DATABASE RagEmu;`
+    - Create a user (RagEmu): `CREATE USER 'RagEmu'@'localhost' IDENTIFIED BY 'password';`.
+    - Give permissions (GRANT SELECT,INSERT,UPDATE,DELETE) to the user: `GRANT SELECT,INSERT,UPDATE,DELETE ON \`RagEmu\`.* TO 'RagEmu'@'localhost';`
   4. Connect to the MySQL server as the new user:
     - Import the .sql files in /sql-files/ into the new database.
   5. Start Visual Studio and load the provided solution:
@@ -109,15 +95,15 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
       - Initialize the build tools through the Terminal `xcode-select --help`
       - Install Homebrew as described on the project page
       - Install MySQL: `brew install mysql`
-  2. Clone the Hercules repository `git clone https://github.com/HerculesWS/Hercules.git ~/Hercules`
+  2. Clone the RagEmu repository `git clone https://github.com/RagEmu/Renewal.git ~/RagEmu`
   3. Configure the MySQL server and start it.
   4. Connect to the MySQL server as root:
-    - Create a database (hercules): `CREATE DATABASE hercules;`
-    - Create a user (hercules): `CREATE USER 'hercules'@'localhost' IDENTIFIED BY 'password';`.
-    - Give permissions (GRANT SELECT,INSERT,UPDATE,DELETE) to the user: `GRANT SELECT,INSERT,UPDATE,DELETE ON \`hercules\`.* TO 'hercules'@'localhost';`
+    - Create a database (RagEmu): `CREATE DATABASE RagEmu;`
+    - Create a user (RagEmu): `CREATE USER 'RagEmu'@'localhost' IDENTIFIED BY 'password';`.
+    - Give permissions (GRANT SELECT,INSERT,UPDATE,DELETE) to the user: `GRANT SELECT,INSERT,UPDATE,DELETE ON \`RagEmu\`.* TO 'RagEmu'@'localhost';`
   5. Connect to the MySQL server as the new user:
     - Import the .sql files in /sql-files/ into the new database.
-  6. Enter the Hercules directory and configure/build Hercules
+  6. Enter the RagEmu directory and configure/build RagEmu
     - `./configure`
     - `make clean && make sql` (on FreeBSD, replace `make` with `gmake`)
   7. Start the three servers login-server, char-server, map-server.
@@ -170,26 +156,26 @@ Helpful Links
 -------------
 
 The following list of links point to various help files within the GIT, articles or
-pages on the Wiki or topics within the Hercules forum.
+pages on the Wiki or topics within the RagEmu forum.
 
-* Hercules Forums
-	http://herc.ws/board/
+* RagEmu Forums
+	PlaceHolder
 
-* Hercules Wiki
-	http://herc.ws/wiki/Main_Page
+* RagEmu Wiki
+	PlaceHolder
 
 * GIT Repository URL:
-	https://github.com/HerculesWS/Hercules
+	https://github.com/RagEmu/Renewal
 
-* Hercules IRC Channel
+* RagEmu IRC Channel
 	irc.rizon.net
-	Channel: #Hercules
+	Channel: #RagEmu
 
 
 More Documentation
 ------------------
 
-Hercules has a large collection of help files and sample NPC scripts located in /doc/
+RagEmu has a large collection of help files and sample NPC scripts located in /doc/
 
 * Scripting
 	It is recommended to look through /doc/script_commands.txt for help, pointers or
@@ -201,7 +187,7 @@ Hercules has a large collection of help files and sample NPC scripts located in 
 	For an in-depth explanation, please see /doc/atcommands.txt
 
 * Permissions
-	The Hercules emulator has a permission system that enables certain groups of players
+	The RagEmu emulator has a permission system that enables certain groups of players
 	to perform certain actions, or have access to certain visual enhancements or in-game
 	activity. To see what permissions are available, they are detailed in /doc/permissions.txt
 
