@@ -3330,14 +3330,14 @@ void clif_arrow_fail(struct map_session_data *sd,int type)
 /// 01ad <packet len>.W { <name id>.W }*
 void clif_arrow_create_list(struct map_session_data *sd)
 {
-	int i, c;
-	int fd;
+	int i, c, fd;
 
 	nullpo_retv(sd);
 
 	fd = sd->fd;
-	WFIFOHEAD(fd, MAX_SKILL_ARROW_DB*2+4);
-	WFIFOW(fd,0) = 0x1ad;
+
+	WFIFOHEAD(fd, MAX_SKILL_ARROW_DB * 2 + 4);
+	WFIFOW(fd, 0) = 0x1ad;
 
 	for (i = 0, c = 0; i < MAX_SKILL_ARROW_DB; i++) {
 		int j;
@@ -3346,17 +3346,21 @@ void clif_arrow_create_list(struct map_session_data *sd)
 		 && !sd->status.inventory[j].equip && sd->status.inventory[j].identify
 		) {
 			if ((j = itemdb_viewid(skill->dbs->arrow_db[i].nameid)) > 0)
-				WFIFOW(fd,c*2+4) = j;
+				WFIFOW(fd, c * 2 + 4) = j;
 			else
-				WFIFOW(fd,c*2+4) = skill->dbs->arrow_db[i].nameid;
+				WFIFOW(fd, c * 2 + 4) = skill->dbs->arrow_db[i].nameid;
 			c++;
 		}
 	}
-	WFIFOW(fd,2) = c*2+4;
-	WFIFOSET(fd, WFIFOW(fd,2));
+	
+	if (!c) return;
+	
+	WFIFOW(fd, 2) = c * 2 + 4;
+	WFIFOSET(fd, WFIFOW(fd, 2));
 	if (c > 0) {
 		sd->menuskill_id = AC_MAKINGARROW;
 		sd->menuskill_val = c;
+		clif->skill_nodamage(&sd->bl, &sd->bl, AC_MAKINGARROW, c, 1);
 	}
 }
 
