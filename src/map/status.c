@@ -12371,7 +12371,7 @@ void status_read_job_db(void) { /* [malufett/Hercules] */
 	int i = 0;
 	struct config_t job_db_conf;
 	struct config_setting_t *jdb = NULL;
-	const char *config_filename = "db/re/job_db.conf";
+	const char *config_filename = "db/job_db.conf";
 
 	if (!libconfig->load_file(&job_db_conf, config_filename))
 		return;

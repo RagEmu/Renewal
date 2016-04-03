@@ -10927,7 +10927,7 @@ int pc_readdb(void) {
 	pc->clear_skill_tree();
 	pc->read_skill_tree();
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-	sv->readdb(map->db_path, "re/level_penalty.txt", ',', 4, 4, -1, pc->readdb_levelpenalty);
+	sv->readdb(map->db_path, "level_penalty.txt", ',', 4, 4, -1, pc->readdb_levelpenalty);
 	for( k=1; k < 3; k++ ){ // fill in the blanks
 		for (j = RC_FORMLESS; j < RC_MAX; j++) {
 			int tmp = 0;

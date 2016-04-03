@@ -4978,8 +4978,7 @@ enum bl_type map_zone_bl_type(const char *entry, enum map_zone_skill_subtype *su
 void read_map_zone_db(void) {
 	struct config_t map_zone_db;
 	struct config_setting_t *zones = NULL;
-	/* TODO: #ifndef required for re/pre-re */
-	const char *config_filename = "db/re/map_zone_db.conf"; // FIXME hardcoded name
+	const char *config_filename = "db/map_zone_db.conf"; // FIXME hardcoded name
 	if (!libconfig->load_file(&map_zone_db, config_filename))
 		return;
 
