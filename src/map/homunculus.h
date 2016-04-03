@@ -60,7 +60,6 @@ enum homun_id {
 #define homdb_checkid(id) ((id) >=  HM_CLASS_BASE && (id) <= HM_CLASS_MAX)
 #define homun_alive(x) ((x) && (x)->homunculus.vaporize == HOM_ST_ACTIVE && (x)->battle_status.hp > 0)
 
-#ifdef RENEWAL
 #define HOMUN_LEVEL_STATWEIGHT_VALUE 0
 #define APPLY_HOMUN_LEVEL_STATWEIGHT() \
 	do { \
@@ -68,9 +67,6 @@ enum homun_id {
 		hom->vit_value = hom->int_value = \
 		hom->dex_value = hom->luk_value = hom->level / 10 - HOMUN_LEVEL_STATWEIGHT_VALUE; \
 	} while (false)
-#else
-#define APPLY_HOMUN_LEVEL_STATWEIGHT() (void)0
-#endif
 
 struct h_stats {
 	unsigned int HP, SP;

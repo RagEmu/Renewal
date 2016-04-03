@@ -18,7 +18,7 @@
  */
 #define HERCULES_CORE
 
-#include "config/core.h" // CELL_NOSTACK, CIRCULAR_AREA, CONSOLE_INPUT, DBPATH, RENEWAL
+#include "config/core.h" // CELL_NOSTACK, CIRCULAR_AREA, CONSOLE_INPUT
 #include "map.h"
 
 #include "map/HPMmap.h"
@@ -3599,7 +3599,7 @@ int map_readallmaps (void) {
 		ShowStatus("Loading maps (using GRF files)...\n");
 	else {
 		char mapcachefilepath[254];
-		sprintf(mapcachefilepath,"%s/%s%s",map->db_path,DBPATH,"map_cache.dat");
+		sprintf(mapcachefilepath,"%s/%s",map->db_path,"map_cache.dat");
 		ShowStatus("Loading maps (using %s as map cache)...\n", mapcachefilepath);
 		if( (fp = fopen(mapcachefilepath, "rb")) == NULL ) {
 			ShowFatalError("Unable to open map cache file "CL_WHITE"%s"CL_RESET"\n", mapcachefilepath);
@@ -3864,11 +3864,7 @@ void map_reloadnpc(bool clear) {
 	if (clear)
 		npc->addsrcfile("clear"); // this will clear the current script list
 
-#ifdef RENEWAL
 	map->reloadnpc_sub("npc/re/scripts_main.conf");
-#else
-	map->reloadnpc_sub("npc/pre-re/scripts_main.conf");
-#endif
 
 	// Append extra scripts
 	for( i = 0; i < map->extra_scripts_count; i++ ) {
@@ -4982,12 +4978,7 @@ enum bl_type map_zone_bl_type(const char *entry, enum map_zone_skill_subtype *su
 void read_map_zone_db(void) {
 	struct config_t map_zone_db;
 	struct config_setting_t *zones = NULL;
-	/* TODO: #ifndef required for re/pre-re */
-#ifdef RENEWAL
-	const char *config_filename = "db/re/map_zone_db.conf"; // FIXME hardcoded name
-#else
-	const char *config_filename = "db/pre-re/map_zone_db.conf"; // FIXME hardcoded name
-#endif
+	const char *config_filename = "db/map_zone_db.conf"; // FIXME hardcoded name
 	if (!libconfig->load_file(&map_zone_db, config_filename))
 		return;
 

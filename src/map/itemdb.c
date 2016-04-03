@@ -18,7 +18,7 @@
  */
 #define HERCULES_CORE
 
-#include "config/core.h" // DBPATH, RENEWAL
+#include "config/core.h"
 #include "itemdb.h"
 
 #include "map/battle.h" // struct battle_config
@@ -758,11 +758,7 @@ int itemdb_isidentified2(struct item_data *data) {
 void itemdb_read_groups(void) {
 	struct config_t item_group_conf;
 	struct config_setting_t *itg = NULL, *it = NULL;
-#ifdef RENEWAL
-	const char *config_filename = "db/re/item_group.conf"; // FIXME hardcoded name
-#else
-	const char *config_filename = "db/pre-re/item_group.conf"; // FIXME hardcoded name
-#endif
+	const char *config_filename = "db/item_group.conf"; // FIXME hardcoded name
 	const char *itname;
 	int i = 0, count = 0, c;
 	unsigned int *gsize = NULL;
@@ -1048,11 +1044,7 @@ bool itemdb_read_cached_packages(const char *config_filename) {
 void itemdb_read_packages(void) {
 	struct config_t item_packages_conf;
 	struct config_setting_t *itg = NULL, *it = NULL, *t = NULL;
-#ifdef RENEWAL
-	const char *config_filename = "db/re/item_packages.conf"; // FIXME hardcoded name
-#else
-	const char *config_filename = "db/pre-re/item_packages.conf"; // FIXME hardcoded name
-#endif
+	const char *config_filename = "db/item_packages.conf"; // FIXME hardcoded name
 	const char *itname;
 	int i = 0, count = 0, c = 0, highest_gcount = 0;
 	unsigned int *must = NULL, *random = NULL, *rgroup = NULL, **rgroups = NULL;
@@ -1278,11 +1270,7 @@ void itemdb_read_packages(void) {
 void itemdb_read_chains(void) {
 	struct config_t item_chain_conf;
 	struct config_setting_t *itc = NULL;
-#ifdef RENEWAL
-	const char *config_filename = "db/re/item_chain.conf"; // FIXME hardcoded name
-#else
-	const char *config_filename = "db/pre-re/item_chain.conf"; // FIXME hardcoded name
-#endif
+	const char *config_filename = "db/item_chain.conf"; // FIXME hardcoded name
 	int i = 0, count = 0;
 
 	if (!libconfig->load_file(&item_chain_conf, config_filename))
@@ -1374,7 +1362,7 @@ void itemdb_read_combos(void)
 	char filepath[256];
 	FILE* fp;
 
-	sprintf(filepath, "%s/%s", map->db_path, DBPATH"item_combo_db.txt");
+	sprintf(filepath, "%s/%s", map->db_path, "item_combo_db.txt");
 
 	if ((fp = fopen(filepath, "r")) == NULL) {
 		ShowError("itemdb_read_combos: File not found \"%s\".\n", filepath);
@@ -2095,7 +2083,7 @@ void itemdb_read(bool minimal) {
 	DBData prev;
 
 	const char *filename[] = {
-		DBPATH"item_db.conf",
+		"item_db.conf",
 		"item_db2.conf",
 	};
 	for (i = 0; i < ARRAYLENGTH(filename); i++)

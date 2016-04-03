@@ -18,7 +18,7 @@
  */
 #define HERCULES_CORE
 
-#include "config/core.h" // DBPATH
+#include "config/core.h"
 #include "homunculus.h"
 
 #include "map/atcommand.h"
@@ -1207,7 +1207,7 @@ bool homunculus_read_db_sub(char* str[], int columns, int current) {
 
 void homunculus_read_db(void) {
 	int i;
-	const char *filename[]={DBPATH"homunculus_db.txt","homunculus_db2.txt"};
+	const char *filename[]={"homunculus_db.txt","homunculus_db2.txt"};
 	memset(homun->dbs->db, 0, sizeof(homun->dbs->db));
 	for(i = 0; i<ARRAYLENGTH(filename); i++) {
 		if( i > 0 ) {
@@ -1294,7 +1294,7 @@ void homunculus_exp_db_read(void) {
 	char line[1024];
 	int i, j=0;
 	char *filename[]={
-		DBPATH"exp_homun.txt",
+		"exp_homun.txt",
 		"exp_homun2.txt"};
 
 	memset(homun->dbs->exptable, 0, sizeof(homun->dbs->exptable));

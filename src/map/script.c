@@ -18,7 +18,7 @@
  */
 #define HERCULES_CORE
 
-#include "config/core.h" // RENEWAL, RENEWAL_ASPD, RENEWAL_CAST, RENEWAL_DROP, RENEWAL_EDP, RENEWAL_EXP, RENEWAL_LVDMG, SCRIPT_CALLFUNC_CHECK, SECURE_NPCTIMEOUT, SECURE_NPCTIMEOUT_INTERVAL
+#include "config/core.h" // RENEWAL_DROP, RENEWAL_EXP, SCRIPT_CALLFUNC_CHECK, SECURE_NPCTIMEOUT, SECURE_NPCTIMEOUT_INTERVAL
 #include "script.h"
 
 #include "map/atcommand.h"
@@ -6299,10 +6299,8 @@ BUILDIN(percentheal)
 	sd = script->rid2sd(st);
 	if( sd == NULL )
 		return true;
-#ifdef RENEWAL
 	if( sd->sc.data[SC_EXTREMITYFIST2] )
 		sp = 0;
-#endif
 	pc->percentheal(sd,hp,sp);
 	return true;
 }
@@ -18846,49 +18844,14 @@ BUILDIN(checkre)
 	num=script_getnum(st,2);
 	switch(num) {
 		case 0:
-#ifdef RENEWAL
-			script_pushint(st, 1);
-#else
-			script_pushint(st, 0);
-#endif
-			break;
-		case 1:
-#ifdef RENEWAL_CAST
-			script_pushint(st, 1);
-#else
-			script_pushint(st, 0);
-#endif
-			break;
-		case 2:
 #ifdef RENEWAL_DROP
 			script_pushint(st, 1);
 #else
 			script_pushint(st, 0);
 #endif
 			break;
-		case 3:
+		case 1:
 #ifdef RENEWAL_EXP
-			script_pushint(st, 1);
-#else
-			script_pushint(st, 0);
-#endif
-			break;
-		case 4:
-#ifdef RENEWAL_LVDMG
-			script_pushint(st, 1);
-#else
-			script_pushint(st, 0);
-#endif
-			break;
-		case 5:
-#ifdef RENEWAL_EDP
-			script_pushint(st, 1);
-#else
-			script_pushint(st, 0);
-#endif
-			break;
-		case 6:
-#ifdef RENEWAL_ASPD
 			script_pushint(st, 1);
 #else
 			script_pushint(st, 0);
@@ -20997,16 +20960,6 @@ void script_hardcoded_constants(void)
 	script->set_constant("EQP_SHADOW_ACC_L", EQP_SHADOW_ACC_L, false, false);
 
 	script->constdb_comment("Renewal");
-#ifdef RENEWAL
-	script->set_constant("RENEWAL", 1, false, false);
-#else
-	script->set_constant("RENEWAL", 0, false, false);
-#endif
-#ifdef RENEWAL_CAST
-	script->set_constant("RENEWAL_CAST", 1, false, false);
-#else
-	script->set_constant("RENEWAL_CAST", 0, false, false);
-#endif
 #ifdef RENEWAL_DROP
 	script->set_constant("RENEWAL_DROP", 1, false, false);
 #else
@@ -21016,21 +20969,6 @@ void script_hardcoded_constants(void)
 	script->set_constant("RENEWAL_EXP", 1, false, false);
 #else
 	script->set_constant("RENEWAL_EXP", 0, false, false);
-#endif
-#ifdef RENEWAL_LVDMG
-	script->set_constant("RENEWAL_LVDMG", 1, false, false);
-#else
-	script->set_constant("RENEWAL_LVDMG", 0, false, false);
-#endif
-#ifdef RENEWAL_EDP
-	script->set_constant("RENEWAL_EDP", 1, false, false);
-#else
-	script->set_constant("RENEWAL_EDP", 0, false, false);
-#endif
-#ifdef RENEWAL_ASPD
-	script->set_constant("RENEWAL_ASPD", 1, false, false);
-#else
-	script->set_constant("RENEWAL_ASPD", 0, false, false);
 #endif
 	script->constdb_comment(NULL);
 }

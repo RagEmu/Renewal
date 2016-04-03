@@ -18,7 +18,7 @@
  */
 #define HERCULES_CORE
 
-#include "config/core.h" // RENEWAL_CAST
+#include "config/core.h"
 #include "unit.h"
 
 #include "map/battle.h"
@@ -1542,13 +1542,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		break;
 	}
 
-	// moved here to prevent Suffragium from ending if skill fails
-#ifndef RENEWAL_CAST
-	if (!(skill->get_castnodex(skill_id, skill_lv)&2))
-		casttime = skill->cast_fix_sc(src, casttime);
-#else
 	casttime = skill->vf_cast_fix(src, casttime, skill_id, skill_lv);
-#endif
 
 	if (src->type == BL_NPC) { // NPC-objects do not have cast time
 		casttime = 0;
@@ -1722,13 +1716,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 
 	unit->stop_attack(src);
 
-	// moved here to prevent Suffragium from ending if skill fails
-#ifndef RENEWAL_CAST
-	if (!(skill->get_castnodex(skill_id, skill_lv)&2))
-		casttime = skill->cast_fix_sc(src, casttime);
-#else
 	casttime = skill->vf_cast_fix(src, casttime, skill_id, skill_lv );
-#endif
 
 	if (src->type == BL_NPC) { // NPC-objects do not have cast time
 		casttime = 0;
