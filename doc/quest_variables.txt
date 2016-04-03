@@ -1,4 +1,4 @@
-//===== Hercules Documentation ===============================
+//===== RagEmu Documentation ===============================
 //= Permanent Quest Variables
 //===== By: ==================================================
 //= Lupus

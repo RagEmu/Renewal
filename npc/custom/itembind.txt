@@ -1,10 +1,10 @@
-//===== Hercules Script =======================================
+//===== RagEmu Script ========================================
 //= Item Bind Script
 //===== By: ==================================================
 //= Akinari
 //===== Compatible With: =====================================
 //= Revision 17351+ (rAthena)
-//= Revision 12949+ (Hercules)
+//= Revision 12949+ (RagEmu)
 //===== Description: =========================================
 //= Item Bind Script
 //= Allows users to pay a price to make an item bound to

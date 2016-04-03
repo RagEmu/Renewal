@@ -1,4 +1,4 @@
-//===== Hercules Script ======================================
+//===== RagEmu Script ========================================
 //= Valentine Event Script + EXP bonus
 //===== By: ==================================================
 //= Lupus (based on Muad_Dib's work)

@@ -1,11 +1,11 @@
-//===== Hercules Script ======================================
+//===== RagEmu Script ========================================
 //= Rock Scissors Roulette
 //===== By: ==================================================
 //= acky
 //===== Current Version: =====================================
 //= 1.2
 //===== Compatible With: =====================================
-//= Hercules SVN
+//= RagEmu SVN
 //===== Description: =========================================
 //= Plays a hybrid Russian Roulette Rock Scissors Paper game.
 //===== Additional Comments: =================================

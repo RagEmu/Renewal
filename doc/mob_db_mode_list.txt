@@ -1,11 +1,11 @@
-//===== Hercules Documentation ===============================
-//= Hercules Monster Modes Reference
+//===== RagEmu Documentation ===============================
+//= RagEmu Monster Modes Reference
 //===== By: ==================================================
-//= Hercules Dev Team
+//= RagEmu Dev Team
 //===== Current Version: =====================================
 //= 20120630
 //===== Description: =========================================
-//= A reference description of Hercules' mob_db 'mode' field.
+//= A reference description of RagEmu' mob_db 'mode' field.
 //============================================================
 
 Bit Legend:
