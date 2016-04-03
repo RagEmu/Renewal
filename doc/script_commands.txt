@@ -1,14 +1,14 @@
-//===== Hercules Documentation ===============================
-//= Hercules Script Commands
+//===== RagEmu Documentation ===============================
+//= RagEmu Script Commands
 //===== By: ==================================================
-//= Hercules Dev Team
+//= RagEmu Dev Team
 //===== Description: =========================================
-//= A reference manual for the Hercules scripting language.
+//= A reference manual for the RagEmu scripting language.
 //= Commands are sorted depending on their functionality.
 //============================================================
 
 This document is a reference manual for all the scripting commands and 
-functions available in current Hercules GIT. It is not a simple tutorial. 
+functions available in current RagEmu GIT. It is not a simple tutorial. 
 When people tell you to "Read The F***ing Manual", they mean this.
 
 The information was mostly acquired through looking up how things actually 
@@ -100,7 +100,7 @@ wherever you place it.
 // This line will be ignored when processing the script.
 
 Block comments can also be used, where you can place /* and */ between any 
-text you wish Hercules to ignore.
+text you wish RagEmu to ignore.
 
 Example:
 /* This text,
@@ -155,7 +155,7 @@ Monster name is the name the monsters will have on screen, and has no
 relation whatsoever to their names anywhere else. It's the mob id that 
 counts, which identifies monster record in 'mob_db.txt' database of 
 monsters. If the mob name is given as "--ja--", the 'japanese name' field 
-from the monster database is used, (which, in Hercules, actually contains 
+from the monster database is used, (which, in RagEmu, actually contains 
 an English name) if it's "--en--", it's the 'english name' from the 
 monster database (which contains an uppercase name used to summon the 
 monster with a GM command).
@@ -441,7 +441,7 @@ Variables
 The meat of every programming language is variables - places where you 
 store data.
 
-In Hercules scripting language, variable names are case sensitive. Even though
+In RagEmu scripting language, variable names are case sensitive. Even though
 at the current time the script engine accepts them even with the incorrect
 case, it is not advised to rely on this behavior, as it may change at any
 time.
@@ -648,7 +648,7 @@ quote symbol (") in a string you need to escape it with a blackslash:
 Arrays
 ------
 
-Arrays (in Hercules at least) are essentially a set of variables going 
+Arrays (in RagEmu at least) are essentially a set of variables going 
 under the same name. You can tell between the specific variables of an 
 array with an 'array index', a number of a variable in that array:
 
@@ -793,7 +793,7 @@ Logical bitwise operators work only on numbers, and they are the following:
  |  - Or.
 	The bitwise operator AND (&) is used to test two values against each 
     other, and results in setting bits which are active in both arguments. 
-    This can be used for a few things, but in Hercules this operator is 
+    This can be used for a few things, but in RagEmu this operator is 
     usually used to create bit-masks in scripts.
 	
 	The bitwise operator OR (|) sets to 1 a binary position if the binary 
@@ -2172,7 +2172,7 @@ need. Disabling (0) may warn you if an infinite loop is detected if your
 script is looping too many times.
 
 Please note, once again, that this isn't a solution to all problems, and by
-disabling this protection your Hercules server may become laggy or
+disabling this protection your RagEmu server may become laggy or
 unresponsive if the script it is used in is performing lenghty loop
 operations.
 
@@ -2183,7 +2183,7 @@ Example:
 	for (.@i = 0; .@i < .@bigloop; ++.@i) {
 		dothis;
 		// will sleep the script for 1ms when detect an infinity loop to 
-		// let Hercules do what it need to do (socket, timer, process, 
+		// let RagEmu do what it need to do (socket, timer, process, 
 		// etc.)
 	}
 
@@ -2781,7 +2781,7 @@ See 'getequipid' for a full list of valid equipment slots.
 *getitemname(<item id>)
 
 Given the database ID number of an item, this function will return the 
-text stored in the 'japanese name' field (which, in Hercules, stores an 
+text stored in the 'japanese name' field (which, in RagEmu, stores an 
 English name the players would normally see on screen).
 Return "null" if no such item exist.
 
@@ -3234,7 +3234,7 @@ characters. For a full description see, for example, the description of
 All the format characters given in there should properly work.
 Max length is the maximum length of a time string to generate.
 
-The example given in Hercules sample scripts works like this:
+The example given in RagEmu sample scripts works like this:
 
 	mes gettimestr("%Y-%m/%d %H:%M:%S",21);
 
@@ -4575,7 +4575,7 @@ sprites, which is essential for making custom headgear.
 
 Since a lot of people have different palettes for hair and clothes, it's 
 impossible to tell you what all the color numbers are. If you want a 
-serious example, there is a Stylist script inside the default Hercules 
+serious example, there is a Stylist script inside the default RagEmu 
 installation that you can look at: 'npc/custom/stylist.txt'
 
 ---------------------------------------
@@ -4601,10 +4601,10 @@ due to a wall), the character is pushed only up to the obstacle.
 
 This command will return the SVN revision number or Git SHA-1 hash the 
 server is currently running on (depends on whether you used a SVN or Git 
-client for getting Hercules).
+client for getting RagEmu).
 
 	if ( get_version() >= 15000 )
-		mes "Welcome to Hercules!";
+		mes "Welcome to RagEmu!";
 		
 ---------------------------------------
 
@@ -6725,7 +6725,7 @@ In the OnBuyItem, two arrays are set (@bought_nameid and
 and the amount sold of it. Same goes for the OnSellItem label, only the 
 variables are named different (@sold_nameid, @sold_quantity, @sold_refine, 
 @sold_attribute, @sold_identify, @sold_card1, @sold_card2, @sold_card3, 
-@sold_card4). An example on a shop comes with Hercules, and can be found 
+@sold_card4). An example on a shop comes with RagEmu, and can be found 
 in the doc/sample/npc_dynamic_shop.txt file.
  
 This example shows how to use the labels and their set variables to create 
@@ -7753,7 +7753,7 @@ Example:
 
 Returns distance between 2 points.
 
-Note: When Hercules is configured to use circular areas, the Euclidean distance
+Note: When RagEmu is configured to use circular areas, the Euclidean distance
 is returned, otherwise the Chebyshev distance. The value is truncated to
 integer.
 
@@ -8015,7 +8015,7 @@ Characters not of the alphabelt will return 0.
 
 Example:
 
-	charisupper("Hercules", 0); //returns 1
+	charisupper("RagEmu", 0); //returns 1
 
 ---------------------------------------
 
@@ -8070,7 +8070,7 @@ Example:
 C style sprintf. The resulting string is returned same as in PHP. All C 
 format specifiers are supported except %n. For more info check sprintf 
 function at www.cplusplus.com 
-Number of params is only limited by Hercules' script engine.
+Number of params is only limited by RagEmu' script engine.
 
 Example:
 	.@format$ = "The %s contains %d monkeys";
@@ -8086,7 +8086,7 @@ Example:
 	
 C style sscanf. All C format specifiers are supported. 
 More info: sscanf @ www.cplusplus.com. The number of params is only 
-limited by Hercules' script engine.
+limited by RagEmu' script engine.
 
 Example:
 	sscanf("This is a test: 42 foobar", "This is a test: %d %s", .@num, .@str$);
