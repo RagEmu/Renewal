@@ -283,7 +283,7 @@ int do_init(int argc, char** argv)
 	grf_list_file = aStrdup("conf/grf-files.txt");
 	map_list_file = aStrdup("db/map_index.txt");
 	/* setup pre-defined, #define-dependant */
-	map_cache_file = aStrdup("db/"DBPATH"map_cache.dat");
+	map_cache_file = aStrdup("db/map_cache.dat");
 
 	cmdline->exec(argc, argv, CMDLINE_OPT_PREINIT);
 	cmdline->exec(argc, argv, CMDLINE_OPT_NORMAL);

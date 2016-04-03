@@ -18,7 +18,7 @@
  */
 #define HERCULES_CORE
 
-#include "config/core.h" // DBPATH
+#include "config/core.h"
 #include "pet.h"
 
 #include "map/atcommand.h" // msg_txt()
@@ -1183,7 +1183,7 @@ int pet_skill_support_timer(int tid, int64 tick, int id, intptr_t data) {
 int read_petdb(void)
 {
 	const char *filename[] = {
-		DBPATH"pet_db.txt",
+		"pet_db.txt",
 		"pet_db2.txt",
 	};
 	int i,j;
