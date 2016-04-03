@@ -20,7 +20,7 @@
 #define MAP_SCRIPT_H
 
 #include "map/map.h" //EVENT_NAME_LENGTH
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 #include "common/mmo.h" // struct item
 #include "common/sql.h" // Sql
@@ -812,9 +812,9 @@ struct script_interface {
 	void (*run_item_unequip_script) (struct map_session_data *sd, struct item_data *data, int oid);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void script_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct script_interface *script;
 

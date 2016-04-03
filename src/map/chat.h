@@ -20,7 +20,7 @@
 #define MAP_CHAT_H
 
 #include "map/map.h" // struct block_list, CHATROOM_TITLE_SIZE
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 
 struct chat_data;
@@ -69,9 +69,9 @@ struct chat_interface {
 	struct chat_data* (*create) (struct block_list* bl, const char* title, const char* pass, int limit, bool pub, int trigger, const char* ev, int zeny, int minLvl, int maxLvl);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void chat_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct chat_interface *chat;
 

@@ -19,7 +19,7 @@
 
 /// Sample Hercules Plugin
 
-#include "common/hercules.h" /* Should always be the first Hercules file included! (if you don't make it first, you won't be able to use interfaces) */
+#include "common/ragemu.h" /* Should always be the first Hercules file included! (if you don't make it first, you won't be able to use interfaces) */
 #include "common/memmgr.h"
 #include "common/mmo.h"
 #include "common/socket.h"

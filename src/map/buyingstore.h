@@ -19,7 +19,7 @@
 #ifndef MAP_BUYINGSTORE_H
 #define MAP_BUYINGSTORE_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/mmo.h" // MAX_SLOTS
 
 struct map_session_data;
@@ -85,9 +85,9 @@ struct buyingstore_interface {
 	unsigned int (*getuid) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void buyingstore_defaults (void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct buyingstore_interface *buyingstore;
 

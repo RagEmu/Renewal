@@ -19,7 +19,7 @@
 #ifndef CHAR_INT_STORAGE_H
 #define CHAR_INT_STORAGE_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 struct storage_data;
 struct guild_storage;
@@ -39,9 +39,9 @@ struct inter_storage_interface {
 	int (*parse_frommap) (int fd);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void inter_storage_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct inter_storage_interface *inter_storage;
 

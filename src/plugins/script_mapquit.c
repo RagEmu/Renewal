@@ -20,7 +20,7 @@
 /// Base author: Haru <haru@dotalux.com>
 /// mapquit() script command
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "map/map.h"
 #include "map/script.h"
 

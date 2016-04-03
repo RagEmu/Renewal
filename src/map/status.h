@@ -19,7 +19,7 @@
 #ifndef MAP_STATUS_H
 #define MAP_STATUS_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/mmo.h" // NEW_CARTS
 
 struct block_list;
@@ -2298,9 +2298,9 @@ struct status_interface {
 	void (*read_job_db_sub) (int idx, const char *name, struct config_setting_t *jdb);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void status_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct status_interface *status;
 

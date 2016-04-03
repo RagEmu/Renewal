@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 
-# This file is part of Hercules.
-# http://herc.ws - http://github.com/HerculesWS/Hercules
+# This file is part of RagEmu.
+# http://ragemu.org - https://github.com/RagEmu/Renewal
 #
-# Copyright (C) 2013-2015  Hercules Dev Team
+# Copyright (C) 2016  RagEmu Dev Team
 #
-# Hercules is free software: you can redistribute it and/or modify
+# RagEmu is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
@@ -467,12 +467,12 @@ foreach my $servertype (keys %keys) {
 
 		print FH <<"EOF";
 /**
- * This file is part of Hercules.
- * http://herc.ws - http://github.com/HerculesWS/Hercules
+ * This file is part of RagEmu.
+ * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
- * Copyright (C) 2015-$year  Hercules Dev Team
+ * Copyright (C) 2015-$year  RagEmu Dev Team
  *
- * Hercules is free software: you can redistribute it and/or modify
+ * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -491,7 +491,7 @@ foreach my $servertype (keys %keys) {
  *       as it will get overwritten.
  */
 
-#if !defined(HERCULES_CORE)
+#if !defined(RAGEMU_CORE)
 EOF
 
 		foreach my $key (@$keysref) {
@@ -503,7 +503,7 @@ EOF
 		}
 
 		print FH <<"EOF";
-#endif // ! HERCULES_CORE
+#endif // ! RAGEMU_CORE
 
 HPExport const char *HPM_shared_symbols(int server_type)
 {
@@ -531,11 +531,11 @@ EOF
 
 	print FH <<"EOF";
 /**
- * This file is part of Hercules.
+ * This file is part of RagEmu.
  *
- * Copyright (C) 2013-$year  Hercules Dev Team
+ * Copyright (C) 2013-$year  RagEmu Dev Team
  *
- * Hercules is free software: you can redistribute it and/or modify
+ * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -582,12 +582,12 @@ EOF
 
 	print FH <<"EOF";
 /**
- * This file is part of Hercules.
- * http://herc.ws - http://github.com/HerculesWS/Hercules
+ * This file is part of RagEmu.
+ * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
- * Copyright (C) 2013-$year  Hercules Dev Team
+ * Copyright (C) 2013-$year  RagEmu Dev Team
  *
- * Hercules is free software: you can redistribute it and/or modify
+ * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -621,12 +621,12 @@ EOF
 
 	print FH <<"EOF";
 /**
- * This file is part of Hercules.
- * http://herc.ws - http://github.com/HerculesWS/Hercules
+ * This file is part of RagEmu.
+ * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
- * Copyright (C) 2013-$year  Hercules Dev Team
+ * Copyright (C) 2013-$year  RagEmu Dev Team
  *
- * Hercules is free software: you can redistribute it and/or modify
+ * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -696,12 +696,12 @@ EOF
 
 	print FH <<"EOF";
 /**
- * This file is part of Hercules.
- * http://herc.ws - http://github.com/HerculesWS/Hercules
+ * This file is part of RagEmu.
+ * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
- * Copyright (C) 2013-$year  Hercules Dev Team
+ * Copyright (C) 2013-$year  RagEmu Dev Team
  *
- * Hercules is free software: you can redistribute it and/or modify
+ * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.

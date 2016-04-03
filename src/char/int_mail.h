@@ -19,7 +19,7 @@
 #ifndef CHAR_INT_MAIL_H
 #define CHAR_INT_MAIL_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 struct item;
 struct mail_data;
@@ -39,9 +39,9 @@ struct inter_mail_interface {
 	void (*sendmail) (int send_id, const char* send_name, int dest_id, const char* dest_name, const char* title, const char* body, int zeny, struct item *item);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void inter_mail_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct inter_mail_interface *inter_mail;
 

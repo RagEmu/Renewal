@@ -19,7 +19,7 @@
 #ifndef COMMON_STRLIB_H
 #define COMMON_STRLIB_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 #include <stdarg.h>
 #include <string.h>
@@ -182,9 +182,9 @@ struct sv_interface {
 	bool (*readdb) (const char* directory, const char* filename, char delim, int mincols, int maxcols, int maxrows, bool (*parseproc)(char* fields[], int columns, int current));
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void strlib_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct strlib_interface *strlib;
 HPShared struct stringbuf_interface *StrBuf;

@@ -19,7 +19,7 @@
 
 /// db/constants.conf -> doc/constants.md generator plugin
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 //#include "common/memmgr.h"
 #include "common/nullpo.h"
 #include "common/strlib.h"

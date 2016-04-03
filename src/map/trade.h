@@ -19,7 +19,7 @@
 #ifndef MAP_TRADE_H
 #define MAP_TRADE_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 //Max distance from traders to enable a trade to take place.
 //TODO: battle_config candidate?
@@ -39,9 +39,9 @@ struct trade_interface {
 	void (*commit) (struct map_session_data *sd);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void trade_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct trade_interface *trade;
 

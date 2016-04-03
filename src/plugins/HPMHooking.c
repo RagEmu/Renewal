@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 #include "common/memmgr.h"
 #include "common/mmo.h"

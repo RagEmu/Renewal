@@ -19,7 +19,7 @@
 #ifndef MAP_CHANNEL_H
 #define MAP_CHANNEL_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 #include "common/mmo.h"
 
@@ -124,9 +124,9 @@ struct channel_interface {
 	void (*config_read) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void channel_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct channel_interface *channel;
 

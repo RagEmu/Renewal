@@ -145,7 +145,7 @@
     <ClInclude Include="..\src\common\atomic.h" />
     <ClInclude Include="..\src\common\conf.h" />
     <ClInclude Include="..\src\common\des.h" />
-    <ClInclude Include="..\src\common\hercules.h" />
+    <ClInclude Include="..\src\common\ragemu.h" />
     <ClInclude Include="..\src\common\HPMDataCheck.h" />
     <ClInclude Include="..\src\common\HPMSymbols.inc.h" />
     <ClInclude Include="..\src\common\mutex.h" />

@@ -1,9 +1,9 @@
--- This file is part of Hercules.
--- http://herc.ws - http://github.com/HerculesWS/Hercules
+-- This file is part of RagEmu.
+-- http://ragemu.org - https://github.com/RagEmu/Renewal
 --
--- Copyright (C) 2013-2015  Hercules Dev Team
+-- Copyright (C) 2016  RagEmu Dev Team
 --
--- Hercules is free software: you can redistribute it and/or modify
+-- RagEmu is free software: you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
 -- the Free Software Foundation, either version 3 of the License, or
 -- (at your option) any later version.
@@ -17,9 +17,9 @@
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --
--- Upgrade file to be used when going from eAthena to Hercules
+-- Upgrade file to be used when going from eAthena to RagEmu
 -- Note: If you're not up to date with eAthena, go through their upgrade files first and run them before this file.
--- Note: After runing this file run Hercules upgrade files.
+-- Note: After runing this file run RagEmu upgrade files.
 --
 
 ALTER TABLE `global_reg_value` MODIFY `type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '3';

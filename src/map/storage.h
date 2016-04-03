@@ -19,7 +19,7 @@
 #ifndef MAP_STORAGE_H
 #define MAP_STORAGE_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 
 struct guild_storage;
@@ -76,10 +76,10 @@ struct guild_storage_interface {
 	DBData (*create) (DBKey key, va_list args);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void storage_defaults(void);
 void gstorage_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct storage_interface *storage;
 HPShared struct guild_storage_interface *gstorage;

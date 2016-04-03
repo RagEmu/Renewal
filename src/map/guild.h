@@ -20,7 +20,7 @@
 #define MAP_GUILD_H
 
 #include "map/map.h" // EVENT_NAME_LENGTH
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 #include "common/mmo.h"
 
@@ -179,9 +179,9 @@ struct guild_interface {
 	void (*castle_reconnect_sub) (void *key, void *data, va_list ap);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void guild_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct guild_interface *guild;
 

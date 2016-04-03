@@ -1,9 +1,9 @@
--- This file is part of Hercules.
--- http://herc.ws - http://github.com/HerculesWS/Hercules
+-- This file is part of RagEmu.
+-- http://ragemu.org - https://github.com/RagEmu/Renewal
 --
--- Copyright (C) 2013-2014  Hercules Dev Team
+-- Copyright (C) 2016 RagEmu Dev Team
 --
--- Hercules is free software: you can redistribute it and/or modify
+-- RagEmu is free software: you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
 -- the Free Software Foundation, either version 3 of the License, or
 -- (at your option) any later version.
@@ -17,16 +17,16 @@
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --
--- rAthena to Hercules log database upgrade query.
--- This upgrades a FULLY UPGRADED rAthena to a FULLY UPGRADED Hercules
--- Please don't use if either rAthena or Hercules launched a SQL update after last revision date of this file.
+-- rAthena to RagEmu log database upgrade query.
+-- This upgrades a FULLY UPGRADED rAthena to a FULLY UPGRADED RagEmu
+-- Please don't use if either rAthena or RagEmu launched a SQL update after last revision date of this file.
 -- Remember to make a backup before applying.
 -- We are not liable for any data loss this may cause.
 -- Apply in the same database you applied your logs.sql
 -- Last revised: July 22, 2014 20:45 GMT
 --
 
--- Drop table `cashlog` since it's not used in Hercules
+-- Drop table `cashlog` since it's not used in RagEmu
 -- Comment it if you wish to keep the table
 DROP TABLE IF EXISTS `cashlog`;
 

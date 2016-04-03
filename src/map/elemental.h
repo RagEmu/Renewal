@@ -21,7 +21,7 @@
 
 #include "map/status.h" // struct status_data, struct status_change
 #include "map/unit.h" // struct unit_data
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/mmo.h" // NAME_LENGTH
 
 #include <stdarg.h>
@@ -156,9 +156,9 @@ struct elemental_interface {
 	int (*read_db) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void elemental_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct elemental_interface *elemental;
 

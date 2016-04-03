@@ -22,7 +22,7 @@
 #include "map/map.h" // struct block_list
 #include "map/status.h" // struct status_data, struct status_change
 #include "map/unit.h" // struct unit_data, view_data
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/mmo.h" // struct item
 
 struct hplugin_data_store;
@@ -532,9 +532,9 @@ struct mob_interface {
 	void (*destroy_mob_db) (int index);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void mob_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct mob_interface *mob;
 

@@ -20,7 +20,7 @@
 #define MAP_BATTLEGROUND_H
 
 #include "map/map.h" // EVENT_NAME_LENGTH
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 #include "common/mmo.h" // struct party
 
@@ -139,9 +139,9 @@ struct battleground_interface {
 	void (*config_read) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void battleground_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct battleground_interface *bg;
 

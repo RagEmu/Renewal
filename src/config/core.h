@@ -38,15 +38,15 @@
 /// your map-server using more resources while this is active, comment the line
 #define SCRIPT_CALLFUNC_CHECK
 
-/// Comment to disable Hercules' console_parse
+/// Comment to disable RagEmu' console_parse
 /// CONSOLE_INPUT allows you to type commands into the server's console,
 /// Disabling it saves one thread.
 #define CONSOLE_INPUT
 /// Maximum number of characters 'CONSOLE_INPUT' will support per line.
 #define MAX_CONSOLE_INPUT 150
 
-/// Uncomment to disable Hercules' anonymous stat report
-/// We kindly ask you to consider keeping it enabled, it helps us improve Hercules.
+/// Uncomment to disable RagEmu' anonymous stat report
+/// We kindly ask you to consider keeping it enabled, it helps us improve RagEmu.
 //#define STATS_OPT_OUT
 
 /// Uncomment to enable the Cell Stack Limit mod.

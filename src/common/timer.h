@@ -19,7 +19,7 @@
 #ifndef COMMON_TIMER_H
 #define COMMON_TIMER_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 #define DIFF_TICK(a,b) ((a)-(b))
 #define DIFF_TICK32(a,b) ((int32)((a)-(b)))
@@ -77,9 +77,9 @@ struct timer_interface {
 	void (*final) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void timer_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct timer_interface *timer;
 

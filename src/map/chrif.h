@@ -19,7 +19,7 @@
 #ifndef MAP_CHRIF_H
 #define MAP_CHRIF_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 #include "common/mmo.h"
 
@@ -164,9 +164,9 @@ struct chrif_interface {
 	void (*del_scdata_single) (int account_id, int char_id, short type);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void chrif_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct chrif_interface *chrif;
 

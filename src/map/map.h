@@ -20,7 +20,7 @@
 #define MAP_MAP_H
 
 #include "map/atcommand.h"
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/core.h" // CORE_ST_LAST
 #include "common/db.h"
 #include "common/mapindex.h"
@@ -1207,9 +1207,9 @@ END_ZEROED_BLOCK;
 	void (*zone_clear_single) (struct map_zone_data *zone);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void map_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct mapit_interface *mapit;
 HPShared struct map_interface *map;

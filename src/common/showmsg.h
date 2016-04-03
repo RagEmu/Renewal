@@ -19,7 +19,7 @@
 #ifndef COMMON_SHOWMSG_H
 #define COMMON_SHOWMSG_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 #include <stdarg.h>
 
@@ -134,9 +134,9 @@ struct showmsg_interface {
 #define ShowFatalError(fmt, ...) (showmsg->showFatalError((fmt), ##__VA_ARGS__))
 #define ShowConfigWarning(config, fmt, ...) (showmsg->showConfigWarning((config), (fmt), ##__VA_ARGS__))
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void showmsg_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct showmsg_interface *showmsg;
 

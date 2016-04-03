@@ -19,7 +19,7 @@
 #ifndef COMMON_MEMMGR_H
 #define COMMON_MEMMGR_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 #define ALC_MARK __FILE__, __LINE__, __func__
 
@@ -95,11 +95,11 @@ struct malloc_interface {
 	void (*init_messages) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void malloc_defaults(void);
 
 void memmgr_report(int extra);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct malloc_interface *iMalloc;
 

@@ -19,7 +19,7 @@
 #ifndef CHAR_GEOIP_H
 #define CHAR_GEOIP_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 /**
  * GeoIP information
@@ -40,9 +40,9 @@ struct geoip_interface {
 	void (*init) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void geoip_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct geoip_interface *geoip;
 

@@ -19,7 +19,7 @@
 #ifndef CHAR_INT_PARTY_H
 #define CHAR_INT_PARTY_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 #include "common/mmo.h"
 
@@ -61,9 +61,9 @@ struct inter_party_interface {
 	int (*CharOffline) (int char_id, int party_id);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void inter_party_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct inter_party_interface *inter_party;
 

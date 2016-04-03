@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#define HERCULES_CORE
+#define RAGEMU_CORE
 
 #include "config/core.h" // CONSOLE_INPUT, MAX_CONSOLE_INPUT
 #include "console.h"
@@ -69,19 +69,23 @@ void display_title(void) {
 	const char *vcstype = sysinfo->vcstype();
 
 	ShowMessage("\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"                                                                      "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"                 Hercules Development Team presents                   "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"                _   _                     _                           "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"               | | | |                   | |                          "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"               | |_| | ___ _ __ ___ _   _| | ___  ___                 "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"               |  _  |/ _ \\ '__/ __| | | | |/ _ \\/ __|                "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"               | | | |  __/ | | (__| |_| | |  __/\\__ \\                "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"               \\_| |_/\\___|_|  \\___|\\__,_|_|\\___||___/                "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"                                                                      "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"                      http://herc.ws/board/                           "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"                                                                      "CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                                                              "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BT_WHITE"               RagEmu Team presents              "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                                                         "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     ______            _____                "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     | ___ \\          |  ___|               "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     | |_/ /__ _  __ _| |__ _ __ ___  _   _ "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     |    // _` |/ _` |  __| '_ ` _ \\| | | |"CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     | |\\ \\ (_| | (_| | |__| | | | | | |_| |"CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     \\_| \\_\\__,_|\\__, \\____/_| |_| |_|\\__,_|"CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                  __/ |                     "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                 |___/                      "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                                                          "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"	     "CL_BT_GREEN"        Ragnarok Renewal Emulator                         "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                                                         "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                                                         "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
 
-	ShowInfo("Hercules %d-bit for %s\n", sysinfo->is64bit() ? 64 : 32, sysinfo->platform());
+	ShowInfo("RagEmu %d-bit for %s\n", sysinfo->is64bit() ? 64 : 32, sysinfo->platform());
 	ShowInfo("%s revision (src): '"CL_WHITE"%s"CL_RESET"'\n", vcstype, sysinfo->vcsrevision_src());
 	ShowInfo("%s revision (scripts): '"CL_WHITE"%s"CL_RESET"'\n", vcstype, sysinfo->vcsrevision_scripts());
 	ShowInfo("OS version: '"CL_WHITE"%s"CL_RESET" [%s]'\n", sysinfo->osversion(), sysinfo->arch());
@@ -96,7 +100,7 @@ void display_title(void) {
  */
 void display_gplnotice(void)
 {
-	ShowInfo("Hercules, Copyright (C) 2012-2015, Hercules Dev Team and others.\n");
+	ShowInfo("RagEmu, Copyright (C) 2016, RagEmu Dev Team and others.\n");
 	ShowInfo("Licensed under the GNU General Public License, version 3 or later.\n");
 }
 
@@ -182,7 +186,7 @@ CPCMD_C(skip,update) {
 		ShowDebug("usage example: sql update skip 2013-02-14--16-15.sql\n");
 		return;
 	}
-	Sql_HerculesUpdateSkip(console->input->SQL, line);
+	Sql_RagEmuUpdateSkip(console->input->SQL, line);
 }
 
 /**

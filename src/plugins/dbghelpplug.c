@@ -20,7 +20,7 @@
 // Ported from eAthena Dev Team's version @ http://eathena-project.googlecode.com/svn/trunk/src/plugins/dbghelpplug.c
 // Currently supported dbghelp 5.1
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 #include "common/sysinfo.h"
 

@@ -21,7 +21,7 @@
 
 #include "map/map.h"
 #include "map/packets_struct.h"
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/mmo.h"
 
 #include <stdarg.h>
@@ -1338,9 +1338,9 @@ struct clif_interface {
 	const char *(*get_bl_name) (const struct block_list *bl);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void clif_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct clif_interface *clif;
 

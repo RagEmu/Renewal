@@ -20,7 +20,7 @@
 #define MAP_MAPREG_H
 
 #include "map/script.h" // struct reg_db
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 
 struct eri;
@@ -62,9 +62,9 @@ struct mapreg_interface {
 	bool (*config_read) (const char *w1, const char *w2);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void mapreg_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct mapreg_interface *mapreg;
 

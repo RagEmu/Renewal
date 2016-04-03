@@ -19,7 +19,7 @@
 #ifndef MAP_LOG_H
 #define MAP_LOG_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/sql.h"
 
 /**
@@ -154,9 +154,9 @@ struct log_interface {
 	bool (*should_log_item) (int nameid, int amount, int refine, struct item_data *id);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void log_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct log_interface *logs;
 

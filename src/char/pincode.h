@@ -19,7 +19,7 @@
 #ifndef CHAR_PINCODE_H
 #define CHAR_PINCODE_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 struct char_session_data;
 
@@ -56,9 +56,9 @@ struct pincode_interface {
 	bool (*config_read) (char *w1, char *w2);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void pincode_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct pincode_interface *pincode;
 

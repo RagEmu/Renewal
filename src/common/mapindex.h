@@ -19,7 +19,7 @@
 #ifndef COMMON_MAPINDEX_H
 #define COMMON_MAPINDEX_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 #include "common/mmo.h"
 
@@ -109,9 +109,9 @@ struct mapindex_interface {
 	bool (*check_default) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void mapindex_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct mapindex_interface *mapindex;
 

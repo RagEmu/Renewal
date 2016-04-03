@@ -19,7 +19,7 @@
 #ifndef CHAR_INT_HOMUN_H
 #define CHAR_INT_HOMUN_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 /**
  * inter_homunculus interface
@@ -30,9 +30,9 @@ struct inter_homunculus_interface {
 	int (*parse_frommap) (int fd);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void inter_homunculus_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct inter_homunculus_interface *inter_homunculus;
 

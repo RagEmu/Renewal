@@ -22,7 +22,7 @@
 #include "map/map.h" // struct block_list
 #include "map/status.h" // enum sc_type
 #include "map/unit.h" // struct unit_data
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/mmo.h" // NAME_LENGTH, struct s_pet
 
 #define MAX_PET_DB       300
@@ -167,9 +167,9 @@ struct pet_interface {
 	int (*read_db) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void pet_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct pet_interface *pet;
 

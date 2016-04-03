@@ -19,7 +19,7 @@
 #ifndef MAP_PC_GROUPS_H
 #define MAP_PC_GROUPS_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 
 /* Forward Declarations */
@@ -112,9 +112,9 @@ struct pc_groups_interface {
 	int (*get_idx) (GroupSettings *group);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void pc_groups_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct pc_groups_interface *pcg;
 

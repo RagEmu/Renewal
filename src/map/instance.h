@@ -20,7 +20,7 @@
 #define MAP_INSTANCE_H
 
 #include "map/script.h" // struct reg_db
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/mmo.h" // struct point
 
 struct hplugin_data_store;
@@ -96,9 +96,9 @@ struct instance_interface {
 	int (*destroy_timer) (int tid, int64 tick, int id, intptr_t data);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void instance_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct instance_interface *instance;
 

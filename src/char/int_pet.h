@@ -19,7 +19,7 @@
 #ifndef CHAR_INT_PET_H
 #define CHAR_INT_PET_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 struct s_pet;
 
@@ -36,9 +36,9 @@ struct inter_pet_interface {
 	int (*parse_frommap) (int fd);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void inter_pet_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct inter_pet_interface *inter_pet;
 

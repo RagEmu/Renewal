@@ -19,7 +19,7 @@
 #ifndef COMMON_SOCKET_H
 #define COMMON_SOCKET_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/db.h"
 
 #ifdef WIN32
@@ -227,9 +227,9 @@ struct socket_interface {
 	void (*net_config_read) (const char *filename);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void socket_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct socket_interface *sockt;
 

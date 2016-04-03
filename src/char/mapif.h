@@ -19,7 +19,7 @@
 #ifndef CHAR_MAPIF_H
 #define CHAR_MAPIF_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/mmo.h"
 
 struct WisData;
@@ -201,9 +201,9 @@ struct mapif_interface {
 	int (*parse_NameChangeRequest) (int fd);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void mapif_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct mapif_interface *mapif;
 

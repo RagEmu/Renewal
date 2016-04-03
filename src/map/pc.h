@@ -31,7 +31,7 @@
 #include "map/status.h" // enum sc_type, OPTION_*
 #include "map/unit.h" // struct unit_data, struct view_data
 #include "map/vending.h" // struct s_vending
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/ers.h" // struct eri
 #include "common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus, NEW_CARTS
 
@@ -1069,9 +1069,9 @@ END_ZEROED_BLOCK; /* End */
 	int (*have_magnifier) (struct map_session_data *sd);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void pc_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct pc_interface *pc;
 

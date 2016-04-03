@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#define HERCULES_CORE
+#define RAGEMU_CORE
 
 #include "config/core.h"
 #include "core.h"
@@ -173,7 +173,7 @@ void signals_init (void) {
  */
 void usercheck(void) {
 	if (sysinfo->is_superuser()) {
-		ShowWarning("You are running Hercules with root privileges, it is not necessary.\n");
+		ShowWarning("You are running RagEmu with root privileges, it is not necessary.\n");
 	}
 }
 
@@ -264,7 +264,7 @@ static CMDLINEARG(help)
  */
 static CMDLINEARG(version)
 {
-	ShowInfo(CL_GREEN"Website/Forum:"CL_RESET"\thttp://herc.ws/\n");
+	ShowInfo(CL_GREEN"Website/Forum:"CL_RESET"\thttp://ragemu.org/\n");
 	ShowInfo(CL_GREEN"IRC Channel:"CL_RESET"\tirc://irc.rizon.net/#Hercules\n");
 	ShowInfo("Open "CL_WHITE"readme.txt"CL_RESET" for more information.\n");
 	return false;

@@ -19,7 +19,7 @@
 #ifndef MAP_QUEST_H
 #define MAP_QUEST_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/mmo.h" // enum quest_state
 
 /* Forward Declarations */
@@ -79,9 +79,9 @@ struct quest_interface {
 	struct quest_db *(*read_db_sub) (struct config_setting_t *cs, int n, const char *source);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void quest_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct quest_interface *quest;
 

@@ -22,7 +22,7 @@
  *       as it will get overwritten.
  */
 
-#if !defined(HERCULES_CORE)
+#if !defined(RAGEMU_CORE)
 #ifdef COMMON_UTILS_H /* HCache */
 struct HCache_interface *HCache;
 #endif // COMMON_UTILS_H
@@ -248,7 +248,7 @@ struct unit_interface *unit;
 #ifdef MAP_VENDING_H /* vending */
 struct vending_interface *vending;
 #endif // MAP_VENDING_H
-#endif // ! HERCULES_CORE
+#endif // ! RAGEMU_CORE
 
 HPExport const char *HPM_shared_symbols(int server_type)
 {

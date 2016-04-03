@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 #
-# This file is part of Hercules.
-# http://herc.ws - http://github.com/HerculesWS/Hercules
+# This file is part of RagEmu.
+# http://ragemu.org - https://github.com/RagEmu/Renewal
 #
-# Copyright (C) 2016  Hercules Dev Team
+# Copyright (C) 2016  RagEmu Dev Team
 #
-# Hercules is free software: you can redistribute it and/or modify
+# RagEmu is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
@@ -60,22 +60,24 @@ sub parse_constdb (@) {
 }
 my $year = (localtime)[5] + 1900;
 print <<'EOF';
-//================= Hercules Database =====================================
-//=       _   _                     _
-//=      | | | |                   | |
-//=      | |_| | ___ _ __ ___ _   _| | ___  ___
-//=      |  _  |/ _ \ '__/ __| | | | |/ _ \/ __|
-//=      | | | |  __/ | | (__| |_| | |  __/\__ \
-//=      \_| |_/\___|_|  \___|\__,_|_|\___||___/
+//================= RagEmu Database =====================================
+//=     ______            _____                
+//=     | ___ \          |  ___|               
+//=     | |_/ /__ _  __ _| |__ _ __ ___  _   _ 
+//=     |    // _` |/ _` |  __| '_ ` _ \| | | |
+//=     | |\ \ (_| | (_| | |__| | | | | | |_| |
+//=     \_| \_\__,_|\__, \____/_| |_| |_|\__,_|
+//=                  __/ |                     
+//=                 |___/                      
 //================= License ===============================================
 EOF
 print << "EOF";
-//= This file is part of Hercules.
-//= http://herc.ws - http://github.com/HerculesWS/Hercules
+//= This file is part of RagEmu.
+//= http://ragemu.org - https://github.com/RagEmu/Renewal
 //=
-//= Copyright (C) 2016-$year  Hercules Dev Team
+//= Copyright (C) 2016-$year  RagEmu Dev Team
 //=
-//= Hercules is free software: you can redistribute it and/or modify
+//= RagEmu is free software: you can redistribute it and/or modify
 //= it under the terms of the GNU General Public License as published by
 //= the Free Software Foundation, either version 3 of the License, or
 //= (at your option) any later version.
