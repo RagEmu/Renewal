@@ -6647,7 +6647,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 
 		// Weapon Refining [Celest]
 		case WS_WEAPONREFINE:
-			if(sd){
+			if (sd) {
 				sd->state.prerefining = 1;
 				clif->item_refine_list(sd);
 			}
@@ -15142,12 +15142,12 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				ITEMID_ORIDECON,
 			};
 			int i = 0, per;
-			if( ditem->flag.no_refine ) {
+			if (ditem->flag.no_refine) {
 				// if the item isn't refinable
-				clif->skill_fail(sd,sd->menuskill_id,USESKILL_FAIL_LEVEL,0);
+				clif->skill_fail(sd, sd->menuskill_id, USESKILL_FAIL_LEVEL, 0);
 				return;
 			}
-			if( item->refine >= sd->menuskill_val || item->refine >= 10 ){
+			if (item->refine >= sd->menuskill_val || item->refine >= 10){
 				clif->upgrademessage(sd->fd, 2, item->nameid);
 				return;
 			}
@@ -15159,7 +15159,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 			per = status->get_refine_chance(ditem->wlv, (int)item->refine) * 10;
 
 			// Aegis leaked formula. [malufett]
-			if( sd->status.class_ == JOB_MECHANIC_T )
+			if (sd->status.class_ == JOB_MECHANIC_T)
 				per += 100;
 			else
 				per += 5 * ((signed int)sd->status.job_level - 50);
@@ -15170,40 +15170,41 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				logs->pick_pc(sd, LOG_TYPE_REFINE, -1, item, ditem);
 				item->refine++;
 				logs->pick_pc(sd, LOG_TYPE_REFINE,  1, item, ditem);
-				if(item->equip) {
+				if (item->equip) {
 					ep = item->equip;
-					pc->unequipitem(sd, idx, PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE);
+					pc->unequipitem(sd, idx, PCUNEQUIPITEM_RECALC | PCUNEQUIPITEM_FORCE);
 				}
 				clif->delitem(sd, idx, 1, DELITEM_NORMAL);
-				clif->upgrademessage(sd->fd, 0,item->nameid);
+				clif->upgrademessage(sd->fd, 0, item->nameid);
 				clif->inventorylist(sd);
-				clif->refine(sd->fd,0,idx,item->refine);
+				clif->refine(sd->fd, 0, idx, item->refine);
 				if (ep)
-					pc->equipitem(sd,idx,ep);
-				clif->misceffect(&sd->bl,3);
-				if(item->refine == 10 &&
+					pc->equipitem(sd, idx, ep);
+				clif->misceffect(&sd->bl, 3);
+				if (item->refine == 10 &&
 					item->card[0] == CARD0_FORGE &&
-					(int)MakeDWord(item->card[2],item->card[3]) == sd->status.char_id)
+					(int)MakeDWord(item->card[2], item->card[3]) == sd->status.char_id)
 				{ // Fame point system [DracoRPG]
-					switch(ditem->wlv){
+					switch (ditem->wlv) {
 						case 1:
-							pc->addfame(sd,1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
+							pc->addfame(sd, 1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
 							break;
 						case 2:
-							pc->addfame(sd,25); // Success to refine to +10 a lv2 weapon you forged = +25 fame point
+							pc->addfame(sd, 25); // Success to refine to +10 a lv2 weapon you forged = +25 fame point
 							break;
 						case 3:
-							pc->addfame(sd,1000); // Success to refine to +10 a lv3 weapon you forged = +1000 fame point
+							pc->addfame(sd, 1000); // Success to refine to +10 a lv3 weapon you forged = +1000 fame point
 							break;
 					}
 				}
 			} else {
 				item->refine = 0;
-				if(item->equip)
-					pc->unequipitem(sd, idx, PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE);
-				clif->refine(sd->fd,1,idx,item->refine);
+				if (item->equip)
+					pc->unequipitem(sd, idx, PCUNEQUIPITEM_RECALC | PCUNEQUIPITEM_FORCE);
+				clif->upgrademessage(sd->fd, 1, item->nameid);
+				clif->refine(sd->fd, 1, idx, item->refine);
 				pc->delitem(sd, idx, 1, 0, DELITEM_NORMAL, LOG_TYPE_REFINE);
-				clif->misceffect(&sd->bl,2);
+				clif->misceffect(&sd->bl, 2);
 				clif->emotion(&sd->bl, E_OMG);
 			}
 		}

@@ -6012,29 +6012,38 @@ void clif_item_refine_list(struct map_session_data *sd)
 
 	nullpo_retv(sd);
 
-	skill_lv = pc->checkskill(sd,WS_WEAPONREFINE);
+	skill_lv = pc->checkskill(sd, WS_WEAPONREFINE);
 
-	fd=sd->fd;
+	fd = sd->fd;
 
 	WFIFOHEAD(fd, MAX_INVENTORY * 13 + 4);
-	WFIFOW(fd,0)=0x221;
+	WFIFOW(fd, 0) = 0x221;
 	for (i = c = 0; i < MAX_INVENTORY; i++) {
-		if(sd->status.inventory[i].nameid > 0 && sd->status.inventory[i].identify
+		if (sd->status.inventory[i].nameid > 0 && sd->status.inventory[i].identify
 			&& itemdb_wlv(sd->status.inventory[i].nameid) >= 1
 			&& !sd->inventory_data[i]->flag.no_refine
-			&& !(sd->status.inventory[i].equip&EQP_ARMS)){
-			WFIFOW(fd,c*13+ 4)=i+2;
-			WFIFOW(fd,c*13+ 6)=sd->status.inventory[i].nameid;
-			WFIFOB(fd,c*13+ 8)=sd->status.inventory[i].refine;
-			clif->addcards(WFIFOP(fd,c*13+9), &sd->status.inventory[i]);
+			&& !(sd->status.inventory[i].equip&EQP_ARMS)) {
+			WFIFOW(fd, c * 13 + 4) = i + 2;
+			WFIFOW(fd, c * 13 + 6) = sd->status.inventory[i].nameid;
+			WFIFOB(fd, c * 13 + 8) = sd->status.inventory[i].refine;
+			clif->addcards(WFIFOP(fd, c * 13 + 9), &sd->status.inventory[i]);
 			c++;
 		}
 	}
-	WFIFOW(fd,2)=c*13+4;
-	WFIFOSET(fd,WFIFOW(fd,2));
+	
+	if (c == 0) {
+		sd->state.prerefining = 0;
+		clif->skill_fail(sd, sd->ud.skill_id, USESKILL_FAIL_LEVEL, 0);
+		return;
+	}
+	
+	WFIFOW(fd, 2) = c * 13 + 4;
+	WFIFOSET(fd, WFIFOW(fd, 2));
+	
 	if (c > 0) {
 		sd->menuskill_id = WS_WEAPONREFINE;
 		sd->menuskill_val = skill_lv;
+		clif->skill_nodamage(&sd->bl, &sd->bl, WS_WEAPONREFINE, skill_lv, 1);
 	}
 }
 
