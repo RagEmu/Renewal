@@ -8606,8 +8606,9 @@ BUILDIN(successrefitem)
 	int i = -1 , num, up = 1;
 	struct map_session_data *sd;
 
-	num = script_getnum(st,2);
+	num = script_getnum(st, 2);
 	sd = script->rid2sd(st);
+	
 	if (sd == NULL)
 		return true;
 
@@ -8615,7 +8616,8 @@ BUILDIN(successrefitem)
 		up = script_getnum(st, 3);
 
 	if (num > 0 && num <= ARRAYLENGTH(script->equip))
-		i=pc->checkequip(sd,script->equip[num-1]);
+		i = pc->checkequip(sd, script->equip[num - 1]);
+	
 	if (i >= 0) {
 		int ep = sd->status.inventory[i].equip;
 
@@ -8630,27 +8632,26 @@ BUILDIN(successrefitem)
 		pc->unequipitem(sd, i, PCUNEQUIPITEM_FORCE); // status calc will happen in pc->equipitem() below
 
 		clif->refine(sd->fd,0,i,sd->status.inventory[i].refine);
-		clif->delitem(sd, i, 1, DELITEM_MATERIALCHANGE);
 
 		//Logs items, got from (N)PC scripts [Lupus]
-		logs->pick_pc(sd, LOG_TYPE_SCRIPT, 1, &sd->status.inventory[i],sd->inventory_data[i]);
+		logs->pick_pc(sd, LOG_TYPE_SCRIPT, 1, &sd->status.inventory[i], sd->inventory_data[i]);
 
-		clif->additem(sd,i,1,0);
-		pc->equipitem(sd,i,ep);
-		clif->misceffect(&sd->bl,3);
-		if(sd->status.inventory[i].refine == 10 &&
+		pc->equipitem(sd, i, ep);
+		clif->misceffect(&sd->bl, 3);
+		
+		if (sd->status.inventory[i].refine == 10 &&
 		   sd->status.inventory[i].card[0] == CARD0_FORGE &&
-		   sd->status.char_id == (int)MakeDWord(sd->status.inventory[i].card[2],sd->status.inventory[i].card[3])
+		   sd->status.char_id == (int)MakeDWord(sd->status.inventory[i].card[2], sd->status.inventory[i].card[3])
 		  ) { // Fame point system [DracoRPG]
 			switch (sd->inventory_data[i]->wlv) {
 				case 1:
-					pc->addfame(sd,1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
+					pc->addfame(sd, 1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
 					break;
 				case 2:
-					pc->addfame(sd,25); // Success to refine to +10 a lv2 weapon you forged = +25 fame point
+					pc->addfame(sd, 25); // Success to refine to +10 a lv2 weapon you forged = +25 fame point
 					break;
 				case 3:
-					pc->addfame(sd,1000); // Success to refine to +10 a lv3 weapon you forged = +1000 fame point
+					pc->addfame(sd, 1000); // Success to refine to +10 a lv3 weapon you forged = +1000 fame point
 					break;
 			}
 		}
@@ -8664,24 +8665,26 @@ BUILDIN(successrefitem)
  *------------------------------------------*/
 BUILDIN(failedrefitem)
 {
-	int i=-1,num;
+	int i = -1, num;
 	struct map_session_data *sd;
 
-	num = script_getnum(st,2);
+	num = script_getnum(st, 2);
 	sd = script->rid2sd(st);
-	if( sd == NULL )
+	
+	if (sd == NULL)
 		return true;
 
 	if (num > 0 && num <= ARRAYLENGTH(script->equip))
-		i=pc->checkequip(sd,script->equip[num-1]);
-	if(i >= 0) {
+		i = pc->checkequip(sd, script->equip[num - 1]);
+	
+	if (i >= 0) {
 		sd->status.inventory[i].refine = 0;
 		pc->unequipitem(sd, i, PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE); //recalculate bonus
-		clif->refine(sd->fd,1,i,sd->status.inventory[i].refine); //notify client of failure
+		clif->refine(sd->fd, 1, i, sd->status.inventory[i].refine); //notify client of failure
 
 		pc->delitem(sd, i, 1, 0, DELITEM_FAILREFINE, LOG_TYPE_SCRIPT);
 
-		clif->misceffect(&sd->bl,2); // display failure effect
+		clif->misceffect(&sd->bl, 2); // display failure effect
 	}
 
 	return true;
