@@ -3,7 +3,7 @@ RagEmu
 
 Build Status:  
 [![Build Status](https://travis-ci.org/RagEmu/Renewal.svg)](https://travis-ci.org/RagEmu/Renewal)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/cm9xbwurpbltqjop?svg=true)](https://ci.appveyor.com/project/Haru/RagEmu)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/vi0yrixr71wkn9x3?svg=true)](https://ci.appveyor.com/project/dastgir/renewal)
 
 Project Info:  
 ![Language](https://img.shields.io/badge/language-C-yellow.svg)
