@@ -69,19 +69,23 @@ void display_title(void) {
 	const char *vcstype = sysinfo->vcstype();
 
 	ShowMessage("\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"                                                                      "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"                 Hercules Development Team presents                   "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"                _   _                     _                           "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"               | | | |                   | |                          "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"               | |_| | ___ _ __ ___ _   _| | ___  ___                 "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"               |  _  |/ _ \\ '__/ __| | | | |/ _ \\/ __|                "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"               | | | |  __/ | | (__| |_| | |  __/\\__ \\                "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"               \\_| |_/\\___|_|  \\___|\\__,_|_|\\___||___/                "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"                                                                      "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"                      http://herc.ws/board/                           "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_RED""CL_BT_WHITE"                                                                      "CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                                                              "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BT_WHITE"               RagEmu Team presents              "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                                                         "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     ______            _____                "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     | ___ \\          |  ___|               "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     | |_/ /__ _  __ _| |__ _ __ ___  _   _ "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     |    // _` |/ _` |  __| '_ ` _ \\| | | |"CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     | |\\ \\ (_| | (_| | |__| | | | | | |_| |"CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     \\_| \\_\\__,_|\\__, \\____/_| |_| |_|\\__,_|"CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                  __/ |                     "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                 |___/                      "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                                                          "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"	     "CL_BT_GREEN"        Ragnarok Renewal Emulator                         "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                                                         "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                                                         "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
 
-	ShowInfo("Hercules %d-bit for %s\n", sysinfo->is64bit() ? 64 : 32, sysinfo->platform());
+	ShowInfo("RagEmu %d-bit for %s\n", sysinfo->is64bit() ? 64 : 32, sysinfo->platform());
 	ShowInfo("%s revision (src): '"CL_WHITE"%s"CL_RESET"'\n", vcstype, sysinfo->vcsrevision_src());
 	ShowInfo("%s revision (scripts): '"CL_WHITE"%s"CL_RESET"'\n", vcstype, sysinfo->vcsrevision_scripts());
 	ShowInfo("OS version: '"CL_WHITE"%s"CL_RESET" [%s]'\n", sysinfo->osversion(), sysinfo->arch());
