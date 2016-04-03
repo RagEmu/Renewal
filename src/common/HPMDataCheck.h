@@ -1,10 +1,9 @@
 /**
- * This file is part of Hercules.
- * http://herc.ws - http://github.com/HerculesWS/Hercules
+ * This file is part of RagEmu.
+ * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
- * Copyright (C) 2014-2016  Hercules Dev Team
- *
- * Hercules is free software: you can redistribute it and/or modify
+ * Copyright (C) 2016  RagEmu Dev Team
+ * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
