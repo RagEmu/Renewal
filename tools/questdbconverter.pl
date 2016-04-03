@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 #
 # This file is part of Hercules.
-# http://herc.ws - http://github.com/HerculesWS/Hercules
+# http://ragemu.org - https://github.com/RagEmu/Renewal
 #
 # Copyright (C) 2015  Hercules Dev Team
 #

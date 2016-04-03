@@ -2,9 +2,9 @@
 # -*- coding: utf8 -*-
 #
 # This file is part of Hercules.
-# http://herc.ws - http://github.com/HerculesWS/Hercules
+# http://ragemu.org - https://github.com/RagEmu/Renewal
 #
-# Copyright (C) 2014-2015  Hercules Dev Team
+# Copyright (C) 2016  RagEmu Dev Team
 # Copyright (C) 2014  Andrei Karas (4144)
 #
 # Hercules is free software: you can redistribute it and/or modify

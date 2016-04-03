@@ -1,9 +1,9 @@
--- This file is part of Hercules.
--- http://herc.ws - http://github.com/HerculesWS/Hercules
+-- This file is part of RagEmu.
+-- http://ragemu.org - https://github.com/RagEmu/Renewal
 --
--- Copyright (C) 2014-2015  Hercules Dev Team
+-- Copyright (C) 2016  RagEmu Dev Team
 --
--- Hercules is free software: you can redistribute it and/or modify
+-- RagEmu is free software: you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
 -- the Free Software Foundation, either version 3 of the License, or
 -- (at your option) any later version.
@@ -16,7 +16,7 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
--- Base Author: Dastgir @ http://hercules.ws
+-- Base Author: Dastgir @ http://ragemu.org
 --
 -- This script requires lua 5.1 to run.
 
@@ -69,7 +69,7 @@ end
 
 print("-----------------------------------------------------------------")
 print("----------------- item_*.txt to  ItemDB.conf --------------------")
-print("------------------- By Dastgir[Hercules] ------------------------")
+print("------------------- By Dastgir[RagEmu] ------------------------")
 print("-----------------------------------------------------------------")
 if (arg[1]==nil) then --If any argument is missing, error
 	print("Invalid Command:")

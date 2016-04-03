@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 
 # This file is part of Hercules.
-# http://herc.ws - http://github.com/HerculesWS/Hercules
+# http://ragemu.org - https://github.com/RagEmu/Renewal
 #
-# Copyright (C) 2014-2015  Hercules Dev Team
+# Copyright (C) 2016  RagEmu Dev Team
 #
 # Hercules is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ my $year = (localtime)[5] + 1900;
 print FH <<"EOF";
 /**
  * This file is part of Hercules.
- * http://herc.ws - http://github.com/HerculesWS/Hercules
+ * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
  * Copyright (C) 2014-$year  Hercules Dev Team
  *

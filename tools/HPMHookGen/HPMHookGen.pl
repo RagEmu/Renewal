@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 
 # This file is part of Hercules.
-# http://herc.ws - http://github.com/HerculesWS/Hercules
+# http://ragemu.org - https://github.com/RagEmu/Renewal
 #
-# Copyright (C) 2013-2015  Hercules Dev Team
+# Copyright (C) 2016  RagEmu Dev Team
 #
 # Hercules is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -468,7 +468,7 @@ foreach my $servertype (keys %keys) {
 		print FH <<"EOF";
 /**
  * This file is part of Hercules.
- * http://herc.ws - http://github.com/HerculesWS/Hercules
+ * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
  * Copyright (C) 2015-$year  Hercules Dev Team
  *
@@ -583,7 +583,7 @@ EOF
 	print FH <<"EOF";
 /**
  * This file is part of Hercules.
- * http://herc.ws - http://github.com/HerculesWS/Hercules
+ * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
  * Copyright (C) 2013-$year  Hercules Dev Team
  *
@@ -622,7 +622,7 @@ EOF
 	print FH <<"EOF";
 /**
  * This file is part of Hercules.
- * http://herc.ws - http://github.com/HerculesWS/Hercules
+ * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
  * Copyright (C) 2013-$year  Hercules Dev Team
  *
@@ -697,7 +697,7 @@ EOF
 	print FH <<"EOF";
 /**
  * This file is part of Hercules.
- * http://herc.ws - http://github.com/HerculesWS/Hercules
+ * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
  * Copyright (C) 2013-$year  Hercules Dev Team
  *
