@@ -18,7 +18,7 @@
  */
 #define HERCULES_CORE
 
-#include "config/core.h" // ANTI_MAYAP_CHEAT, DBPATH, DEFTYPE_MAX, DEFTYPE_MIN, DEVOTION_REFLECT_DAMAGE,
+#include "config/core.h" // ANTI_MAYAP_CHEAT, DEFTYPE_MAX, DEFTYPE_MIN, DEVOTION_REFLECT_DAMAGE,
 #include "status.h"
 
 #include "map/battle.h"
@@ -12611,8 +12611,8 @@ int status_readdb(void)
 	// read databases
 	//
 	sv->readdb(map->db_path, "job_db2.txt",         ',', 1,                 1+MAX_LEVEL,       -1,                       status->readdb_job2);
-	sv->readdb(map->db_path, DBPATH"size_fix.txt", ',', MAX_SINGLE_WEAPON_TYPE, MAX_SINGLE_WEAPON_TYPE, ARRAYLENGTH(status->dbs->atkmods), status->readdb_sizefix);
-	status->readdb_refine_libconfig(DBPATH"refine_db.conf");
+	sv->readdb(map->db_path, "size_fix.txt", ',', MAX_SINGLE_WEAPON_TYPE, MAX_SINGLE_WEAPON_TYPE, ARRAYLENGTH(status->dbs->atkmods), status->readdb_sizefix);
+	status->readdb_refine_libconfig("refine_db.conf");
 	sv->readdb(map->db_path, "sc_config.txt",       ',', 2,                 2,                 SC_MAX,                   status->readdb_scconfig);
 	status->read_job_db();
 

@@ -18,7 +18,7 @@
  */
 #define HERCULES_CORE
 
-#include "config/core.h" // DBPATH, MAGIC_REFLECTION_TYPE, OFFICIAL_WALKPATH, VARCAST_REDUCTION()
+#include "config/core.h" // MAGIC_REFLECTION_TYPE, OFFICIAL_WALKPATH, VARCAST_REDUCTION()
 #include "skill.h"
 
 #include "map/battle.h"
@@ -19042,9 +19042,9 @@ void skill_readdb(bool minimal) {
 	safestrncpy(skill->dbs->db[0].desc, "Unknown Skill", sizeof(skill->dbs->db[0].desc));
 
 #ifdef ENABLE_CASE_CHECK
-	script->parser_current_file = DBPATH"skill_db.txt";
+	script->parser_current_file = "skill_db.txt";
 #endif // ENABLE_CASE_CHECK
-	sv->readdb(map->db_path, DBPATH"skill_db.txt",           ',',  17,                       17,               MAX_SKILL_DB, skill->parse_row_skilldb);
+	sv->readdb(map->db_path, "skill_db.txt",           ',',  17,                       17,               MAX_SKILL_DB, skill->parse_row_skilldb);
 #ifdef ENABLE_CASE_CHECK
 	script->parser_current_file = NULL;
 #endif // ENABLE_CASE_CHECK
@@ -19052,10 +19052,10 @@ void skill_readdb(bool minimal) {
 	if (minimal)
 		return;
 
-	sv->readdb(map->db_path, DBPATH"skill_require_db.txt",   ',',  32,                       32,               MAX_SKILL_DB, skill->parse_row_requiredb);
-	sv->readdb(map->db_path, "re/skill_cast_db.txt",         ',',   8,                        8,               MAX_SKILL_DB, skill->parse_row_castdb);
-	sv->readdb(map->db_path, DBPATH"skill_castnodex_db.txt", ',',   2,                        3,               MAX_SKILL_DB, skill->parse_row_castnodexdb);
-	sv->readdb(map->db_path, DBPATH"skill_unit_db.txt",      ',',   8,                        8,               MAX_SKILL_DB, skill->parse_row_unitdb);
+	sv->readdb(map->db_path, "skill_require_db.txt",   ',',  32,                       32,               MAX_SKILL_DB, skill->parse_row_requiredb);
+	sv->readdb(map->db_path, "skill_cast_db.txt",         ',',   8,                        8,               MAX_SKILL_DB, skill->parse_row_castdb);
+	sv->readdb(map->db_path, "skill_castnodex_db.txt", ',',   2,                        3,               MAX_SKILL_DB, skill->parse_row_castnodexdb);
+	sv->readdb(map->db_path, "skill_unit_db.txt",      ',',   8,                        8,               MAX_SKILL_DB, skill->parse_row_unitdb);
 
 	skill->init_unit_layout();
 	sv->readdb(map->db_path, "produce_db.txt",               ',',   4, 4+2*MAX_PRODUCE_RESOURCE,       MAX_SKILL_PRODUCE_DB, skill->parse_row_producedb);

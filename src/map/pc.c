@@ -18,7 +18,7 @@
  */
 #define HERCULES_CORE
 
-#include "config/core.h" // DBPATH, GP_BOUND_ITEMS, MAX_SPIRITBALL, RENEWAL_DROP, RENEWAL_EXP, SECURE_NPCTIMEOUT
+#include "config/core.h" // GP_BOUND_ITEMS, MAX_SPIRITBALL, RENEWAL_DROP, RENEWAL_EXP, SECURE_NPCTIMEOUT
 #include "pc.h"
 
 #include "map/atcommand.h" // get_atcommand_level()
@@ -10607,7 +10607,7 @@ void pc_read_skill_tree(void)
 	struct map_session_data *sd;
 	bool loaded[CLASS_COUNT] = { false };
 
-	safesnprintf(config_filename, sizeof(config_filename), "%s/"DBPATH"skill_tree.conf", map->db_path);
+	safesnprintf(config_filename, sizeof(config_filename), "%s/""skill_tree.conf", map->db_path);
 	if (!libconfig->load_file(&skill_tree_conf, config_filename))
 		return;
 
@@ -10852,7 +10852,7 @@ int pc_readdb(void) {
 	memset(pc->exp_table,0,sizeof(pc->exp_table));
 	memset(pc->max_level,0,sizeof(pc->max_level));
 
-	sprintf(line, "%s/"DBPATH"exp.txt", map->db_path);
+	sprintf(line, "%s/""exp.txt", map->db_path);
 
 	fp=fopen(line, "r");
 	if(fp==NULL){
@@ -10921,7 +10921,7 @@ int pc_readdb(void) {
 	}
 	fclose(fp);
 	pc->validate_levels();
-	ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s/"DBPATH"%s"CL_RESET"'.\n",count,map->db_path,"exp.txt");
+	ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s/""%s"CL_RESET"'.\n",count,map->db_path,"exp.txt");
 	count = 0;
 	// Reset and read skilltree
 	pc->clear_skill_tree();
@@ -10949,7 +10949,7 @@ int pc_readdb(void) {
 			for ( k = ELE_NEUTRAL; k<ELE_MAX; k++ )
 				battle->attr_fix_table[i][j][k]=100;
 
-	sprintf(line, "%s/"DBPATH"attr_fix.txt", map->db_path);
+	sprintf(line, "%s/""attr_fix.txt", map->db_path);
 
 	fp=fopen(line,"r");
 	if(fp==NULL){
@@ -10991,13 +10991,13 @@ int pc_readdb(void) {
 		}
 	}
 	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s/"DBPATH"%s"CL_RESET"'.\n",count,map->db_path,"attr_fix.txt");
+	ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s/""%s"CL_RESET"'.\n",count,map->db_path,"attr_fix.txt");
 	count = 0;
 	// reset then read statspoint
 	memset(pc->statp,0,sizeof(pc->statp));
 	i=1;
 
-	sprintf(line, "%s/"DBPATH"statpoint.txt", map->db_path);
+	sprintf(line, "%s/""statpoint.txt", map->db_path);
 	fp=fopen(line,"r");
 	if(fp == NULL){
 		ShowWarning("Can't read '"CL_WHITE"%s"CL_RESET"'... Generating DB.\n",line);
@@ -11018,7 +11018,7 @@ int pc_readdb(void) {
 		}
 		fclose(fp);
 
-		ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s/"DBPATH"%s"CL_RESET"'.\n",count,map->db_path,"statpoint.txt");
+		ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s/""%s"CL_RESET"'.\n",count,map->db_path,"statpoint.txt");
 	}
 	// generate the remaining parts of the db if necessary
 	k = battle_config.use_statpoint_table; //save setting

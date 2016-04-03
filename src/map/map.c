@@ -18,7 +18,7 @@
  */
 #define HERCULES_CORE
 
-#include "config/core.h" // CELL_NOSTACK, CIRCULAR_AREA, CONSOLE_INPUT, DBPATH, RENEWAL
+#include "config/core.h" // CELL_NOSTACK, CIRCULAR_AREA, CONSOLE_INPUT
 #include "map.h"
 
 #include "map/HPMmap.h"
@@ -3599,7 +3599,7 @@ int map_readallmaps (void) {
 		ShowStatus("Loading maps (using GRF files)...\n");
 	else {
 		char mapcachefilepath[254];
-		sprintf(mapcachefilepath,"%s/%s%s",map->db_path,DBPATH,"map_cache.dat");
+		sprintf(mapcachefilepath,"%s/%s",map->db_path,"map_cache.dat");
 		ShowStatus("Loading maps (using %s as map cache)...\n", mapcachefilepath);
 		if( (fp = fopen(mapcachefilepath, "rb")) == NULL ) {
 			ShowFatalError("Unable to open map cache file "CL_WHITE"%s"CL_RESET"\n", mapcachefilepath);

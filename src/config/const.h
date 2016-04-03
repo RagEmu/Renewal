@@ -45,11 +45,6 @@
 #endif
 
 /**
- * Path within the /db folder to (non-)renewal specific db files
- **/
-#define DBPATH "re/"
-
-/**
  * DefType
  **/
 typedef short defType;

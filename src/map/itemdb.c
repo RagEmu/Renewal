@@ -18,7 +18,7 @@
  */
 #define HERCULES_CORE
 
-#include "config/core.h" // DBPATH, RENEWAL
+#include "config/core.h"
 #include "itemdb.h"
 
 #include "map/battle.h" // struct battle_config
@@ -1362,7 +1362,7 @@ void itemdb_read_combos(void)
 	char filepath[256];
 	FILE* fp;
 
-	sprintf(filepath, "%s/%s", map->db_path, DBPATH"item_combo_db.txt");
+	sprintf(filepath, "%s/%s", map->db_path, "item_combo_db.txt");
 
 	if ((fp = fopen(filepath, "r")) == NULL) {
 		ShowError("itemdb_read_combos: File not found \"%s\".\n", filepath);
@@ -2083,7 +2083,7 @@ void itemdb_read(bool minimal) {
 	DBData prev;
 
 	const char *filename[] = {
-		DBPATH"item_db.conf",
+		"item_db.conf",
 		"item_db2.conf",
 	};
 	for (i = 0; i < ARRAYLENGTH(filename); i++)
