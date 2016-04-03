@@ -15,7 +15,7 @@
 //= Copyright (C) 2016  RagEmu Dev Team
 //= Copyright (C) 2013-2015  Haru
 //=
-//= Hercules is free software: you can redistribute it and/or modify
+//= RagEmu is free software: you can redistribute it and/or modify
 //= it under the terms of the GNU General Public License as published by
 //= the Free Software Foundation, either version 3 of the License, or
 //= (at your option) any later version.
@@ -119,7 +119,7 @@ function	script	F_TestVarOfAnotherNPC	{
 	end;
 }
 
-function	script	HerculesSelfTestHelper	{
+function	script	RagEmuSelfTestHelper	{
 	if (.once > 0)
 		return .errors;
 	.once = 1;
@@ -790,10 +790,10 @@ OnSetReference:
 	return getarg(0);
 }
 
--	script	HerculesSelfTest	FAKE_NPC,{
+-	script	RagEmuSelfTest	FAKE_NPC,{
 	end;
 
 OnInit:
-	callfunc("HerculesSelfTestHelper");
+	callfunc("RagEmuSelfTestHelper");
 	end;
 }

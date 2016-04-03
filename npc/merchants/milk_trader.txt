@@ -17,7 +17,7 @@
 //= Copyright (C)  L0ne_W0lf
 //= Copyright (C)  kobra_k88
 //=
-//= Hercules is free software: you can redistribute it and/or modify
+//= RagEmu is free software: you can redistribute it and/or modify
 //= it under the terms of the GNU General Public License as published by
 //= the Free Software Foundation, either version 3 of the License, or
 //= (at your option) any later version.
