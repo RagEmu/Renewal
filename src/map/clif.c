@@ -17067,27 +17067,32 @@ void clif_parse_debug(int fd,struct map_session_data *sd) {
  * Server tells client to display a window similar to Magnifier (item) one
  * Server populates the window with available elemental converter options according to player's inventory
  *------------------------------------------*/
-int clif_elementalconverter_list(struct map_session_data *sd) {
-	int i,c,view,fd;
+int clif_elementalconverter_list(struct map_session_data *sd)
+{
+	int i, c, view, fd;
 
 	nullpo_ret(sd);
 
-/// Main client packet processing function
-	fd=sd->fd;
-	WFIFOHEAD(fd, MAX_SKILL_PRODUCE_DB *2+4);
-	WFIFOW(fd, 0)=0x1ad;
+	fd = sd->fd;
+	
+	WFIFOHEAD(fd, MAX_SKILL_PRODUCE_DB * 2 + 4);
+	WFIFOW(fd, 0) = 0x1ad;
 
-	for(i=0,c=0;i<MAX_SKILL_PRODUCE_DB;i++){
-		if( skill->can_produce_mix(sd,skill->dbs->produce_db[i].nameid,23, 1) ){
-			if((view = itemdb_viewid(skill->dbs->produce_db[i].nameid)) > 0)
-				WFIFOW(fd,c*2+ 4)= view;
+	for (i = c = 0; i < MAX_SKILL_PRODUCE_DB; i++) {
+		if (skill->can_produce_mix(sd, skill->dbs->produce_db[i].nameid, 23, 1)) {
+			if ((view = itemdb_viewid(skill->dbs->produce_db[i].nameid)) > 0)
+				WFIFOW(fd, c * 2 + 4) = view;
 			else
-				WFIFOW(fd,c*2+ 4)= skill->dbs->produce_db[i].nameid;
+				WFIFOW(fd, c * 2 + 4) = skill->dbs->produce_db[i].nameid;
 			c++;
 		}
 	}
-	WFIFOW(fd,2) = c*2+4;
-	WFIFOSET(fd, WFIFOW(fd,2));
+	
+	if (!c) return 0;
+	
+	WFIFOW(fd, 2) = c * 2 + 4;
+	WFIFOSET(fd, WFIFOW(fd, 2));
+	
 	if (c > 0) {
 		sd->menuskill_id = SA_CREATECON;
 		sd->menuskill_val = c;
@@ -17095,6 +17100,7 @@ int clif_elementalconverter_list(struct map_session_data *sd) {
 
 	return 0;
 }
+
 /**
  * Rune Knight
  **/
