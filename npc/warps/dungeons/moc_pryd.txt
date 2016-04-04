@@ -62,3 +62,6 @@ moc_prydb1,111,115,0	warp	mocp11	2,6,moc_prydb1,145,115
 moc_prydb1,142,115,0	warp	mocp11-1	2,6,moc_prydb1,108,115
 moc_prydb1,59,115,0	warp	mocp12	2,6,moc_prydb1,90,115
 moc_prydb1,87,115,0	warp	mocp12-1	2,6,moc_prydb1,56,115
+
+moc_prydn1,223,9,0	warp	PyramidsN1-2	2,2,moc_prydn2,192,8
+moc_prydn2,195,8,0	warp	PyramidsN2-1	2,3,moc_prydn1,220,9

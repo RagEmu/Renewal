@@ -3864,7 +3864,7 @@ void map_reloadnpc(bool clear) {
 	if (clear)
 		npc->addsrcfile("clear"); // this will clear the current script list
 
-	map->reloadnpc_sub("npc/re/scripts_main.conf");
+	map->reloadnpc_sub("npc/scripts_main.conf");
 
 	// Append extra scripts
 	for( i = 0; i < map->extra_scripts_count; i++ ) {

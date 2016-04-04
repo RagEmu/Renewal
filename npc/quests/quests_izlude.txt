@@ -118,3 +118,10 @@
 	mes "See you later~";
 	close;
 }
+
+izlude,179,219,2	duplicate(Edgar_izlude)	Edgar#izlude	1_M_03
+izlude_a,179,219,2	duplicate(Edgar_izlude)	Edgar#izlude_a	1_M_03
+izlude_b,179,219,2	duplicate(Edgar_izlude)	Edgar#izlude_b	1_M_03
+izlude_c,179,219,2	duplicate(Edgar_izlude)	Edgar#izlude_c	1_M_03
+izlude_d,179,219,2	duplicate(Edgar_izlude)	Edgar#izlude_d	1_M_03
+
