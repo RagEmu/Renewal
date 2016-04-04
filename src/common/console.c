@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#define HERCULES_CORE
+#define RAGEMU_CORE
 
 #include "config/core.h" // CONSOLE_INPUT, MAX_CONSOLE_INPUT
 #include "console.h"
@@ -100,7 +100,7 @@ void display_title(void) {
  */
 void display_gplnotice(void)
 {
-	ShowInfo("Hercules, Copyright (C) 2012-2015, Hercules Dev Team and others.\n");
+	ShowInfo("RagEmu, Copyright (C) 2016, RagEmu Dev Team and others.\n");
 	ShowInfo("Licensed under the GNU General Public License, version 3 or later.\n");
 }
 
@@ -186,7 +186,7 @@ CPCMD_C(skip,update) {
 		ShowDebug("usage example: sql update skip 2013-02-14--16-15.sql\n");
 		return;
 	}
-	Sql_HerculesUpdateSkip(console->input->SQL, line);
+	Sql_RagEmuUpdateSkip(console->input->SQL, line);
 }
 
 /**

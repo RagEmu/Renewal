@@ -1069,9 +1069,9 @@ END_ZEROED_BLOCK; /* End */
 	int (*have_magnifier) (struct map_session_data *sd);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void pc_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct pc_interface *pc;
 

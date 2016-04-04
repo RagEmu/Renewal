@@ -56,9 +56,9 @@ struct duel_interface {
 	void (*final) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void duel_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct duel_interface *duel;
 

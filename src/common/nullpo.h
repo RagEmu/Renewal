@@ -154,9 +154,9 @@ struct nullpo_interface {
 	void (*assert_report) (const char *file, int line, const char *func, const char *targetname, const char *title);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void nullpo_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct nullpo_interface *nullpo;
 

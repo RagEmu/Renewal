@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#define HERCULES_CORE
+#define RAGEMU_CORE
 
 #include "sql.h"
 
@@ -917,7 +917,7 @@ void Sql_inter_server_read(const char* cfgName, bool first) {
 	return;
 }
 
-void Sql_HerculesUpdateCheck(Sql* self) {
+void Sql_RagEmuUpdateCheck(Sql* self) {
 	char line[22];// "yyyy-mm-dd--hh-mm" (17) + ".sql" (4) + 1
 	FILE* ifp;/* index fp */
 	unsigned int performed = 0;
@@ -978,7 +978,7 @@ void Sql_HerculesUpdateCheck(Sql* self) {
 	StrBuf->Destroy(&buf);
 }
 
-void Sql_HerculesUpdateSkip(Sql* self,const char *filename) {
+void Sql_RagEmuUpdateSkip(Sql* self,const char *filename) {
 	char path[41];// "sql-files/upgrades/" (19) + "yyyy-mm-dd--hh-mm" (17) + ".sql" (4) + 1
 	char timestamp[11];// "1360186680" (10) + 1
 	FILE* ifp;/* index fp */

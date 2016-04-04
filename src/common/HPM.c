@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#define HERCULES_CORE
+#define RAGEMU_CORE
 
 #include "config/core.h" // CONSOLE_INPUT
 #include "HPM.h"
@@ -746,7 +746,7 @@ unsigned char hplugins_parse_packets(int fd, int packet_id, enum HPluginPacketHo
  *
  * @param pid The plugin identifier.
  * @return The plugin name.
- * @retval "core" if the plugin ID belongs to the Hercules core.
+ * @retval "core" if the plugin ID belongs to the RagEmu core.
  * @retval "UnknownPlugin" if the plugin wasn't found.
  */
 char *hplugins_id2name(unsigned int pid)

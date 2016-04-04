@@ -2298,9 +2298,9 @@ struct status_interface {
 	void (*read_job_db_sub) (int idx, const char *name, struct config_setting_t *jdb);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void status_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct status_interface *status;
 

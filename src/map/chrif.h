@@ -164,9 +164,9 @@ struct chrif_interface {
 	void (*del_scdata_single) (int account_id, int char_id, short type);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void chrif_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct chrif_interface *chrif;
 

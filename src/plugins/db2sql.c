@@ -94,12 +94,12 @@ void db2sql_fileheader(void)
 	int year = lt->tm_year+1900;
 
 	fprintf(tosql.fp,
-			"-- This file is part of Hercules.\n"
-			"-- http://herc.ws - http://github.com/HerculesWS/Hercules\n"
+			"-- This file is part of RagEmu.\n"
+			"-- http://ragemu.org - https://github.com/RagEmu/Renewal\n"
 			"--\n"
-			"-- Copyright (C) 2013-%d  Hercules Dev Team\n"
+			"-- Copyright (C) 2016-%d  RagEmu Dev Team\n"
 			"--\n"
-			"-- Hercules is free software: you can redistribute it and/or modify\n"
+			"-- RagEmu is free software: you can redistribute it and/or modify\n"
 			"-- it under the terms of the GNU General Public License as published by\n"
 			"-- the Free Software Foundation, either version 3 of the License, or\n"
 			"-- (at your option) any later version.\n"

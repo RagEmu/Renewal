@@ -39,9 +39,9 @@ struct inter_auction_interface {
 	void (*sql_final) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void inter_auction_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct inter_auction_interface *inter_auction;
 

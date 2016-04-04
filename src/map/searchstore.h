@@ -109,9 +109,9 @@ struct searchstore_interface {
 	bool (*result) (struct map_session_data* sd, unsigned int store_id, int account_id, const char* store_name, unsigned short nameid, unsigned short amount, unsigned int price, const short* card, unsigned char refine);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void searchstore_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct searchstore_interface *searchstore;
 

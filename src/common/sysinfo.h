@@ -20,7 +20,7 @@
 #define COMMON_SYSINFO_H
 
 /**
- * Provides various bits of information about the system Hercules is running on
+ * Provides various bits of information about the system RagEmu is running on
  * (note: on unix systems, to avoid runtime detection, most of the data is
  * cached at compile time).
  *
@@ -61,9 +61,9 @@ struct sysinfo_interface {
 	void (*final) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void sysinfo_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct sysinfo_interface *sysinfo;
 

@@ -95,11 +95,11 @@ struct malloc_interface {
 	void (*init_messages) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void malloc_defaults(void);
 
 void memmgr_report(int extra);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct malloc_interface *iMalloc;
 

@@ -213,11 +213,11 @@ struct login_interface {
 	char *NET_CONF_NAME; ///< Network configuration filename
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 extern struct mmo_char_server server[MAX_SERVERS];
 
 void login_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct login_interface *login;
 

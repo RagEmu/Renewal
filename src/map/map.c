@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#define HERCULES_CORE
+#define RAGEMU_CORE
 
 #include "config/core.h" // CELL_NOSTACK, CIRCULAR_AREA, CONSOLE_INPUT
 #include "map.h"
@@ -5707,12 +5707,12 @@ CPCMD(gm_use) {
 
 	map->cpsd_active = false;
 }
-/* Hercules Console Parser */
+/* RagEmu Console Parser */
 void map_cp_defaults(void) {
 #ifdef CONSOLE_INPUT
 	/* default HCP data */
 	map->cpsd = pc->get_dummy_sd();
-	strcpy(map->cpsd->status.name, "Hercules Console");
+	strcpy(map->cpsd->status.name, "RagEmu Console");
 	map->cpsd->bl.x = mapindex->default_x;
 	map->cpsd->bl.y = mapindex->default_y;
 	map->cpsd->bl.m = map->mapname2mapid(mapindex->default_map);
@@ -6099,7 +6099,7 @@ int do_init(int argc, char *argv[])
 	if (battle_config.pk_mode)
 		ShowNotice("Server is running on '"CL_WHITE"PK Mode"CL_RESET"'.\n");
 
-	Sql_HerculesUpdateCheck(map->mysql_handle);
+	Sql_RagEmuUpdateCheck(map->mysql_handle);
 
 #ifdef CONSOLE_INPUT
 	console->input->setSQL(map->mysql_handle);

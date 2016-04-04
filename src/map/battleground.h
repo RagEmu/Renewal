@@ -139,9 +139,9 @@ struct battleground_interface {
 	void (*config_read) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void battleground_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct battleground_interface *bg;
 

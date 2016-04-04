@@ -85,9 +85,9 @@ struct buyingstore_interface {
 	unsigned int (*getuid) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void buyingstore_defaults (void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct buyingstore_interface *buyingstore;
 

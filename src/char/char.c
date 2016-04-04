@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#define HERCULES_CORE
+#define RAGEMU_CORE
 
 #include "config/core.h" // CONSOLE_INPUT
 #include "char.h"
@@ -5837,7 +5837,7 @@ int do_init(int argc, char **argv) {
 		exit(EXIT_FAILURE);
 	}
 
-	Sql_HerculesUpdateCheck(inter->sql_handle);
+	Sql_RagEmuUpdateCheck(inter->sql_handle);
 #ifdef CONSOLE_INPUT
 	console->input->setSQL(inter->sql_handle);
 	console->display_gplnotice();

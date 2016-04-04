@@ -112,9 +112,9 @@ struct pc_groups_interface {
 	int (*get_idx) (GroupSettings *group);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void pc_groups_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct pc_groups_interface *pcg;
 

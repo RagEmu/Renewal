@@ -117,9 +117,9 @@ struct libconfig_interface {
 	int (*lookup_mutable_string) (const struct config_t *config, const char *name, char *out, size_t out_size);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void libconfig_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct libconfig_interface *libconfig;
 

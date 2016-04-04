@@ -67,9 +67,9 @@ struct path_interface {
 	int (*distance_client) (int dx, int dy);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void path_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct path_interface *path;
 

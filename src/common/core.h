@@ -88,21 +88,21 @@ struct core_interface {
 #define SERVER_NAME (core->server_name)
 #define SERVER_TYPE (core->server_type)
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 extern void cmdline_args_init_local(void);
 extern int do_init(int,char**);
 extern void set_server_type(void);
 extern void do_abort(void);
 extern int do_final(void);
 
-/// Special plugin ID assigned to the Hercules core
+/// Special plugin ID assigned to the RagEmu core
 #define HPM_PID_CORE ((unsigned int)-1)
 
 #define CMDLINEARG_DEF(name, shortname, help, options) cmdline->arg_add(HPM_PID_CORE, "--" EXPAND_AND_QUOTE(name), shortname, cmdline_arg_ ## name, help, options)
 #define CMDLINEARG_DEF2(name, funcname, help, options) cmdline->arg_add(HPM_PID_CORE, "--" EXPAND_AND_QUOTE(name), '\0', cmdline_arg_ ## funcname, help, options)
 
 void cmdline_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct core_interface *core;
 HPShared struct cmdline_interface *cmdline;

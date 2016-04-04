@@ -22,7 +22,7 @@
  *
  * Base Author: Haru @ http://herc.ws
  */
-#define HERCULES_CORE
+#define RAGEMU_CORE
 
 #include "sysinfo.h"
 
@@ -854,7 +854,7 @@ const char *sysinfo_arch(void) {
 }
 
 /**
- * Returns info about the 32 or 64 bit build of Hercules.
+ * Returns info about the 32 or 64 bit build of RagEmu.
  *
  * @retval true  if this is a 64 bit build.
  * @retval false if this isn't a 64 bit build (i.e. it is a 32 bit build).

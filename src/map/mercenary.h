@@ -147,9 +147,9 @@ struct mercenary_interface {
 	bool (*read_skill_db_sub) (char* str[], int columns, int current);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void mercenary_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct mercenary_interface *mercenary;
 

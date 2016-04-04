@@ -143,9 +143,9 @@ struct atcommand_interface {
 	const char* (*msgsd) (struct map_session_data *sd, int msg_number);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void atcommand_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct atcommand_interface *atcommand;
 

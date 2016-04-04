@@ -50,11 +50,11 @@ struct inter_interface {
 	void (*final) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 extern unsigned int party_share_level;
 
 void inter_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct inter_interface *inter;
 

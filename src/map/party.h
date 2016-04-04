@@ -146,9 +146,9 @@ struct party_interface {
 	int (*db_final) (DBKey key, DBData *data, va_list ap);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void party_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct party_interface *party;
 

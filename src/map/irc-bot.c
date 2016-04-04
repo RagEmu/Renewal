@@ -20,7 +20,7 @@
 /**
  * Base Author: shennetsind @ http://herc.ws
  */
-#define HERCULES_CORE
+#define RAGEMU_CORE
 
 #include "irc-bot.h"
 

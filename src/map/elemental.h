@@ -156,9 +156,9 @@ struct elemental_interface {
 	int (*read_db) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void elemental_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct elemental_interface *elemental;
 

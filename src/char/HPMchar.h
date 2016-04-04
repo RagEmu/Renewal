@@ -19,7 +19,7 @@
 #ifndef CHAR_HPMCHAR_H
 #define CHAR_HPMCHAR_H
 
-#ifndef HERCULES_CORE
+#ifndef RAGEMU_CORE
 #error You should never include HPMchar.h from a plugin.
 #endif
 
