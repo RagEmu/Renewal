@@ -77,9 +77,9 @@ struct timer_interface {
 	void (*final) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void timer_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct timer_interface *timer;
 

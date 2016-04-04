@@ -46,9 +46,9 @@ struct vending_interface {
 	bool (*searchall) (struct map_session_data* sd, const struct s_search_store_search* s);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void vending_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct vending_interface *vending;
 

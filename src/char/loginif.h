@@ -42,9 +42,9 @@ struct loginif_interface {
 	void (*connect_to_server) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void loginif_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct loginif_interface *loginif;
 

@@ -812,9 +812,9 @@ struct script_interface {
 	void (*run_item_unequip_script) (struct map_session_data *sd, struct item_data *data, int oid);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void script_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct script_interface *script;
 

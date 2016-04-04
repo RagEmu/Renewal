@@ -1338,9 +1338,9 @@ struct clif_interface {
 	const char *(*get_bl_name) (const struct block_list *bl);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void clif_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct clif_interface *clif;
 

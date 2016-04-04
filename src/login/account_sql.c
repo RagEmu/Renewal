@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#define HERCULES_CORE
+#define RAGEMU_CORE
 
 #include "config/core.h" // CONSOLE_INPUT
 #include "account.h"
@@ -184,7 +184,7 @@ static bool account_db_sql_init(AccountDB* self)
 	if( codepage[0] != '\0' && SQL_ERROR == SQL->SetEncoding(sql_handle, codepage) )
 		Sql_ShowDebug(sql_handle);
 
-	Sql_HerculesUpdateCheck(db->accounts);
+	Sql_RagEmuUpdateCheck(db->accounts);
 #ifdef CONSOLE_INPUT
 	console->input->setSQL(db->accounts);
 #endif

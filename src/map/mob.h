@@ -532,9 +532,9 @@ struct mob_interface {
 	void (*destroy_mob_db) (int index);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void mob_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct mob_interface *mob;
 

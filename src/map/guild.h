@@ -179,9 +179,9 @@ struct guild_interface {
 	void (*castle_reconnect_sub) (void *key, void *data, va_list ap);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void guild_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct guild_interface *guild;
 

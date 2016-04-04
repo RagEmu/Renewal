@@ -491,7 +491,7 @@ foreach my $servertype (keys %keys) {
  *       as it will get overwritten.
  */
 
-#if !defined(HERCULES_CORE)
+#if !defined(RAGEMU_CORE)
 EOF
 
 		foreach my $key (@$keysref) {
@@ -503,7 +503,7 @@ EOF
 		}
 
 		print FH <<"EOF";
-#endif // ! HERCULES_CORE
+#endif // ! RAGEMU_CORE
 
 HPExport const char *HPM_shared_symbols(int server_type)
 {

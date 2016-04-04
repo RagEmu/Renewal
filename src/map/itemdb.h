@@ -652,9 +652,9 @@ struct itemdb_interface {
 	bool (*lookup_const) (const struct config_setting_t *it, const char *name, int *value);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void itemdb_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct itemdb_interface *itemdb;
 

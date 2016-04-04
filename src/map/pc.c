@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#define HERCULES_CORE
+#define RAGEMU_CORE
 
 #include "config/core.h" // GP_BOUND_ITEMS, MAX_SPIRITBALL, RENEWAL_DROP, RENEWAL_EXP, SECURE_NPCTIMEOUT
 #include "pc.h"

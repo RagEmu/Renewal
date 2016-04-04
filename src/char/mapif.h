@@ -201,9 +201,9 @@ struct mapif_interface {
 	int (*parse_NameChangeRequest) (int fd);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void mapif_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct mapif_interface *mapif;
 

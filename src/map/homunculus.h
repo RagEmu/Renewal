@@ -202,9 +202,9 @@ struct homunculus_interface {
 	int8 (*get_intimacy_grade) (struct homun_data *hd);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void homunculus_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct homunculus_interface *homun;
 

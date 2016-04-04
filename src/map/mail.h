@@ -37,9 +37,9 @@ struct mail_interface {
 	bool (*invalid_operation) (struct map_session_data *sd);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void mail_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct mail_interface *mail;
 

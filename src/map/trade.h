@@ -39,9 +39,9 @@ struct trade_interface {
 	void (*commit) (struct map_session_data *sd);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void trade_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct trade_interface *trade;
 

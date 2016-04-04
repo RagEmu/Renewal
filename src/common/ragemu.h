@@ -30,8 +30,8 @@
 
 #define HPShared extern
 
-#ifndef HERCULES_CORE
+#ifndef RAGEMU_CORE
 #include "common/HPMi.h"
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 #endif // COMMON_HERCULES_H

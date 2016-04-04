@@ -104,9 +104,9 @@ struct console_interface {
 	struct console_input_interface *input;
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void console_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct console_interface *console;
 

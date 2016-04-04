@@ -76,10 +76,10 @@ struct guild_storage_interface {
 	DBData (*create) (DBKey key, va_list args);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void storage_defaults(void);
 void gstorage_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct storage_interface *storage;
 HPShared struct guild_storage_interface *gstorage;

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#define HERCULES_CORE
+#define RAGEMU_CORE
 
 #include "config/core.h" // CELL_NOSTACK, CIRCULAR_AREA, CONSOLE_INPUT
 #include "map.h"
@@ -6099,7 +6099,7 @@ int do_init(int argc, char *argv[])
 	if (battle_config.pk_mode)
 		ShowNotice("Server is running on '"CL_WHITE"PK Mode"CL_RESET"'.\n");
 
-	Sql_HerculesUpdateCheck(map->mysql_handle);
+	Sql_RagEmuUpdateCheck(map->mysql_handle);
 
 #ifdef CONSOLE_INPUT
 	console->input->setSQL(map->mysql_handle);

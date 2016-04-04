@@ -19,7 +19,7 @@
 #ifndef COMMON_HPM_H
 #define COMMON_HPM_H
 
-#ifndef HERCULES_CORE
+#ifndef RAGEMU_CORE
 #error You should never include HPM.h from a plugin.
 #endif
 

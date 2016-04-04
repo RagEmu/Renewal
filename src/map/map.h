@@ -1207,9 +1207,9 @@ END_ZEROED_BLOCK;
 	void (*zone_clear_single) (struct map_zone_data *zone);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void map_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct mapit_interface *mapit;
 HPShared struct map_interface *map;

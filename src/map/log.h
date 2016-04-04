@@ -154,9 +154,9 @@ struct log_interface {
 	bool (*should_log_item) (int nameid, int amount, int refine, struct item_data *id);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void log_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct log_interface *logs;
 

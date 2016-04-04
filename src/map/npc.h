@@ -304,9 +304,9 @@ struct npc_interface {
 	int (*secure_timeout_timer) (int tid, int64 tick, int id, intptr_t data);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void npc_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct npc_interface *npc;
 
@@ -370,9 +370,9 @@ struct pcre_interface {
 /**
  * Also defaults libpcre
  **/
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void npc_chat_defaults(void);
-#endif // HERCULES_CORE
+#endif // RAGEMU_CORE
 
 HPShared struct npc_chat_interface *npc_chat;
 HPShared struct pcre_interface *libpcre;

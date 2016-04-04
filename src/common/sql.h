@@ -258,14 +258,14 @@ struct sql_interface {
 
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 void sql_defaults(void);
 
 void Sql_Init(void);
 
-void Sql_HerculesUpdateCheck(Sql* self);
-void Sql_HerculesUpdateSkip(Sql* self,const char *filename);
-#endif // HERCULES_CORE
+void Sql_RagEmuUpdateCheck(Sql* self);
+void Sql_RagEmuUpdateSkip(Sql* self,const char *filename);
+#endif // RAGEMU_CORE
 
 HPShared struct sql_interface *SQL;
 
