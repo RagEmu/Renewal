@@ -95,7 +95,7 @@ extern void set_server_type(void);
 extern void do_abort(void);
 extern int do_final(void);
 
-/// Special plugin ID assigned to the Hercules core
+/// Special plugin ID assigned to the RagEmu core
 #define HPM_PID_CORE ((unsigned int)-1)
 
 #define CMDLINEARG_DEF(name, shortname, help, options) cmdline->arg_add(HPM_PID_CORE, "--" EXPAND_AND_QUOTE(name), shortname, cmdline_arg_ ## name, help, options)

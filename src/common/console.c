@@ -100,7 +100,7 @@ void display_title(void) {
  */
 void display_gplnotice(void)
 {
-	ShowInfo("Hercules, Copyright (C) 2012-2015, Hercules Dev Team and others.\n");
+	ShowInfo("RagEmu, Copyright (C) 2016, RagEmu Dev Team and others.\n");
 	ShowInfo("Licensed under the GNU General Public License, version 3 or later.\n");
 }
 

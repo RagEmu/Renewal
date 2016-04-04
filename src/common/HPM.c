@@ -746,7 +746,7 @@ unsigned char hplugins_parse_packets(int fd, int packet_id, enum HPluginPacketHo
  *
  * @param pid The plugin identifier.
  * @return The plugin name.
- * @retval "core" if the plugin ID belongs to the Hercules core.
+ * @retval "core" if the plugin ID belongs to the RagEmu core.
  * @retval "UnknownPlugin" if the plugin wasn't found.
  */
 char *hplugins_id2name(unsigned int pid)

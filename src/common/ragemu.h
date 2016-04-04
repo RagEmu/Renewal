@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef COMMON_HERCULES_H
-#define COMMON_HERCULES_H
+#ifndef COMMON_RAGEMU_H
+#define COMMON_RAGEMU_H
 
 #include "config/core.h"
 #include "common/cbasetypes.h"
@@ -34,4 +34,4 @@
 #include "common/HPMi.h"
 #endif // RAGEMU_CORE
 
-#endif // COMMON_HERCULES_H
+#endif // COMMON_RAGEMU_H
