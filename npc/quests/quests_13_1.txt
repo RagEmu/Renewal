@@ -13994,3 +13994,9 @@ prontera,161,192,5	script	Ash-Vacuum Warper	4_M_MOC_SOLDIER,{
 	}
 }
 */
+
+izlude,102,171,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz	4W_SAILOR
+izlude_a,102,171,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz_a	4W_SAILOR
+izlude_b,102,171,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz_b	4W_SAILOR
+izlude_c,102,171,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz_c	4W_SAILOR
+izlude_d,102,171,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz_d	4W_SAILOR

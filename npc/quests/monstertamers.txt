@@ -783,3 +783,5 @@ comodo,112,182,0	script	Munak's Grandma	8_F_GRANDMOTHER,{
 		close;
 	}
 }
+
+izlude_in,55,105,4	duplicate(MonsterTamer_izlude)	Monster Tamer#izu	4_M_TELEPORTER
