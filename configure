@@ -703,7 +703,6 @@ enable_64bit
 enable_lto
 enable_static
 enable_sanitize
-enable_renewal
 with_maxconn
 with_mysql
 with_MYSQL_CFLAGS
@@ -1366,8 +1365,6 @@ Optional Features:
                           disabled by default)
   --enable-sanitize[=ARG] Enables sanitizer. (disabled by default) (available
                           options: yes, no, full)
-  --disable-renewal       Disable Ragnarok Renewal support (override settings
-                          in src/config/renewal.h)
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -3702,28 +3699,6 @@ else
   enable_sanitize="no"
 
 fi
-
-
-
-#
-# Renewal
-#
-# Check whether --enable-renewal was given.
-if test "${enable_renewal+set}" = set; then :
-  enableval=$enable_renewal;
-		enable_renewal="$enableval"
-		case $enableval in
-			"no");;
-			"yes");;
-			*) as_fn_error $? "invalid argument --enable-renewal=$enableval... stopping" "$LINENO" 5;;
-		esac
-
-else
-  enable_renewal="yes"
-
-fi
-
-
 
 #
 # Optionally set the max number of network conenctions
@@ -7886,18 +7861,6 @@ case $enable_profiler in
 	"gprof")
 		CFLAGS="$CFLAGS -pg"
 		LDFLAGS="$LDFLAGS -pg"
-		;;
-esac
-
-#
-# Renewal
-#
-case $enable_renewal in
-	"no")
-		CPPFLAGS="$CPPFLAGS -DDISABLE_RENEWAL"
-		;;
-	"yes")
-		# default value
 		;;
 esac
 
