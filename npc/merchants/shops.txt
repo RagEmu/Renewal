@@ -166,15 +166,13 @@ OnInit:
 	sellitem Life_Force_Pot;
 	sellitem Yggdrasilberry_Dew;
 	sellitem Seed_Of_Life;
-	if (RENEWAL) {
-		sellitem Melange_Pot;
-		sellitem Cooking_Skewer;
-		sellitem Black_Charcoal;
-		sellitem Large_Cookpot;
-		sellitem Fine_Noodle;
-		sellitem Cool_Gravy;
-		sellitem Bottle_To_Throw;
-	}
+	sellitem Melange_Pot;
+	sellitem Cooking_Skewer;
+	sellitem Black_Charcoal;
+	sellitem Large_Cookpot;
+	sellitem Fine_Noodle;
+	sellitem Cool_Gravy;
+	sellitem Bottle_To_Throw;
 }
 
 //== Amatsu ================================================
@@ -233,10 +231,8 @@ OnInit:
 	sellitem Flash_Shuriken;
 	sellitem Sharp_Leaf_Shuriken;
 	sellitem Thorn_Needle_Shuriken;
-	if (RENEWAL) {
-		sellitem Explosive_Kunai;
-		sellitem Makibishi;
-	}
+	sellitem Explosive_Kunai;
+	sellitem Makibishi;
 }
 
 que_ng,73,26,5	trader	Boonray#nin	4_M_01,{
@@ -250,10 +246,8 @@ OnInit:
 	sellitem Charm_Ice;
 	sellitem Charm_Wind;
 	sellitem Charm_Earth;
-	if (RENEWAL) {
-		sellitem Fox_Armguard;
-		sellitem Special_Ninja_Suit;
-	}
+	sellitem Fox_Armguard;
+	sellitem Special_Ninja_Suit;
 }
 
 //== Ayothaya ==============================================
