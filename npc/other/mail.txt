@@ -134,3 +134,9 @@ rachel,122,146,0	duplicate(MailBox)	Post Box#ra	2_POSTBOX
 
 //== Veins =================================================
 veins,218,123,0	duplicate(MailBox)	Post Box#ve	2_POSTBOX
+
+//== Izlude ================================================
+izlude_a,136,94,0	duplicate(MailBox)	Mailbox#iz_a	2_POSTBOX
+izlude_b,136,94,0	duplicate(MailBox)	Mailbox#iz_b	2_POSTBOX
+izlude_c,136,94,0	duplicate(MailBox)	Mailbox#iz_c	2_POSTBOX
+izlude_d,136,94,0	duplicate(MailBox)	Mailbox#iz_d	2_POSTBOX

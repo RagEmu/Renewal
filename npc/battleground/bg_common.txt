@@ -574,3 +574,5 @@ bat_room,160,150,3	script	Erundek	4_M_MANAGER,{
 	}
 	close;
 }
+
+morocc,145,82,3	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit8	4_F_JOB_KNIGHT

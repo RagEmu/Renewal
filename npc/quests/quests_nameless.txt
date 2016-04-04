@@ -13317,3 +13317,5 @@ morocc,116,39,3	script	Rogue Guild Agent#nd4	4_M_YOYOROGUE,{
 		close;
 	}
 }
+
+izlude_in,57,92,3	duplicate(Dorian_izlude)	Dorian	4_M_OILMAN,2,2
