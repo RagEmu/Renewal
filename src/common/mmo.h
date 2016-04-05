@@ -456,8 +456,6 @@ struct s_homunculus { //[orn]
 	int int_value;
 	int dex_value;
 	int luk_value;
-
-	int8 spiritball; //for homun S [lighta]
 };
 
 struct s_mercenary {

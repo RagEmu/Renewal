@@ -102,44 +102,59 @@ enum homun_type homunculus_class2type(int class_) {
 	}
 }
 
-void homunculus_addspiritball(struct homun_data *hd, int max) {
-	nullpo_retv(hd);
-
-	if (max > MAX_SKILL_LEVEL)
-		max = MAX_SKILL_LEVEL;
-	if (hd->homunculus.spiritball < 0)
-		hd->homunculus.spiritball = 0;
-
-	if (hd->homunculus.spiritball && hd->homunculus.spiritball >= max) {
-		hd->homunculus.spiritball = max;
-	}
-	else
-		hd->homunculus.spiritball++;
-
-	clif->spiritball(&hd->bl);
-}
-
-void homunculus_delspiritball(struct homun_data *hd, int count, int type) {
-	nullpo_retv(hd);
-
-	if (hd->homunculus.spiritball <= 0) {
-		hd->homunculus.spiritball = 0;
-		return;
-	}
-	if (count <= 0)
-		return;
-	if (count > MAX_SKILL_LEVEL)
-		count = MAX_SKILL_LEVEL;
-	if (count > hd->homunculus.spiritball)
-		count = hd->homunculus.spiritball;
-
-	hd->homunculus.spiritball -= count;
-	if (!type)
-		clif->spiritball(&hd->bl);
-}
-
 void homunculus_damaged(struct homun_data *hd) {
 	clif->hominfo(hd->master,hd,0);
+}
+
+int homunculus_addspiritball(struct homun_data *hd, int max)
+{
+	short old_sphere_count = hd->hom_spiritball;
+	nullpo_ret(hd);
+
+	if ( max > MAX_HOMUN_SPHERES )
+		max = MAX_HOMUN_SPHERES;
+
+	if ( hd->hom_spiritball < 0 )
+		hd->hom_spiritball = 0;
+
+	if ( hd->hom_spiritball > max )
+		hd->hom_spiritball = max;
+
+	if ( hd->hom_spiritball < max )
+		hd->hom_spiritball++;
+
+	if ( old_sphere_count != hd->hom_spiritball )
+		clif->hom_spiritball(hd);
+
+	return 0;
+}
+
+int homunculus_delspiritball(struct homun_data *hd, int count)
+{
+	short old_sphere_count = hd->hom_spiritball;
+	nullpo_ret(hd);
+
+	if ( hd->hom_spiritball <= 0 )
+	{
+		hd->hom_spiritball = 0;
+		return 0;
+	}
+
+	if ( count <= 0 )
+		return 0;
+
+	if ( count > hd->hom_spiritball )
+		count = hd->hom_spiritball;
+
+	hd->hom_spiritball -= count;
+
+	if ( count > MAX_HOMUN_SPHERES )
+		count = MAX_HOMUN_SPHERES;
+
+	if ( old_sphere_count != hd->hom_spiritball )
+		clif->hom_spiritball(hd);
+
+	return 0;
 }
 
 int homunculus_dead(struct homun_data *hd) {
@@ -152,6 +167,7 @@ int homunculus_dead(struct homun_data *hd) {
 
 	//Delete timers when dead.
 	homun->hunger_timer_delete(hd);
+	homun->delspiritball(hd,hd->hom_spiritball);
 	hd->homunculus.hp = 0;
 
 	if (!sd) //unit remove map will invoke unit free
@@ -181,6 +197,7 @@ int homunculus_vaporize(struct map_session_data *sd, enum homun_state flag) {
 	hd->regen.state.block = 3; //Block regen while vaporized.
 	//Delete timers when vaporized.
 	homun->hunger_timer_delete(hd);
+	homun->delspiritball(hd,hd->hom_spiritball);
 	hd->homunculus.vaporize = flag;
 	if(battle_config.hom_setting&0x40)
 		memset(hd->blockskill, 0, sizeof(hd->blockskill));
@@ -839,6 +856,10 @@ void homunculus_init_timers(struct homun_data * hd) {
 	if (hd->hungry_timer == INVALID_TIMER)
 		hd->hungry_timer = timer->add(timer->gettick()+hd->homunculusDB->hungryDelay,homun->hunger_timer,hd->master->bl.id,0);
 	hd->regen.state.block = 0; //Restore HP/SP block.
+
+	// Eleanor starts off in fighter style.
+	if ( homunculus_checkskill(hd,MH_STYLE_CHANGE) > 0 )
+		sc_start(&hd->src,&hd->bl,SC_STYLE_CHANGE,100,FIGHTER_STYLE,-1);
 }
 
 bool homunculus_call(struct map_session_data *sd) {
@@ -1367,6 +1388,8 @@ void homunculus_defaults(void) {
 	homun->get_viewdata = homunculus_get_viewdata;
 	homun->class2type = homunculus_class2type;
 	homun->damaged = homunculus_damaged;
+	homun->addspiritball = homunculus_addspiritball;
+	homun->delspiritball = homunculus_delspiritball;
 	homun->dead = homunculus_dead;
 	homun->vaporize = homunculus_vaporize;
 	homun->delete = homunculus_delete;
@@ -1404,7 +1427,5 @@ void homunculus_defaults(void) {
 	homun->read_skill_db_sub = homunculus_read_skill_db_sub;
 	homun->skill_db_read = homunculus_skill_db_read;
 	homun->exp_db_read = homunculus_exp_db_read;
-	homun->addspiritball = homunculus_addspiritball;
-	homun->delspiritball = homunculus_delspiritball;
 	homun->get_intimacy_grade = homunculus_get_intimacy_grade;
 }

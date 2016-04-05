@@ -56,6 +56,7 @@ struct status_change_entry;
 #define MAX_SKILLUNITGROUP        25
 #define MAX_SKILL_ITEM_REQUIRE    10
 #define MAX_SKILLUNITGROUPTICKSET 25
+#define MAX_SKILL_CRIMSON_MARKER  3 //Max Crimson Marker targets (RL_C_MARKER)
 #define MAX_SKILL_NAME_LENGTH     30
 
 // (Epoque:) To-do: replace this macro with some sort of skill tree check (rather than hard-coded skill names)
@@ -68,6 +69,10 @@ struct status_change_entry;
 
 //Walk intervals at which chase-skills are attempted to be triggered.
 #define WALK_SKILL_INTERVAL 5
+
+/// Time that's added to canact delay on castbegin and substracted on castend
+/// This is to prevent hackers from sending a skill packet after cast but before a timer triggers castend
+#define SECURITY_CASTTIME 100
 
 /**
  * Enumerations
@@ -174,9 +179,9 @@ enum {
 	ST_ELEMENTALSPIRIT,
 	ST_POISONINGWEAPON,
 	ST_ROLLINGCUTTER,
-	ST_MH_FIGHTING,
-	ST_MH_GRAPPLING,
 	ST_PECO,
+	ST_FIGHTER,
+	ST_GRAPPLER,
 };
 
 enum e_skill {
@@ -1736,6 +1741,7 @@ struct skill_unit_group {
 		unsigned song_dance : 2; //0x1 Song/Dance, 0x2 Ensemble
 		unsigned guildaura : 1;
 	} state;
+	short x,y;	// [Invisible unit support] - for visible center we have to keep group origin x,y
 };
 
 struct skill_unit {
@@ -1745,6 +1751,7 @@ struct skill_unit {
 
 	int limit;
 	int val1,val2;
+	bool invisible; // [Invisible unit support]
 	short alive,range;
 	int prev;
 };
@@ -1871,6 +1878,7 @@ struct skill_interface {
 	int firewall_unit_pos;
 	int icewall_unit_pos;
 	int earthstrain_unit_pos;
+	int firerain_unit_pos;
 	int area_temp[8];
 	int unit_temp[20];  // temporary storage for tracking skill unit skill ids as players move in/out of them
 	int unit_group_newid;
@@ -2020,6 +2028,7 @@ struct skill_interface {
 	void (*unitsetmapcell) (struct skill_unit *src, uint16 skill_id, uint16 skill_lv, cell_t cell, bool flag);
 	int (*unit_onplace_timer) (struct skill_unit *src, struct block_list *bl, int64 tick);
 	int (*unit_effect) (struct block_list* bl, va_list ap);
+	int (*bind_trap) (struct block_list *bl, va_list ap);
 	int (*unit_timer_sub_onplace) (struct block_list* bl, va_list ap);
 	int (*unit_move_sub) (struct block_list* bl, va_list ap);
 	int (*blockpc_end) (int tid, int64 tick, int id, intptr_t data);
@@ -2051,7 +2060,7 @@ struct skill_interface {
 	/* run spellbook of nameid id */
 	int (*spellbook) (struct map_session_data *sd, int nameid);
 	/* */
-	int (*block_check) (struct block_list *bl, enum sc_type type, uint16 skill_id);
+	int (*block_check) (struct block_list *bl, int src_id, int skill_id);
 	int (*detonator) (struct block_list *bl, va_list ap);
 	bool (*check_camouflage) (struct block_list *bl, struct status_change_entry *sce);
 	int (*magicdecoy) (struct map_session_data *sd, int nameid);

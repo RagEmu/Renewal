@@ -186,7 +186,7 @@ int pc_spiritball_timer(int tid, int64 tick, int id, intptr_t data) {
 		memmove(sd->spirit_timer+i, sd->spirit_timer+i+1, (sd->spiritball-i)*sizeof(int));
 	sd->spirit_timer[sd->spiritball] = INVALID_TIMER;
 
-	clif->spiritball(&sd->bl);
+	clif->spiritball(sd);
 
 	return 0;
 }
@@ -242,7 +242,7 @@ int pc_addspiritball(struct map_session_data *sd,int interval,int max)
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
 		clif->millenniumshield(&sd->bl,sd->spiritball);
 	else
-		clif->spiritball(&sd->bl);
+		clif->spiritball(sd);
 
 	return 0;
 }
@@ -281,7 +281,7 @@ int pc_delspiritball(struct map_session_data *sd,int count,int type)
 		if( (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
 			clif->millenniumshield(&sd->bl,sd->spiritball);
 		else
-			clif->spiritball(&sd->bl);
+			clif->spiritball(sd);
 	}
 	return 0;
 }
@@ -1509,6 +1509,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 				 * Dummy skills must be added here otherwise they'll be displayed in the,
 				 * skill tree and since they have no icons they'll give resource errors
 				 **/
+				case RL_R_TRIP_PLUSATK:
 				case SM_SELFPROVOKE:
 				case AB_DUPLELIGHT_MELEE:
 				case AB_DUPLELIGHT_MAGIC:
@@ -1523,6 +1524,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 				case WL_SUMMON_ATK_GROUND:
 				case LG_OVERBRAND_BRANDISH:
 				case LG_OVERBRAND_PLUSATK:
+				case NC_MAGMA_ERUPTION_DOTDAMAGE:
 					continue;
 				default:
 					break;
@@ -4737,6 +4739,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 			break;
 		case ITEMID_BUBBLE_GUM:
 		case ITEMID_COMP_BUBBLE_GUM:
+		case ITEMID_HE_BUBBLE_GUM:
 			if( sd->sc.data[SC_CASH_RECEIVEITEM] )
 				return 0;
 			break;
@@ -4885,10 +4888,12 @@ int pc_useitem(struct map_session_data *sd,int n) {
 		sd->sc.data[SC__MANHOLE] ||
 		sd->sc.data[SC_KG_KAGEHUMI] ||
 		sd->sc.data[SC_WHITEIMPRISON] ||
-		sd->sc.data[SC_DEEP_SLEEP] ||
+		(nameid != ITEMID_NAUTHIZ && sd->sc.data[SC_DEEP_SLEEP]) ||
 		sd->sc.data[SC_SATURDAY_NIGHT_FEVER] ||
-		sd->sc.data[SC_COLD] ||
-		pc_ismuted(&sd->sc, MANNER_NOITEM)
+		sd->sc.data[SC_HEAT_BARREL_AFTER] ||
+		(nameid != ITEMID_NAUTHIZ && sd->sc.data[SC_COLD]) ||
+		sd->sc.data[SC_KINGS_GRACE] ||
+		(nameid != ITEMID_NAUTHIZ && pc_ismuted(&sd->sc, MANNER_NOITEM))
 	    ))
 		return 0;
 
@@ -5464,7 +5469,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short map_index, int x, int 
 			if( sd->equip_index[ i ] >= 0 )
 				if( !pc->isequip( sd , sd->equip_index[ i ] ) )
 					pc->unequipitem(sd, sd->equip_index[i], PCUNEQUIPITEM_FORCE);
-		}
+			}
 		if (battle_config.clear_unit_onwarp&BL_PC)
 			skill->clear_unitgroup(&sd->bl);
 		party->send_dot_remove(sd); //minimap dot fix [Kevin]
@@ -7527,7 +7532,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src) {
 		struct battleground_data *bgd;
 		if( (bgd = bg->team_search(sd->bg_id)) != NULL && bgd->die_event[0] )
 			npc->event(sd, bgd->die_event, 0);
-	}
+		}
 
 	for (i = 0; i < VECTOR_LENGTH(sd->script_queues); i++ ) {
 		struct script_queue *queue = script->queue(VECTOR_INDEX(sd->script_queues, i));
@@ -8861,7 +8866,8 @@ bool pc_can_attack( struct map_session_data *sd, int target_id ) {
 		(sd->sc.data[SC_SIREN] && sd->sc.data[SC_SIREN]->val2 == target_id) ||
 		sd->sc.data[SC_BLADESTOP] ||
 		sd->sc.data[SC_DEEP_SLEEP] ||
-		sd->sc.data[SC_FALLENEMPIRE] )
+		sd->sc.data[SC_FALLENEMPIRE] ||
+		sd->sc.data[SC_KINGS_GRACE])
 			return false;
 
 	return true;
@@ -9522,7 +9528,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 		return 0;
 	}
 
-	if (sd->sc.data[SC_BERSERK] || sd->sc.data[SC_NO_SWITCH_EQUIP])
+	if (sd->sc.data[SC_BERSERK] || sd->sc.data[SC_NO_SWITCH_EQUIP] || ( sd->sc.data[SC_PYROCLASTIC] && req_pos&EQP_WEAPON ))
 	{
 		clif->equipitemack(sd,n,0,EIA_FAIL); // fail
 		return 0;
@@ -9710,7 +9716,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 	}
 
 	// if player is berserk then cannot unequip
-	if (!(flag&PCUNEQUIPITEM_FORCE) && sd->sc.count && (sd->sc.data[SC_BERSERK] || sd->sc.data[SC_NO_SWITCH_EQUIP]) )
+	if (!(flag&PCUNEQUIPITEM_FORCE) && sd->sc.count && (sd->sc.data[SC_BERSERK] || sd->sc.data[SC_NO_SWITCH_EQUIP] || sd->sc.data[SC_PYROCLASTIC] || sd->sc.data[SC_KYOUGAKU]))
 	{
 		clif->unequipitemack(sd,n,0,UIA_FAIL);
 		return 0;
@@ -9742,12 +9748,21 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 	if((pos & EQP_ARMS) &&
 		sd->weapontype1 == 0 && sd->weapontype2 == 0 && (!sd->sc.data[SC_TK_SEVENWIND] || sd->sc.data[SC_ASPERSIO])) //Check for seven wind (but not level seven!)
 		skill->enchant_elemental_end(&sd->bl,-1);
+	
+	if(pos & EQP_ARMS){
+		status_change_end(&sd->bl,SC_HEAT_BARREL,INVALID_TIMER);
+		status_change_end(&sd->bl,SC_P_ALTER,INVALID_TIMER);
+	}
 
 	if(pos & EQP_ARMOR) {
 		// On Armor Change...
 		status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_ARMOR_RESIST, INVALID_TIMER);
 	}
+
+	//On ammo change
+	if( sd->inventory_data[n]->type == IT_AMMO )
+		status_change_end(&sd->bl,SC_P_ALTER,INVALID_TIMER);
 
 	if( sd->state.autobonus&pos )
 		sd->state.autobonus &= ~sd->status.inventory[n].equip; //Check for activated autobonus [Inkfish]
@@ -11046,6 +11061,24 @@ void pc_validate_levels(void) {
 	}
 }
 
+/**
+ * Clear Crimson Marker data from caster
+ * @param sd: Player
+ */
+void pc_crimson_marker_clear(struct map_session_data *sd) {
+	uint8 i;
+
+	if( !sd )
+		return;
+	for( i = 0; i < MAX_SKILL_CRIMSON_MARKER; i++ ) {
+		struct block_list *bl = map->id2bl(sd->c_marker[i]);
+
+		if( sd->c_marker[i] && bl )
+			status_change_end(bl,SC_C_MARKER,INVALID_TIMER);
+		sd->c_marker[i] = 0;
+	}
+}
+
 void pc_itemcd_do(struct map_session_data *sd, bool load) {
 	int i,cursor = 0;
 	struct item_cd* cd = NULL;
@@ -11762,6 +11795,8 @@ void pc_defaults(void) {
 
 	pc->baselevelchanged = pc_baselevelchanged;
 	pc->level_penalty_mod = pc_level_penalty_mod;
+
+	pc->crimson_marker_clear = pc_crimson_marker_clear;
 
 	pc->calc_skillpoint = pc_calc_skillpoint;
 

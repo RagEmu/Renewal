@@ -244,6 +244,7 @@ int unit_walktoxy_timer(int tid, int64 tick, int id, intptr_t data) {
 	struct mob_data         *md;
 	struct unit_data        *ud;
 	struct mercenary_data   *mrd;
+	struct npc_data  		*nd;
 
 	bl = map->id2bl(id);
 	if(bl == NULL)
@@ -251,6 +252,7 @@ int unit_walktoxy_timer(int tid, int64 tick, int id, intptr_t data) {
 	sd = BL_CAST(BL_PC, bl);
 	md = BL_CAST(BL_MOB, bl);
 	mrd = BL_CAST(BL_MER, bl);
+	nd = BL_CAST(BL_NPC, bl);
 	ud = unit->bl2ud(bl);
 
 	if(ud == NULL) return 0;
@@ -1095,10 +1097,11 @@ int unit_can_move(struct block_list *bl) {
 		    || (sc->data[SC_CAMOUFLAGE] && sc->data[SC_CAMOUFLAGE]->val1 < 3 && !(sc->data[SC_CAMOUFLAGE]->val3&1))
 		    ||  sc->data[SC_MEIKYOUSISUI]
 		    ||  sc->data[SC_KG_KAGEHUMI]
-		    ||  sc->data[SC_NEEDLE_OF_PARALYZE]
+		    ||  sc->data[SC_TINDER_BREAKER]
 		    ||  sc->data[SC_VACUUM_EXTREME]
 		    || (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
 			|| sc->data[SC_NETHERWORLD]
+			|| sc->data[SC_KINGS_GRACE]
 		    || (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
 		    || (sc->data[SC_CLOAKING] && sc->data[SC_CLOAKING]->val1 < 3 && !(sc->data[SC_CLOAKING]->val4&1)) //Need wall at level 1-2
 		    || (
@@ -1238,8 +1241,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 			target_id = src->id;
 		temp = 1;
 	} else if ( target_id == src->id &&
-		skill->get_inf(skill_id)&INF_SELF_SKILL &&
-		skill->get_inf2(skill_id)&INF2_NO_TARGET_SELF )
+		(skill->get_inf(skill_id)&INF_SELF_SKILL) &&
+		((skill->get_inf2(skill_id)&INF2_NO_TARGET_SELF) ||
+		(skill_id == RL_QD_SHOT && sc && sc->data[SC_QD_SHOT_READY])) )
 	{
 		target_id = ud->target; //Auto-select target. [Skotlex]
 		temp = 1;
@@ -1297,6 +1301,11 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 				target = battle->get_master(src);
 				if (!target) return 0;
 				target_id = target->id;
+				break;
+			case MH_SONIC_CRAW:
+				if (sc && sc->data[SC_MIDNIGHT_FRENZY_POSTDELAY])
+					target_id = sc->data[SC_MIDNIGHT_FRENZY_POSTDELAY]->val2;
+				break;
 	}
 
 	if( !target ) // choose default target
@@ -1369,14 +1378,20 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 				sd->skill_id_old = skill_id;
 				sd->skill_lv_old = skill_lv;
 				break;
+			case RL_C_MARKER: {
+					uint8 i = 0;
+
+					ARR_FIND(0, MAX_SKILL_CRIMSON_MARKER, i, sd->c_marker[i] == target_id);
+					if( i == MAX_SKILL_CRIMSON_MARKER ) {
+						ARR_FIND(0, MAX_SKILL_CRIMSON_MARKER, i, sd->c_marker[i] == 0);
+						if( i == MAX_SKILL_CRIMSON_MARKER ) { //No free slots, skill Fail
+							clif->skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+							return 0;
 		}
 	}
-
-	if (src->type == BL_HOM) {
-		// In case of homunuculus, set the sd to the homunculus' master, as needed below
-		struct block_list *master = battle->get_master(src);
-		if (master)
-			sd = map->id2sd(master->id);
+				}
+				break;
+		}
 	}
 
 	if (sd) {
@@ -1387,6 +1402,13 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		if (!skill->check_condition_castbegin(sd, skill_id, skill_lv))
 #endif
 			return 0;
+	}
+
+	if (src->type == BL_HOM) {
+		// In case of homunuculus, set the sd to the homunculus' master, as needed below
+		struct block_list *master = battle->get_master(src);
+		if (master)
+			sd = map->id2sd(master->id);
 	}
 
 	if (src->type == BL_MOB) {
@@ -1426,7 +1448,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		} else if( src->type == BL_MER && skill_id == MA_REMOVETRAP ) {
 			if( !battle->check_range(battle->get_master(src), target, range + 1) )
 				return 0; // Aegis calc remove trap based on Master position, ignoring mercenary O.O
-		} else if( !battle->check_range(src, target, range + (skill_id == RG_CLOSECONFINE?0:2)) ) {
+		} else if( !battle->check_range(src, target, range) ) {
 			return 0; // Arrow-path check failed.
 		}
 	}
@@ -1600,7 +1622,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		ud->state.skillcastcancel = 0;
 
 	if( !sd || sd->skillitem != skill_id || skill->get_cast(skill_id,skill_lv) )
-		ud->canact_tick = tick + casttime + 100;
+		ud->canact_tick = tick + max(casttime, max(status_get_amotion(src), battle_config.min_skill_delay_limit)) + SECURITY_CASTTIME;
+
 	if( sd )
 	{
 		switch( skill_id )
@@ -1615,6 +1638,11 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	ud->skilly       = 0;
 	ud->skill_id      = skill_id;
 	ud->skill_lv      = skill_lv;
+
+	if( sc && sc->data[SC__MANHOLE] ) {
+		status_change_end(src,SC__MANHOLE,INVALID_TIMER);
+		if (!src->prev) return 0; //Warped away!
+	}
 
 	if( casttime > 0 ) {
 		if (src->id != target->id) // self-targeted skills shouldn't show different direction
@@ -1674,6 +1702,11 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 			return 0;
 	}
 
+	if(sc && sc->data[SC__MAELSTROM] && (skill_id >= SC_MANHOLE && skill_id <= SC_FEINTBOMB) && skill_id == GN_HELLS_PLANT) {
+		clif->skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+		return 0;
+	}
+
 	if (!status->check_skilluse(src, NULL, skill_id, 0))
 		return 0;
 
@@ -1724,7 +1757,8 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 
 	ud->state.skillcastcancel = castcancel&&casttime>0?1:0;
 	if( !sd || sd->skillitem != skill_id || skill->get_cast(skill_id,skill_lv) )
-		ud->canact_tick  = tick + casttime + 100;
+		ud->canact_tick = tick + max(casttime, max(status_get_amotion(src), battle_config.min_skill_delay_limit)) + SECURITY_CASTTIME;
+
 #if 0
 	if (sd) {
 		switch (skill_id) {
@@ -1748,6 +1782,9 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 			if (!src->prev) return 0; //Warped away!
 		} else if (sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4)) {
 			status_change_end(src, SC_CLOAKINGEXCEED, INVALID_TIMER);
+			if (!src->prev) return 0;
+		} else if (sc->data[SC__MANHOLE]) {
+			status_change_end(src, SC__MANHOLE, INVALID_TIMER);
 			if (!src->prev) return 0;
 		}
 	}
@@ -2097,6 +2134,9 @@ int unit_attack_timer_sub(struct block_list* src, int tid, int64 tick) {
 	)
 		return 0; // can't attack under these conditions
 
+	if( sd && sd->sc.count && sd->sc.data[SC_HEAT_BARREL_AFTER] )
+		return 0;
+
 	if (src->m != target->m) {
 		if (src->type == BL_MOB && mob->warpchase(BL_UCAST(BL_MOB, src), target))
 			return 1; // Follow up.
@@ -2401,6 +2441,7 @@ int unit_remove_map(struct block_list *bl, clr_type clrtype, const char* file, i
 		status_change_end(bl, SC_VACUUM_EXTREME, INVALID_TIMER);
 		status_change_end(bl, SC_CURSEDCIRCLE_ATKER, INVALID_TIMER); //callme before warp
 		status_change_end(bl, SC_NETHERWORLD, INVALID_TIMER);
+		status_change_end(bl, SC_TINDER_BREAKER, INVALID_TIMER);
 	}
 
 	if (bl->type&(BL_CHAR|BL_PET)) {

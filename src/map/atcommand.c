@@ -3224,7 +3224,7 @@ ACMD(spiritball)
 	if( sd->spiritball > 0 )
 		pc->delspiritball(sd, sd->spiritball, 1);
 	sd->spiritball = number;
-	clif->spiritball(&sd->bl);
+	clif->spiritball(sd);
 	// no message, player can look the difference
 
 	return true;
