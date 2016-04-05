@@ -435,6 +435,8 @@ void itemdb_jobid2mapid(uint64 *bclass, int job_id, bool enable)
 		case JOB_REBELLION:
 			mask[1] = 1ULL << MAPID_GUNSLINGER;
 			break;
+		case JOB_SUMMONER:
+			mask[0] = 1ULL << MAPID_SUMMONER;
 		// Other Classes
 		case JOB_GANGSI: //Bongun/Munak
 			mask[0] = 1ULL << MAPID_GANGSI;
@@ -1698,6 +1700,7 @@ int itemdb_readdb_libconfig_sub(struct config_setting_t *it, int n, const char *
 	struct config_setting_t *t = NULL;
 	const char *str = NULL;
 	int i32 = 0;
+	long long int i64 = 0;
 	bool inherit = false;
 
 	nullpo_ret(it);

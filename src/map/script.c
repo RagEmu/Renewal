@@ -6327,6 +6327,8 @@ BUILDIN(percentheal)
 		return true;
 	if( sd->sc.data[SC_EXTREMITYFIST2] )
 		sp = 0;
+	if (sd->sc.data[SC_BITESCAR])
+ 		hp = 0;
 	pc->percentheal(sd,hp,sp);
 	return true;
 }
