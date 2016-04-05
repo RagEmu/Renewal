@@ -808,8 +808,9 @@ struct clif_interface {
 	void (*skillcasting) (struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, uint16 skill_id, int property, int casttime);
 	void (*produce_effect) (struct map_session_data* sd,int flag,int nameid);
 	void (*devotion) (struct block_list *src, struct map_session_data *tsd);
-	void (*spiritball) (struct block_list *bl, struct block_list *tbl, send_target target);
-	void (*spiritball3) (struct block_list *bl, struct block_list *tbl, send_target target);
+	int (*spiritball) (struct map_session_data *sd);
+	int (*hom_spiritball) (struct homun_data *hd);
+	int (*hom_skillupdateinfo) (struct map_session_data *sd,int skillid,int type,int range);
 	void (*spiritball_single) (int fd, struct map_session_data *sd);
 	void (*bladestop) (struct block_list *src, int dst_id, int active);
 	void (*mvp_effect) (struct map_session_data *sd);

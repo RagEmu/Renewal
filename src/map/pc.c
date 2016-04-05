@@ -186,7 +186,7 @@ int pc_spiritball_timer(int tid, int64 tick, int id, intptr_t data) {
 		memmove(sd->spirit_timer+i, sd->spirit_timer+i+1, (sd->spiritball-i)*sizeof(int));
 	sd->spirit_timer[sd->spiritball] = INVALID_TIMER;
 
-	clif->spiritball(&sd->bl,&sd->bl,AREA);
+	clif->spiritball(sd);
 
 	return 0;
 }
@@ -242,7 +242,7 @@ int pc_addspiritball(struct map_session_data *sd,int interval,int max)
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
 		clif->millenniumshield(&sd->bl,sd->spiritball);
 	else
-		clif->spiritball(&sd->bl,&sd->bl,AREA);
+		clif->spiritball(sd);
 
 	return 0;
 }
@@ -281,7 +281,7 @@ int pc_delspiritball(struct map_session_data *sd,int count,int type)
 		if( (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
 			clif->millenniumshield(&sd->bl,sd->spiritball);
 		else
-			clif->spiritball(&sd->bl,&sd->bl,AREA);
+			clif->spiritball(sd);
 	}
 	return 0;
 }

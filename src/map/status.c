@@ -468,22 +468,25 @@ void initChangeTables(void) {
 	set_sc( MH_LIGHT_OF_REGENE   , SC_LIGHT_OF_REGENE      , SI_LIGHT_OF_REGENE , SCB_NONE );
 	set_sc( MH_OVERED_BOOST      , SC_OVERED_BOOST         , SI_OVERED_BOOST    , SCB_FLEE|SCB_ASPD|SCB_DEF );
 
-	set_sc(MH_NEEDLE_OF_PARALYZE,		SC_NEEDLE_OF_PARALYZE,	SI_NEEDLE_OF_PARALYZE,		SCB_SPEED);
-	add_sc(MH_POISON_MIST,				SC_BLIND);
-	set_sc(MH_PAIN_KILLER,				SC_PAIN_KILLER,			SI_PAIN_KILLER,				SCB_ASPD);
-	set_sc(MH_SILENT_BREEZE,			SC_SILENCE,				SI_SILENT_BREEZE,			SCB_NONE);
-	set_sc(MH_STYLE_CHANGE,				SC_STYLE_CHANGE,		SI_STYLE_CHANGE,			SCB_NONE);
-	set_sc(MH_GOLDENE_FERSE,			SC_GOLDENE_FERSE,		SI_GOLDENE_FERSE,			/*SCB_MAXHP|*/SCB_ASPD);
-	add_sc( MH_STEINWAND,				SC_SAFETYWALL );
-	set_sc(MH_ANGRIFFS_MODUS,			SC_ANGRIFFS_MODUS,		SI_ANGRIFFS_MODUS,			SCB_WATK|SCB_DEF|SCB_FLEE);
-	set_sc(MH_TINDER_BREAKER,			SC_TINDER_BREAKER,		SI_TINDER_BREAKER,			SCB_FLEE);
-	set_sc(MH_CBC,						SC_CBC,					SI_CBC,						SCB_NONE);
-	set_sc(MH_EQC,						SC_EQC,					SI_EQC,						SCB_BATK|SCB_DEF);
-	set_sc(MH_MAGMA_FLOW,				SC_MAGMA_FLOW,			SI_MAGMA_FLOW,				SCB_NONE);
-	set_sc(MH_GRANITIC_ARMOR,			SC_GRANITIC_ARMOR,		SI_GRANITIC_ARMOR,			SCB_NONE);
-	set_sc(MH_LAVA_SLIDE,				SC_BURNING,				SI_BURNT,					SCB_MDEF);
-	set_sc(MH_PYROCLASTIC,				SC_PYROCLASTIC,			SI_PYROCLASTIC,				SCB_WATK);
-	set_sc(MH_VOLCANIC_ASH,				SC_VOLCANIC_ASH,		SI_VOLCANIC_ASH,			SCB_WATK|SCB_DEF|SCB_FLEE|SCB_HIT);
+	set_sc( MH_NEEDLE_OF_PARALYZE	, SC_NEEDLE_OF_PARALYZE	, SI_NEEDLE_OF_PARALYZE		, SCB_SPEED );
+	add_sc( MH_POISON_MIST			, SC_BLIND);
+	set_sc( MH_PAIN_KILLER			, SC_PAIN_KILLER		, SI_PAIN_KILLER			, SCB_ASPD );
+	set_sc( MH_SILENT_BREEZE		, SC_SILENCE			, SI_SILENT_BREEZE			, SCB_NONE );
+	set_sc( MH_GOLDENE_FERSE		, SC_GOLDENE_FERSE		, SI_GOLDENE_FERSE			, /*SCB_MAXHP|*/SCB_ASPD );
+	add_sc( MH_STEINWAND			, SC_SAFETYWALL );
+	set_sc( MH_ANGRIFFS_MODUS		, SC_ANGRIFFS_MODUS		, SI_ANGRIFFS_MODUS			, SCB_WATK|SCB_DEF|SCB_FLEE );
+	set_sc( MH_MAGMA_FLOW			, SC_MAGMA_FLOW			, SI_MAGMA_FLOW				, SCB_NONE );
+	set_sc( MH_GRANITIC_ARMOR		, SC_GRANITIC_ARMOR		, SI_GRANITIC_ARMOR			, SCB_NONE );
+	set_sc( MH_LAVA_SLIDE			, SC_BURNING			, SI_BURNT					, SCB_MDEF );
+	set_sc( MH_PYROCLASTIC			, SC_PYROCLASTIC		, SI_PYROCLASTIC			, SCB_WATK );
+	set_sc( MH_VOLCANIC_ASH			, SC_VOLCANIC_ASH		, SI_VOLCANIC_ASH			, SCB_WATK|SCB_DEF|SCB_FLEE|SCB_HIT );
+
+	set_sc( MH_STYLE_CHANGE      , SC_STYLE_CHANGE      , SI_STYLE_CHANGE      , SCB_NONE );
+	add_sc( MH_SILVERVEIN_RUSH   , SC_STUN );
+	add_sc( MH_MIDNIGHT_FRENZY   , SC_FEAR );
+	set_sc( MH_TINDER_BREAKER    , SC_TINDER_BREAKER    , SI_TINDER_BREAKER    , SCB_FLEE );
+	set_sc( MH_CBC               , SC_CBC               , SI_CBC               , SCB_NONE );
+	set_sc( MH_EQC               , SC_EQC               , SI_EQC               , SCB_MAXHP|SCB_BATK|SCB_WATK|SCB_DEF|SCB_DEF2 );
 
 	add_sc( MER_CRASH            , SC_STUN            );
 	set_sc( MER_PROVOKE          , SC_PROVOKE         , SI_PROVOKE         , SCB_DEF|SCB_DEF2|SCB_BATK|SCB_WATK );
@@ -941,6 +944,13 @@ void initChangeTables(void) {
 	status->dbs->IconChangeTable[SC_DROCERA_HERB_STEAMED] = SI_DROCERA_HERB_STEAMED;
 	status->dbs->IconChangeTable[SC_PUTTI_TAILS_NOODLES] = SI_PUTTI_TAILS_NOODLES;
 	status->dbs->IconChangeTable[SC_BANANA_BOMB] = SI_BANANA_BOMB;
+
+	// Homunculus S 'side' status change icons.
+	status->dbs->IconChangeTable[SC_SONIC_CLAW_POSTDELAY] = SI_SONIC_CLAW_POSTDELAY;
+	status->dbs->IconChangeTable[SC_SILVERVEIN_RUSH_POSTDELAY] = SI_SILVERVEIN_RUSH_POSTDELAY;
+	status->dbs->IconChangeTable[SC_MIDNIGHT_FRENZY_POSTDELAY] = SI_MIDNIGHT_FRENZY_POSTDELAY;
+	status->dbs->IconChangeTable[SC_TINDER_BREAKER_POSTDELAY] = SI_TINDER_BREAKER_POSTDELAY;
+	status->dbs->IconChangeTable[SC_CBC_POSTDELAY] = SI_CBC_POSTDELAY;
 
 	// Elemental Spirit's 'side' status change icons.
 	status->dbs->IconChangeTable[SC_CIRCLE_OF_FIRE] = SI_CIRCLE_OF_FIRE;
@@ -3197,9 +3207,6 @@ int status_calc_npc_(struct npc_data *nd, enum e_status_calc_opt opt) {
 	return 0;
 }
 
-// Skills which target depends on a combo-state.
-int combo_dependant_target_skills[] = { MH_SONIC_CRAW };
-
 int status_calc_homunculus_(struct homun_data *hd, enum e_status_calc_opt opt) {
 	struct status_data *hstatus = &hd->base_status;
 	struct s_homunculus *hom = &hd->homunculus;
@@ -4592,7 +4599,7 @@ unsigned short status_calc_batk(struct block_list *bl, struct status_change *sc,
 	if (sc->data[SC_BATTLESCROLL])
 		batk += batk * sc->data[SC_BATTLESCROLL]->val1 / 100;
 	if( sc->data[SC_EQC] )
-		batk -= batk * sc->data[SC_EQC]->val1 * 5 / 100;
+		batk -= batk * sc->data[SC_EQC]->val3 / 100;
 	if ( sc->data[SC_ANGRIFFS_MODUS] )
 		batk += 50 + 20 * sc->data[SC_ANGRIFFS_MODUS]->val1;
 
@@ -4677,6 +4684,8 @@ unsigned short status_calc_watk(struct block_list *bl, struct status_change *sc,
 		watk += watk / 10;
 	if(sc->data[SC_TIDAL_WEAPON])
 		watk += watk * sc->data[SC_TIDAL_WEAPON]->val2 / 100;
+	if(sc->data[SC_EQC])
+		watk -= watk * sc->data[SC_EQC]->val3 / 100;
 	if ( sc->data[SC_PYROCLASTIC] )
 		watk += sc->data[SC_PYROCLASTIC]->val2 + 10 * sc->data[SC_PYROCLASTIC]->val1;
 	if( sc->data[SC_VOLCANIC_ASH] && status_get_element(bl) == ELE_WATER )
@@ -5051,7 +5060,7 @@ defType status_calc_def(struct block_list *bl, struct status_change *sc, int def
 	if (sc->data[SC_VOLCANIC_ASH] && status_get_race(bl)== RC_PLANT )
 		def /= 2;
 	if( sc->data[SC_EQC] )
-		def -= def * sc->data[SC_EQC]->val1 * 5 / 100;
+		def -= def * sc->data[SC_EQC]->val3 / 100;
 	if (sc->data[SC_UNLIMIT])
 		return 1;
 	if (sc->data[SC_ARMORSCROLL])
@@ -5108,6 +5117,8 @@ signed short status_calc_def2(struct block_list *bl, struct status_change *sc, i
 		def2 -= def2 * ( 14 * sc->data[SC_ANALYZE]->val1 ) / 100;
 	if (sc->data[SC_ECHOSONG])
 		def2 += sc->data[SC_ECHOSONG]->val3;
+	if(sc->data[SC_EQC])
+		def2 -= def2 * sc->data[SC_EQC]->val3 / 100;
 	if (sc->data[SC_UNLIMIT])
 		return 1;
 	return (short)cap_value(def2,SHRT_MIN,SHRT_MAX);
@@ -5763,6 +5774,8 @@ unsigned int status_calc_maxhp(struct block_list *bl, struct status_change *sc, 
 		maxhp += maxhp * 5 * sc->data[SC_ANGRIFFS_MODUS]->val1 /100;
 	if (sc->data[SC_GOLDENE_FERSE])
 		maxhp += maxhp * sc->data[SC_GOLDENE_FERSE]->val2 / 100;
+	if(sc->data[SC_EQC])
+		maxhp -= maxhp * sc->data[SC_EQC]->val2 / 100;
 	if (sc->data[SC_FRIGG_SONG])
 		maxhp += maxhp * sc->data[SC_FRIGG_SONG]->val2 / 100;
 	if (sc->data[SC_SOULSCROLL])
@@ -6465,46 +6478,6 @@ struct status_change *status_get_sc(struct block_list *bl)
 	return NULL;
 }
 
-// Obtains spiritball count for pc/homun
-int status_get_spiritball(struct block_list *bl)
-{
-	if ( bl ) {
-		switch ( bl->type ) {
-		case BL_PC:	return ((TBL_PC*)bl)->spiritball;
-		case BL_HOM: return ((TBL_HOM*)bl)->spiritballs;
-		default: 
-			{
-				struct status_change *sc = status_get_sc(bl);
-				if ( !sc || !sc->data[SC_SPIRITBALL] )
-					return 0;
-				return sc->data[SC_SPIRITBALL]->val1;
-			}
-
-		}
-	}
-	return 0;
-}
-
-
-// If spiritball count >= num, deletes num spiritballs and returns 1
-// Otherwise leaves existing spiritballs and returns 0
-int status_charge_spiritball(struct block_list *bl, int num)
-{
-	TBL_HOM *hd;
-
-	if ( status_get_spiritball(bl) < num )
-		return 0;
-
-	if ( bl->type == BL_PC )
-		pc->delspiritball(BL_CAST(BL_PC,bl),num,0);
-	else if ( bl->type == BL_HOM ) {
-		hd = BL_CAST(BL_HOM,bl);
-		hd->spiritballs -= num;
-		clif->spiritball3(&hd->bl,&hd->bl,AREA);
-	}
-	return 1;
-}
-
 void status_change_init(struct block_list *bl) {
 	struct status_change *sc = status->get_sc(bl);
 	nullpo_retv(sc);
@@ -6909,6 +6882,7 @@ void status_display_remove(struct map_session_data *sd, enum sc_type type) {
  */
 int status_change_start(struct block_list *src, struct block_list *bl, enum sc_type type, int rate, int val1, int val2, int val3, int val4, int tick, int flag) {
 	struct map_session_data *sd = NULL;
+	struct homun_data *hd;
 	struct status_change* sc;
 	struct status_change_entry* sce;
 	struct status_data *st;
@@ -6918,6 +6892,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 	nullpo_ret(bl);
 	sc = status->get_sc(bl);
 	st = status->get_status_data(bl);
+	hd = BL_CAST(BL_HOM, bl);
 
 	if (type <= SC_NONE || type >= SC_MAX) {
 		ShowError("status_change_start: invalid status change (%d)!\n", type);
@@ -7641,6 +7616,19 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 			break;
 		case SC_ANGRIFFS_MODUS:
 			status_change_end(bl,SC_GOLDENE_FERSE,INVALID_TIMER);
+			break;
+		case SC_SONIC_CLAW_POSTDELAY:
+		case SC_SILVERVEIN_RUSH_POSTDELAY:
+		case SC_MIDNIGHT_FRENZY_POSTDELAY:
+		case SC_TINDER_BREAKER_POSTDELAY:
+		case SC_CBC_POSTDELAY:
+			if( sc->data[type] )// Don't remove status that was just activated.
+				break;
+			status_change_end(bl, SC_SONIC_CLAW_POSTDELAY, INVALID_TIMER);
+			status_change_end(bl, SC_SILVERVEIN_RUSH_POSTDELAY, INVALID_TIMER);
+			status_change_end(bl, SC_MIDNIGHT_FRENZY_POSTDELAY, INVALID_TIMER);
+			status_change_end(bl, SC_TINDER_BREAKER_POSTDELAY, INVALID_TIMER);
+			status_change_end(bl, SC_CBC_POSTDELAY, INVALID_TIMER);
 			break;
 		case SC_KINGS_GRACE:
 			status_change_end(bl,SC_POISON,INVALID_TIMER);
@@ -8792,10 +8780,6 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 					val4 = 1;
 				tick_time = 1000; // [GodLesZ] tick time
 				break;
-			case SC_CBC:
-				val4 = tick/1000;	// TODO: change 1000 to official tick
-				tick_time = 1000;
-				break;
 			case SC_ANGRIFFS_MODUS:
 				val4 = tick/1000;
 				tick_time = 1000;
@@ -9284,6 +9268,26 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 			case SC_OVERED_BOOST:
 				val2 = 300 + 40*val1; //flee bonus
 				val3 = 179 + 2*val1; //aspd bonus
+				break;
+			case SC_STYLE_CHANGE:
+				if ( val1 == FIGHTER_STYLE )
+					val2 = 20 + hd->homunculus.level / 5;// Sphere gain chance when attacking.
+				else if ( val1 == GRAPPLER_STYLE )
+					val2 = hd->homunculus.level / 2;// Sphere gain chance when getting attacked.
+				else
+					val2 = 0;
+				break;
+			case SC_MIDNIGHT_FRENZY_POSTDELAY:// Allows Sonic Claw to auto target in the combo.
+				clif->hom_skillupdateinfo(hd->master, MH_SONIC_CRAW, INF_SELF_SKILL, 1);
+				break;
+			case SC_CBC:
+				val1 = 0;// Prepares for tracking seconds in timer script.
+				val4 = tick/1000;
+				tick = 1000;
+				break;
+			case SC_EQC:
+				val2 = 2 * val1;// MaxHP Reduction
+				val3 = 5 * val1;// ATK/DEF Reduction
 				break;
 			case SC_FULL_THROTTLE:
 				status_percent_heal(bl,100,0);
@@ -9920,9 +9924,6 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				if(src->type == BL_PC && (sd = map->id2sd(src->id)))
 					clif->crimson_marker(sd,bl,0); //Send mini-map, don't wait for first timer triggered
 				break;
-			case SC_SPIRITBALL:
-				clif->spiritball(bl,bl,AREA);
-				break;
 	}
 
 	if( opt_flag&2 && sd && sd->touching_id )
@@ -9995,6 +9996,7 @@ int status_change_clear(struct block_list* bl, int type) {
 *------------------------------------------*/
 int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const char* file, int line) {
 	struct map_session_data *sd;
+	struct homun_data *hd;
 	struct status_change *sc;
 	struct status_change_entry *sce;
 	struct status_data *st;
@@ -10012,6 +10014,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		return 0;
 
 	sd = BL_CAST(BL_PC,bl);
+	hd = BL_CAST(BL_HOM, bl);
 
 	if (sce->timer != tid && tid != INVALID_TIMER && sce->timer != INVALID_TIMER)
 		return 0;
@@ -10445,13 +10448,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_PYROCLASTIC:
 			skill->break_equip(bl,EQP_WEAPON,10000,BCT_SELF);
 			break;
-		case SC_TINDER_BREAKER: {
-				struct block_list *src = map->id2bl(sce->val1);
-				sce->val1 = 0;	// To prevent endless loop
-				if ( src )
-					status_change_end(src,SC_TINDER_BREAKER,INVALID_TIMER);
-			}
-			break;
 		case SC_CURSEDCIRCLE_TARGET:
 		{
 			struct block_list *src = map->id2bl(sce->val2);
@@ -10471,9 +10467,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 						ssc->bs_counter--;
 				}
 			}
-			break;
-		case SC_SPIRITBALL:
-			clif->spiritball(bl,bl,AREA);
 			break;
 		case SC_CLAIRVOYANCE:
 			calc_flag = SCB_ALL;/* required for overlapping */
@@ -10498,6 +10491,9 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					status_zap(bl, 0, status_get_max_sp(bl) / 2);
 					break;
 			}
+			break;
+		case SC_MIDNIGHT_FRENZY_POSTDELAY:
+			clif->hom_skillupdateinfo(hd->master, MH_SONIC_CRAW, INF_ATTACK_SKILL, 1);
 			break;
 		case SC_HEAT_BARREL:
 			if (sd)
@@ -11659,14 +11655,22 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 			}
 			break;
 		case SC_CBC:
-			if( --(sce->val4) >= 0 )
-			{
-				int hp = 1600, sp = 96;	// 2012-02-21 iRO Sakray tests: this seems constant
-				if ( bl->type == BL_PC )
-					status_zap(bl, hp, sp);
-				else
-					status_zap(bl, hp+10*sp, 0);
-				sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
+			if(--(sce->val4)>0)
+			{// Val1 is used to count the number of seconds that passed.
+				sce->val1 += 1;
+
+				if ( sce->val1 % 2 == 0 )// Loose HP every 2 seconds.
+					if ( sce->val3 > 0 )// SPdamage value higher then 0 signals target is not a monster.
+					{// HP loss for players and other non monster entitys.
+						if( !status->charge(bl, sce->val2, 0))
+							break;
+					}// If its a monster then use this to remove HP since status_charge won't work.
+					else if (!status->damage(NULL, bl, sce->val2, 0, 0, 3))
+
+				if ( sce->val1 % 3 == 0 )// Loose SP every 3 seconds.
+					status->charge(bl, 0, sce->val3);
+
+				sc_timer_next(1000+tick, status->change_timer,bl->id, data);
 				return 0;
 			}
 			break;
@@ -12948,8 +12952,6 @@ void status_defaults(void) {
 	status->get_emblem_id = status_get_emblem_id;
 	status->get_mexp = status_get_mexp;
 	status->get_race2 = status_get_race2;
-	status->get_spiritball = status_get_spiritball;
-	status->charge_spiritball = status_charge_spiritball;
 
 	status->get_viewdata = status_get_viewdata;
 	status->set_viewdata = status_set_viewdata;

@@ -635,6 +635,7 @@ struct s_skill_unit_layout* skill_get_unit_layout (uint16 skill_id, uint16 skill
 int skill_additional_effect(struct block_list* src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int attack_type, int dmg_lv, int64 tick) {
 	struct map_session_data *sd, *dstsd;
 	struct mob_data *md, *dstmd;
+	struct homun_data *hd;
 	struct status_data *sstatus, *tstatus;
 	struct status_change *sc, *tsc;
 
@@ -651,6 +652,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 
 	sd = BL_CAST(BL_PC, src);
 	md = BL_CAST(BL_MOB, src);
+	hd = BL_CAST(BL_HOM, src);
 	dstsd = BL_CAST(BL_PC, bl);
 	dstmd = BL_CAST(BL_MOB, bl);
 
@@ -1331,27 +1333,36 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			if ( sc_start(src, bl, SC_NEEDLE_OF_PARALYZE, 40 + 5*skill_lv,skill_lv,skill->get_time(skill_id,skill_lv)) )
 				clif->specialeffect(bl,20,AREA);
 			break;
-		case MH_SONIC_CRAW:
-			sc_start(src, src,SC_SONIC_CRAW_POSTDELAY,100,skill_lv,skill->get_delay(skill_id,skill_lv)+1000);	// Combo delay
-			break;
 		case MH_SILVERVEIN_RUSH:
-			sc_start(src, bl,SC_STUN,20 + 5*skill_lv,skill_lv,5000);
-			sc_start(src, src,SC_SILVERVEIN_RUSH_POSTDELAY,100,skill_lv,skill->get_delay(skill_id,skill_lv)+1000);	// Combo delay
+			sc_start(src, bl, SC_STUN, 20 + 5 * skill_lv, skill_lv, skill->get_time(skill_id,skill_lv));
 			break;
 		case MH_MIDNIGHT_FRENZY:
-			sc_start(src, bl,SC_FEAR,(10 + 2 * skill_lv) * (status->get_spiritball(bl)+2),skill_lv,5000);
-			sc_start2(src, src,SC_COMBOATTACK,100,MH_MIDNIGHT_FRENZY,bl->id,skill->get_delay(skill_id,skill_lv)+1000);
+			sc_start(src, bl, SC_FEAR, (10 + 2 * skill_lv) * hd->hom_spiritball_old, skill_lv, skill->get_time(skill_id,skill_lv));
 			break;
 		case MH_TINDER_BREAKER:
-			sc_start(src, bl,SC_TINDER_BREAKER,100,src->id,skill->get_time(skill_id,skill_lv)+1000*((sstatus->str - tstatus->str)/10));
-			sc_start(src, src,SC_TINDER_BREAKER,100,bl->id,skill->get_time(skill_id,skill_lv)+1000*((sstatus->str - tstatus->str)/10));
-			sc_start(src, src,SC_TINDER_BREAKER_POSTDELAY,100,skill_lv,skill->get_delay(skill_id,skill_lv)+1000);	// Combo delay
+			sc_start(src, bl, SC_TINDER_BREAKER, 100, skill_lv, 1000 * (sstatus->str / 7 - tstatus->str / 10));
+			break;
+		case MH_CBC:
+			{
+				int HPdamage = 400 * skill_lv + 4 * hd->homunculus.level;
+				int SPdamage = 10 * skill_lv + hd->homunculus.level / 5 + hd->homunculus.dex / 10;
+
+				// A bonus is applied to HPdamage using SPdamage
+				// formula x10 if entity is a monster.
+				if ( !(bl->type&BL_CONSUME) )
+				{
+					HPdamage += 10 * SPdamage;
+					SPdamage = 0;// Signals later that entity is a monster.
+				}
+				status_change_end(bl, SC_TINDER_BREAKER, -1);
+				sc_start(src, bl, SC_TINDER_BREAKER, 100, skill_lv, 1000 * (sstatus->str / 7 - tstatus->str / 10));
+				sc_start4(src, bl, SC_CBC, 100, skill_lv, HPdamage, SPdamage, 0, 1000 * (sstatus->str / 7 - tstatus->str / 10));
+			}
 			break;
 		case MH_EQC:
-			// Free from cbc grapple
-			status_change_end(bl,SC_CBC,INVALID_TIMER);
-			sc_start(src, bl,SC_EQC,100,skill_lv,skill->get_time(skill_id,skill_lv));					// TODO: need official duration
-			sc_start(src, bl,SC_STUN,100,skill_lv,status->get_sc_base_duration(bl,SC_STUN,skill_lv));	// TODO: need official duration
+			sc_start(src, bl, SC_STUN, 100, skill_lv, 1000 * hd->homunculus.level / 50 + 500 * skill_lv);
+			sc_start(src, bl, SC_EQC, 100, skill_lv, skill->get_time(skill_id,skill_lv));
+			status_change_end(bl, SC_TINDER_BREAKER, -1);
 			break;
 		case MH_STAHL_HORN:
 			sc_start(src, bl,SC_STUN,16 + 4 * skill_lv,skill_lv,skill->get_time(skill_id,skill_lv));
@@ -1753,6 +1764,7 @@ int skill_counter_additional_effect(struct block_list* src, struct block_list *b
 	int rate;
 	struct map_session_data *sd=NULL;
 	struct map_session_data *dstsd=NULL;
+	struct status_data *sstatus, *tstatus;
 	struct status_change *sc;
 
 	nullpo_ret(src);
@@ -1763,6 +1775,9 @@ int skill_counter_additional_effect(struct block_list* src, struct block_list *b
 	sd = BL_CAST(BL_PC, src);
 	dstsd = BL_CAST(BL_PC, bl);
 	sc = status->get_sc(src);
+
+	sstatus = status->get_status_data(src);
+	tstatus = status->get_status_data(bl);
 
 	if(dstsd && attack_type&BF_WEAPON) {
 		//Counter effects.
@@ -1806,6 +1821,28 @@ int skill_counter_additional_effect(struct block_list* src, struct block_list *b
 				if (hd->master)
 					clif->send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy/100);
 			}
+			break;
+		case MH_SONIC_CRAW:
+			sc_start(src,src,SC_SONIC_CLAW_POSTDELAY,100,skill_lv,2000);
+			break;
+		case MH_SILVERVEIN_RUSH:
+			sc_start(src,src,SC_SILVERVEIN_RUSH_POSTDELAY,100,skill_lv,2000);
+			break;
+		case MH_MIDNIGHT_FRENZY:
+			sc_start2(src,src,SC_MIDNIGHT_FRENZY_POSTDELAY,100,skill_lv,bl->id,2000);
+			break;
+		case MH_TINDER_BREAKER:
+			sc_start(src,src,SC_TINDER_BREAKER, 100, skill_lv, 1000 * (sstatus->str / 7 - tstatus->str / 10));
+			sc_start(src,src,SC_TINDER_BREAKER_POSTDELAY,100,skill_lv,2000);
+			break;
+		case MH_CBC:
+			status_change_end(src, SC_TINDER_BREAKER, -1);
+			sc_start(src,src,SC_TINDER_BREAKER, 100, skill_lv, 1000 * (sstatus->str / 7 - tstatus->str / 10));
+			sc_start(src,src,SC_CBC_POSTDELAY,100,skill_lv,2000);
+			break;
+		case MH_EQC:
+			status_change_end(src, SC_CBC_POSTDELAY, -1);// End of grappler combo as it doesn't loop.
+			status_change_end(src, SC_TINDER_BREAKER, -1);
 			break;
 		case CR_GRANDCROSS:
 		case NPC_GRANDDARKNESS:
@@ -3147,8 +3184,9 @@ int skill_check_unit_range2 (struct block_list *bl, int x, int y, uint16 skill_i
  *------------------------------------------*/
 int skill_check_condition_mercenary(struct block_list *bl, int skill_id, int lv, int type) {
 	struct status_data *st;
+	struct status_change *sc;
 	struct map_session_data *sd = NULL;
-	int i, hp, sp, hp_rate, sp_rate, state, mhp;
+	int i, hp, sp, hp_rate, sp_rate, state, mhp, spiritball;
 	uint16 idx;
 	int itemid[MAX_SKILL_ITEM_REQUIRE],amount[ARRAYLENGTH(itemid)],index[ARRAYLENGTH(itemid)];
 
@@ -3162,6 +3200,11 @@ int skill_check_condition_mercenary(struct block_list *bl, int skill_id, int lv,
 	}
 
 	st = status->get_status_data(bl);
+	sc = status->get_sc(bl);
+
+	if( sc && !sc->count )
+		sc = NULL;
+
 	if( (idx = skill->get_index(skill_id)) == 0 )
 		return 0;
 
@@ -3176,6 +3219,7 @@ int skill_check_condition_mercenary(struct block_list *bl, int skill_id, int lv,
 	hp_rate = skill->dbs->db[idx].hp_rate[lv-1];
 	sp_rate = skill->dbs->db[idx].sp_rate[lv-1];
 	state = skill->dbs->db[idx].state;
+	spiritball = skill->dbs->db[idx].spiritball[lv-1];
 	if( (mhp = skill->dbs->db[idx].mhp[lv-1]) > 0 )
 		hp += (st->max_hp * mhp) / 100;
 	if( hp_rate > 0 )
@@ -3198,6 +3242,79 @@ int skill_check_condition_mercenary(struct block_list *bl, int skill_id, int lv,
 				if( hd->homunculus.intimacy < (unsigned int)battle_config.hvan_explosion_intimate )
 					return 0;
 				break;
+			case MH_SONIC_CRAW:
+				// Requires at least 1 spirit sphere even
+				// tho it doesn't take any on skill use.
+				if ( hd->hom_spiritball < 1 )
+				{
+					clif->skill_fail(sd,skill_id,USESKILL_FAIL_SPIRITS,1);
+					return 0;
+				}
+				else
+					hd->hom_spiritball_old = hd->hom_spiritball;
+				break;
+			case MH_SILVERVEIN_RUSH:
+				if(!(sc && sc->data[SC_SONIC_CLAW_POSTDELAY]))
+				{
+					clif->skill_fail(sd,skill_id,USESKILL_FAIL_COMBOSKILL,MH_SONIC_CRAW);
+					return 0;
+				}
+				break;
+			case MH_MIDNIGHT_FRENZY:
+				if(!(sc && sc->data[SC_SILVERVEIN_RUSH_POSTDELAY]))
+				{
+					clif->skill_fail(sd,skill_id,USESKILL_FAIL_COMBOSKILL,MH_SILVERVEIN_RUSH);
+					return 0;
+				}
+				break;
+			case MH_CBC:
+				if(!(sc && sc->data[SC_TINDER_BREAKER_POSTDELAY]))
+				{
+					clif->skill_fail(sd,skill_id,USESKILL_FAIL_COMBOSKILL,MH_TINDER_BREAKER);
+					return 0;
+				}
+				break;
+			case MH_EQC:
+				if(!(sc && sc->data[SC_CBC_POSTDELAY]))
+				{
+					clif->skill_fail(sd,skill_id,USESKILL_FAIL_COMBOSKILL,MH_CBC);
+					return 0;
+				}
+				break;
+		}
+
+		// Homunculus Status Checks
+		switch ( state )
+		{
+			case ST_FIGHTER:
+				if( !(sc && sc->data[SC_STYLE_CHANGE] && sc->data[SC_STYLE_CHANGE]->val1 == FIGHTER_STYLE) )
+				{
+					clif->skill_fail(sd,skill_id,USESKILL_FAIL_STYLE_CHANGE_FIGHTER,0);
+					return 0;
+				}
+				break;
+			case ST_GRAPPLER:
+				if( !(sc && sc->data[SC_STYLE_CHANGE] && sc->data[SC_STYLE_CHANGE]->val1 == GRAPPLER_STYLE) )
+				{
+					clif->skill_fail(sd,skill_id,USESKILL_FAIL_STYLE_CHANGE_GRAPPLER,0);
+					return 0;
+				}
+				break;
+		}
+
+		// Homunculus Spirit Sphere's Check
+		if ( spiritball > 0 )
+		{
+			if ( hd->hom_spiritball < spiritball )
+			{
+				clif->skill_fail(sd,skill_id,USESKILL_FAIL_SPIRITS,spiritball);
+				return 0;
+			}
+			else
+			{
+				hd->hom_spiritball_old = hd->hom_spiritball;
+				homun->delspiritball(hd,spiritball);
+			}
 		}
 	}
 
@@ -3814,6 +3931,10 @@ int skill_castend_damage_id(struct block_list* src, struct block_list *bl, uint1
 		case KO_SETSUDAN:
 		case MH_NEEDLE_OF_PARALYZE:
 		case MH_STAHL_HORN:
+		case MH_SONIC_CRAW:
+		case MH_SILVERVEIN_RUSH:
+		case MH_MIDNIGHT_FRENZY:
+		case MH_CBC:
 		case GC_DARKCROW:
 		case NC_MAGMA_ERUPTION_DOTDAMAGE:
 		case LG_OVERBRAND_BRANDISH:
@@ -3990,7 +4111,7 @@ int skill_castend_damage_id(struct block_list* src, struct block_list *bl, uint1
 					}
 					clif->slide(src, src->x, src->y);
 					clif->fixpos(src);
-					clif->spiritball(src,src,AREA);
+					clif->spiritball(sd);
 				}
 			}
 			break;
@@ -4842,6 +4963,21 @@ int skill_castend_damage_id(struct block_list* src, struct block_list *bl, uint1
 				skill->attack(skill->get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
 			break;
 
+		case MH_TINDER_BREAKER:
+			if( unit->movepos(src, bl->x, bl->y, 1, 1) )
+			{	// Self knock back 1 cell to make it appear you warped
+				// next to the enemy you targeted from the direction
+				// you attacked from.
+				skill->blown(bl,src,1,unit->getdir(src),0);
+				skill->attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
+			}
+			break;
+
+		case MH_EQC:
+			if (!(tstatus->mode&MD_BOSS))// Not usable on boss monsters.
+				skill->attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
+			break;
+
 		case RL_MASS_SPIRAL:
 			clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
 			skill->attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag|SD_ANIMATION);
@@ -4959,118 +5095,6 @@ int skill_castend_damage_id(struct block_list* src, struct block_list *bl, uint1
 				}
 				clif->skill_nodamage(src,src,skill_id,skill_lv,1);
 			}
-			break;
-
-		// Recursive homun skill
-		case MH_SONIC_CRAW:
-			if ( sc && sc->data[SC_STYLE_CHANGE] ) {
-				TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-				if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_STYLE_CHANGE_FIGHTER,0);
-				break;
-			}
-			if ( status->get_spiritball(src) < 1 ) {
-				TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-				if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_SPIRITS,1);
-				break;
-			}
-			skill->attack(skill->get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
-			break;
-		case MH_SILVERVEIN_RUSH:
-			if ( sc && sc->data[SC_STYLE_CHANGE] ) {
-				TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-				if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_STYLE_CHANGE_FIGHTER,0);
-				break;
-			}
-			if ( !( sc && sc->data[SC_SONIC_CRAW_POSTDELAY] ) ) {	// Only usable after Sonic Claw
-				TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-				if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_COMBOSKILL,MH_SONIC_CRAW);
-				break;
-			}
-			if ( !status->charge_spiritball(src,1) ) {
-				TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-				if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_SPIRITS,1);
-				break;
-			}
-
-			skill->attack(skill->get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
-			break;
-		case MH_MIDNIGHT_FRENZY:
-			if ( sc && sc->data[SC_STYLE_CHANGE] ) {
-				TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-				if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_STYLE_CHANGE_FIGHTER,0);
-				break;
-			}
-			if ( !( sc && sc->data[SC_SILVERVEIN_RUSH_POSTDELAY] ) ) {	// Only usable after Sonic Claw
-				TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-				if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_COMBOSKILL,MH_SILVERVEIN_RUSH);
-				break;
-			}
-			if ( !status->charge_spiritball(src,2) ) {
-				TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-				if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_SPIRITS,2);
-				break;
-			}
-
-			skill->attack(skill->get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
-			break;
-		case MH_TINDER_BREAKER:
-			{
-				short dst_x = bl->x, dst_y = bl->y;
-
-				// Grappler type only
-				if ( !(sc && sc->data[SC_STYLE_CHANGE]) ) {
-					TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-					if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_STYLE_CHANGE_GRAPPLER,0);
-					break;
-				}
-
-				// Decide destination leap cell
-				// Jump not on an enemy, but to a nearby cell.
-				if ( src->x > dst_x )
-					dst_x++;
-				else if ( src->x < dst_x )
-					dst_x--;
-				if ( src->y > dst_y )
-					dst_y++;
-				else if ( src->y < dst_y )
-					dst_y--;
-
-				if( unit->movepos(src, dst_x, dst_y, 1, 1) ) {
-					if ( !status->charge_spiritball(src,1) ) {	// Consumes 1 spiritball
-						TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-						if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_SPIRITS,1);
-						break;
-					}
-
-					if( battle->check_target(src, bl, BCT_ENEMY) > 0 )
-						skill->attack(skill->get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
-					clif->slide(src,dst_x,dst_y);
-				}
-			}
-			break;
-		case MH_EQC:
-			if ( !(sc && sc->data[SC_STYLE_CHANGE]) ) {
-				TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-				if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_STYLE_CHANGE_GRAPPLER,0);
-				break;
-			}
-			if ( !( sc && sc->data[SC_CBC_POSTDELAY] ) ) {	// Only usable after CBC
-				TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-				if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_COMBOSKILL,MH_CBC);
-				break;
-			}
-			if ( is_boss(bl) ) {	// Non-usable vs boss monsters
-				TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-				if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				break;
-			}
-			if ( !status->charge_spiritball(src,2) ) {
-				TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-				if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_SPIRITS,2);
-				break;
-			}
-
-			skill->attack(skill->get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
 			break;
 
 		case 0:/* no skill - basic/normal attack */
@@ -5448,7 +5472,7 @@ int skill_castend_id(int tid, int64 tick, int id, intptr_t data) {
 			if (unit->movepos(src, src->x+x, src->y+y, 1, 1)) {
 				//Display movement + animation.
 				clif->slide(src,src->x,src->y);
-				clif->spiritball(src,src,AREA);
+				clif->spiritball(sd);
 			}
 			clif->skill_fail(sd,ud->skill_id,USESKILL_FAIL_LEVEL,0);
 		}
@@ -6441,6 +6465,29 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 				clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
 				for ( i = 0; i < limit; i++ )
 					pc->addspiritball(sd, skill->get_time(skill_id, skill_lv), limit);
+			}
+			break;
+
+		case MH_STYLE_CHANGE:
+			if(hd)
+			{// Fighter <---> Grappler style switch.
+				if ( hd->sc.data[SC_STYLE_CHANGE] )
+				{
+					if ( hd->sc.data[SC_STYLE_CHANGE]->val1 == FIGHTER_STYLE )
+					{// Change from fighter to grappler style.
+						status_change_end(bl,type,INVALID_TIMER);
+						sc_start(src,bl,type,100,GRAPPLER_STYLE,-1);
+					}
+					else if ( hd->sc.data[SC_STYLE_CHANGE]->val1 == GRAPPLER_STYLE )
+					{// Change from grappler to fighter style.
+						status_change_end(bl,type,INVALID_TIMER);
+						sc_start(src,bl,type,100,FIGHTER_STYLE,-1);
+					}
+				}
+				else// If for some reason no style is active, start in fighter style.
+					sc_start(src,bl,type,100,FIGHTER_STYLE,-1);
+
+				clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
 			}
 			break;
 
@@ -10152,47 +10199,6 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 			sc_start(src,bl,type,100,skill_lv,skill->get_time(skill_id,skill_lv));
 			if( hd )
 				skill->blockhomun_start(hd,skill_id,skill->get_cooldown(skill_id,skill_lv));
-			break;
-		case MH_STYLE_CHANGE: {
-				struct status_change *sc = status->get_sc(src);
-				if ( sc && sc->data[type] ) {
-					status_change_end(bl,type,INVALID_TIMER);
-					clif->specialeffect(bl,104,AREA);	// Custom, to determine modes
-				} else {
-					sc_start(src,bl,type,100,skill_lv,-1);
-					clif->specialeffect(bl,131,AREA);	// Custom, to determine modes
-				}
-				clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
-			}
-			break;
-		case MH_CBC: {
-				struct status_change *sc = status->get_sc(src);
-				if ( !(sc && sc->data[SC_STYLE_CHANGE]) ) {
-					TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-					if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_STYLE_CHANGE_GRAPPLER,0);
-					break;
-				}
-				if ( !( sc && sc->data[SC_TINDER_BREAKER_POSTDELAY] ) ) {	// Only usable after Tinder Breaker
-					TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-					if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_COMBOSKILL,MH_TINDER_BREAKER);
-					break;
-				}
-				if ( !status->charge_spiritball(src,1) ) {
-					TBL_PC *sd = BL_CAST(BL_PC,battle->get_master(src));
-					if ( sd ) clif->skill_fail(sd,skill_id,USESKILL_FAIL_SPIRITS,1);
-					break;
-				}
-
-				// Refresh Tinder Breaker grapple
-				sc_start(src, bl,SC_TINDER_BREAKER,100,src->id,skill->get_time(skill_id,skill_lv)+1000*((sstatus->str - tstatus->str)/10));
-				sc_start(src, src,SC_TINDER_BREAKER,100,bl->id,skill->get_time(skill_id,skill_lv)+1000*((sstatus->str - tstatus->str)/10));
-				// Set CBC dot
-				sc_start(src, bl,SC_CBC,100,skill_lv,skill->get_time(skill_id,skill_lv)+1000*((sstatus->str - tstatus->str)/10));
-				// Set CBC postdelay for EQC combo
-				sc_start(src, src,SC_CBC_POSTDELAY,100,skill_lv,skill->get_delay(skill_id,skill_lv)+1000);
-				//clif_skill_damage(src,bl,tick,0,0,1,1,skill_id,skill_lv,6);
-				clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
-			}
 			break;
 		case MH_SUMMON_LEGION:
 		{
@@ -19416,6 +19422,8 @@ bool skill_parse_row_requiredb(char* split[], int columns, int current) {
 	else if( strcmpi(split[10],"poisonweapon")        == 0 ) skill->dbs->db[idx].state = ST_POISONINGWEAPON;
 	else if( strcmpi(split[10],"rollingcutter")       == 0 ) skill->dbs->db[idx].state = ST_ROLLINGCUTTER;
 	else if( strcmpi(split[10],"peco")                == 0 ) skill->dbs->db[idx].state = ST_PECO;
+	else if( strcmpi(split[10],"fighter")             == 0 ) skill->dbs->db[idx].state = ST_FIGHTER;
+	else if( strcmpi(split[10],"grappler")            == 0 ) skill->dbs->db[idx].state = ST_GRAPPLER;
 	/**
 	 * Unknown or no state
 	 **/

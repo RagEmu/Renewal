@@ -1328,6 +1328,18 @@ void clif_spiritball_single(int fd, struct map_session_data *sd) {
 }
 
 /*==========================================
+ * Homunculus Spirit Spheres
+ *------------------------------------------*/
+static void clif_hom_spiritball_single(int fd, struct homun_data *hd) {
+	nullpo_retv(hd);
+	WFIFOHEAD(fd, packet_len(0x1e1));
+	WFIFOW(fd,0)=0x1e1;
+	WFIFOL(fd,2)=hd->bl.id;
+	WFIFOW(fd,6)=hd->hom_spiritball;
+	WFIFOSET(fd, packet_len(0x1e1));
+}
+
+/*==========================================
  * Kagerou/Oboro amulet spirit
  *------------------------------------------*/
 void clif_charm_single(int fd, struct map_session_data *sd)
@@ -1419,7 +1431,7 @@ bool clif_spawn(struct block_list *bl)
 			struct map_session_data *sd = BL_UCAST(BL_PC, bl);
 			int i;
 			if (sd->spiritball > 0)
-				clif->spiritball(&sd->bl,&sd->bl,AREA);
+				clif->spiritball(sd);
 			if (sd->state.size == SZ_BIG) // tiny/big players [Valaris]
 				clif->specialeffect(bl,423,AREA);
 			else if (sd->state.size == SZ_MEDIUM)
@@ -1457,6 +1469,13 @@ bool clif_spawn(struct block_list *bl)
 			if (vd->head_bottom)
 				clif->send_petdata(NULL, BL_UCAST(BL_PET, bl), 3, vd->head_bottom); // needed to display pet equip properly
 			break;
+		case BL_HOM:
+		{
+			TBL_HOM *hd = ((TBL_HOM*)bl);
+			if (hd->hom_spiritball > 0)
+				clif->hom_spiritball(hd);
+		}
+		break;
 	}
 	return true;
 }
@@ -4217,6 +4236,13 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl) {
 			if (vd->head_bottom)
 				clif->send_petdata(NULL, BL_UCAST(BL_PET, bl), 3, vd->head_bottom); // needed to display pet equip properly
 			break;
+		case BL_HOM:
+		{
+			TBL_HOM* hd = (TBL_HOM*)bl;
+			if (hd->hom_spiritball > 0)
+				clif_hom_spiritball_single(sd->fd,hd);
+		}
+			break;
 	}
 }
 
@@ -4635,6 +4661,49 @@ int clif_outsight(struct block_list *bl,va_list ap)
 		      && !(tbl->type == BL_NPC && (BL_UCAST(BL_NPC, tbl)->option&OPTION_INVISIBLE)))
 			clif->clearunit_single(tbl->id,CLR_OUTSIGHT,sd->fd);
 	}
+	return 0;
+}
+
+/*==========================================
+ * Updates settings for homunculus skills.
+ * Needed for Midnight Frenzy -> Sonic Claw
+ * combo.
+ *------------------------------------------*/
+int clif_hom_skillupdateinfo(struct map_session_data *sd,int skillid,int type,int range)
+{
+	struct homun_data *hd;
+	int fd, id, skill_num;
+
+	nullpo_ret(sd);
+
+	fd = sd->fd;
+	hd = sd->hd;
+
+	skill_num = skillid - HM_SKILLBASE;
+
+	if( (id=hd->homunculus.hskill[skill_num].id) <= 0 )
+		return 0;
+
+	WFIFOHEAD(fd,packet_len(0x7e1));
+	WFIFOW(fd,0) = 0x7e1;
+	WFIFOW(fd,2) = id;
+	if( type )
+		WFIFOL(fd,4) = type;
+	else
+		WFIFOL(fd,4) = skill->get_inf(id);
+	WFIFOW(fd,8) = hd->homunculus.hskill[skill_num].lv;
+	WFIFOW(fd,10) = skill->get_sp(id,hd->homunculus.hskill[skill_num].lv);
+	if( range )
+		WFIFOW(fd,12) = range;
+	else
+		WFIFOW(fd,12) = skill->get_range2(&hd->bl, id,hd->homunculus.hskill[skill_num].lv);
+
+	if(hd->homunculus.hskill[id-HM_SKILLBASE].flag ==0)
+		WFIFOB(fd,14)= (hd->homunculus.hskill[skill_num].lv < homun->skill_tree_get_max(id, hd->homunculus.class_))? 1:0;
+	else
+		WFIFOB(fd,14) = 0;
+	WFIFOSET(fd,packet_len(0x7e1));
+
 	return 0;
 }
 
@@ -7009,24 +7078,33 @@ void clif_devotion(struct block_list *src, struct map_session_data *tsd)
  * 01d0 <id>.L <amount>.W (ZC_SPIRITS)
  * 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
  *------------------------------------------*/
-void clif_spiritball(struct block_list *bl, struct block_list *tbl, send_target target)
+int clif_spiritball(struct map_session_data *sd)
 {
 	unsigned char buf[16];
 
+	nullpo_ret(sd);
+
 	WBUFW(buf,0)=0x1d0;
-	WBUFL(buf,2)=bl->id;
-	WBUFW(buf,6)=status->get_spiritball(bl);
-	clif->send(buf,packet_len(0x1d0),tbl,AREA);
+	WBUFL(buf,2)=sd->bl.id;
+	WBUFW(buf,6)=sd->spiritball;
+	clif_send(buf,packet_len(0x1d0),&sd->bl,AREA);
+	return 0;
 }
 
-void clif_spiritball3(struct block_list *bl, struct block_list *tbl, send_target target)
+/*==========================================
+ * Homunculus Spirit Spheres
+ *------------------------------------------*/
+int clif_hom_spiritball(struct homun_data *hd)
 {
-	uint8 buf[10];
-	memset(buf,0,sizeof(buf));
-	WBUFW(buf,0) = 0x440;
-	WBUFL(buf,2) = bl->id;
-	WBUFW(buf,6) = status->get_spiritball(bl);
-	clif->send(buf,packet_len(0x440),tbl,target);
+	unsigned char buf[16];
+
+	nullpo_ret(hd);
+
+	WBUFW(buf,0)=0x1d0;
+	WBUFL(buf,2)=hd->bl.id;
+	WBUFW(buf,6)=hd->hom_spiritball;
+	clif_send(buf,packet_len(0x1d0),&hd->bl,AREA);
+	return 0;
 }
 
 /// Notifies clients in area of a character's combo delay (ZC_COMBODELAY).
@@ -19349,7 +19427,8 @@ void clif_defaults(void) {
 	clif->produce_effect = clif_produceeffect;
 	clif->devotion = clif_devotion;
 	clif->spiritball = clif_spiritball;
-	clif->spiritball3 = clif_spiritball3;
+	clif->hom_spiritball = clif_hom_spiritball;
+	clif->hom_skillupdateinfo = clif_hom_skillupdateinfo;
 	clif->spiritball_single = clif_spiritball_single;
 	clif->bladestop = clif_bladestop;
 	clif->mvp_effect = clif_mvp_effect;

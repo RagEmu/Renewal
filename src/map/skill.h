@@ -180,6 +180,8 @@ enum {
 	ST_POISONINGWEAPON,
 	ST_ROLLINGCUTTER,
 	ST_PECO,
+	ST_FIGHTER,
+	ST_GRAPPLER,
 };
 
 enum e_skill {

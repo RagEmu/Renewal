@@ -26,6 +26,8 @@
 
 struct map_session_data;
 
+#define MAX_HOMUN_SPHERES 10
+
 /// Homunuculus IDs
 enum homun_id {
 	HOMID_LIF           = 6001, ///< Lif
@@ -88,9 +90,10 @@ enum {
 	HOMUNCULUS_FOOD
 };
 
+// Eleanor's Fighting Styles
 enum {
-	MH_MD_FIGHTING = 1,
-	MH_MD_GRAPPLING
+	GRAPPLER_STYLE = 0,
+	FIGHTER_STYLE
 };
 
 enum {
@@ -107,6 +110,7 @@ enum homun_state {
 
 struct homun_data {
 	struct block_list bl;
+	struct block_list src;
 	struct unit_data  ud;
 	struct view_data *vd;
 	struct status_data base_status, battle_status;
@@ -119,7 +123,7 @@ struct homun_data {
 	int hungry_timer;                     //[orn]
 	unsigned int exp_next;
 	char blockskill[MAX_SKILL];           // [orn]
-	int8 spiritballs;	// Eleanor's spirit balls, max. 10
+	short hom_spiritball, hom_spiritball_old;
 
 	int64 masterteleport_timer;
 };
@@ -161,6 +165,8 @@ struct homunculus_interface {
 	struct view_data* (*get_viewdata) (int class_);
 	enum homun_type (*class2type) (int class_);
 	void (*damaged) (struct homun_data *hd);
+	int (*addspiritball) (struct homun_data *hd, int max);
+	int (*delspiritball) (struct homun_data *hd, int count);
 	int (*dead) (struct homun_data *hd);
 	int (*vaporize) (struct map_session_data *sd, enum homun_state flag);
 	int (*delete) (struct homun_data *hd, int emote);

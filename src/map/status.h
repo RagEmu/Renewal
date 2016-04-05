@@ -829,7 +829,7 @@ typedef enum sc_type {
 	SC_PYROCLASTIC,
 	SC_VOLCANIC_ASH,
 	SC_STYLE_CHANGE,
-	SC_SONIC_CRAW_POSTDELAY,
+	SC_SONIC_CLAW_POSTDELAY,
 	SC_SILVERVEIN_RUSH_POSTDELAY,
 	SC_TINDER_BREAKER,
 	SC_TINDER_BREAKER_POSTDELAY,
@@ -838,7 +838,7 @@ typedef enum sc_type {
 	SC_EQC,
 	SC_GOLDENE_FERSE,
 	SC_ANGRIFFS_MODUS,
-	SC_SPIRITBALL,
+	SC_MIDNIGHT_FRENZY_POSTDELAY,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
@@ -2235,15 +2235,12 @@ struct status_interface {
 	int (*get_emblem_id) (const struct block_list *bl);
 	int (*get_mexp) (const struct block_list *bl);
 	int (*get_race2) (const struct block_list *bl);
-	int (*get_spiritball) (struct block_list *bl);
-	int (*charge_spiritball) (struct block_list *bl, int num);
 	struct view_data * (*get_viewdata) (struct block_list *bl);
 	void (*set_viewdata) (struct block_list *bl, int class_);
 	void (*change_init) (struct block_list *bl);
 	struct status_change * (*get_sc) (struct block_list *bl);
 	int (*isdead) (struct block_list *bl);
 	int (*isimmune) (struct block_list *bl);
-	int (*get_sc_base_duration) (struct block_list *bl, enum sc_type type, int skill_lv);
 	int (*get_sc_def) (struct block_list *src, struct block_list *bl, enum sc_type type, int rate, int tick, int flag);
 	int (*change_start) (struct block_list *src, struct block_list *bl, enum sc_type type, int rate, int val1, int val2, int val3, int val4, int tick, int flag);
 	int (*change_end_) (struct block_list* bl, enum sc_type type, int tid, const char* file, int line);
