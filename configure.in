@@ -337,30 +337,6 @@ AC_ARG_ENABLE(
 	[enable_sanitize="no"]
 )
 
-
-#
-# Renewal
-#
-AC_ARG_ENABLE(
-	[renewal],
-	AC_HELP_STRING(
-		[--disable-renewal],
-		[
-			Disable Ragnarok Renewal support (override settings in src/config/renewal.h)
-		]
-	),
-	[
-		enable_renewal="$enableval"
-		case $enableval in
-			"no");;
-			"yes");;
-			*) AC_MSG_ERROR([[invalid argument --enable-renewal=$enableval... stopping]]);;
-		esac
-	],
-	[enable_renewal="yes"]
-)
-
-
 #
 # Optionally set the max number of network conenctions
 # the core will be support
@@ -1121,18 +1097,6 @@ case $enable_profiler in
 	"gprof")
 		CFLAGS="$CFLAGS -pg"
 		LDFLAGS="$LDFLAGS -pg"
-		;;
-esac
-
-#
-# Renewal
-#
-case $enable_renewal in
-	"no")
-		CPPFLAGS="$CPPFLAGS -DDISABLE_RENEWAL"
-		;;
-	"yes")
-		# default value
 		;;
 esac
 

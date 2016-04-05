@@ -286,7 +286,7 @@ arena_room,147,49,3	script	Helper Epin	4_F_JOB_HUNTER,{
 	next;
 	mes "[Epin]";
 	mes "This ^3131FFLv 80 arena stage^000000";
-	mes "is accessable to characters from ^FF0000level 80^000000 to ^FF0000level "+(RENEWAL?"160":"99")+"^000000.";
+	mes "is accessable to characters from ^FF0000level 80^000000 to ^FF0000level "+ MAX_LEVEL +"^000000.";
 	next;
 	mes "[Epin]";
 	mes "This level limitation is to prevent high level characters abusing low level arena stages. I hope you will understand.";
@@ -326,7 +326,7 @@ arena_room,158,93,5	script	Helper Lunic	4_M_ROGUE,{
 	next;
 	mes "[Lunic]";
 	mes "^3131FFParty Arena Stage^000000";
-	mes "is accessible to players from ^FF0000level 10^000000 to ^FF0000level "+(RENEWAL?"160":"99")+"^000000.";
+	mes "is accessible to players from ^FF0000level 10^000000 to ^FF0000level "+ MAX_LEVEL +"^000000.";
 	next;
 	mes "[Lunic]";
 	mes "Also, arena will be not be started until all of 5 party members enter the room. We accept an entrance fee 1,000 zeny.";

@@ -1978,3 +1978,5 @@ monk_in,19,43,1	script	Bishop Maugins	1_M_PASTOR,{
 	mes "Would you come back later?";
 	close;
 }
+
+pay_fild08,40,83,5	duplicate(Acolyte_Tu)	Acolyte#tu	4_F_SISTER

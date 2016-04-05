@@ -4814,3 +4814,5 @@ alde_gld,178,180,0	script	Sign#TBT	2_BULLETIN_BOARD,{
 	mes "participants compete to be the first to reach the Finish Line! Don't miss the chance to race against your friends!";
 	close;
 }
+
+alde_gld,181,199,5	duplicate(MountManager_turbo)	Mount Manager	4_F_RACING

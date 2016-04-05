@@ -7389,3 +7389,5 @@ ve_in,239,107,1	script	Male Customer#ve2	4_M_DESERT,{
 	specialeffect EF_ASPERSIO;
 	close;
 }
+
+ve_fild02,337,314,4	duplicate(WincingOldMan_veins)	Wincing Old Man#ve	4_M_DST_GRAND

@@ -126,3 +126,14 @@ geffen,119,107,4	duplicate(SmileHelper)	Smile Assistance#gef	4_F_03
 moc_ruins,59,154,3	duplicate(SmileHelper)	Smile Assistance#moc	4_F_03
 payon,186,104,5	duplicate(SmileHelper)	Smile Assistance#pay	4_F_03
 prontera,157,187,4	duplicate(SmileHelper)	Smile Assistance#prt	4_F_03
+
+
+//== Izlude ================================================
+izlude,125,175,4	duplicate(SmileHelper)	Smile Assistance#iz	4_F_03
+izlude_a,125,175,4	duplicate(SmileHelper)	Smile Assistance#iz_a	4_F_03
+izlude_b,125,175,4	duplicate(SmileHelper)	Smile Assistance#iz_b	4_F_03
+izlude_c,125,175,4	duplicate(SmileHelper)	Smile Assistance#iz_c	4_F_03
+izlude_d,125,175,4	duplicate(SmileHelper)	Smile Assistance#iz_d	4_F_03
+
+//== Morroc ================================================
+morocc,159,107,4	duplicate(SmileHelper)	Smile Assistance#moc1	4_F_03
