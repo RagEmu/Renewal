@@ -20,8 +20,9 @@
 #define MAP_VENDING_H
 
 #include "common/ragemu.h"
-#include "common/db.h"
 
+/* Forward Declarations */
+struct DBMap; // common/db.h
 struct map_session_data;
 struct s_search_store_search;
 
@@ -33,7 +34,7 @@ struct s_vending {
 
 struct vending_interface {
 	unsigned int next_id;/* next vender id */
-	DBMap *db;
+	struct DBMap *db;
 	/* */
 	void (*init) (bool minimal);
 	void (*final) (void);

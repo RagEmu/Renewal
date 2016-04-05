@@ -20,12 +20,12 @@
 #define MAP_CHANNEL_H
 
 #include "common/ragemu.h"
-#include "common/db.h"
 #include "common/mmo.h"
 
 /**
  * Declarations
  **/
+struct DBMap; // common/db.h
 struct map_session_data;
 struct guild;
 
@@ -82,8 +82,8 @@ struct channel_data {
 	char name[HCS_NAME_LENGTH];
 	char password[HCS_NAME_LENGTH];
 	unsigned char color;
-	DBMap *users;
-	DBMap *banned;
+	struct DBMap *users;
+	struct DBMap *banned;
 	unsigned int options;
 	unsigned int owner;
 	enum channel_types type;
@@ -93,7 +93,7 @@ struct channel_data {
 
 struct channel_interface {
 	/* vars */
-	DBMap *db;
+	struct DBMap *db;
 	struct Channel_Config *config;
 
 	int (*init) (bool minimal);
