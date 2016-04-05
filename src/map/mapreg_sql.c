@@ -26,6 +26,7 @@
 #include "common/db.h"
 #include "common/ers.h"
 #include "common/memmgr.h"
+#include "common/nullpo.h"
 #include "common/showmsg.h"
 #include "common/sql.h"
 #include "common/strlib.h"
@@ -74,6 +75,7 @@ bool mapreg_setreg(int64 uid, int val) {
 	unsigned int i = script_getvaridx(uid);
 	const char* name = script->get_str(num);
 
+	nullpo_retr(true, name);
 	if( val != 0 ) {
 		if( (m = i64db_get(mapreg->regs.vars, uid)) ) {
 			m->u.i = val;
@@ -129,6 +131,8 @@ bool mapreg_setregstr(int64 uid, const char* str) {
 	int num = script_getvarid(uid);
 	unsigned int i   = script_getvaridx(uid);
 	const char* name = script->get_str(num);
+
+	nullpo_retr(true, name);
 
 	if( str == NULL || *str == 0 ) {
 		if( i )
@@ -244,6 +248,7 @@ void script_save_mapreg(void)
 				int num = script_getvarid(m->uid);
 				int i   = script_getvaridx(m->uid);
 				const char* name = script->get_str(num);
+				nullpo_retv(name);
 				if (!m->is_string) {
 					if( SQL_ERROR == SQL->Query(map->mysql_handle, "UPDATE `%s` SET `value`='%d' WHERE `varname`='%s' AND `index`='%d' LIMIT 1", mapreg->table, m->u.i, name, i) )
 						Sql_ShowDebug(map->mysql_handle);
@@ -344,6 +349,8 @@ void mapreg_init(void) {
  * Loads the mapreg configuration file.
  */
 bool mapreg_config_read(const char* w1, const char* w2) {
+	nullpo_retr(false, w1);
+	nullpo_retr(false, w2);
 	if(!strcmpi(w1, "mapreg_db"))
 		safestrncpy(mapreg->table, w2, sizeof(mapreg->table));
 	else
