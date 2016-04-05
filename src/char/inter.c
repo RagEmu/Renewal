@@ -40,6 +40,7 @@
 #include "common/nullpo.h"
 #include "common/showmsg.h"
 #include "common/socket.h"
+#include "common/sql.h"
 #include "common/strlib.h"
 #include "common/timer.h"
 
@@ -80,7 +81,7 @@ struct WisData {
 	int64 tick;
 	unsigned char src[24], dst[24], msg[512];
 };
-static DBMap* wis_db = NULL; // int wis_id -> struct WisData*
+static struct DBMap *wis_db = NULL; // int wis_id -> struct WisData*
 static int wis_dellist[WISDELLIST_MAX], wis_delnum;
 
 #define MAX_JOB_NAMES 150
@@ -1035,7 +1036,7 @@ int mapif_disconnectplayer(int fd, int account_id, int char_id, int reason)
  * Existence check of WISP data
  * @see DBApply
  */
-int inter_check_ttl_wisdata_sub(DBKey key, DBData *data, va_list ap)
+int inter_check_ttl_wisdata_sub(union DBKey key, struct DBData *data, va_list ap)
 {
 	int64 tick;
 	struct WisData *wd = DB->data2ptr(data);

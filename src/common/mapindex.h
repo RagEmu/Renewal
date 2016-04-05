@@ -20,8 +20,10 @@
 #define COMMON_MAPINDEX_H
 
 #include "common/ragemu.h"
-#include "common/db.h"
 #include "common/mmo.h"
+
+/* Forward Declarations */
+struct DBMap; // common/db.h
 
 #define MAX_MAPINDEX 2000
 
@@ -80,7 +82,7 @@
 struct mapindex_interface {
 	char config_file[80];
 	/* mapname (str) -> index (int) */
-	DBMap *db;
+	struct DBMap *db;
 	/* number of entries in the index table */
 	int num;
 	/* default map name */
