@@ -74,6 +74,7 @@ typedef enum sc_conf_type {
 	SC_DEBUFF        = 0x20,
 	SC_MADO_NO_RESET = 0x40,
 	SC_NO_CLEAR      = 0x80,
+	SC_NO_BANISHING_BUSTER = 0x100,
 } sc_conf_type;
 
 /**
@@ -110,7 +111,8 @@ typedef enum sc_type {
 	SC_COLD,
 	SC_BURNING,
 	SC_DEEP_SLEEP,
-	SC_COMMON_MAX = 14, // end
+	SC__CHAOS,
+	SC_COMMON_MAX = 15, // end
 
 	//Next up, we continue on 20, to leave enough room for additional "common" ailments in the future.
 	SC_PROVOKE = 20,
@@ -689,20 +691,9 @@ typedef enum sc_type {
 	SC_GENSOU,
 	SC_AKAITSUKI,
 
-	//homon S
-	SC_STYLE_CHANGE,
-	SC_GOLDENE_FERSE, // 540
-	SC_ANGRIFFS_MODUS,
-	SC_ERASER_CUTTER,
-	SC_OVERED_BOOST,
-	SC_LIGHT_OF_REGENE,
-	SC_VOLCANIC_ASH,
-	SC_GRANITIC_ARMOR,
-	SC_MAGMA_FLOW,
-	SC_PYROCLASTIC,
-	SC_NEEDLE_OF_PARALYZE,
-	SC_PAIN_KILLER, // 550
-	SC_EXTREMITYFIST2,
+	SC_FIRE_EXPANSION_TEAR_GAS_SOB,
+
+	SC_EXTREMITYFIST2 = 551,
 	SC_RAID,
 	SC_DARKCROW = 553,
 	SC_FULL_THROTTLE,
@@ -733,9 +724,9 @@ typedef enum sc_type {
 	SC_DECORATION_OF_MUSIC,
 
 	SC__MAELSTROM,
-	SC__CHAOS,
+	//SC__CHAOS,
 
-	SC__FEINTBOMB_MASTER,
+	SC__FEINTBOMB_MASTER = 578,
 	SC_FALLENEMPIRE,
 	SC_FLASHCOMBO, // 580
 
@@ -817,6 +808,37 @@ typedef enum sc_type {
 	SC_M_LIFEPOTION,
 	SC_G_LIFEPOTION, // 640
 	SC_MYSTICPOWDER,
+
+	// Rebellion
+	SC_HEAT_BARREL = 900,
+	SC_HEAT_BARREL_AFTER,
+	SC_P_ALTER,
+	SC_E_CHAIN,
+	SC_C_MARKER,
+	SC_ANTI_M_BLAST,
+	SC_B_TRAP,
+	SC_H_MINE,
+	SC_QD_SHOT_READY,
+	// Homunculus S
+	SC_LIGHT_OF_REGENE = 950,
+	SC_OVERED_BOOST,
+	SC_NEEDLE_OF_PARALYZE,
+	SC_PAIN_KILLER,
+	SC_MAGMA_FLOW,
+	SC_GRANITIC_ARMOR,
+	SC_PYROCLASTIC,
+	SC_VOLCANIC_ASH,
+	SC_STYLE_CHANGE,
+	SC_SONIC_CRAW_POSTDELAY,
+	SC_SILVERVEIN_RUSH_POSTDELAY,
+	SC_TINDER_BREAKER,
+	SC_TINDER_BREAKER_POSTDELAY,
+	SC_CBC,
+	SC_CBC_POSTDELAY,
+	SC_EQC,
+	SC_GOLDENE_FERSE,
+	SC_ANGRIFFS_MODUS,
+	SC_SPIRITBALL,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
@@ -2213,12 +2235,15 @@ struct status_interface {
 	int (*get_emblem_id) (const struct block_list *bl);
 	int (*get_mexp) (const struct block_list *bl);
 	int (*get_race2) (const struct block_list *bl);
+	int (*get_spiritball) (struct block_list *bl);
+	int (*charge_spiritball) (struct block_list *bl, int num);
 	struct view_data * (*get_viewdata) (struct block_list *bl);
 	void (*set_viewdata) (struct block_list *bl, int class_);
 	void (*change_init) (struct block_list *bl);
 	struct status_change * (*get_sc) (struct block_list *bl);
 	int (*isdead) (struct block_list *bl);
 	int (*isimmune) (struct block_list *bl);
+	int (*get_sc_base_duration) (struct block_list *bl, enum sc_type type, int skill_lv);
 	int (*get_sc_def) (struct block_list *src, struct block_list *bl, enum sc_type type, int rate, int tick, int flag);
 	int (*change_start) (struct block_list *src, struct block_list *bl, enum sc_type type, int rate, int val1, int val2, int val3, int val4, int tick, int flag);
 	int (*change_end_) (struct block_list* bl, enum sc_type type, int tid, const char* file, int line);

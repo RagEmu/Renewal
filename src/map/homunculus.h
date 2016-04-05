@@ -119,6 +119,7 @@ struct homun_data {
 	int hungry_timer;                     //[orn]
 	unsigned int exp_next;
 	char blockskill[MAX_SKILL];           // [orn]
+	int8 spiritballs;	// Eleanor's spirit balls, max. 10
 
 	int64 masterteleport_timer;
 };
@@ -197,8 +198,6 @@ struct homunculus_interface {
 	bool (*read_skill_db_sub) (char* split[], int columns, int current);
 	void (*skill_db_read) (void);
 	void (*exp_db_read) (void);
-	void (*addspiritball) (struct homun_data *hd, int max);
-	void (*delspiritball) (struct homun_data *hd, int count, int type);
 	int8 (*get_intimacy_grade) (struct homun_data *hd);
 };
 

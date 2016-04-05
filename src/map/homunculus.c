@@ -102,42 +102,6 @@ enum homun_type homunculus_class2type(int class_) {
 	}
 }
 
-void homunculus_addspiritball(struct homun_data *hd, int max) {
-	nullpo_retv(hd);
-
-	if (max > MAX_SKILL_LEVEL)
-		max = MAX_SKILL_LEVEL;
-	if (hd->homunculus.spiritball < 0)
-		hd->homunculus.spiritball = 0;
-
-	if (hd->homunculus.spiritball && hd->homunculus.spiritball >= max) {
-		hd->homunculus.spiritball = max;
-	}
-	else
-		hd->homunculus.spiritball++;
-
-	clif->spiritball(&hd->bl);
-}
-
-void homunculus_delspiritball(struct homun_data *hd, int count, int type) {
-	nullpo_retv(hd);
-
-	if (hd->homunculus.spiritball <= 0) {
-		hd->homunculus.spiritball = 0;
-		return;
-	}
-	if (count <= 0)
-		return;
-	if (count > MAX_SKILL_LEVEL)
-		count = MAX_SKILL_LEVEL;
-	if (count > hd->homunculus.spiritball)
-		count = hd->homunculus.spiritball;
-
-	hd->homunculus.spiritball -= count;
-	if (!type)
-		clif->spiritball(&hd->bl);
-}
-
 void homunculus_damaged(struct homun_data *hd) {
 	clif->hominfo(hd->master,hd,0);
 }
@@ -1404,7 +1368,5 @@ void homunculus_defaults(void) {
 	homun->read_skill_db_sub = homunculus_read_skill_db_sub;
 	homun->skill_db_read = homunculus_skill_db_read;
 	homun->exp_db_read = homunculus_exp_db_read;
-	homun->addspiritball = homunculus_addspiritball;
-	homun->delspiritball = homunculus_delspiritball;
 	homun->get_intimacy_grade = homunculus_get_intimacy_grade;
 }

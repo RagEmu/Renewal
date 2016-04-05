@@ -557,6 +557,9 @@ END_ZEROED_BLOCK;
 	int expiration_tid;
 	time_t expiration_time;
 
+	int c_marker[MAX_SKILL_CRIMSON_MARKER]; //Store target that marked by Crimson Marker [Cydh]
+	bool flicker; //Check RL_FLICKER usage status [Cydh]
+
 	/* */
 	struct {
 		unsigned int second,third;
@@ -800,6 +803,8 @@ END_ZEROED_BLOCK; /* End */
 
 	struct map_session_data* (*get_dummy_sd) (void);
 	int (*class2idx) (int class_);
+	int (*classarrayidx2class) (int arrayidx);
+	int (*update_last_action) (struct map_session_data *sd);
 	bool (*can_talk) (struct map_session_data *sd);
 	bool (*can_attack) ( struct map_session_data *sd, int target_id );
 
@@ -1007,6 +1012,8 @@ END_ZEROED_BLOCK; /* End */
 	void (*baselevelchanged) (struct map_session_data *sd);
 	int (*level_penalty_mod) (int diff, unsigned char race, uint32 mode, int type);
 	int (*calc_skillpoint) (struct map_session_data* sd);
+
+	void (*crimson_marker_clear) (struct map_session_data *sd);
 
 	int (*invincible_timer) (int tid, int64 tick, int id, intptr_t data);
 	int (*spiritball_timer) (int tid, int64 tick, int id, intptr_t data);

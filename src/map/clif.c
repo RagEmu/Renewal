@@ -1419,7 +1419,7 @@ bool clif_spawn(struct block_list *bl)
 			struct map_session_data *sd = BL_UCAST(BL_PC, bl);
 			int i;
 			if (sd->spiritball > 0)
-				clif->spiritball(&sd->bl);
+				clif->spiritball(&sd->bl,&sd->bl,AREA);
 			if (sd->state.size == SZ_BIG) // tiny/big players [Valaris]
 				clif->specialeffect(bl,423,AREA);
 			else if (sd->state.size == SZ_MEDIUM)
@@ -5432,6 +5432,9 @@ void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val
 	if (type == SI_BLANK)  //It shows nothing on the client...
 		return;
 
+	if (type == SI_POSTDELAY && tick == 0)
+		return;
+
 	nullpo_retv(bl);
 
 	if (!(status->type2relevant_bl_types(type)&bl->type)) // only send status changes that actually matter to the client
@@ -7006,21 +7009,24 @@ void clif_devotion(struct block_list *src, struct map_session_data *tsd)
  * 01d0 <id>.L <amount>.W (ZC_SPIRITS)
  * 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
  *------------------------------------------*/
-void clif_spiritball(struct block_list *bl) {
+void clif_spiritball(struct block_list *bl, struct block_list *tbl, send_target target)
+{
 	unsigned char buf[16];
-	struct map_session_data *sd = BL_CAST(BL_PC,bl);
-	struct homun_data *hd = BL_CAST(BL_HOM,bl);
 
-	nullpo_retv(bl);
+	WBUFW(buf,0)=0x1d0;
+	WBUFL(buf,2)=bl->id;
+	WBUFW(buf,6)=status->get_spiritball(bl);
+	clif->send(buf,packet_len(0x1d0),tbl,AREA);
+}
 
-	WBUFW(buf, 0) = 0x1d0;
-	WBUFL(buf, 2) = bl->id;
-	WBUFW(buf, 6) = 0; //init to 0
-	switch(bl->type){
-		case BL_PC: WBUFW(buf, 6) = sd->spiritball; break;
-		case BL_HOM: WBUFW(buf, 6) = hd->homunculus.spiritball; break;
-	}
-	clif->send(buf, packet_len(0x1d0), bl, AREA);
+void clif_spiritball3(struct block_list *bl, struct block_list *tbl, send_target target)
+{
+	uint8 buf[10];
+	memset(buf,0,sizeof(buf));
+	WBUFW(buf,0) = 0x440;
+	WBUFL(buf,2) = bl->id;
+	WBUFW(buf,6) = status->get_spiritball(bl);
+	clif->send(buf,packet_len(0x440),tbl,target);
 }
 
 /// Notifies clients in area of a character's combo delay (ZC_COMBODELAY).
@@ -8364,18 +8370,18 @@ void clif_charnameack (int fd, struct block_list *bl)
 				WBUFB(buf,30) = WBUFB(buf,54) = WBUFB(buf,78) = 0;
 				break;
 			}
-			memcpy(WBUFP(buf,6), ssd->status.name, NAME_LENGTH);
+				memcpy(WBUFP(buf,6), ssd->status.name, NAME_LENGTH);
 
 			if (ssd->status.party_id != 0) {
 				p = party->search(ssd->status.party_id);
 			}
 			if (ssd->status.guild_id != 0) {
 				if ((g = ssd->guild) != NULL) {
-					int i;
-					ARR_FIND(0, g->max_member, i, g->member[i].account_id == ssd->status.account_id && g->member[i].char_id == ssd->status.char_id);
-					if (i < g->max_member)
-						ps = g->member[i].position;
-				}
+				int i;
+				ARR_FIND(0, g->max_member, i, g->member[i].account_id == ssd->status.account_id && g->member[i].char_id == ssd->status.char_id);
+				if (i < g->max_member)
+					ps = g->member[i].position;
+			}
 			}
 
 			if (!battle_config.display_party_name && g == NULL) {
@@ -8420,10 +8426,10 @@ void clif_charnameack (int fd, struct block_list *bl)
 
 			memcpy(WBUFP(buf,6), md->name, NAME_LENGTH);
 			if (md->guardian_data && md->guardian_data->g) {
-				WBUFW(buf, 0) = cmd = 0x195;
-				WBUFB(buf,30) = 0;
-				memcpy(WBUFP(buf,54), md->guardian_data->g->name, NAME_LENGTH);
-				memcpy(WBUFP(buf,78), md->guardian_data->castle->castle_name, NAME_LENGTH);
+					WBUFW(buf, 0) = cmd = 0x195;
+					WBUFB(buf,30) = 0;
+					memcpy(WBUFP(buf,54), md->guardian_data->g->name, NAME_LENGTH);
+					memcpy(WBUFP(buf,78), md->guardian_data->castle->castle_name, NAME_LENGTH);
 			} else if (battle_config.show_mob_info) {
 				char mobhp[50], *str_p = mobhp;
 				WBUFW(buf, 0) = cmd = 0x195;
@@ -9461,7 +9467,7 @@ void clif_parse_LoadEndAck(int fd, struct map_session_data *sd) {
 				}
 			}
 		}
-	}
+				}
 #endif
 }
 
@@ -9965,6 +9971,8 @@ void clif_parse_HowManyConnections(int fd, struct map_session_data *sd) {
 
 void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, int target_id, int64 tick)
 {
+	struct status_change *tsc = status->get_sc(map->id2bl(target_id));
+
 	nullpo_retv(sd);
 	if (pc_isdead(sd)) {
 		clif->clearunit_area(&sd->bl, CLR_DEAD);
@@ -10002,6 +10010,9 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 				return;
 
 			if( sd->sc.option&OPTION_COSTUME )
+				return;
+
+			if( (sd->sc.count && sd->sc.data[SC__MANHOLE]) || (tsc && tsc->data[SC__MANHOLE]) )
 				return;
 
 			if (!battle_config.sdelay_attack_enable && pc->checkskill(sd, SA_FREECAST) <= 0) {
@@ -11111,6 +11122,9 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 
 	if( sd->sc.data[SC_BASILICA] && (skill_id != HP_BASILICA || sd->sc.data[SC_BASILICA]->val4 != sd->bl.id) )
 		return; // On basilica only caster can use Basilica again to stop it.
+
+	if(sd->sc.data[SC__MANHOLE])
+		return;
 
 	if( sd->menuskill_id ) {
 		if( sd->menuskill_id == SA_TAMINGMONSTER ) {
@@ -17858,6 +17872,46 @@ void clif_scriptclear(struct map_session_data *sd, int npcid) {
 	clif->send(&p,sizeof(p), &sd->bl, SELF);
 }
 
+/** Mark a target in mini-map and send it to party members
+ * Flag:
+ *	0: Add
+ *	1: Remove
+ */
+void clif_crimson_marker(struct map_session_data *sd, struct block_list *bl, uint8 flag) {
+	struct packet_markerinfo p;
+
+	nullpo_retv(sd);
+	nullpo_retv(bl);
+
+	p.PacketType = 0x9c1;
+	p.AID = bl->id;
+	p.xPos = (flag ? -1 : bl->x);
+	p.yPos = (flag ? -1 : bl->y);
+
+	clif->crimson_marker_single(sd, bl, ((flag)?1:0));
+
+	if( sd->status.party_id )
+		clif->send(&p, sizeof(p), &sd->bl, PARTY_SAMEMAP_WOS);
+}
+
+/** Mark a target in mini-map and send it to SELF
+ * Flag:
+ *	0: Add
+ *	1: Remove
+ */
+void clif_crimson_marker_single(struct map_session_data *sd, struct block_list *bl, uint8 flag) {
+	struct packet_markerinfo p;
+
+	nullpo_retv(sd);
+	nullpo_retv(bl);
+
+	p.PacketType = 0x9c1;
+	p.AID = bl->id;
+	p.xPos = (flag ? -1 : bl->x);
+	p.yPos = (flag ? -1 : bl->y);
+	clif->send(&p, sizeof(p), &sd->bl, SELF);
+}
+
 /* Made Possible Thanks to Yommy! */
 void clif_package_item_announce(struct map_session_data *sd, unsigned short nameid, unsigned short containerid) {
 	struct packet_package_item_announce p;
@@ -19295,6 +19349,7 @@ void clif_defaults(void) {
 	clif->produce_effect = clif_produceeffect;
 	clif->devotion = clif_devotion;
 	clif->spiritball = clif_spiritball;
+	clif->spiritball3 = clif_spiritball3;
 	clif->spiritball_single = clif_spiritball_single;
 	clif->bladestop = clif_bladestop;
 	clif->mvp_effect = clif_mvp_effect;
@@ -19778,6 +19833,8 @@ void clif_defaults(void) {
 	clif->pDebug = clif_parse_debug;
 	clif->pSkillSelectMenu = clif_parse_SkillSelectMenu;
 	clif->pMoveItem = clif_parse_MoveItem;
+	clif->crimson_marker = clif_crimson_marker;
+	clif->crimson_marker_single = clif_crimson_marker_single;
 	/* dull */
 	clif->pDull = clif_parse_dull;
 	/* BGQueue */
