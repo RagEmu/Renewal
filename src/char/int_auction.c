@@ -45,7 +45,7 @@ static int inter_auction_count(int char_id, bool buy)
 {
 	int i = 0;
 	struct auction_data *auction;
-	DBIterator *iter = db_iterator(inter_auction->db);
+	struct DBIterator *iter = db_iterator(inter_auction->db);
 
 	for( auction = dbi_first(iter); dbi_exists(iter); auction = dbi_next(iter) )
 	{
@@ -61,7 +61,7 @@ void inter_auction_save(struct auction_data *auction)
 {
 	int j;
 	StringBuf buf;
-	SqlStmt* stmt;
+	struct SqlStmt *stmt;
 
 	if( !auction )
 		return;
@@ -91,7 +91,7 @@ unsigned int inter_auction_create(struct auction_data *auction)
 {
 	int j;
 	StringBuf buf;
-	SqlStmt* stmt;
+	struct SqlStmt *stmt;
 
 	if( !auction )
 		return false;
@@ -278,7 +278,7 @@ void mapif_parse_auction_requestlist(int fd)
 	int price = RFIFOL(fd,10);
 	short type = RFIFOW(fd,8), page = max(1,RFIFOW(fd,14));
 	unsigned char buf[5 * sizeof(struct auction_data)];
-	DBIterator *iter = db_iterator(inter_auction->db);
+	struct DBIterator *iter = db_iterator(inter_auction->db);
 	struct auction_data *auction;
 	short i = 0, j = 0, pages = 1;
 

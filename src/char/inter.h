@@ -21,15 +21,17 @@
 
 #include "common/ragemu.h"
 #include "common/db.h"
-#include "common/sql.h"
 
 #include <stdarg.h>
+
+/* Forward Declarations */
+struct Sql; // common/sql.h
 
 /**
  * inter interface
  **/
 struct inter_interface {
-	Sql* sql_handle;
+	struct Sql *sql_handle;
 	const char* (*msg_txt) (int msg_number);
 	bool (*msg_config_read) (const char *cfg_name, bool allow_override);
 	void (*do_final_msg) (void);
@@ -43,7 +45,7 @@ struct inter_interface {
 	int (*log) (char* fmt, ...);
 	int (*init_sql) (const char *file);
 	int (*mapif_init) (int fd);
-	int (*check_ttl_wisdata_sub) (DBKey key, DBData *data, va_list ap);
+	int (*check_ttl_wisdata_sub) (union DBKey key, struct DBData *data, va_list ap);
 	int (*check_ttl_wisdata) (void);
 	int (*check_length) (int fd, int length);
 	int (*parse_frommap) (int fd);
