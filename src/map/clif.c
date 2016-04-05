@@ -3339,7 +3339,7 @@ void clif_arrow_create_list(struct map_session_data *sd)
 	WFIFOHEAD(fd, MAX_SKILL_ARROW_DB * 2 + 4);
 	WFIFOW(fd, 0) = 0x1ad;
 
-	for (i = 0, c = 0; i < MAX_SKILL_ARROW_DB; i++) {
+	for (i = c = 0; i < MAX_SKILL_ARROW_DB; i++) {
 		int j;
 		if (skill->dbs->arrow_db[i].nameid > 0
 		 && (j = pc->search_inventory(sd, skill->dbs->arrow_db[i].nameid)) != INDEX_NOT_FOUND
@@ -5345,53 +5345,53 @@ void clif_skill_produce_mix_list(struct map_session_data *sd, int skill_id , int
 ///     6 = GN_S_PHARMACY
 void clif_cooking_list(struct map_session_data *sd, int trigger, uint16 skill_id, int qty, int list_type)
 {
-	int fd;
-	int i, c;
-	int view;
+	int fd, i, c, view;
 
 	nullpo_retv(sd);
 	fd = sd->fd;
 
 	WFIFOHEAD(fd, 6 + 2 * MAX_SKILL_PRODUCE_DB);
-	WFIFOW(fd,0) = 0x25a;
-	WFIFOW(fd,4) = list_type; // list type
+	WFIFOW(fd, 0) = 0x25a;
+	WFIFOW(fd, 4) = list_type; // list type
 
-	c = 0;
-	for( i = 0; i < MAX_SKILL_PRODUCE_DB; i++ ) {
-		if( !skill->can_produce_mix(sd,skill->dbs->produce_db[i].nameid,trigger, qty) )
+	for (i = c = 0; i < MAX_SKILL_PRODUCE_DB; i++) {
+		if (!skill->can_produce_mix(sd, skill->dbs->produce_db[i].nameid, trigger, qty) )
 			continue;
 
-		if( (view = itemdb_viewid(skill->dbs->produce_db[i].nameid)) > 0 )
+		if ((view = itemdb_viewid(skill->dbs->produce_db[i].nameid)) > 0)
 			WFIFOW(fd, 6 + 2 * c) = view;
 		else
 			WFIFOW(fd, 6 + 2 * c) = skill->dbs->produce_db[i].nameid;
 
 		c++;
 	}
+	
+	if (!c) return;
 
-	if( skill_id == AM_PHARMACY ) {
+	if (skill_id == AM_PHARMACY) {
 		// Only send it while Cooking else check for c.
-		WFIFOW(fd,2) = 6 + 2 * c;
-		WFIFOSET(fd,WFIFOW(fd,2));
+		WFIFOW(fd, 2) = 6 + 2 * c;
+		WFIFOSET(fd, WFIFOW(fd, 2));
 	}
 
-	if( c > 0 ) {
+	if (c > 0) {
 		sd->menuskill_id = skill_id;
 		sd->menuskill_val = trigger;
-		if( skill_id != AM_PHARMACY ) {
+		if (skill_id != AM_PHARMACY) {
 			sd->menuskill_val2 = qty; // amount.
-			WFIFOW(fd,2) = 6 + 2 * c;
-			WFIFOSET(fd,WFIFOW(fd,2));
+			WFIFOW(fd, 2) = 6 + 2 * c;
+			WFIFOSET(fd, WFIFOW(fd, 2));
 		}
-	} else {
+	}
+	else {
 		clif_menuskill_clear(sd);
-		if( skill_id != AM_PHARMACY ) { // AM_PHARMACY is used to Cooking.
+		if (skill_id != AM_PHARMACY) { // AM_PHARMACY is used to Cooking.
 			// It fails.
 #if PACKETVER >= 20090922
 			clif->msgtable_skill(sd, skill_id, MSG_COOKING_LIST_FAIL);
 #else
-			WFIFOW(fd,2) = 6 + 2 * c;
-			WFIFOSET(fd,WFIFOW(fd,2));
+			WFIFOW(fd, 2) = 6 + 2 * c;
+			WFIFOSET(fd, WFIFOW(fd, 2));
 #endif
 		}
 	}
