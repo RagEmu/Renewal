@@ -1960,7 +1960,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 			return 0;
 		if( ( tsc->data[SC_STEALTHFIELD] || tsc->data[SC_CAMOUFLAGE] ) && !(st->mode&(MD_BOSS|MD_DETECTOR)) && flag == 4 )
 			return 0;
-		if (skill_id == SC__MANHOLE && tsc->data[SC_MANHOLE])
+		if (skill_id == SC_MANHOLE && tsc->data[SC__MANHOLE])
 			return 0;
 	}
 	//If targeting, cloak+hide protect you, otherwise only hiding does.
