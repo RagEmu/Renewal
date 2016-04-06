@@ -4507,7 +4507,7 @@ int skill_castend_damage_id(struct block_list* src, struct block_list *bl, uint1
 			if( (tsc = status->get_sc(bl)) && (tsc->data[SC_HIDING] )) {
 				clif->skill_nodamage(src,src,skill_id,skill_lv,1);
 			} else
-				skill->attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
+				skill->attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		}
 			break;
 		case NPC_SELFDESTRUCTION: {
@@ -19223,7 +19223,7 @@ int skill_block_check(struct block_list *bl, int src_id, int skill_id) {
 		case SC_FATALMENACE:	case TK_STORMKICK:			case TK_DOWNKICK:			case TK_TURNKICK:
 		case TK_COUNTER:		case SG_SUN_WARM:			case SG_MOON_WARM:			case SG_STAR_WARM:
 		case GS_TRIPLEACTION:	case GS_TRACKING:			case GS_PIERCINGSHOT:		case GS_RAPIDSHOWER:
-		case GS_DESPERADO:		case GS_DUST:				case GS_FULLBUSTER:	
+		case GS_DESPERADO:		case GS_DUST:				case GS_FULLBUSTER:			case RK_DRAGONBREATH_WATER:
 			return 0;	// Can do it.
 	}
 	return 1; // Can't do
