@@ -10983,6 +10983,14 @@ void clif_parse_SelectCart(int fd, struct map_session_data *sd)
 {
 #if PACKETVER >= 20150805 // RagexeRE
 	int type;
+	
+	if (pc->checkskill(sd, MC_CHANGECART) < 1)
+		return;
+
+	if (sd->npc_id || sd->state.workinprogress&1) {
+		clif->msgtable(sd, MSG_NPC_WORK_IN_PROGRESS);
+		return;
+	}
 
 	if (!sd || !pc->checkskill(sd, MC_CARTDECORATE) || RFIFOL(fd, 2) != sd->status.account_id)
 		return;
