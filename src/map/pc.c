@@ -8714,12 +8714,10 @@ int pc_setcart(struct map_session_data *sd,int type) {
 				pc->unequipitem(sd, sd->equip_index[EQI_AMMO], PCUNEQUIPITEM_FORCE);
 			break;
 		default:/* everything else is an allowed ID so we can move on */
-			if (type >= 6 && type <= 9) {
-				if (((sd->class_&MAPID_THIRDMASK) != MAPID_GENETIC) || ((sd->class_&MAPID_THIRDMASK) != MAPID_GENETIC_T))
-					return 0;
-			}
 			if (!sd->sc.data[SC_PUSH_CART]) /* first time, so fill cart data */
 				clif->cartlist(sd);
+			if ((type >= 6 && type <= 9) && (sd->class_&MAPID_THIRDMASK) != MAPID_GENETIC)
+				return 0;
 			clif->updatestatus(sd, SP_CARTINFO);
 			sc_start(NULL,&sd->bl, SC_PUSH_CART, 100, type, 0);
 			clif->sc_load(&sd->bl, sd->bl.id, AREA, SI_ON_PUSH_CART, type, 0, 0);
