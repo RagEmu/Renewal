@@ -244,7 +244,6 @@ int unit_walktoxy_timer(int tid, int64 tick, int id, intptr_t data) {
 	struct mob_data         *md;
 	struct unit_data        *ud;
 	struct mercenary_data   *mrd;
-	struct npc_data  		*nd;
 
 	bl = map->id2bl(id);
 	if(bl == NULL)
@@ -252,7 +251,6 @@ int unit_walktoxy_timer(int tid, int64 tick, int id, intptr_t data) {
 	sd = BL_CAST(BL_PC, bl);
 	md = BL_CAST(BL_MOB, bl);
 	mrd = BL_CAST(BL_MER, bl);
-	nd = BL_CAST(BL_NPC, bl);
 	ud = unit->bl2ud(bl);
 
 	if(ud == NULL) return 0;

@@ -5598,7 +5598,6 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 			break;
 		case SO_ELEMENTAL_SHIELD: {
 				struct party_data *p;
-				short ret = 0;
 				int x0, y0, x1, y1, range, i;
 
 				if(sd == NULL || !sd->ed)
@@ -14620,7 +14619,6 @@ int skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id, 
 		if (ud) {
 			int maxcount = skill->get_maxcount(skill_id, skill_lv);
 			if (battle_config.land_skill_limit && maxcount > 0) {
-				int i;
 				for (i = 0; i < MAX_SKILLUNITGROUP && ud->skillunit[i] && maxcount; i++) {
 					if (ud->skillunit[i]->skill_id == ud->skill_id)
 						maxcount--;

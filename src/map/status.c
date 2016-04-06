@@ -1902,7 +1902,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 				(sc->data[SC_ROKISWEIL] && skill_id != BD_ADAPTATION) ||
 				(sc->data[SC_HERMODE] && skill->get_inf(skill_id) & INF_SUPPORT_SKILL) ||
 				pc_ismuted(sc, MANNER_NOSKILL) ||
-				(sc->data[SC__MANHOLE] || ((tsc = status->get_sc(target)) && tsc->data[SC__MANHOLE]) && skill_id != SC_SHADOWFORM)
+				(skill_id != SC_SHADOWFORM && (sc->data[SC__MANHOLE] || ((tsc = status->get_sc(target)) && tsc->data[SC__MANHOLE])))
 				)
 				return 0;
 
@@ -10482,8 +10482,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			switch( bl->type ){
 				case BL_HOM:
 				{
-					struct homun_data *hd = BL_CAST(BL_HOM, bl);
-						if( hd )
+						if (hd)
 							hd->homunculus.hunger = max(1, hd->homunculus.hunger - 50);
 				}
 					break;
@@ -10500,16 +10499,16 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				sc_start(bl,bl,SC_HEAT_BARREL_AFTER,100,sce->val1,skill->get_time2(RL_HEAT_BARREL,sce->val1));
 			break;
 		case SC_C_MARKER: {
-				struct map_session_data *sd = map->id2sd(sce->val2);
+				struct map_session_data *temp_sd = map->id2sd(sce->val2);
 				uint8 i = 0;
 
-				if (!sd)
+				if (temp_sd == NULL)
 					break;
-				ARR_FIND(0,MAX_SKILL_CRIMSON_MARKER,i,sd->c_marker[i] == bl->id);
+				ARR_FIND(0,MAX_SKILL_CRIMSON_MARKER,i,temp_sd->c_marker[i] == bl->id);
 				if (i < MAX_SKILL_CRIMSON_MARKER) { //Remove mark data from caster
-					clif->crimson_marker(sd,bl,1);
-					sd->c_marker[i] = 0;
-	}
+					clif->crimson_marker(temp_sd,bl,1);
+					temp_sd->c_marker[i] = 0;
+				}
 			}
 			break;
 		/*case SC_H_MINE: { //Drop the material from target if expired
@@ -11655,13 +11654,12 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 			}
 			break;
 		case SC_CBC:
-			if(--(sce->val4)>0)
-			{// Val1 is used to count the number of seconds that passed.
+			if(--(sce->val4) > 0) { // Val1 is used to count the number of seconds that passed.
 				sce->val1 += 1;
 
-				if ( sce->val1 % 2 == 0 )// Loose HP every 2 seconds.
-					if ( sce->val3 > 0 )// SPdamage value higher then 0 signals target is not a monster.
-					{// HP loss for players and other non monster entitys.
+				if ((sce->val1%2) == 0) // Loose HP every 2 seconds.
+					if (sce->val3 > 0) { // SPdamage value higher then 0 signals target is not a monster.
+					// HP loss for players and other non monster entitys.
 						if( !status->charge(bl, sce->val2, 0))
 							break;
 					}// If its a monster then use this to remove HP since status_charge won't work.
@@ -11722,11 +11720,11 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 			break;
 		case SC_C_MARKER:
 			if( --(sce->val4) >= 0 ) {
-				struct map_session_data *sd = map->id2sd(sce->val2);
+				struct map_session_data *temp_sd = map->id2sd(sce->val2);
 
-				if( !sd || sd->bl.m != bl->m ) //End status if caster isn't in same map
+				if( temp_sd == NULL || temp_sd->bl.m != bl->m ) //End status if caster isn't in same map
 					break;
-				clif->crimson_marker(sd,bl,0); //Update target position
+				clif->crimson_marker(temp_sd, bl, 0); //Update target position
 				sc_timer_next(1000 + tick,status->change_timer,bl->id,data);
 				return 0;
 	}
