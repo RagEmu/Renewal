@@ -13,6 +13,8 @@
 //= http://ragemu.org - https://github.com/RagEmu/Renewal
 //=
 //= Copyright (C) 2016  RagEmu Dev Team
+//= Copyright (C)  Jedzkie
+//= Copyright (C)  Dastgir
 //= Copyright (C)  Euphy
 //= Copyright (C)  Masao
 //= Copyright (C)  L0ne_W0lf
@@ -39,7 +41,7 @@
 //================= Description ===========================================
 //= Quests for skills: Crazy Uproar, Change Cart, Cart Revolution
 //================= Current Version =======================================
-//= 1.8
+//= 1.9
 //=========================================================================
 
 alberta,83,96,5	script	Necko	4W_M_02,7,7,{
@@ -745,4 +747,151 @@ alberta,119,221,6	script	Charlron	1_M_PAY_ELDER,{
 	mes "If it doesn't work, make it work.";
 	mes "If it doesn't work, make it work.";
 	close;
+}
+
+alberta,47,37,5	script	Cart model Expert Jason	4_M_REPAIR,{	// Cart Remodel Expert Jason
+	.@MaxCartLevel = 1;
+	.@skill_lv = getskilllv(MC_CARTDECORATE);
+	if (.@skill_lv == .@MaxCartLevel) {
+		mes "[Jason]";
+		mes "No. I am still exploring the new design course. I will teach you once I have learned it.";
+		close;
+	}
+	if (.@skill_lv == 0) {
+		mes "[Jason]";
+		mes "The original pustcard is beautiful!";
+		next;
+		mes "[Jason]";
+		mes "The grey colour, solid pushcart";
+		next;
+		mes "[Jason]";
+		mes "I can remodel into new cute designs";
+		next;
+		switch(select("What is Pushcart Decoration?", "Learn Pushcart Decoration", "End Dialog")) {
+		case 1:
+			mes "[Jason]";
+			mes "I like to remodel the poor pushcart";
+			next;
+			mes "[Jason]";
+			mes "The little remodel doesn't enough, are you agree?";
+			next;
+			mes "[Jason]";
+			mes "Therefore, you have invented some new designs.";
+			next;
+			mes "[Jason]";
+			mes "It is cute and refreshing!";
+			close;
+		case 2:
+			if (BaseClass != Job_Merchant) {
+				mes "[Jason]";
+				mes "Why you want to learn the Pushcart Decoration? Don't disturb me!";
+				close;
+			}
+			if (countitem(P_Cart_C) == 0) { // 6606
+				mes "[Jason]";
+				mes "It is difficult to learn the Pushcart Decoration.";
+				next;
+				mes "[Jason]";
+				mes "I will teach you if you bring the ^3131FFCute Cart Remodel Coupon^000000 to me.";
+				close;
+			}
+			mes "[Jason]";
+			mes "You have brought the Cute Cart Remodel Coupon, are you sure to learn Pushcart Decoration?";
+			next;
+			switch(select("YES", "NO")) {
+			case 1:
+				mes "[Jason]";
+				mes "Alright! Follow me.";
+				next;
+				mes "[Jason]";
+				mes "This design";
+				mes "need to caught the pushcart...";
+				next;
+				mes "[Jason]";
+				mes "This design";
+				mes "need to caught the pushcart,";
+				mes "Then add this....";
+				mes "¬Ò¬ß¬Ò¬ß";
+				next;
+				mes "[Jason]";
+				mes "You are genius! You have learned it!";
+				next;
+				mes "[Jason]";
+				mes "Now is your turn to do it,";
+				mes "Press Alt+S button to change your pushcart!";
+				next;
+				mes "[Jason]";
+				mes "This is new cute design pushcart, you are one of our family now...!";
+				skill MC_CARTDECORATE, 1, 0;
+				close;
+			case 2:
+				mes "[Jason]";
+				mes "Come again after you have changed your mind!";
+				close;
+			}
+		case 3:
+			close;
+		}
+	} else {
+		mes "[Jason]";
+		mes "Have you decorated the pushcart?";
+		next;
+		switch(select("Do I still need to learn?", "I forgot how to decorate pushcart")) {
+		case 1:
+			mes "[Jason]";
+			mes "I have something to teach, do you want to learn?";
+			next;
+			mes "[Jason]";
+			mes "It need ^3131FFCute Cart Remodel Coupon^000000.";
+			next;
+			switch(select("I want to learn", "No")) {
+			case 1:
+				if (countitem(P_Cart_C) == 0) { // 6606
+					mes "[Jason]";
+					mes "You don't have any Cute Cart Remodel Coupon?";
+					close;
+				}
+				mes "[Jason]";
+				mes "Ok,let's begins!";
+				next;
+				mes "[Jason]";
+				mes "Do it like this is better,";
+				mes "Do that like this as well...";
+				next;
+				mes "[Jason]";
+				mes "....";
+				mes "Let's do it!";
+				next;
+				mes "[Jason]";
+				mes "I have taught you the skill, you can try it now.";
+				skill MC_CARTDECORATE, .@skill_lv + 1, 0;
+				close;
+				
+			case 2:
+				mes "[Jason]";
+				mes "You can come back anytime.";
+				close;
+			}
+		case 2:
+			mes "[Jason]";
+			mes "Oh? Let me see";
+			next;
+			if (BaseClass != Job_Merchant) {
+				mes "[Jason]";
+				mes "Please come again after you can use the pushcart!";
+				close;
+			}
+			mes "[Jason]";
+			mes "Do I have taught you?";
+			mes "I have taught you this method.";
+			next;
+			mes "[Jason]";
+			mes "You have forgotten?";
+			mes "Let's recall back now!";
+			next;
+			mes "[Jason]";
+			mes "Think carefully, you will remember it again.";
+			close;
+		}
+	}
 }
