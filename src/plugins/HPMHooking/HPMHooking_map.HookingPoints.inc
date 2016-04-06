@@ -1,9 +1,9 @@
 /**
- * This file is part of Hercules.
+ * This file is part of RagEmu.
  *
- * Copyright (C) 2013-2016  Hercules Dev Team
+ * Copyright (C) 2016-2016  RagEmu Dev Team
  *
- * Hercules is free software: you can redistribute it and/or modify
+ * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -471,6 +471,8 @@ struct HookingPointData HookingPoints[] = {
 	{ HP_POP(clif->produce_effect, HP_clif_produce_effect) },
 	{ HP_POP(clif->devotion, HP_clif_devotion) },
 	{ HP_POP(clif->spiritball, HP_clif_spiritball) },
+	{ HP_POP(clif->hom_spiritball, HP_clif_hom_spiritball) },
+	{ HP_POP(clif->hom_skillupdateinfo, HP_clif_hom_skillupdateinfo) },
 	{ HP_POP(clif->spiritball_single, HP_clif_spiritball_single) },
 	{ HP_POP(clif->bladestop, HP_clif_bladestop) },
 	{ HP_POP(clif->mvp_effect, HP_clif_mvp_effect) },
@@ -912,6 +914,8 @@ struct HookingPointData HookingPoints[] = {
 	{ HP_POP(clif->pSkillSelectMenu, HP_clif_pSkillSelectMenu) },
 	{ HP_POP(clif->pMoveItem, HP_clif_pMoveItem) },
 	{ HP_POP(clif->pDull, HP_clif_pDull) },
+	{ HP_POP(clif->crimson_marker, HP_clif_crimson_marker) },
+	{ HP_POP(clif->crimson_marker_single, HP_clif_crimson_marker_single) },
 	{ HP_POP(clif->pBGQueueRegister, HP_clif_pBGQueueRegister) },
 	{ HP_POP(clif->pBGQueueCheckState, HP_clif_pBGQueueCheckState) },
 	{ HP_POP(clif->pBGQueueRevokeReq, HP_clif_pBGQueueRevokeReq) },
@@ -1137,6 +1141,8 @@ struct HookingPointData HookingPoints[] = {
 	{ HP_POP(homun->get_viewdata, HP_homun_get_viewdata) },
 	{ HP_POP(homun->class2type, HP_homun_class2type) },
 	{ HP_POP(homun->damaged, HP_homun_damaged) },
+	{ HP_POP(homun->addspiritball, HP_homun_addspiritball) },
+	{ HP_POP(homun->delspiritball, HP_homun_delspiritball) },
 	{ HP_POP(homun->dead, HP_homun_dead) },
 	{ HP_POP(homun->vaporize, HP_homun_vaporize) },
 	{ HP_POP(homun->delete, HP_homun_delete) },
@@ -1174,8 +1180,6 @@ struct HookingPointData HookingPoints[] = {
 	{ HP_POP(homun->read_skill_db_sub, HP_homun_read_skill_db_sub) },
 	{ HP_POP(homun->skill_db_read, HP_homun_skill_db_read) },
 	{ HP_POP(homun->exp_db_read, HP_homun_exp_db_read) },
-	{ HP_POP(homun->addspiritball, HP_homun_addspiritball) },
-	{ HP_POP(homun->delspiritball, HP_homun_delspiritball) },
 	{ HP_POP(homun->get_intimacy_grade, HP_homun_get_intimacy_grade) },
 /* instance */
 	{ HP_POP(instance->init, HP_instance_init) },
@@ -2181,6 +2185,7 @@ struct HookingPointData HookingPoints[] = {
 	{ HP_POP(pc->baselevelchanged, HP_pc_baselevelchanged) },
 	{ HP_POP(pc->level_penalty_mod, HP_pc_level_penalty_mod) },
 	{ HP_POP(pc->calc_skillpoint, HP_pc_calc_skillpoint) },
+	{ HP_POP(pc->crimson_marker_clear, HP_pc_crimson_marker_clear) },
 	{ HP_POP(pc->invincible_timer, HP_pc_invincible_timer) },
 	{ HP_POP(pc->spiritball_timer, HP_pc_spiritball_timer) },
 	{ HP_POP(pc->check_banding, HP_pc_check_banding) },
@@ -2323,6 +2328,7 @@ struct HookingPointData HookingPoints[] = {
 	{ HP_POP(script->get_val_instance_num, HP_script_get_val_instance_num) },
 	{ HP_POP(script->get_val2, HP_script_get_val2) },
 	{ HP_POP(script->push_str, HP_script_push_str) },
+	{ HP_POP(script->push_conststr, HP_script_push_conststr) },
 	{ HP_POP(script->push_copy, HP_script_push_copy) },
 	{ HP_POP(script->pop_stack, HP_script_pop_stack) },
 	{ HP_POP(script->set_constant, HP_script_set_constant) },
@@ -2625,6 +2631,7 @@ struct HookingPointData HookingPoints[] = {
 	{ HP_POP(skill->unitsetmapcell, HP_skill_unitsetmapcell) },
 	{ HP_POP(skill->unit_onplace_timer, HP_skill_unit_onplace_timer) },
 	{ HP_POP(skill->unit_effect, HP_skill_unit_effect) },
+	{ HP_POP(skill->bind_trap, HP_skill_bind_trap) },
 	{ HP_POP(skill->unit_timer_sub_onplace, HP_skill_unit_timer_sub_onplace) },
 	{ HP_POP(skill->unit_move_sub, HP_skill_unit_move_sub) },
 	{ HP_POP(skill->blockpc_end, HP_skill_blockpc_end) },

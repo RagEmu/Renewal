@@ -1,10 +1,10 @@
 /**
- * This file is part of Hercules.
- * http://herc.ws - http://github.com/HerculesWS/Hercules
+ * This file is part of RagEmu.
+ * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
- * Copyright (C) 2013-2016  Hercules Dev Team
+ * Copyright (C) 2016-2016  RagEmu Dev Team
  *
- * Hercules is free software: you can redistribute it and/or modify
+ * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -902,6 +902,10 @@ struct {
 	struct HPMHookPoint *HP_clif_devotion_post;
 	struct HPMHookPoint *HP_clif_spiritball_pre;
 	struct HPMHookPoint *HP_clif_spiritball_post;
+	struct HPMHookPoint *HP_clif_hom_spiritball_pre;
+	struct HPMHookPoint *HP_clif_hom_spiritball_post;
+	struct HPMHookPoint *HP_clif_hom_skillupdateinfo_pre;
+	struct HPMHookPoint *HP_clif_hom_skillupdateinfo_post;
 	struct HPMHookPoint *HP_clif_spiritball_single_pre;
 	struct HPMHookPoint *HP_clif_spiritball_single_post;
 	struct HPMHookPoint *HP_clif_bladestop_pre;
@@ -1784,6 +1788,10 @@ struct {
 	struct HPMHookPoint *HP_clif_pMoveItem_post;
 	struct HPMHookPoint *HP_clif_pDull_pre;
 	struct HPMHookPoint *HP_clif_pDull_post;
+	struct HPMHookPoint *HP_clif_crimson_marker_pre;
+	struct HPMHookPoint *HP_clif_crimson_marker_post;
+	struct HPMHookPoint *HP_clif_crimson_marker_single_pre;
+	struct HPMHookPoint *HP_clif_crimson_marker_single_post;
 	struct HPMHookPoint *HP_clif_pBGQueueRegister_pre;
 	struct HPMHookPoint *HP_clif_pBGQueueRegister_post;
 	struct HPMHookPoint *HP_clif_pBGQueueCheckState_pre;
@@ -2216,6 +2224,10 @@ struct {
 	struct HPMHookPoint *HP_homun_class2type_post;
 	struct HPMHookPoint *HP_homun_damaged_pre;
 	struct HPMHookPoint *HP_homun_damaged_post;
+	struct HPMHookPoint *HP_homun_addspiritball_pre;
+	struct HPMHookPoint *HP_homun_addspiritball_post;
+	struct HPMHookPoint *HP_homun_delspiritball_pre;
+	struct HPMHookPoint *HP_homun_delspiritball_post;
 	struct HPMHookPoint *HP_homun_dead_pre;
 	struct HPMHookPoint *HP_homun_dead_post;
 	struct HPMHookPoint *HP_homun_vaporize_pre;
@@ -2290,10 +2302,6 @@ struct {
 	struct HPMHookPoint *HP_homun_skill_db_read_post;
 	struct HPMHookPoint *HP_homun_exp_db_read_pre;
 	struct HPMHookPoint *HP_homun_exp_db_read_post;
-	struct HPMHookPoint *HP_homun_addspiritball_pre;
-	struct HPMHookPoint *HP_homun_addspiritball_post;
-	struct HPMHookPoint *HP_homun_delspiritball_pre;
-	struct HPMHookPoint *HP_homun_delspiritball_post;
 	struct HPMHookPoint *HP_homun_get_intimacy_grade_pre;
 	struct HPMHookPoint *HP_homun_get_intimacy_grade_post;
 	struct HPMHookPoint *HP_instance_init_pre;
@@ -4262,6 +4270,8 @@ struct {
 	struct HPMHookPoint *HP_pc_level_penalty_mod_post;
 	struct HPMHookPoint *HP_pc_calc_skillpoint_pre;
 	struct HPMHookPoint *HP_pc_calc_skillpoint_post;
+	struct HPMHookPoint *HP_pc_crimson_marker_clear_pre;
+	struct HPMHookPoint *HP_pc_crimson_marker_clear_post;
 	struct HPMHookPoint *HP_pc_invincible_timer_pre;
 	struct HPMHookPoint *HP_pc_invincible_timer_post;
 	struct HPMHookPoint *HP_pc_spiritball_timer_pre;
@@ -4538,6 +4548,8 @@ struct {
 	struct HPMHookPoint *HP_script_get_val2_post;
 	struct HPMHookPoint *HP_script_push_str_pre;
 	struct HPMHookPoint *HP_script_push_str_post;
+	struct HPMHookPoint *HP_script_push_conststr_pre;
+	struct HPMHookPoint *HP_script_push_conststr_post;
 	struct HPMHookPoint *HP_script_push_copy_pre;
 	struct HPMHookPoint *HP_script_push_copy_post;
 	struct HPMHookPoint *HP_script_pop_stack_pre;
@@ -5136,6 +5148,8 @@ struct {
 	struct HPMHookPoint *HP_skill_unit_onplace_timer_post;
 	struct HPMHookPoint *HP_skill_unit_effect_pre;
 	struct HPMHookPoint *HP_skill_unit_effect_post;
+	struct HPMHookPoint *HP_skill_bind_trap_pre;
+	struct HPMHookPoint *HP_skill_bind_trap_post;
 	struct HPMHookPoint *HP_skill_unit_timer_sub_onplace_pre;
 	struct HPMHookPoint *HP_skill_unit_timer_sub_onplace_post;
 	struct HPMHookPoint *HP_skill_unit_move_sub_pre;
@@ -6783,6 +6797,10 @@ struct {
 	int HP_clif_devotion_post;
 	int HP_clif_spiritball_pre;
 	int HP_clif_spiritball_post;
+	int HP_clif_hom_spiritball_pre;
+	int HP_clif_hom_spiritball_post;
+	int HP_clif_hom_skillupdateinfo_pre;
+	int HP_clif_hom_skillupdateinfo_post;
 	int HP_clif_spiritball_single_pre;
 	int HP_clif_spiritball_single_post;
 	int HP_clif_bladestop_pre;
@@ -7665,6 +7683,10 @@ struct {
 	int HP_clif_pMoveItem_post;
 	int HP_clif_pDull_pre;
 	int HP_clif_pDull_post;
+	int HP_clif_crimson_marker_pre;
+	int HP_clif_crimson_marker_post;
+	int HP_clif_crimson_marker_single_pre;
+	int HP_clif_crimson_marker_single_post;
 	int HP_clif_pBGQueueRegister_pre;
 	int HP_clif_pBGQueueRegister_post;
 	int HP_clif_pBGQueueCheckState_pre;
@@ -8097,6 +8119,10 @@ struct {
 	int HP_homun_class2type_post;
 	int HP_homun_damaged_pre;
 	int HP_homun_damaged_post;
+	int HP_homun_addspiritball_pre;
+	int HP_homun_addspiritball_post;
+	int HP_homun_delspiritball_pre;
+	int HP_homun_delspiritball_post;
 	int HP_homun_dead_pre;
 	int HP_homun_dead_post;
 	int HP_homun_vaporize_pre;
@@ -8171,10 +8197,6 @@ struct {
 	int HP_homun_skill_db_read_post;
 	int HP_homun_exp_db_read_pre;
 	int HP_homun_exp_db_read_post;
-	int HP_homun_addspiritball_pre;
-	int HP_homun_addspiritball_post;
-	int HP_homun_delspiritball_pre;
-	int HP_homun_delspiritball_post;
 	int HP_homun_get_intimacy_grade_pre;
 	int HP_homun_get_intimacy_grade_post;
 	int HP_instance_init_pre;
@@ -10143,6 +10165,8 @@ struct {
 	int HP_pc_level_penalty_mod_post;
 	int HP_pc_calc_skillpoint_pre;
 	int HP_pc_calc_skillpoint_post;
+	int HP_pc_crimson_marker_clear_pre;
+	int HP_pc_crimson_marker_clear_post;
 	int HP_pc_invincible_timer_pre;
 	int HP_pc_invincible_timer_post;
 	int HP_pc_spiritball_timer_pre;
@@ -10419,6 +10443,8 @@ struct {
 	int HP_script_get_val2_post;
 	int HP_script_push_str_pre;
 	int HP_script_push_str_post;
+	int HP_script_push_conststr_pre;
+	int HP_script_push_conststr_post;
 	int HP_script_push_copy_pre;
 	int HP_script_push_copy_post;
 	int HP_script_pop_stack_pre;
@@ -11017,6 +11043,8 @@ struct {
 	int HP_skill_unit_onplace_timer_post;
 	int HP_skill_unit_effect_pre;
 	int HP_skill_unit_effect_post;
+	int HP_skill_bind_trap_pre;
+	int HP_skill_bind_trap_post;
 	int HP_skill_unit_timer_sub_onplace_pre;
 	int HP_skill_unit_timer_sub_onplace_post;
 	int HP_skill_unit_move_sub_pre;
