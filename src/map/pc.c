@@ -8703,24 +8703,27 @@ int pc_setcart(struct map_session_data *sd,int type) {
 		status_change_end(&sd->bl,SC_GN_CARTBOOST,INVALID_TIMER);
 
 #ifdef NEW_CARTS
-
-	switch( type ) {
+	switch (type) {
 		case 0:
-			if( !sd->sc.data[SC_PUSH_CART] )
+			if (!sd->sc.data[SC_PUSH_CART])
 				return 0;
-			status_change_end(&sd->bl,SC_PUSH_CART,INVALID_TIMER);
+			status_change_end(&sd->bl, SC_PUSH_CART, INVALID_TIMER);
 			clif->clearcart(sd->fd);
 			clif->updatestatus(sd, SP_CARTINFO);
-			if ( sd->equip_index[EQI_AMMO] > 0 )
+			if (sd->equip_index[EQI_AMMO] > 0)
 				pc->unequipitem(sd, sd->equip_index[EQI_AMMO], PCUNEQUIPITEM_FORCE);
 			break;
 		default:/* everything else is an allowed ID so we can move on */
-			if( !sd->sc.data[SC_PUSH_CART] ) /* first time, so fill cart data */
+			if (type >= 6 && type <= 9) {
+				if (((sd->class_&MAPID_THIRDMASK) != MAPID_GENETIC) || ((sd->class_&MAPID_THIRDMASK) != MAPID_GENETIC_T))
+					return 0;
+			}
+			if (!sd->sc.data[SC_PUSH_CART]) /* first time, so fill cart data */
 				clif->cartlist(sd);
 			clif->updatestatus(sd, SP_CARTINFO);
 			sc_start(NULL,&sd->bl, SC_PUSH_CART, 100, type, 0);
 			clif->sc_load(&sd->bl, sd->bl.id, AREA, SI_ON_PUSH_CART, type, 0, 0);
-			if( sd->sc.data[SC_PUSH_CART] )/* forcefully update */
+			if (sd->sc.data[SC_PUSH_CART])/* forcefully update */
 				sd->sc.data[SC_PUSH_CART]->val1 = type;
 			break;
 	}
