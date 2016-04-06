@@ -822,6 +822,7 @@ alberta,47,37,5	script	Cart model Expert Jason	4_M_REPAIR,{	// Cart Remodel Expe
 				next;
 				mes "[Jason]";
 				mes "This is new cute design pushcart, you are one of our family now...!";
+				delitem P_Cart_C, 1;
 				skill MC_CARTDECORATE, 1, 0;
 				close;
 			case 2:
@@ -864,6 +865,7 @@ alberta,47,37,5	script	Cart model Expert Jason	4_M_REPAIR,{	// Cart Remodel Expe
 				next;
 				mes "[Jason]";
 				mes "I have taught you the skill, you can try it now.";
+				delitem P_Cart_C, 1;
 				skill MC_CARTDECORATE, .@skill_lv + 1, 0;
 				close;
 				
