@@ -106,7 +106,7 @@ void constdb2doc_skilldb(void)
 
 	nullpo_retv(out_fp);
 
-	fprintf(out_fp, "## Skills (db/"DBPATH"skill_db.txt)\n\n");
+	fprintf(out_fp, "## Skills (db/skill_db.txt)\n\n");
 	for (i = 1; i < MAX_SKILL_DB; i++) {
 		if (skill->dbs->db[i].name[0] != '\0')
 			fprintf(out_fp, "- `%s`: %d\n", skill->dbs->db[i].name, skill->dbs->db[i].nameid);
@@ -120,7 +120,7 @@ void constdb2doc_mobdb(void)
 
 	nullpo_retv(out_fp);
 
-	fprintf(out_fp, "## Mobs (db/"DBPATH"mob_db.txt)\n\n");
+	fprintf(out_fp, "## Mobs (db/mob_db.txt)\n\n");
 	for (i = 0; i < MAX_MOB_DB; i++) {
 		struct mob_db *md = mob->db(i);
 		if (md == mob->dummy || md->sprite[0] == '\0')
@@ -145,7 +145,7 @@ void constdb2doc_itemdb(void)
 
 	nullpo_retv(out_fp);
 
-	fprintf(out_fp, "## Items (db/"DBPATH"item_db.conf)\n");
+	fprintf(out_fp, "## Items (db/item_db.conf)\n");
 	for (i = 0; i < ARRAYLENGTH(itemdb->array); i++) {
 		struct item_data *id = constdb2doc_itemdb_search(i);
 		if (id == NULL || id->name[0] == '\0')

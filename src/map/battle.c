@@ -1714,15 +1714,11 @@ int battle_calc_skillratio(int attack_type, struct block_list *src, struct block
 					break;
 				case AC_DOUBLE:
 				case MA_DOUBLE:
-					skillratio += 10 * (skill_lv-1);
+					skillratio += 10 * (skill_lv - 1);
 					break;
 				case AC_SHOWER:
 				case MA_SHOWER:
-					#ifdef RENEWAL
-						skillratio += 50 + 10 * skill_lv;
-					#else
-						skillratio += -25 + 5 * skill_lv;
-					#endif
+					skillratio += 50 + 10 * skill_lv;
 					break;
 				case AC_CHARGEARROW:
 				case MA_CHARGEARROW:
@@ -1739,7 +1735,7 @@ int battle_calc_skillratio(int attack_type, struct block_list *src, struct block
 					skillratio += 20 * skill_lv;
 					break;
 				case KN_SPEARBOOMERANG:
-					skillratio += 50*skill_lv;
+					skillratio += 50 * skill_lv;
 					break;
 				case KN_BRANDISHSPEAR:
 				case ML_BRANDISH:

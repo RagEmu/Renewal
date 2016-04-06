@@ -44,12 +44,6 @@ HPExport struct hplugin_info pinfo = {
 	HPM_VERSION,     // HPM Version (don't change, macro is automatically updated)
 };
 
-#ifdef RENEWAL
-#define DBSUFFIX "_re"
-#else // not RENEWAL
-#define DBSUFFIX ""
-#endif
-
 /// Conversion state tracking.
 struct {
 	FILE *fp; ///< Currently open file pointer
@@ -488,7 +482,7 @@ void do_itemdb2sql(void)
 		const char *source;
 		const char *destination;
 	} files[] = {
-		{"item_db", DBPATH"item_db.conf", "sql-files/item_db" DBSUFFIX ".sql"},
+		{"item_db", "item_db.conf", "sql-files/item_db.sql"},
 		{"item_db2", "item_db2.conf", "sql-files/item_db2.sql"},
 	};
 
@@ -760,7 +754,7 @@ void do_mobdb2sql(void)
 		const char *source;
 		const char *destination;
 	} files[] = {
-		{"mob_db", DBPATH"mob_db.conf", "sql-files/mob_db" DBSUFFIX ".sql"},
+		{"mob_db", "mob_db.conf", "sql-files/mob_db.sql"},
 		{"mob_db2", "mob_db2.conf", "sql-files/mob_db2.sql"},
 	};
 
