@@ -11657,15 +11657,15 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 			if(--(sce->val4) > 0) { // Val1 is used to count the number of seconds that passed.
 				sce->val1 += 1;
 
-				if ((sce->val1%2) == 0) // Loose HP every 2 seconds.
+				if ((sce->val1%2) == 0) { // Loose HP every 2 seconds.
 					if (sce->val3 > 0) { // SPdamage value higher then 0 signals target is not a monster.
-					// HP loss for players and other non monster entitys.
-						if( !status->charge(bl, sce->val2, 0))
+						// HP loss for players and other non monster entitys.
+						if (!status->charge(bl, sce->val2, 0))
 							break;
-					}// If its a monster then use this to remove HP since status_charge won't work.
-					else if (!status->damage(NULL, bl, sce->val2, 0, 0, 3))
-
-				if ( sce->val1 % 3 == 0 )// Loose SP every 3 seconds.
+					} else if (!status->damage(NULL, bl, sce->val2, 0, 0, 3)) {	// If its a monster then use this to remove HP since status_charge won't work.
+						break;
+					}
+				} else if (sce->val1 % 3 == 0) // Loose SP every 3 seconds.
 					status->charge(bl, 0, sce->val3);
 
 				sc_timer_next(1000+tick, status->change_timer,bl->id, data);
