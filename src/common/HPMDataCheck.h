@@ -2,7 +2,9 @@
  * This file is part of RagEmu.
  * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
- * Copyright (C) 2016  RagEmu Dev Team
+ * Copyright (C) 2016-2016  RagEmu Dev Team
+ * Copyright (C) 2014-2015  Hercules Dev Team
+ *
  * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -518,6 +520,7 @@ HPExport const struct s_HPMDataCheck HPMDataCheck[] = {
 		{ "packet_itemlist_equip", sizeof(struct packet_itemlist_equip), SERVER_TYPE_MAP },
 		{ "packet_itemlist_normal", sizeof(struct packet_itemlist_normal), SERVER_TYPE_MAP },
 		{ "packet_maptypeproperty2", sizeof(struct packet_maptypeproperty2), SERVER_TYPE_MAP },
+		{ "packet_markerinfo", sizeof(struct packet_markerinfo), SERVER_TYPE_MAP },
 		{ "packet_mission_info_sub", sizeof(struct packet_mission_info_sub), SERVER_TYPE_MAP },
 		{ "packet_monster_hp", sizeof(struct packet_monster_hp), SERVER_TYPE_MAP },
 		{ "packet_notify_bounditem", sizeof(struct packet_notify_bounditem), SERVER_TYPE_MAP },

@@ -1,11 +1,12 @@
 language: c
-sudo: false
+sudo: required
 addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
     packages:
     - gcc-5
+    - gdb
 
 install:
   - ./travis.sh getplugins || true
@@ -19,6 +20,7 @@ before_script:
 script:
   - ./travis.sh build $CONFIGURE_FLAGS
   - ./travis.sh test ragnarok travis travis
+  - for i in $(find ./ -maxdepth 1 -name 'core*' -print); do gdb $(pwd)/map-server core* -ex "thread apply all bt" -ex "set pagination 0" -batch; done;
 
 # We can't use this, unfortunately
 # http://github.com/travis-ci/travis-ci/issues/979

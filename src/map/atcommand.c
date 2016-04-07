@@ -3,6 +3,9 @@
  * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
  * Copyright (C) 2016  RagEmu Dev Team
+ * Copyright (C) 2012-2016  Hercules Dev Team
+ * Copyright (C)  Athena Dev Teams
+ *
  * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -3224,7 +3227,7 @@ ACMD(spiritball)
 	if( sd->spiritball > 0 )
 		pc->delspiritball(sd, sd->spiritball, 1);
 	sd->spiritball = number;
-	clif->spiritball(&sd->bl,&sd->bl,AREA);
+	clif->spiritball(sd);
 	// no message, player can look the difference
 
 	return true;

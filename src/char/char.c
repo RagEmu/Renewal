@@ -3,6 +3,9 @@
  * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
  * Copyright (C) 2016  RagEmu Dev Team
+ * Copyright (C) 2012-2015  Hercules Dev Team
+ * Copyright (C)  Athena Dev Teams
+ *
  * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -5533,7 +5536,7 @@ int char_config_read(const char* cfgName)
 		} else if (strcmpi(w1, "save_log") == 0) {
 			save_log = config_switch(w2);
 		}
-		else if (strcmpi(w1, "start_point_re") == 0) {
+		else if (strcmpi(w1, "start_point") == 0) {
 			char map[MAP_NAME_LENGTH_EXT];
 			int x, y;
 			if (sscanf(w2, "%15[^,],%d,%d", map, &x, &y) < 3)

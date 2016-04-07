@@ -3,6 +3,9 @@
  * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
  * Copyright (C) 2016  RagEmu Dev Team
+ * Copyright (C) 2012-2015  Hercules Dev Team
+ * Copyright (C)  Athena Dev Teams
+ *
  * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -34,7 +37,7 @@
  * - On 'timeout' the npc dialog window changes its next/menu to a 'close' button
  * Uncomment to enable
  **/
-//#define SECURE_NPCTIMEOUT
+#define SECURE_NPCTIMEOUT
 
 /**
  * number of seconds to 'timeout' if the user is on idle for longer than the value allowed after a 'input' field is displayed.

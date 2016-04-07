@@ -3,6 +3,9 @@
  * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
  * Copyright (C) 2016  RagEmu Dev Team
+ * Copyright (C) 2012-2015  Hercules Dev Team
+ * Copyright (C)  Athena Dev Teams
+ *
  * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -808,21 +811,9 @@ typedef enum sc_type {
 	SC_M_LIFEPOTION,
 	SC_G_LIFEPOTION, // 640
 	SC_MYSTICPOWDER,
-	
-	//Summoner
-	SC_SUHIDE,
-	SC_SU_STOOP,
-	SC_SPRITEMABLE,
-	SC_CATNIPPOWDER,
-	SC_SV_ROOTTWIST,
-	SC_BITESCAR,
-	SC_ARCLOUSEDASH,
-	SC_TUNAPARTY,
-	SC_SHRIMP,	// 650
-	SC_FRESHSHRIMP,
 
 	// Rebellion
-	SC_HEAT_BARREL = 900,
+	SC_HEAT_BARREL,
 	SC_HEAT_BARREL_AFTER,
 	SC_P_ALTER,
 	SC_E_CHAIN,
@@ -830,9 +821,10 @@ typedef enum sc_type {
 	SC_ANTI_M_BLAST,
 	SC_B_TRAP,
 	SC_H_MINE,
-	SC_QD_SHOT_READY,
+	SC_QD_SHOT_READY, // 650
+	
 	// Homunculus S
-	SC_LIGHT_OF_REGENE = 950,
+	SC_LIGHT_OF_REGENE,
 	SC_OVERED_BOOST,
 	SC_NEEDLE_OF_PARALYZE,
 	SC_PAIN_KILLER,
@@ -841,7 +833,7 @@ typedef enum sc_type {
 	SC_PYROCLASTIC,
 	SC_VOLCANIC_ASH,
 	SC_STYLE_CHANGE,
-	SC_SONIC_CRAW_POSTDELAY,
+	SC_SONIC_CLAW_POSTDELAY, // 660
 	SC_SILVERVEIN_RUSH_POSTDELAY,
 	SC_TINDER_BREAKER,
 	SC_TINDER_BREAKER_POSTDELAY,
@@ -850,7 +842,19 @@ typedef enum sc_type {
 	SC_EQC,
 	SC_GOLDENE_FERSE,
 	SC_ANGRIFFS_MODUS,
-	SC_SPIRITBALL,
+	SC_MIDNIGHT_FRENZY_POSTDELAY,
+	
+	//Summoner
+	SC_SUHIDE, // 670
+	SC_SU_STOOP,
+	SC_SPRITEMABLE,
+	SC_CATNIPPOWDER,
+	SC_SV_ROOTTWIST,
+	SC_BITESCAR,
+	SC_ARCLOUSEDASH,
+	SC_TUNAPARTY,
+	SC_SHRIMP,
+	SC_FRESHSHRIMP,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
@@ -2248,15 +2252,12 @@ struct status_interface {
 	int (*get_emblem_id) (const struct block_list *bl);
 	int (*get_mexp) (const struct block_list *bl);
 	int (*get_race2) (const struct block_list *bl);
-	int (*get_spiritball) (struct block_list *bl);
-	int (*charge_spiritball) (struct block_list *bl, int num);
 	struct view_data * (*get_viewdata) (struct block_list *bl);
 	void (*set_viewdata) (struct block_list *bl, int class_);
 	void (*change_init) (struct block_list *bl);
 	struct status_change * (*get_sc) (struct block_list *bl);
 	int (*isdead) (struct block_list *bl);
 	int (*isimmune) (struct block_list *bl);
-	int (*get_sc_base_duration) (struct block_list *bl, enum sc_type type, int skill_lv);
 	int (*get_sc_def) (struct block_list *src, struct block_list *bl, enum sc_type type, int rate, int tick, int flag);
 	int (*change_start) (struct block_list *src, struct block_list *bl, enum sc_type type, int rate, int val1, int val2, int val3, int val4, int tick, int flag);
 	int (*change_end_) (struct block_list* bl, enum sc_type type, int tid, const char* file, int line);

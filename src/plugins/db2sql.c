@@ -3,6 +3,8 @@
  * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
  * Copyright (C) 2016  RagEmu Dev Team
+ * Copyright (C) 2013-2015  Hercules Dev Team
+ *
  * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -43,12 +45,6 @@ HPExport struct hplugin_info pinfo = {
 	"0.5",           // Plugin version
 	HPM_VERSION,     // HPM Version (don't change, macro is automatically updated)
 };
-
-#ifdef RENEWAL
-#define DBSUFFIX "_re"
-#else // not RENEWAL
-#define DBSUFFIX ""
-#endif
 
 /// Conversion state tracking.
 struct {
@@ -488,7 +484,7 @@ void do_itemdb2sql(void)
 		const char *source;
 		const char *destination;
 	} files[] = {
-		{"item_db", DBPATH"item_db.conf", "sql-files/item_db" DBSUFFIX ".sql"},
+		{"item_db", "item_db.conf", "sql-files/item_db.sql"},
 		{"item_db2", "item_db2.conf", "sql-files/item_db2.sql"},
 	};
 
@@ -760,7 +756,7 @@ void do_mobdb2sql(void)
 		const char *source;
 		const char *destination;
 	} files[] = {
-		{"mob_db", DBPATH"mob_db.conf", "sql-files/mob_db" DBSUFFIX ".sql"},
+		{"mob_db", "mob_db.conf", "sql-files/mob_db.sql"},
 		{"mob_db2", "mob_db2.conf", "sql-files/mob_db2.sql"},
 	};
 

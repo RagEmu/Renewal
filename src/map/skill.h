@@ -3,6 +3,9 @@
  * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
  * Copyright (C) 2016  RagEmu Dev Team
+ * Copyright (C) 2012-2015  Hercules Dev Team
+ * Copyright (C)  Athena Dev Teams
+ *
  * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -49,7 +52,7 @@ struct status_change_entry;
 #define MAX_SKILL_ABRA_DB         210
 #define MAX_SKILL_IMPROVISE_DB    30
 #define MAX_SKILL_LEVEL           10
-#define MAX_SKILL_UNIT_LAYOUT     45
+#define MAX_SKILL_UNIT_LAYOUT     51
 #define MAX_SQUARE_LAYOUT         5 // 11*11 Placement of a maximum unit
 #define MAX_SKILL_UNIT_COUNT      ((MAX_SQUARE_LAYOUT*2+1)*(MAX_SQUARE_LAYOUT*2+1))
 #define MAX_SKILLTIMERSKILL       15
@@ -180,6 +183,8 @@ enum {
 	ST_POISONINGWEAPON,
 	ST_ROLLINGCUTTER,
 	ST_PECO,
+	ST_FIGHTER,
+	ST_GRAPPLER,
 };
 
 enum e_skill {

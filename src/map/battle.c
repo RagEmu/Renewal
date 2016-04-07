@@ -3,6 +3,9 @@
  * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
  * Copyright (C) 2016  RagEmu Dev Team
+ * Copyright (C) 2012-2016  Hercules Dev Team
+ * Copyright (C)  Athena Dev Teams
+ *
  * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -1720,15 +1723,11 @@ int battle_calc_skillratio(int attack_type, struct block_list *src, struct block
 					break;
 				case AC_DOUBLE:
 				case MA_DOUBLE:
-					skillratio += 10 * (skill_lv-1);
+					skillratio += 10 * (skill_lv - 1);
 					break;
 				case AC_SHOWER:
 				case MA_SHOWER:
-					#ifdef RENEWAL
-						skillratio += 50 + 10 * skill_lv;
-					#else
-						skillratio += -25 + 5 * skill_lv;
-					#endif
+					skillratio += 50 + 10 * skill_lv;
 					break;
 				case AC_CHARGEARROW:
 				case MA_CHARGEARROW:
@@ -1745,7 +1744,7 @@ int battle_calc_skillratio(int attack_type, struct block_list *src, struct block
 					skillratio += 20 * skill_lv;
 					break;
 				case KN_SPEARBOOMERANG:
-					skillratio += 50*skill_lv;
+					skillratio += 50 * skill_lv;
 					break;
 				case KN_BRANDISHSPEAR:
 				case ML_BRANDISH:
@@ -2460,16 +2459,16 @@ int battle_calc_skillratio(int attack_type, struct block_list *src, struct block
 					skillratio = (10 * skill_lv + status->get_lv(src)) * 2 * status->get_lv(src) / 100;
 					break;
 				case MH_SONIC_CRAW:
-					skillratio = 40 * skill_lv * status->get_lv(src) / 150;
+					skillratio = (40 * skill_lv) * status->get_lv(src) / 150;
 					break;
 				case MH_SILVERVEIN_RUSH:
-					skillratio = 150 * skill_lv * status->get_lv(src) / 100;
+					skillratio = (150 * skill_lv) * status->get_lv(src) / 100;
 					break;
 				case MH_MIDNIGHT_FRENZY:
-					skillratio = 300 * skill_lv * status->get_lv(src) / 150;
+					skillratio = (300 * skill_lv) * status->get_lv(src) / 150;
 					break;
 				case MH_TINDER_BREAKER:
-					skillratio += -100 + (100 * skill_lv + 3 * status_get_str(src)) * status->get_lv(src) / 120;
+					skillratio = (100 * skill_lv + 3 * st->str) * status->get_lv(src) / 120;
 					break;
 				case MH_STAHL_HORN:
 					skillratio = (500 + 100 * skill_lv) * status->get_lv(src) / 150;
@@ -2579,6 +2578,7 @@ void battle_calc_skillratio_weapon_unknown(int *attack_type, struct block_list *
  *------------------------------------------*/
 int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damage *d,int64 damage,uint16 skill_id,uint16 skill_lv) {
 	struct map_session_data *s_sd, *t_sd;
+	struct homun_data *hd = NULL;
 	struct status_change *s_sc, *sc;
 	struct status_change_entry *sce;
 	int div_, flag;
@@ -2610,6 +2610,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		if(!damage) return 0;
 	}
+	else if ( bl->type == BL_HOM )
+		hd=(struct homun_data *)bl;
 
 	s_sc = status->get_sc(src);
 	sc = status->get_sc(bl);
@@ -2942,10 +2944,10 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 
 		if( (sce = sc->data[SC_PAIN_KILLER]) ) {
-			int div_ = (skill_id ? skill->get_num(skill_id,skill_lv) : d->div_);
+			int div_temp = (skill_id ? skill->get_num(skill_id,skill_lv) : d->div_);
 
-			damage -= (div_ < 0 ? sce->val3 : div_ * sce->val3);
-			damage = max(damage,1);
+			damage -= (div_temp < 0 ? sce->val3 : div_temp * sce->val3);
+			damage = max(damage, 1);
 		}
 
 		if( (sce = sc->data[SC_DARKCROW]) && (flag&(BF_SHORT|BF_WEAPON)) == (BF_SHORT|BF_WEAPON) )
@@ -3039,6 +3041,9 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if( sc->data[SC__DEADLYINFECT]  && flag&BF_WEAPON && rnd()%100 < 30 + 10 * sc->data[SC__DEADLYINFECT]->val1 && !is_boss(src) )
 			status->change_spread(bl, src); // Deadly infect attacked side
 
+		if ( hd && (sce = sc->data[SC_STYLE_CHANGE]) && sce->val1 == GRAPPLER_STYLE && rand()%100 < sce->val2 )
+			homun->addspiritball(hd,MAX_HOMUN_SPHERES);
+
 		if (t_sd && damage > 0 && (sce = sc->data[SC_GENTLETOUCH_ENERGYGAIN]) != NULL) {
 			if ( rnd() % 100 < sce->val2 )
 				pc->addspiritball(t_sd, skill->get_time(MO_CALLSPIRITS, 1), pc->getmaxspiritball(t_sd, 0));
@@ -3123,27 +3128,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			|| (flag&BF_MISC && battle_config.skill_min_damage&4)
 		)
 			damage = div_;
-	}
-
-	// Eleanor gets spheres when attacking / receiving damage, depending on SC_STYLE_CHANGE active or not
-	if ( !skill_id && rnd()%100 < 50 ) {
-		struct block_list *sphere_bl = 0;
-		if ( sc && sc->data[SC_STYLE_CHANGE] )	// Receiving damage with style change 
-			sphere_bl = bl;
-		else if ( src->type == BL_HOM && homun->checkskill(BL_CAST(BL_HOM,src),MH_STYLE_CHANGE) && s_sc && !s_sc->data[SC_STYLE_CHANGE] )	// Attacking without style change
-			sphere_bl = src;
-
-		// Conditions are met. Add sphere.
-		if ( sphere_bl ) {
-			TBL_HOM *hd = BL_CAST(BL_HOM,sphere_bl);
-			if ( hd ) {
-				int new_spiritballs = cap_value(hd->spiritballs+1,0,10);
-				if ( hd->spiritballs != new_spiritballs ) {
-					hd->spiritballs = new_spiritballs;
-					clif->spiritball3(&hd->bl,&hd->bl,AREA);
-				}
-			}
-		}
 	}
 
 	if( bl->type == BL_MOB && !status->isdead(bl) && src != bl) {
@@ -3852,13 +3836,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	case NPC_EVILLAND:
 		md.damage = skill->calc_heal(src,target,skill_id,skill_lv,false);
 		break;
-	case RK_DRAGONBREATH:
-	case RK_DRAGONBREATH_WATER:
-		md.damage = ((status_get_hp(src) / 50) + (status_get_max_sp(src) / 4)) * skill_lv;
-		RE_LVL_MDMOD(150);
-		if (sd) md.damage = md.damage * (95 + 5 * pc->checkskill(sd,RK_DRAGONTRAINING)) / 100;
-		md.flag |= BF_LONG|BF_WEAPON;
-		break;
 	/**
 	 * Ranger
 	 **/
@@ -3907,8 +3884,11 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	case RL_B_TRAP:
 		md.damage = (skill_lv * 3 * status_get_max_hp(target) / 100) + (tstatus->dex*10);
 		break;
-	case MH_EQC:	// After skill use, Target loses (Skill Level * 2)% Max HP
-		md.damage = skill_lv * 2 * status_get_max_hp(target) / 100;
+	case MH_EQC:
+		md.damage = tstatus->hp - sstatus->hp;
+		if ( md.damage < 0 )
+			md.damage = 1;
+		break;
 	case KO_HAPPOKUNAI:
 		{
 			struct Damage wd = battle->calc_weapon_attack(src, target, 0, 1, mflag);
@@ -4076,6 +4056,7 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 	bool n_ele = false; // non-elemental
 
 	struct map_session_data *sd, *tsd;
+	struct homun_data *hd;
 	struct Damage wd;
 	struct status_change *sc = status->get_sc(src);
 	struct status_change *tsc = status->get_sc(target);
@@ -4139,6 +4120,7 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 
 	sd = BL_CAST(BL_PC, src);
 	tsd = BL_CAST(BL_PC, target);
+	hd = BL_CAST(BL_HOM, src);
 
 	if(sd)
 		wd.blewcount += battle->blewcount_bonus(sd, skill_id);
@@ -4160,9 +4142,6 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 					else
 						wd.div_ = sd->spiritball_old;
 				}
-				break;
-			case MH_SONIC_CRAW:
-				wd.div_ = status->get_spiritball(src);
 				break;
 			case HT_PHANTASMIC:
 				//Since these do not consume ammo, they need to be explicitly set as arrow attacks.
@@ -4209,6 +4188,13 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 			case LG_HESPERUSLIT:
 				if( sc && sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 3 )
 					wd.div_ = sc->data[SC_BANDING]->val2;
+				break;
+
+			case MH_SONIC_CRAW:
+				if (hd)
+					wd.div_ = hd->hom_spiritball_old;
+				else
+					wd.div_ = 10;
 				break;
 
 			case MO_INVESTIGATE:
@@ -4624,7 +4610,6 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 				break;
 			case HFLI_SBR44: //[orn]
 				if (src->type == BL_HOM) {
-					const struct homun_data *hd = BL_UCCAST(BL_HOM, src);
 					wd.damage = hd->homunculus.intimacy;
 					break;
 				}
@@ -4873,14 +4858,6 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 				wd.damage = 20 * skill_lv;
 				break;
 		}
-		//The following are applied on top of current damage and are stackable.
-		if ( sc ) {
-			if(sc->data[SC_STYLE_CHANGE]){
-				struct homun_data *hd = BL_CAST(BL_HOM, src);
-				if (hd != NULL)
-					ATK_ADD(hd->homunculus.spiritball * 3);
-				}
-			}
 
 		switch (skill_id) {
 			case AS_SONICBLOW:
@@ -5143,6 +5120,10 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 			}
 			flag.lh = 1;
 		}
+	}
+	else if (hd)
+	{// Homunculus Spirit Sphere's ATK Bonus
+		ATK_ADD(wd.div_*hd->hom_spiritball*3);
 	}
 
 	if(!flag.rh && wd.damage)
@@ -5611,8 +5592,10 @@ int battle_damage_area(struct block_list *bl, va_list ap) {
 // FIXME: flag is undocumented
 enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* target, int64 tick, int flag) {
 	struct map_session_data *sd = NULL, *tsd = NULL;
+	struct homun_data *hd = NULL;
 	struct status_data *sstatus, *tstatus;
 	struct status_change *sc, *tsc;
+	struct status_change_entry *sce;
 	int64 damage;
 	int skillv;
 	struct Damage wd;
@@ -5625,6 +5608,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 	sd = BL_CAST(BL_PC, src);
 	tsd = BL_CAST(BL_PC, target);
+	hd = BL_CAST(BL_HOM, src);
 
 	sstatus = status->get_status_data(src);
 	tstatus = status->get_status_data(target);
@@ -5751,6 +5735,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		if( tsc && tsc->data[SC_MTF_MLEATKED] && rnd()%100 < 20 )
 			clif->skill_nodamage(target, target, SM_ENDURE, 5,
 				sc_start(target,target, SC_ENDURE, 100, 5, skill->get_time(SM_ENDURE, 5)));
+		if ( hd && (sce = sc->data[SC_STYLE_CHANGE]) && sce->val1 == FIGHTER_STYLE && rand()%100 < sce->val2 )
+			homun->addspiritball(hd,MAX_HOMUN_SPHERES);
 	}
 
 	if(tsc && tsc->data[SC_KAAHI] && tsc->data[SC_KAAHI]->val4 == INVALID_TIMER && tstatus->hp < tstatus->max_hp)
@@ -5809,7 +5795,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		battle->delay_damage(tick, wd.amotion, src, target, wd.flag, 0, 0, damage, wd.dmg_lv, wd.dmotion, true);
 	if( tsc ) {
 		if( tsc->data[SC_DEVOTION] ) {
-			struct status_change_entry *sce = tsc->data[SC_DEVOTION];
+			sce = tsc->data[SC_DEVOTION];
 			struct block_list *d_bl = map->id2bl(sce->val1);
 			struct mercenary_data *d_md = BL_CAST(BL_MER, d_bl);
 			struct map_session_data *d_sd = BL_CAST(BL_PC, d_bl);
@@ -5947,7 +5933,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		 && status->check_skilluse(target, src, TF_POISON, 0)
 		) {
 			//Poison React
-			struct status_change_entry *sce = tsc->data[SC_POISONREACT];
+			sce = tsc->data[SC_POISONREACT];
 			if (sstatus->def_ele == ELE_POISON) {
 				sce->val2 = 0;
 				skill->attack(BF_WEAPON,target,target,src,AS_POISONREACT,sce->val1,tick,0);

@@ -3,6 +3,9 @@
  * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
  * Copyright (C) 2016  RagEmu Dev Team
+ * Copyright (C) 2012-2016  Hercules Dev Team
+ * Copyright (C)  Athena Dev Teams
+ *
  * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -187,7 +190,7 @@ int pc_spiritball_timer(int tid, int64 tick, int id, intptr_t data) {
 		memmove(sd->spirit_timer+i, sd->spirit_timer+i+1, (sd->spiritball-i)*sizeof(int));
 	sd->spirit_timer[sd->spiritball] = INVALID_TIMER;
 
-	clif->spiritball(&sd->bl,&sd->bl,AREA);
+	clif->spiritball(sd);
 
 	return 0;
 }
@@ -243,7 +246,7 @@ int pc_addspiritball(struct map_session_data *sd,int interval,int max)
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
 		clif->millenniumshield(&sd->bl,sd->spiritball);
 	else
-		clif->spiritball(&sd->bl,&sd->bl,AREA);
+		clif->spiritball(sd);
 
 	return 0;
 }
@@ -282,7 +285,7 @@ int pc_delspiritball(struct map_session_data *sd,int count,int type)
 		if( (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
 			clif->millenniumshield(&sd->bl,sd->spiritball);
 		else
-			clif->spiritball(&sd->bl,&sd->bl,AREA);
+			clif->spiritball(sd);
 	}
 	return 0;
 }
@@ -8718,30 +8721,30 @@ int pc_setcart(struct map_session_data *sd,int type) {
 		status_change_end(&sd->bl,SC_GN_CARTBOOST,INVALID_TIMER);
 
 #ifdef NEW_CARTS
-
-	switch( type ) {
+	switch (type) {
 		case 0:
-			if( !sd->sc.data[SC_PUSH_CART] )
+			if (!sd->sc.data[SC_PUSH_CART])
 				return 0;
-			status_change_end(&sd->bl,SC_PUSH_CART,INVALID_TIMER);
+			status_change_end(&sd->bl, SC_PUSH_CART, INVALID_TIMER);
 			clif->clearcart(sd->fd);
 			clif->updatestatus(sd, SP_CARTINFO);
-			if ( sd->equip_index[EQI_AMMO] > 0 )
+			if (sd->equip_index[EQI_AMMO] > 0)
 				pc->unequipitem(sd, sd->equip_index[EQI_AMMO], PCUNEQUIPITEM_FORCE);
 			break;
 		default:/* everything else is an allowed ID so we can move on */
-			if( !sd->sc.data[SC_PUSH_CART] ) /* first time, so fill cart data */
+			if (!sd->sc.data[SC_PUSH_CART]) /* first time, so fill cart data */
 				clif->cartlist(sd);
+			if ((type >= 6 && type <= 9) && (sd->class_&MAPID_THIRDMASK) != MAPID_GENETIC)
+				return 0;
 			clif->updatestatus(sd, SP_CARTINFO);
 			sc_start(NULL,&sd->bl, SC_PUSH_CART, 100, type, 0);
 			clif->sc_load(&sd->bl, sd->bl.id, AREA, SI_ON_PUSH_CART, type, 0, 0);
-			if( sd->sc.data[SC_PUSH_CART] )/* forcefully update */
+			if (sd->sc.data[SC_PUSH_CART])/* forcefully update */
 				sd->sc.data[SC_PUSH_CART]->val1 = type;
 			break;
 	}
-
-	if(pc->checkskill(sd, MC_PUSHCART) < 10)
-		status_calc_pc(sd,SCO_NONE); //Recalc speed penalty.
+	if (pc->checkskill(sd, MC_PUSHCART) < 10)
+		status_calc_pc(sd, SCO_NONE); //Recalc speed penalty.
 #else
 	// Update option
 	option = sd->sc.option;

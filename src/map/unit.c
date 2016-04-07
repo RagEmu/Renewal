@@ -3,6 +3,9 @@
  * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
  * Copyright (C) 2016  RagEmu Dev Team
+ * Copyright (C) 2012-2015  Hercules Dev Team
+ * Copyright (C)  Athena Dev Teams
+ *
  * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -244,7 +247,6 @@ int unit_walktoxy_timer(int tid, int64 tick, int id, intptr_t data) {
 	struct mob_data         *md;
 	struct unit_data        *ud;
 	struct mercenary_data   *mrd;
-	struct npc_data  		*nd;
 
 	bl = map->id2bl(id);
 	if(bl == NULL)
@@ -252,7 +254,6 @@ int unit_walktoxy_timer(int tid, int64 tick, int id, intptr_t data) {
 	sd = BL_CAST(BL_PC, bl);
 	md = BL_CAST(BL_MOB, bl);
 	mrd = BL_CAST(BL_MER, bl);
-	nd = BL_CAST(BL_NPC, bl);
 	ud = unit->bl2ud(bl);
 
 	if(ud == NULL) return 0;
@@ -1205,19 +1206,6 @@ int unit_set_walkdelay(struct block_list *bl, int64 tick, int delay, int type) {
 	return 1;
 }
 
-bool unit_check_skill_combo(struct block_list *src, int target_id, int skill_num)
-{
-	struct status_change *sc = status->get_sc(src);
-	if ( sc && sc->data[SC_COMBOATTACK] && sc->data[SC_COMBOATTACK]->val2 && target_id == src->id && 
-		( (skill->get_inf2(skill_num)&INF2_NO_TARGET_SELF)
-		|| ( sc->data[SC_COMBOATTACK]->val1 == MH_MIDNIGHT_FRENZY && skill_num == MH_SONIC_CRAW )
-		
-		) )	// Try to redirect selfskills to target when comboing.
-		return true;
-	else
-		return false;
-}
-
 int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, uint16 skill_lv, int casttime, int castcancel) {
 	struct unit_data *ud;
 	struct status_data *tstatus;
@@ -1315,6 +1303,11 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 				target = battle->get_master(src);
 				if (!target) return 0;
 				target_id = target->id;
+				break;
+			case MH_SONIC_CRAW:
+				if (sc && sc->data[SC_MIDNIGHT_FRENZY_POSTDELAY])
+					target_id = sc->data[SC_MIDNIGHT_FRENZY_POSTDELAY]->val2;
+				break;
 	}
 
 	if( !target ) // choose default target
@@ -1403,13 +1396,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		}
 	}
 
-	if (src->type == BL_HOM) {
-		// In case of homunuculus, set the sd to the homunculus' master, as needed below
-		struct block_list *master = battle->get_master(src);
-		if (master)
-			sd = map->id2sd(master->id);
-	}
-
 	if (sd) {
 		/* temporarily disabled, awaiting for kenpachi to detail this so we can make it work properly */
 #if 0
@@ -1418,6 +1404,13 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		if (!skill->check_condition_castbegin(sd, skill_id, skill_lv))
 #endif
 			return 0;
+	}
+
+	if (src->type == BL_HOM) {
+		// In case of homunuculus, set the sd to the homunculus' master, as needed below
+		struct block_list *master = battle->get_master(src);
+		if (master)
+			sd = map->id2sd(master->id);
 	}
 
 	if (src->type == BL_MOB) {
@@ -2450,6 +2443,7 @@ int unit_remove_map(struct block_list *bl, clr_type clrtype, const char* file, i
 		status_change_end(bl, SC_VACUUM_EXTREME, INVALID_TIMER);
 		status_change_end(bl, SC_CURSEDCIRCLE_ATKER, INVALID_TIMER); //callme before warp
 		status_change_end(bl, SC_NETHERWORLD, INVALID_TIMER);
+		status_change_end(bl, SC_TINDER_BREAKER, INVALID_TIMER);
 		status_change_end(bl, SC_SUHIDE, INVALID_TIMER);
 		status_change_end(bl, SC_SV_ROOTTWIST, INVALID_TIMER);
 	}

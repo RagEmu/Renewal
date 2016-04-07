@@ -1,10 +1,11 @@
 /**
- * This file is part of Hercules.
- * http://herc.ws - http://github.com/HerculesWS/Hercules
+ * This file is part of RagEmu.
+ * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
- * Copyright (C) 2013-2016  Hercules Dev Team
+ * Copyright (C) 2016-2016  RagEmu Dev Team
+ * Copyright (C) 2015  Hercules Dev Team
  *
- * Hercules is free software: you can redistribute it and/or modify
+ * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -858,11 +859,11 @@ void HP_atcommand_cmd_db_clear(void) {
 	}
 	return;
 }
-int HP_atcommand_cmd_db_clear_sub(DBKey key, DBData *data, va_list args) {
+int HP_atcommand_cmd_db_clear_sub(union DBKey key, struct DBData *data, va_list args) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_atcommand_cmd_db_clear_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list args);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list args);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_atcommand_cmd_db_clear_sub_pre; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
@@ -881,7 +882,7 @@ int HP_atcommand_cmd_db_clear_sub(DBKey key, DBData *data, va_list args) {
 		va_end(args___copy);
 	}
 	if( HPMHooks.count.HP_atcommand_cmd_db_clear_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list args);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list args);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_atcommand_cmd_db_clear_sub_post; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
 			postHookFunc = HPMHooks.list.HP_atcommand_cmd_db_clear_sub_post[hIndex].func;
@@ -3246,11 +3247,11 @@ bool HP_bg_send_message(struct map_session_data *sd, const char *mes, int len) {
 	}
 	return retVal___;
 }
-int HP_bg_send_xy_timer_sub(DBKey key, DBData *data, va_list ap) {
+int HP_bg_send_xy_timer_sub(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_bg_send_xy_timer_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_bg_send_xy_timer_sub_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -3269,7 +3270,7 @@ int HP_bg_send_xy_timer_sub(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_bg_send_xy_timer_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_bg_send_xy_timer_sub_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_bg_send_xy_timer_sub_post[hIndex].func;
@@ -3333,11 +3334,11 @@ int HP_bg_afk_timer(int tid, int64 tick, int id, intptr_t data) {
 	}
 	return retVal___;
 }
-int HP_bg_team_db_final(DBKey key, DBData *data, va_list ap) {
+int HP_bg_team_db_final(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_bg_team_db_final_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_bg_team_db_final_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -3356,7 +3357,7 @@ int HP_bg_team_db_final(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_bg_team_db_final_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_bg_team_db_final_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_bg_team_db_final_post[hIndex].func;
@@ -5606,11 +5607,11 @@ void HP_chrif_save_ack(int fd) {
 	}
 	return;
 }
-int HP_chrif_reconnect(DBKey key, DBData *data, va_list ap) {
+int HP_chrif_reconnect(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_chrif_reconnect_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_chrif_reconnect_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -5629,7 +5630,7 @@ int HP_chrif_reconnect(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_chrif_reconnect_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_chrif_reconnect_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_chrif_reconnect_post[hIndex].func;
@@ -5639,11 +5640,11 @@ int HP_chrif_reconnect(DBKey key, DBData *data, va_list ap) {
 	}
 	return retVal___;
 }
-int HP_chrif_auth_db_cleanup_sub(DBKey key, DBData *data, va_list ap) {
+int HP_chrif_auth_db_cleanup_sub(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_chrif_auth_db_cleanup_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_chrif_auth_db_cleanup_sub_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -5662,7 +5663,7 @@ int HP_chrif_auth_db_cleanup_sub(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_chrif_auth_db_cleanup_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_chrif_auth_db_cleanup_sub_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_chrif_auth_db_cleanup_sub_post[hIndex].func;
@@ -5699,11 +5700,11 @@ bool HP_chrif_char_ask_name_answer(int acc, const char *player_name, uint16 type
 	}
 	return retVal___;
 }
-int HP_chrif_auth_db_final(DBKey key, DBData *data, va_list ap) {
+int HP_chrif_auth_db_final(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_chrif_auth_db_final_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_chrif_auth_db_final_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -5722,7 +5723,7 @@ int HP_chrif_auth_db_final(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_chrif_auth_db_final_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_chrif_auth_db_final_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_chrif_auth_db_final_post[hIndex].func;
@@ -11728,31 +11729,86 @@ void HP_clif_devotion(struct block_list *src, struct map_session_data *tsd) {
 	}
 	return;
 }
-void HP_clif_spiritball(struct block_list *bl) {
+int HP_clif_spiritball(struct map_session_data *sd) {
 	int hIndex = 0;
+	int retVal___ = 0;
 	if( HPMHooks.count.HP_clif_spiritball_pre ) {
-		void (*preHookFunc) (struct block_list *bl);
+		int (*preHookFunc) (struct map_session_data *sd);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_clif_spiritball_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_clif_spiritball_pre[hIndex].func;
-			preHookFunc(bl);
+			retVal___ = preHookFunc(sd);
 		}
 		if( *HPMforce_return ) {
 			*HPMforce_return = false;
-			return;
+			return retVal___;
 		}
 	}
 	{
-		HPMHooks.source.clif.spiritball(bl);
+		retVal___ = HPMHooks.source.clif.spiritball(sd);
 	}
 	if( HPMHooks.count.HP_clif_spiritball_post ) {
-		void (*postHookFunc) (struct block_list *bl);
+		int (*postHookFunc) (int retVal___, struct map_session_data *sd);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_clif_spiritball_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_clif_spiritball_post[hIndex].func;
-			postHookFunc(bl);
+			retVal___ = postHookFunc(retVal___, sd);
 		}
 	}
-	return;
+	return retVal___;
+}
+int HP_clif_hom_spiritball(struct homun_data *hd) {
+	int hIndex = 0;
+	int retVal___ = 0;
+	if( HPMHooks.count.HP_clif_hom_spiritball_pre ) {
+		int (*preHookFunc) (struct homun_data *hd);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_clif_hom_spiritball_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_clif_hom_spiritball_pre[hIndex].func;
+			retVal___ = preHookFunc(hd);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return retVal___;
+		}
+	}
+	{
+		retVal___ = HPMHooks.source.clif.hom_spiritball(hd);
+	}
+	if( HPMHooks.count.HP_clif_hom_spiritball_post ) {
+		int (*postHookFunc) (int retVal___, struct homun_data *hd);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_clif_hom_spiritball_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_clif_hom_spiritball_post[hIndex].func;
+			retVal___ = postHookFunc(retVal___, hd);
+		}
+	}
+	return retVal___;
+}
+int HP_clif_hom_skillupdateinfo(struct map_session_data *sd, int skillid, int type, int range) {
+	int hIndex = 0;
+	int retVal___ = 0;
+	if( HPMHooks.count.HP_clif_hom_skillupdateinfo_pre ) {
+		int (*preHookFunc) (struct map_session_data *sd, int *skillid, int *type, int *range);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_clif_hom_skillupdateinfo_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_clif_hom_skillupdateinfo_pre[hIndex].func;
+			retVal___ = preHookFunc(sd, &skillid, &type, &range);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return retVal___;
+		}
+	}
+	{
+		retVal___ = HPMHooks.source.clif.hom_skillupdateinfo(sd, skillid, type, range);
+	}
+	if( HPMHooks.count.HP_clif_hom_skillupdateinfo_post ) {
+		int (*postHookFunc) (int retVal___, struct map_session_data *sd, int *skillid, int *type, int *range);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_clif_hom_skillupdateinfo_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_clif_hom_skillupdateinfo_post[hIndex].func;
+			retVal___ = postHookFunc(retVal___, sd, &skillid, &type, &range);
+		}
+	}
+	return retVal___;
 }
 void HP_clif_spiritball_single(int fd, struct map_session_data *sd) {
 	int hIndex = 0;
@@ -23235,6 +23291,58 @@ void HP_clif_pDull(int fd, struct map_session_data *sd) {
 	}
 	return;
 }
+void HP_clif_crimson_marker(struct map_session_data *sd, struct block_list *bl, uint8 flag) {
+	int hIndex = 0;
+	if( HPMHooks.count.HP_clif_crimson_marker_pre ) {
+		void (*preHookFunc) (struct map_session_data *sd, struct block_list *bl, uint8 *flag);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_clif_crimson_marker_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_clif_crimson_marker_pre[hIndex].func;
+			preHookFunc(sd, bl, &flag);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return;
+		}
+	}
+	{
+		HPMHooks.source.clif.crimson_marker(sd, bl, flag);
+	}
+	if( HPMHooks.count.HP_clif_crimson_marker_post ) {
+		void (*postHookFunc) (struct map_session_data *sd, struct block_list *bl, uint8 *flag);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_clif_crimson_marker_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_clif_crimson_marker_post[hIndex].func;
+			postHookFunc(sd, bl, &flag);
+		}
+	}
+	return;
+}
+void HP_clif_crimson_marker_single(struct map_session_data *sd, struct block_list *bl, uint8 flag) {
+	int hIndex = 0;
+	if( HPMHooks.count.HP_clif_crimson_marker_single_pre ) {
+		void (*preHookFunc) (struct map_session_data *sd, struct block_list *bl, uint8 *flag);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_clif_crimson_marker_single_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_clif_crimson_marker_single_pre[hIndex].func;
+			preHookFunc(sd, bl, &flag);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return;
+		}
+	}
+	{
+		HPMHooks.source.clif.crimson_marker_single(sd, bl, flag);
+	}
+	if( HPMHooks.count.HP_clif_crimson_marker_single_post ) {
+		void (*postHookFunc) (struct map_session_data *sd, struct block_list *bl, uint8 *flag);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_clif_crimson_marker_single_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_clif_crimson_marker_single_post[hIndex].func;
+			postHookFunc(sd, bl, &flag);
+		}
+	}
+	return;
+}
 void HP_clif_pBGQueueRegister(int fd, struct map_session_data *sd) {
 	int hIndex = 0;
 	if( HPMHooks.count.HP_clif_pBGQueueRegister_pre ) {
@@ -24466,11 +24574,11 @@ void HP_core_shutdown_callback(void) {
 	return;
 }
 /* DB */
-DBOptions HP_DB_fix_options(DBType type, DBOptions options) {
+enum DBOptions HP_DB_fix_options(enum DBType type, enum DBOptions options) {
 	int hIndex = 0;
-	DBOptions retVal___ = DB_OPT_BASE;
+	enum DBOptions retVal___ = DB_OPT_BASE;
 	if( HPMHooks.count.HP_DB_fix_options_pre ) {
-		DBOptions (*preHookFunc) (DBType *type, DBOptions *options);
+		enum DBOptions (*preHookFunc) (enum DBType *type, enum DBOptions *options);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_fix_options_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_fix_options_pre[hIndex].func;
@@ -24485,7 +24593,7 @@ DBOptions HP_DB_fix_options(DBType type, DBOptions options) {
 		retVal___ = HPMHooks.source.DB.fix_options(type, options);
 	}
 	if( HPMHooks.count.HP_DB_fix_options_post ) {
-		DBOptions (*postHookFunc) (DBOptions retVal___, DBType *type, DBOptions *options);
+		enum DBOptions (*postHookFunc) (enum DBOptions retVal___, enum DBType *type, enum DBOptions *options);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_fix_options_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_fix_options_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, &type, &options);
@@ -24493,11 +24601,11 @@ DBOptions HP_DB_fix_options(DBType type, DBOptions options) {
 	}
 	return retVal___;
 }
-DBComparator HP_DB_default_cmp(DBType type) {
+DBComparator HP_DB_default_cmp(enum DBType type) {
 	int hIndex = 0;
 	DBComparator retVal___ = NULL;
 	if( HPMHooks.count.HP_DB_default_cmp_pre ) {
-		DBComparator (*preHookFunc) (DBType *type);
+		DBComparator (*preHookFunc) (enum DBType *type);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_default_cmp_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_default_cmp_pre[hIndex].func;
@@ -24512,7 +24620,7 @@ DBComparator HP_DB_default_cmp(DBType type) {
 		retVal___ = HPMHooks.source.DB.default_cmp(type);
 	}
 	if( HPMHooks.count.HP_DB_default_cmp_post ) {
-		DBComparator (*postHookFunc) (DBComparator retVal___, DBType *type);
+		DBComparator (*postHookFunc) (DBComparator retVal___, enum DBType *type);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_default_cmp_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_default_cmp_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, &type);
@@ -24520,11 +24628,11 @@ DBComparator HP_DB_default_cmp(DBType type) {
 	}
 	return retVal___;
 }
-DBHasher HP_DB_default_hash(DBType type) {
+DBHasher HP_DB_default_hash(enum DBType type) {
 	int hIndex = 0;
 	DBHasher retVal___ = NULL;
 	if( HPMHooks.count.HP_DB_default_hash_pre ) {
-		DBHasher (*preHookFunc) (DBType *type);
+		DBHasher (*preHookFunc) (enum DBType *type);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_default_hash_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_default_hash_pre[hIndex].func;
@@ -24539,7 +24647,7 @@ DBHasher HP_DB_default_hash(DBType type) {
 		retVal___ = HPMHooks.source.DB.default_hash(type);
 	}
 	if( HPMHooks.count.HP_DB_default_hash_post ) {
-		DBHasher (*postHookFunc) (DBHasher retVal___, DBType *type);
+		DBHasher (*postHookFunc) (DBHasher retVal___, enum DBType *type);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_default_hash_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_default_hash_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, &type);
@@ -24547,11 +24655,11 @@ DBHasher HP_DB_default_hash(DBType type) {
 	}
 	return retVal___;
 }
-DBReleaser HP_DB_default_release(DBType type, DBOptions options) {
+DBReleaser HP_DB_default_release(enum DBType type, enum DBOptions options) {
 	int hIndex = 0;
 	DBReleaser retVal___ = NULL;
 	if( HPMHooks.count.HP_DB_default_release_pre ) {
-		DBReleaser (*preHookFunc) (DBType *type, DBOptions *options);
+		DBReleaser (*preHookFunc) (enum DBType *type, enum DBOptions *options);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_default_release_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_default_release_pre[hIndex].func;
@@ -24566,7 +24674,7 @@ DBReleaser HP_DB_default_release(DBType type, DBOptions options) {
 		retVal___ = HPMHooks.source.DB.default_release(type, options);
 	}
 	if( HPMHooks.count.HP_DB_default_release_post ) {
-		DBReleaser (*postHookFunc) (DBReleaser retVal___, DBType *type, DBOptions *options);
+		DBReleaser (*postHookFunc) (DBReleaser retVal___, enum DBType *type, enum DBOptions *options);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_default_release_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_default_release_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, &type, &options);
@@ -24574,11 +24682,11 @@ DBReleaser HP_DB_default_release(DBType type, DBOptions options) {
 	}
 	return retVal___;
 }
-DBReleaser HP_DB_custom_release(DBRelease which) {
+DBReleaser HP_DB_custom_release(enum DBReleaseOption which) {
 	int hIndex = 0;
 	DBReleaser retVal___ = NULL;
 	if( HPMHooks.count.HP_DB_custom_release_pre ) {
-		DBReleaser (*preHookFunc) (DBRelease *which);
+		DBReleaser (*preHookFunc) (enum DBReleaseOption *which);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_custom_release_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_custom_release_pre[hIndex].func;
@@ -24593,7 +24701,7 @@ DBReleaser HP_DB_custom_release(DBRelease which) {
 		retVal___ = HPMHooks.source.DB.custom_release(which);
 	}
 	if( HPMHooks.count.HP_DB_custom_release_post ) {
-		DBReleaser (*postHookFunc) (DBReleaser retVal___, DBRelease *which);
+		DBReleaser (*postHookFunc) (DBReleaser retVal___, enum DBReleaseOption *which);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_custom_release_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_custom_release_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, &which);
@@ -24601,11 +24709,11 @@ DBReleaser HP_DB_custom_release(DBRelease which) {
 	}
 	return retVal___;
 }
-DBMap* HP_DB_alloc(const char *file, const char *func, int line, DBType type, DBOptions options, unsigned short maxlen) {
+struct DBMap* HP_DB_alloc(const char *file, const char *func, int line, enum DBType type, enum DBOptions options, unsigned short maxlen) {
 	int hIndex = 0;
-	DBMap* retVal___ = NULL;
+	struct DBMap* retVal___ = NULL;
 	if( HPMHooks.count.HP_DB_alloc_pre ) {
-		DBMap* (*preHookFunc) (const char *file, const char *func, int *line, DBType *type, DBOptions *options, unsigned short *maxlen);
+		struct DBMap* (*preHookFunc) (const char *file, const char *func, int *line, enum DBType *type, enum DBOptions *options, unsigned short *maxlen);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_alloc_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_alloc_pre[hIndex].func;
@@ -24620,7 +24728,7 @@ DBMap* HP_DB_alloc(const char *file, const char *func, int line, DBType type, DB
 		retVal___ = HPMHooks.source.DB.alloc(file, func, line, type, options, maxlen);
 	}
 	if( HPMHooks.count.HP_DB_alloc_post ) {
-		DBMap* (*postHookFunc) (DBMap* retVal___, const char *file, const char *func, int *line, DBType *type, DBOptions *options, unsigned short *maxlen);
+		struct DBMap* (*postHookFunc) (struct DBMap* retVal___, const char *file, const char *func, int *line, enum DBType *type, enum DBOptions *options, unsigned short *maxlen);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_alloc_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_alloc_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, file, func, &line, &type, &options, &maxlen);
@@ -24628,12 +24736,12 @@ DBMap* HP_DB_alloc(const char *file, const char *func, int line, DBType type, DB
 	}
 	return retVal___;
 }
-DBKey HP_DB_i2key(int key) {
+union DBKey HP_DB_i2key(int key) {
 	int hIndex = 0;
-	DBKey retVal___;
-	memset(&retVal___, '\0', sizeof(DBKey));
+	union DBKey retVal___;
+	memset(&retVal___, '\0', sizeof(union DBKey));
 	if( HPMHooks.count.HP_DB_i2key_pre ) {
-		DBKey (*preHookFunc) (int *key);
+		union DBKey (*preHookFunc) (int *key);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_i2key_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_i2key_pre[hIndex].func;
@@ -24648,7 +24756,7 @@ DBKey HP_DB_i2key(int key) {
 		retVal___ = HPMHooks.source.DB.i2key(key);
 	}
 	if( HPMHooks.count.HP_DB_i2key_post ) {
-		DBKey (*postHookFunc) (DBKey retVal___, int *key);
+		union DBKey (*postHookFunc) (union DBKey retVal___, int *key);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_i2key_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_i2key_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, &key);
@@ -24656,12 +24764,12 @@ DBKey HP_DB_i2key(int key) {
 	}
 	return retVal___;
 }
-DBKey HP_DB_ui2key(unsigned int key) {
+union DBKey HP_DB_ui2key(unsigned int key) {
 	int hIndex = 0;
-	DBKey retVal___;
-	memset(&retVal___, '\0', sizeof(DBKey));
+	union DBKey retVal___;
+	memset(&retVal___, '\0', sizeof(union DBKey));
 	if( HPMHooks.count.HP_DB_ui2key_pre ) {
-		DBKey (*preHookFunc) (unsigned int *key);
+		union DBKey (*preHookFunc) (unsigned int *key);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_ui2key_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_ui2key_pre[hIndex].func;
@@ -24676,7 +24784,7 @@ DBKey HP_DB_ui2key(unsigned int key) {
 		retVal___ = HPMHooks.source.DB.ui2key(key);
 	}
 	if( HPMHooks.count.HP_DB_ui2key_post ) {
-		DBKey (*postHookFunc) (DBKey retVal___, unsigned int *key);
+		union DBKey (*postHookFunc) (union DBKey retVal___, unsigned int *key);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_ui2key_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_ui2key_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, &key);
@@ -24684,12 +24792,12 @@ DBKey HP_DB_ui2key(unsigned int key) {
 	}
 	return retVal___;
 }
-DBKey HP_DB_str2key(const char *key) {
+union DBKey HP_DB_str2key(const char *key) {
 	int hIndex = 0;
-	DBKey retVal___;
-	memset(&retVal___, '\0', sizeof(DBKey));
+	union DBKey retVal___;
+	memset(&retVal___, '\0', sizeof(union DBKey));
 	if( HPMHooks.count.HP_DB_str2key_pre ) {
-		DBKey (*preHookFunc) (const char *key);
+		union DBKey (*preHookFunc) (const char *key);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_str2key_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_str2key_pre[hIndex].func;
@@ -24704,7 +24812,7 @@ DBKey HP_DB_str2key(const char *key) {
 		retVal___ = HPMHooks.source.DB.str2key(key);
 	}
 	if( HPMHooks.count.HP_DB_str2key_post ) {
-		DBKey (*postHookFunc) (DBKey retVal___, const char *key);
+		union DBKey (*postHookFunc) (union DBKey retVal___, const char *key);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_str2key_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_str2key_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, key);
@@ -24712,12 +24820,12 @@ DBKey HP_DB_str2key(const char *key) {
 	}
 	return retVal___;
 }
-DBKey HP_DB_i642key(int64 key) {
+union DBKey HP_DB_i642key(int64 key) {
 	int hIndex = 0;
-	DBKey retVal___;
-	memset(&retVal___, '\0', sizeof(DBKey));
+	union DBKey retVal___;
+	memset(&retVal___, '\0', sizeof(union DBKey));
 	if( HPMHooks.count.HP_DB_i642key_pre ) {
-		DBKey (*preHookFunc) (int64 *key);
+		union DBKey (*preHookFunc) (int64 *key);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_i642key_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_i642key_pre[hIndex].func;
@@ -24732,7 +24840,7 @@ DBKey HP_DB_i642key(int64 key) {
 		retVal___ = HPMHooks.source.DB.i642key(key);
 	}
 	if( HPMHooks.count.HP_DB_i642key_post ) {
-		DBKey (*postHookFunc) (DBKey retVal___, int64 *key);
+		union DBKey (*postHookFunc) (union DBKey retVal___, int64 *key);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_i642key_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_i642key_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, &key);
@@ -24740,12 +24848,12 @@ DBKey HP_DB_i642key(int64 key) {
 	}
 	return retVal___;
 }
-DBKey HP_DB_ui642key(uint64 key) {
+union DBKey HP_DB_ui642key(uint64 key) {
 	int hIndex = 0;
-	DBKey retVal___;
-	memset(&retVal___, '\0', sizeof(DBKey));
+	union DBKey retVal___;
+	memset(&retVal___, '\0', sizeof(union DBKey));
 	if( HPMHooks.count.HP_DB_ui642key_pre ) {
-		DBKey (*preHookFunc) (uint64 *key);
+		union DBKey (*preHookFunc) (uint64 *key);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_ui642key_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_ui642key_pre[hIndex].func;
@@ -24760,7 +24868,7 @@ DBKey HP_DB_ui642key(uint64 key) {
 		retVal___ = HPMHooks.source.DB.ui642key(key);
 	}
 	if( HPMHooks.count.HP_DB_ui642key_post ) {
-		DBKey (*postHookFunc) (DBKey retVal___, uint64 *key);
+		union DBKey (*postHookFunc) (union DBKey retVal___, uint64 *key);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_ui642key_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_ui642key_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, &key);
@@ -24768,12 +24876,12 @@ DBKey HP_DB_ui642key(uint64 key) {
 	}
 	return retVal___;
 }
-DBData HP_DB_i2data(int data) {
+struct DBData HP_DB_i2data(int data) {
 	int hIndex = 0;
-	DBData retVal___;
-	memset(&retVal___, '\0', sizeof(DBData));
+	struct DBData retVal___;
+	memset(&retVal___, '\0', sizeof(struct DBData));
 	if( HPMHooks.count.HP_DB_i2data_pre ) {
-		DBData (*preHookFunc) (int *data);
+		struct DBData (*preHookFunc) (int *data);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_i2data_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_i2data_pre[hIndex].func;
@@ -24788,7 +24896,7 @@ DBData HP_DB_i2data(int data) {
 		retVal___ = HPMHooks.source.DB.i2data(data);
 	}
 	if( HPMHooks.count.HP_DB_i2data_post ) {
-		DBData (*postHookFunc) (DBData retVal___, int *data);
+		struct DBData (*postHookFunc) (struct DBData retVal___, int *data);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_i2data_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_i2data_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, &data);
@@ -24796,12 +24904,12 @@ DBData HP_DB_i2data(int data) {
 	}
 	return retVal___;
 }
-DBData HP_DB_ui2data(unsigned int data) {
+struct DBData HP_DB_ui2data(unsigned int data) {
 	int hIndex = 0;
-	DBData retVal___;
-	memset(&retVal___, '\0', sizeof(DBData));
+	struct DBData retVal___;
+	memset(&retVal___, '\0', sizeof(struct DBData));
 	if( HPMHooks.count.HP_DB_ui2data_pre ) {
-		DBData (*preHookFunc) (unsigned int *data);
+		struct DBData (*preHookFunc) (unsigned int *data);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_ui2data_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_ui2data_pre[hIndex].func;
@@ -24816,7 +24924,7 @@ DBData HP_DB_ui2data(unsigned int data) {
 		retVal___ = HPMHooks.source.DB.ui2data(data);
 	}
 	if( HPMHooks.count.HP_DB_ui2data_post ) {
-		DBData (*postHookFunc) (DBData retVal___, unsigned int *data);
+		struct DBData (*postHookFunc) (struct DBData retVal___, unsigned int *data);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_ui2data_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_ui2data_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, &data);
@@ -24824,12 +24932,12 @@ DBData HP_DB_ui2data(unsigned int data) {
 	}
 	return retVal___;
 }
-DBData HP_DB_ptr2data(void *data) {
+struct DBData HP_DB_ptr2data(void *data) {
 	int hIndex = 0;
-	DBData retVal___;
-	memset(&retVal___, '\0', sizeof(DBData));
+	struct DBData retVal___;
+	memset(&retVal___, '\0', sizeof(struct DBData));
 	if( HPMHooks.count.HP_DB_ptr2data_pre ) {
-		DBData (*preHookFunc) (void *data);
+		struct DBData (*preHookFunc) (void *data);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_ptr2data_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_ptr2data_pre[hIndex].func;
@@ -24844,7 +24952,7 @@ DBData HP_DB_ptr2data(void *data) {
 		retVal___ = HPMHooks.source.DB.ptr2data(data);
 	}
 	if( HPMHooks.count.HP_DB_ptr2data_post ) {
-		DBData (*postHookFunc) (DBData retVal___, void *data);
+		struct DBData (*postHookFunc) (struct DBData retVal___, void *data);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_ptr2data_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_ptr2data_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, data);
@@ -24852,11 +24960,11 @@ DBData HP_DB_ptr2data(void *data) {
 	}
 	return retVal___;
 }
-int HP_DB_data2i(DBData *data) {
+int HP_DB_data2i(struct DBData *data) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_DB_data2i_pre ) {
-		int (*preHookFunc) (DBData *data);
+		int (*preHookFunc) (struct DBData *data);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_data2i_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_data2i_pre[hIndex].func;
@@ -24871,7 +24979,7 @@ int HP_DB_data2i(DBData *data) {
 		retVal___ = HPMHooks.source.DB.data2i(data);
 	}
 	if( HPMHooks.count.HP_DB_data2i_post ) {
-		int (*postHookFunc) (int retVal___, DBData *data);
+		int (*postHookFunc) (int retVal___, struct DBData *data);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_data2i_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_data2i_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, data);
@@ -24879,11 +24987,11 @@ int HP_DB_data2i(DBData *data) {
 	}
 	return retVal___;
 }
-unsigned int HP_DB_data2ui(DBData *data) {
+unsigned int HP_DB_data2ui(struct DBData *data) {
 	int hIndex = 0;
 	unsigned int retVal___ = 0;
 	if( HPMHooks.count.HP_DB_data2ui_pre ) {
-		unsigned int (*preHookFunc) (DBData *data);
+		unsigned int (*preHookFunc) (struct DBData *data);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_data2ui_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_data2ui_pre[hIndex].func;
@@ -24898,7 +25006,7 @@ unsigned int HP_DB_data2ui(DBData *data) {
 		retVal___ = HPMHooks.source.DB.data2ui(data);
 	}
 	if( HPMHooks.count.HP_DB_data2ui_post ) {
-		unsigned int (*postHookFunc) (unsigned int retVal___, DBData *data);
+		unsigned int (*postHookFunc) (unsigned int retVal___, struct DBData *data);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_data2ui_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_data2ui_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, data);
@@ -24906,11 +25014,11 @@ unsigned int HP_DB_data2ui(DBData *data) {
 	}
 	return retVal___;
 }
-void* HP_DB_data2ptr(DBData *data) {
+void* HP_DB_data2ptr(struct DBData *data) {
 	int hIndex = 0;
 	void* retVal___ = NULL;
 	if( HPMHooks.count.HP_DB_data2ptr_pre ) {
-		void* (*preHookFunc) (DBData *data);
+		void* (*preHookFunc) (struct DBData *data);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_data2ptr_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_DB_data2ptr_pre[hIndex].func;
@@ -24925,7 +25033,7 @@ void* HP_DB_data2ptr(DBData *data) {
 		retVal___ = HPMHooks.source.DB.data2ptr(data);
 	}
 	if( HPMHooks.count.HP_DB_data2ptr_post ) {
-		void* (*postHookFunc) (void* retVal___, DBData *data);
+		void* (*postHookFunc) (void* retVal___, struct DBData *data);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_DB_data2ptr_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_DB_data2ptr_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, data);
@@ -28051,11 +28159,11 @@ bool HP_guild_read_castledb(char *str[], int columns, int current) {
 	}
 	return retVal___;
 }
-int HP_guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap) {
+int HP_guild_payexp_timer_sub(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_guild_payexp_timer_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_guild_payexp_timer_sub_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -28074,7 +28182,7 @@ int HP_guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_guild_payexp_timer_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_guild_payexp_timer_sub_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_guild_payexp_timer_sub_post[hIndex].func;
@@ -28084,11 +28192,11 @@ int HP_guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap) {
 	}
 	return retVal___;
 }
-int HP_guild_send_xy_timer_sub(DBKey key, DBData *data, va_list ap) {
+int HP_guild_send_xy_timer_sub(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_guild_send_xy_timer_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_guild_send_xy_timer_sub_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -28107,7 +28215,7 @@ int HP_guild_send_xy_timer_sub(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_guild_send_xy_timer_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_guild_send_xy_timer_sub_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_guild_send_xy_timer_sub_post[hIndex].func;
@@ -28144,12 +28252,12 @@ int HP_guild_send_xy_timer(int tid, int64 tick, int id, intptr_t data) {
 	}
 	return retVal___;
 }
-DBData HP_guild_create_expcache(DBKey key, va_list args) {
+struct DBData HP_guild_create_expcache(union DBKey key, va_list args) {
 	int hIndex = 0;
-	DBData retVal___;
-	memset(&retVal___, '\0', sizeof(DBData));
+	struct DBData retVal___;
+	memset(&retVal___, '\0', sizeof(struct DBData));
 	if( HPMHooks.count.HP_guild_create_expcache_pre ) {
-		DBData (*preHookFunc) (DBKey *key, va_list args);
+		struct DBData (*preHookFunc) (union DBKey *key, va_list args);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_guild_create_expcache_pre; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
@@ -28168,7 +28276,7 @@ DBData HP_guild_create_expcache(DBKey key, va_list args) {
 		va_end(args___copy);
 	}
 	if( HPMHooks.count.HP_guild_create_expcache_post ) {
-		DBData (*postHookFunc) (DBData retVal___, DBKey *key, va_list args);
+		struct DBData (*postHookFunc) (struct DBData retVal___, union DBKey *key, va_list args);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_guild_create_expcache_post; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
 			postHookFunc = HPMHooks.list.HP_guild_create_expcache_post[hIndex].func;
@@ -28178,11 +28286,11 @@ DBData HP_guild_create_expcache(DBKey key, va_list args) {
 	}
 	return retVal___;
 }
-int HP_guild_eventlist_db_final(DBKey key, DBData *data, va_list ap) {
+int HP_guild_eventlist_db_final(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_guild_eventlist_db_final_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_guild_eventlist_db_final_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -28201,7 +28309,7 @@ int HP_guild_eventlist_db_final(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_guild_eventlist_db_final_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_guild_eventlist_db_final_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_guild_eventlist_db_final_post[hIndex].func;
@@ -28211,11 +28319,11 @@ int HP_guild_eventlist_db_final(DBKey key, DBData *data, va_list ap) {
 	}
 	return retVal___;
 }
-int HP_guild_expcache_db_final(DBKey key, DBData *data, va_list ap) {
+int HP_guild_expcache_db_final(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_guild_expcache_db_final_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_guild_expcache_db_final_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -28234,7 +28342,7 @@ int HP_guild_expcache_db_final(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_guild_expcache_db_final_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_guild_expcache_db_final_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_guild_expcache_db_final_post[hIndex].func;
@@ -28244,11 +28352,11 @@ int HP_guild_expcache_db_final(DBKey key, DBData *data, va_list ap) {
 	}
 	return retVal___;
 }
-int HP_guild_castle_db_final(DBKey key, DBData *data, va_list ap) {
+int HP_guild_castle_db_final(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_guild_castle_db_final_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_guild_castle_db_final_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -28267,7 +28375,7 @@ int HP_guild_castle_db_final(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_guild_castle_db_final_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_guild_castle_db_final_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_guild_castle_db_final_post[hIndex].func;
@@ -28277,11 +28385,11 @@ int HP_guild_castle_db_final(DBKey key, DBData *data, va_list ap) {
 	}
 	return retVal___;
 }
-int HP_guild_broken_sub(DBKey key, DBData *data, va_list ap) {
+int HP_guild_broken_sub(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_guild_broken_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_guild_broken_sub_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -28300,7 +28408,7 @@ int HP_guild_broken_sub(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_guild_broken_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_guild_broken_sub_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_guild_broken_sub_post[hIndex].func;
@@ -28310,11 +28418,11 @@ int HP_guild_broken_sub(DBKey key, DBData *data, va_list ap) {
 	}
 	return retVal___;
 }
-int HP_guild_castle_broken_sub(DBKey key, DBData *data, va_list ap) {
+int HP_guild_castle_broken_sub(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_guild_castle_broken_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_guild_castle_broken_sub_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -28333,7 +28441,7 @@ int HP_guild_castle_broken_sub(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_guild_castle_broken_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_guild_castle_broken_sub_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_guild_castle_broken_sub_post[hIndex].func;
@@ -28859,12 +28967,12 @@ int HP_gstorage_saved(int guild_id) {
 	}
 	return retVal___;
 }
-DBData HP_gstorage_create(DBKey key, va_list args) {
+struct DBData HP_gstorage_create(union DBKey key, va_list args) {
 	int hIndex = 0;
-	DBData retVal___;
-	memset(&retVal___, '\0', sizeof(DBData));
+	struct DBData retVal___;
+	memset(&retVal___, '\0', sizeof(struct DBData));
 	if( HPMHooks.count.HP_gstorage_create_pre ) {
-		DBData (*preHookFunc) (DBKey *key, va_list args);
+		struct DBData (*preHookFunc) (union DBKey *key, va_list args);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_gstorage_create_pre; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
@@ -28883,7 +28991,7 @@ DBData HP_gstorage_create(DBKey key, va_list args) {
 		va_end(args___copy);
 	}
 	if( HPMHooks.count.HP_gstorage_create_post ) {
-		DBData (*postHookFunc) (DBData retVal___, DBKey *key, va_list args);
+		struct DBData (*postHookFunc) (struct DBData retVal___, union DBKey *key, va_list args);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_gstorage_create_post; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
 			postHookFunc = HPMHooks.list.HP_gstorage_create_post[hIndex].func;
@@ -29077,6 +29185,60 @@ void HP_homun_damaged(struct homun_data *hd) {
 		}
 	}
 	return;
+}
+int HP_homun_addspiritball(struct homun_data *hd, int max) {
+	int hIndex = 0;
+	int retVal___ = 0;
+	if( HPMHooks.count.HP_homun_addspiritball_pre ) {
+		int (*preHookFunc) (struct homun_data *hd, int *max);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_homun_addspiritball_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_homun_addspiritball_pre[hIndex].func;
+			retVal___ = preHookFunc(hd, &max);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return retVal___;
+		}
+	}
+	{
+		retVal___ = HPMHooks.source.homun.addspiritball(hd, max);
+	}
+	if( HPMHooks.count.HP_homun_addspiritball_post ) {
+		int (*postHookFunc) (int retVal___, struct homun_data *hd, int *max);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_homun_addspiritball_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_homun_addspiritball_post[hIndex].func;
+			retVal___ = postHookFunc(retVal___, hd, &max);
+		}
+	}
+	return retVal___;
+}
+int HP_homun_delspiritball(struct homun_data *hd, int count) {
+	int hIndex = 0;
+	int retVal___ = 0;
+	if( HPMHooks.count.HP_homun_delspiritball_pre ) {
+		int (*preHookFunc) (struct homun_data *hd, int *count);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_homun_delspiritball_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_homun_delspiritball_pre[hIndex].func;
+			retVal___ = preHookFunc(hd, &count);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return retVal___;
+		}
+	}
+	{
+		retVal___ = HPMHooks.source.homun.delspiritball(hd, count);
+	}
+	if( HPMHooks.count.HP_homun_delspiritball_post ) {
+		int (*postHookFunc) (int retVal___, struct homun_data *hd, int *count);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_homun_delspiritball_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_homun_delspiritball_post[hIndex].func;
+			retVal___ = postHookFunc(retVal___, hd, &count);
+		}
+	}
+	return retVal___;
 }
 int HP_homun_dead(struct homun_data *hd) {
 	int hIndex = 0;
@@ -30063,58 +30225,6 @@ void HP_homun_exp_db_read(void) {
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_homun_exp_db_read_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_homun_exp_db_read_post[hIndex].func;
 			postHookFunc();
-		}
-	}
-	return;
-}
-void HP_homun_addspiritball(struct homun_data *hd, int max) {
-	int hIndex = 0;
-	if( HPMHooks.count.HP_homun_addspiritball_pre ) {
-		void (*preHookFunc) (struct homun_data *hd, int *max);
-		*HPMforce_return = false;
-		for(hIndex = 0; hIndex < HPMHooks.count.HP_homun_addspiritball_pre; hIndex++ ) {
-			preHookFunc = HPMHooks.list.HP_homun_addspiritball_pre[hIndex].func;
-			preHookFunc(hd, &max);
-		}
-		if( *HPMforce_return ) {
-			*HPMforce_return = false;
-			return;
-		}
-	}
-	{
-		HPMHooks.source.homun.addspiritball(hd, max);
-	}
-	if( HPMHooks.count.HP_homun_addspiritball_post ) {
-		void (*postHookFunc) (struct homun_data *hd, int *max);
-		for(hIndex = 0; hIndex < HPMHooks.count.HP_homun_addspiritball_post; hIndex++ ) {
-			postHookFunc = HPMHooks.list.HP_homun_addspiritball_post[hIndex].func;
-			postHookFunc(hd, &max);
-		}
-	}
-	return;
-}
-void HP_homun_delspiritball(struct homun_data *hd, int count, int type) {
-	int hIndex = 0;
-	if( HPMHooks.count.HP_homun_delspiritball_pre ) {
-		void (*preHookFunc) (struct homun_data *hd, int *count, int *type);
-		*HPMforce_return = false;
-		for(hIndex = 0; hIndex < HPMHooks.count.HP_homun_delspiritball_pre; hIndex++ ) {
-			preHookFunc = HPMHooks.list.HP_homun_delspiritball_pre[hIndex].func;
-			preHookFunc(hd, &count, &type);
-		}
-		if( *HPMforce_return ) {
-			*HPMforce_return = false;
-			return;
-		}
-	}
-	{
-		HPMHooks.source.homun.delspiritball(hd, count, type);
-	}
-	if( HPMHooks.count.HP_homun_delspiritball_post ) {
-		void (*postHookFunc) (struct homun_data *hd, int *count, int *type);
-		for(hIndex = 0; hIndex < HPMHooks.count.HP_homun_delspiritball_post; hIndex++ ) {
-			postHookFunc = HPMHooks.list.HP_homun_delspiritball_post[hIndex].func;
-			postHookFunc(hd, &count, &type);
 		}
 	}
 	return;
@@ -35043,11 +35153,11 @@ void HP_itemdb_package_item(struct map_session_data *sd, struct item_package *pa
 	}
 	return;
 }
-int HP_itemdb_searchname_sub(DBKey key, DBData *data, va_list ap) {
+int HP_itemdb_searchname_sub(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_itemdb_searchname_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_itemdb_searchname_sub_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -35066,7 +35176,7 @@ int HP_itemdb_searchname_sub(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_itemdb_searchname_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_itemdb_searchname_sub_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_itemdb_searchname_sub_post[hIndex].func;
@@ -35076,11 +35186,11 @@ int HP_itemdb_searchname_sub(DBKey key, DBData *data, va_list ap) {
 	}
 	return retVal___;
 }
-int HP_itemdb_searchname_array_sub(DBKey key, DBData data, va_list ap) {
+int HP_itemdb_searchname_array_sub(union DBKey key, struct DBData data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_itemdb_searchname_array_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_itemdb_searchname_array_sub_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -35099,7 +35209,7 @@ int HP_itemdb_searchname_array_sub(DBKey key, DBData data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_itemdb_searchname_array_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_itemdb_searchname_array_sub_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_itemdb_searchname_array_sub_post[hIndex].func;
@@ -35992,11 +36102,11 @@ void HP_itemdb_destroy_item_data(struct item_data *self, int free_self) {
 	}
 	return;
 }
-int HP_itemdb_final_sub(DBKey key, DBData *data, va_list ap) {
+int HP_itemdb_final_sub(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_itemdb_final_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_itemdb_final_sub_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -36015,7 +36125,7 @@ int HP_itemdb_final_sub(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_itemdb_final_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_itemdb_final_sub_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_itemdb_final_sub_post[hIndex].func;
@@ -41708,12 +41818,12 @@ int HP_map_count_sub(struct block_list *bl, va_list ap) {
 	}
 	return retVal___;
 }
-DBData HP_map_create_charid2nick(DBKey key, va_list args) {
+struct DBData HP_map_create_charid2nick(union DBKey key, va_list args) {
 	int hIndex = 0;
-	DBData retVal___;
-	memset(&retVal___, '\0', sizeof(DBData));
+	struct DBData retVal___;
+	memset(&retVal___, '\0', sizeof(struct DBData));
 	if( HPMHooks.count.HP_map_create_charid2nick_pre ) {
-		DBData (*preHookFunc) (DBKey *key, va_list args);
+		struct DBData (*preHookFunc) (union DBKey *key, va_list args);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_map_create_charid2nick_pre; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
@@ -41732,7 +41842,7 @@ DBData HP_map_create_charid2nick(DBKey key, va_list args) {
 		va_end(args___copy);
 	}
 	if( HPMHooks.count.HP_map_create_charid2nick_post ) {
-		DBData (*postHookFunc) (DBData retVal___, DBKey *key, va_list args);
+		struct DBData (*postHookFunc) (struct DBData retVal___, union DBKey *key, va_list args);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_map_create_charid2nick_post; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
 			postHookFunc = HPMHooks.list.HP_map_create_charid2nick_post[hIndex].func;
@@ -41962,12 +42072,12 @@ void HP_map_iwall_nextxy(int16 x, int16 y, int8 dir, int pos, int16 *x1, int16 *
 	}
 	return;
 }
-DBData HP_map_create_map_data_other_server(DBKey key, va_list args) {
+struct DBData HP_map_create_map_data_other_server(union DBKey key, va_list args) {
 	int hIndex = 0;
-	DBData retVal___;
-	memset(&retVal___, '\0', sizeof(DBData));
+	struct DBData retVal___;
+	memset(&retVal___, '\0', sizeof(struct DBData));
 	if( HPMHooks.count.HP_map_create_map_data_other_server_pre ) {
-		DBData (*preHookFunc) (DBKey *key, va_list args);
+		struct DBData (*preHookFunc) (union DBKey *key, va_list args);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_map_create_map_data_other_server_pre; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
@@ -41986,7 +42096,7 @@ DBData HP_map_create_map_data_other_server(DBKey key, va_list args) {
 		va_end(args___copy);
 	}
 	if( HPMHooks.count.HP_map_create_map_data_other_server_post ) {
-		DBData (*postHookFunc) (DBData retVal___, DBKey *key, va_list args);
+		struct DBData (*postHookFunc) (struct DBData retVal___, union DBKey *key, va_list args);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_map_create_map_data_other_server_post; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
 			postHookFunc = HPMHooks.list.HP_map_create_map_data_other_server_post[hIndex].func;
@@ -41996,11 +42106,11 @@ DBData HP_map_create_map_data_other_server(DBKey key, va_list args) {
 	}
 	return retVal___;
 }
-int HP_map_eraseallipport_sub(DBKey key, DBData *data, va_list va) {
+int HP_map_eraseallipport_sub(union DBKey key, struct DBData *data, va_list va) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_map_eraseallipport_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list va);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list va);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_map_eraseallipport_sub_pre; hIndex++ ) {
 			va_list va___copy; va_copy(va___copy, va);
@@ -42019,7 +42129,7 @@ int HP_map_eraseallipport_sub(DBKey key, DBData *data, va_list va) {
 		va_end(va___copy);
 	}
 	if( HPMHooks.count.HP_map_eraseallipport_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list va);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list va);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_map_eraseallipport_sub_post; hIndex++ ) {
 			va_list va___copy; va_copy(va___copy, va);
 			postHookFunc = HPMHooks.list.HP_map_eraseallipport_sub_post[hIndex].func;
@@ -42564,11 +42674,11 @@ void HP_map_read_zone_db(void) {
 	}
 	return;
 }
-int HP_map_db_final(DBKey key, DBData *data, va_list ap) {
+int HP_map_db_final(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_map_db_final_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_map_db_final_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -42587,7 +42697,7 @@ int HP_map_db_final(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_map_db_final_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_map_db_final_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_map_db_final_post[hIndex].func;
@@ -42597,11 +42707,11 @@ int HP_map_db_final(DBKey key, DBData *data, va_list ap) {
 	}
 	return retVal___;
 }
-int HP_map_nick_db_final(DBKey key, DBData *data, va_list args) {
+int HP_map_nick_db_final(union DBKey key, struct DBData *data, va_list args) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_map_nick_db_final_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list args);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list args);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_map_nick_db_final_pre; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
@@ -42620,7 +42730,7 @@ int HP_map_nick_db_final(DBKey key, DBData *data, va_list args) {
 		va_end(args___copy);
 	}
 	if( HPMHooks.count.HP_map_nick_db_final_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list args);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list args);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_map_nick_db_final_post; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
 			postHookFunc = HPMHooks.list.HP_map_nick_db_final_post[hIndex].func;
@@ -42630,11 +42740,11 @@ int HP_map_nick_db_final(DBKey key, DBData *data, va_list args) {
 	}
 	return retVal___;
 }
-int HP_map_cleanup_db_sub(DBKey key, DBData *data, va_list va) {
+int HP_map_cleanup_db_sub(union DBKey key, struct DBData *data, va_list va) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_map_cleanup_db_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list va);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list va);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_map_cleanup_db_sub_pre; hIndex++ ) {
 			va_list va___copy; va_copy(va___copy, va);
@@ -42653,7 +42763,7 @@ int HP_map_cleanup_db_sub(DBKey key, DBData *data, va_list va) {
 		va_end(va___copy);
 	}
 	if( HPMHooks.count.HP_map_cleanup_db_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list va);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list va);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_map_cleanup_db_sub_post; hIndex++ ) {
 			va_list va___copy; va_copy(va___copy, va);
 			postHookFunc = HPMHooks.list.HP_map_cleanup_db_sub_post[hIndex].func;
@@ -43526,11 +43636,11 @@ int HP_mapreg_save_timer(int tid, int64 tick, int id, intptr_t data) {
 	}
 	return retVal___;
 }
-int HP_mapreg_destroyreg(DBKey key, DBData *data, va_list ap) {
+int HP_mapreg_destroyreg(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_mapreg_destroyreg_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_mapreg_destroyreg_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -43549,7 +43659,7 @@ int HP_mapreg_destroyreg(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_mapreg_destroyreg_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_mapreg_destroyreg_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_mapreg_destroyreg_post[hIndex].func;
@@ -47745,12 +47855,12 @@ int HP_npc_event_dequeue(struct map_session_data *sd) {
 	}
 	return retVal___;
 }
-DBData HP_npc_event_export_create(DBKey key, va_list args) {
+struct DBData HP_npc_event_export_create(union DBKey key, va_list args) {
 	int hIndex = 0;
-	DBData retVal___;
-	memset(&retVal___, '\0', sizeof(DBData));
+	struct DBData retVal___;
+	memset(&retVal___, '\0', sizeof(struct DBData));
 	if( HPMHooks.count.HP_npc_event_export_create_pre ) {
-		DBData (*preHookFunc) (DBKey *key, va_list args);
+		struct DBData (*preHookFunc) (union DBKey *key, va_list args);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_npc_event_export_create_pre; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
@@ -47769,7 +47879,7 @@ DBData HP_npc_event_export_create(DBKey key, va_list args) {
 		va_end(args___copy);
 	}
 	if( HPMHooks.count.HP_npc_event_export_create_post ) {
-		DBData (*postHookFunc) (DBData retVal___, DBKey *key, va_list args);
+		struct DBData (*postHookFunc) (struct DBData retVal___, union DBKey *key, va_list args);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_npc_event_export_create_post; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
 			postHookFunc = HPMHooks.list.HP_npc_event_export_create_post[hIndex].func;
@@ -48732,11 +48842,11 @@ int HP_npc_remove_map(struct npc_data *nd) {
 	}
 	return retVal___;
 }
-int HP_npc_unload_ev(DBKey key, DBData *data, va_list ap) {
+int HP_npc_unload_ev(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_npc_unload_ev_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_npc_unload_ev_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -48755,7 +48865,7 @@ int HP_npc_unload_ev(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_npc_unload_ev_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_npc_unload_ev_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_npc_unload_ev_post[hIndex].func;
@@ -48765,11 +48875,11 @@ int HP_npc_unload_ev(DBKey key, DBData *data, va_list ap) {
 	}
 	return retVal___;
 }
-int HP_npc_unload_ev_label(DBKey key, DBData *data, va_list ap) {
+int HP_npc_unload_ev_label(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_npc_unload_ev_label_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_npc_unload_ev_label_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -48788,7 +48898,7 @@ int HP_npc_unload_ev_label(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_npc_unload_ev_label_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_npc_unload_ev_label_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_npc_unload_ev_label_post[hIndex].func;
@@ -49901,11 +50011,11 @@ void HP_npc_read_event_script(void) {
 	}
 	return;
 }
-int HP_npc_path_db_clear_sub(DBKey key, DBData *data, va_list args) {
+int HP_npc_path_db_clear_sub(union DBKey key, struct DBData *data, va_list args) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_npc_path_db_clear_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list args);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list args);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_npc_path_db_clear_sub_pre; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
@@ -49924,7 +50034,7 @@ int HP_npc_path_db_clear_sub(DBKey key, DBData *data, va_list args) {
 		va_end(args___copy);
 	}
 	if( HPMHooks.count.HP_npc_path_db_clear_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list args);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list args);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_npc_path_db_clear_sub_post; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
 			postHookFunc = HPMHooks.list.HP_npc_path_db_clear_sub_post[hIndex].func;
@@ -49934,11 +50044,11 @@ int HP_npc_path_db_clear_sub(DBKey key, DBData *data, va_list args) {
 	}
 	return retVal___;
 }
-int HP_npc_ev_label_db_clear_sub(DBKey key, DBData *data, va_list args) {
+int HP_npc_ev_label_db_clear_sub(union DBKey key, struct DBData *data, va_list args) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_npc_ev_label_db_clear_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list args);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list args);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_npc_ev_label_db_clear_sub_pre; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
@@ -49957,7 +50067,7 @@ int HP_npc_ev_label_db_clear_sub(DBKey key, DBData *data, va_list args) {
 		va_end(args___copy);
 	}
 	if( HPMHooks.count.HP_npc_ev_label_db_clear_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list args);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list args);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_npc_ev_label_db_clear_sub_post; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
 			postHookFunc = HPMHooks.list.HP_npc_ev_label_db_clear_sub_post[hIndex].func;
@@ -51717,11 +51827,11 @@ struct party_booking_ad_info* HP_party_create_booking_data(void) {
 	}
 	return retVal___;
 }
-int HP_party_db_final(DBKey key, DBData *data, va_list ap) {
+int HP_party_db_final(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_party_db_final_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_party_db_final_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -51740,7 +51850,7 @@ int HP_party_db_final(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_party_db_final_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_party_db_final_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_party_db_final_post[hIndex].func;
@@ -56797,6 +56907,32 @@ int HP_pc_calc_skillpoint(struct map_session_data *sd) {
 	}
 	return retVal___;
 }
+void HP_pc_crimson_marker_clear(struct map_session_data *sd) {
+	int hIndex = 0;
+	if( HPMHooks.count.HP_pc_crimson_marker_clear_pre ) {
+		void (*preHookFunc) (struct map_session_data *sd);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_pc_crimson_marker_clear_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_pc_crimson_marker_clear_pre[hIndex].func;
+			preHookFunc(sd);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return;
+		}
+	}
+	{
+		HPMHooks.source.pc.crimson_marker_clear(sd);
+	}
+	if( HPMHooks.count.HP_pc_crimson_marker_clear_post ) {
+		void (*postHookFunc) (struct map_session_data *sd);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_pc_crimson_marker_clear_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_pc_crimson_marker_clear_post[hIndex].func;
+			postHookFunc(sd);
+		}
+	}
+	return;
+}
 int HP_pc_invincible_timer(int tid, int64 tick, int id, intptr_t data) {
 	int hIndex = 0;
 	int retVal___ = 0;
@@ -57966,11 +58102,11 @@ void HP_pc_autotrade_populate(struct map_session_data *sd) {
 	}
 	return;
 }
-int HP_pc_autotrade_final(DBKey key, DBData *data, va_list ap) {
+int HP_pc_autotrade_final(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_pc_autotrade_final_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_pc_autotrade_final_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -57989,7 +58125,7 @@ int HP_pc_autotrade_final(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_pc_autotrade_final_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_pc_autotrade_final_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_pc_autotrade_final_post[hIndex].func;
@@ -60490,11 +60626,11 @@ int HP_script_get_val_instance_num(struct script_state *st, const char *name, st
 	}
 	return retVal___;
 }
-void* HP_script_get_val2(struct script_state *st, int64 uid, struct reg_db *ref) {
+const void* HP_script_get_val2(struct script_state *st, int64 uid, struct reg_db *ref) {
 	int hIndex = 0;
-	void* retVal___ = NULL;
+	const void* retVal___ = NULL;
 	if( HPMHooks.count.HP_script_get_val2_pre ) {
-		void* (*preHookFunc) (struct script_state *st, int64 *uid, struct reg_db *ref);
+		const void* (*preHookFunc) (struct script_state *st, int64 *uid, struct reg_db *ref);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_get_val2_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_script_get_val2_pre[hIndex].func;
@@ -60509,7 +60645,7 @@ void* HP_script_get_val2(struct script_state *st, int64 uid, struct reg_db *ref)
 		retVal___ = HPMHooks.source.script.get_val2(st, uid, ref);
 	}
 	if( HPMHooks.count.HP_script_get_val2_post ) {
-		void* (*postHookFunc) (void* retVal___, struct script_state *st, int64 *uid, struct reg_db *ref);
+		const void* (*postHookFunc) (const void* retVal___, struct script_state *st, int64 *uid, struct reg_db *ref);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_get_val2_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_script_get_val2_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, st, &uid, ref);
@@ -60517,15 +60653,15 @@ void* HP_script_get_val2(struct script_state *st, int64 uid, struct reg_db *ref)
 	}
 	return retVal___;
 }
-struct script_data* HP_script_push_str(struct script_stack *stack, enum c_op type, char *str) {
+struct script_data* HP_script_push_str(struct script_stack *stack, char *str) {
 	int hIndex = 0;
 	struct script_data* retVal___ = NULL;
 	if( HPMHooks.count.HP_script_push_str_pre ) {
-		struct script_data* (*preHookFunc) (struct script_stack *stack, enum c_op *type, char *str);
+		struct script_data* (*preHookFunc) (struct script_stack *stack, char *str);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_push_str_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_script_push_str_pre[hIndex].func;
-			retVal___ = preHookFunc(stack, &type, str);
+			retVal___ = preHookFunc(stack, str);
 		}
 		if( *HPMforce_return ) {
 			*HPMforce_return = false;
@@ -60533,13 +60669,40 @@ struct script_data* HP_script_push_str(struct script_stack *stack, enum c_op typ
 		}
 	}
 	{
-		retVal___ = HPMHooks.source.script.push_str(stack, type, str);
+		retVal___ = HPMHooks.source.script.push_str(stack, str);
 	}
 	if( HPMHooks.count.HP_script_push_str_post ) {
-		struct script_data* (*postHookFunc) (struct script_data* retVal___, struct script_stack *stack, enum c_op *type, char *str);
+		struct script_data* (*postHookFunc) (struct script_data* retVal___, struct script_stack *stack, char *str);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_push_str_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_script_push_str_post[hIndex].func;
-			retVal___ = postHookFunc(retVal___, stack, &type, str);
+			retVal___ = postHookFunc(retVal___, stack, str);
+		}
+	}
+	return retVal___;
+}
+struct script_data* HP_script_push_conststr(struct script_stack *stack, const char *str) {
+	int hIndex = 0;
+	struct script_data* retVal___ = NULL;
+	if( HPMHooks.count.HP_script_push_conststr_pre ) {
+		struct script_data* (*preHookFunc) (struct script_stack *stack, const char *str);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_push_conststr_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_script_push_conststr_pre[hIndex].func;
+			retVal___ = preHookFunc(stack, str);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return retVal___;
+		}
+	}
+	{
+		retVal___ = HPMHooks.source.script.push_conststr(stack, str);
+	}
+	if( HPMHooks.count.HP_script_push_conststr_post ) {
+		struct script_data* (*postHookFunc) (struct script_data* retVal___, struct script_stack *stack, const char *str);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_push_conststr_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_script_push_conststr_post[hIndex].func;
+			retVal___ = postHookFunc(retVal___, stack, str);
 		}
 	}
 	return retVal___;
@@ -61203,10 +61366,10 @@ int HP_script_search_str(const char *p) {
 	}
 	return retVal___;
 }
-void HP_script_setd_sub(struct script_state *st, struct map_session_data *sd, const char *varname, int elem, void *value, struct reg_db *ref) {
+void HP_script_setd_sub(struct script_state *st, struct map_session_data *sd, const char *varname, int elem, const void *value, struct reg_db *ref) {
 	int hIndex = 0;
 	if( HPMHooks.count.HP_script_setd_sub_pre ) {
-		void (*preHookFunc) (struct script_state *st, struct map_session_data *sd, const char *varname, int *elem, void *value, struct reg_db *ref);
+		void (*preHookFunc) (struct script_state *st, struct map_session_data *sd, const char *varname, int *elem, const void *value, struct reg_db *ref);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_setd_sub_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_script_setd_sub_pre[hIndex].func;
@@ -61221,7 +61384,7 @@ void HP_script_setd_sub(struct script_state *st, struct map_session_data *sd, co
 		HPMHooks.source.script.setd_sub(st, sd, varname, elem, value, ref);
 	}
 	if( HPMHooks.count.HP_script_setd_sub_post ) {
-		void (*postHookFunc) (struct script_state *st, struct map_session_data *sd, const char *varname, int *elem, void *value, struct reg_db *ref);
+		void (*postHookFunc) (struct script_state *st, struct map_session_data *sd, const char *varname, int *elem, const void *value, struct reg_db *ref);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_setd_sub_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_script_setd_sub_post[hIndex].func;
 			postHookFunc(st, sd, varname, &elem, value, ref);
@@ -62709,11 +62872,11 @@ void HP_script_detach_state(struct script_state *st, bool dequeue_event) {
 	}
 	return;
 }
-int HP_script_db_free_code_sub(DBKey key, DBData *data, va_list ap) {
+int HP_script_db_free_code_sub(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_script_db_free_code_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_db_free_code_sub_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -62732,7 +62895,7 @@ int HP_script_db_free_code_sub(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_script_db_free_code_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_db_free_code_sub_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_script_db_free_code_sub_post[hIndex].func;
@@ -63409,11 +63572,11 @@ int HP_script_soundeffect_sub(struct block_list *bl, va_list ap) {
 	}
 	return retVal___;
 }
-int HP_script_buildin_query_sql_sub(struct script_state *st, Sql *handle) {
+int HP_script_buildin_query_sql_sub(struct script_state *st, struct Sql *handle) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_script_buildin_query_sql_sub_pre ) {
-		int (*preHookFunc) (struct script_state *st, Sql *handle);
+		int (*preHookFunc) (struct script_state *st, struct Sql *handle);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_buildin_query_sql_sub_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_script_buildin_query_sql_sub_pre[hIndex].func;
@@ -63428,7 +63591,7 @@ int HP_script_buildin_query_sql_sub(struct script_state *st, Sql *handle) {
 		retVal___ = HPMHooks.source.script.buildin_query_sql_sub(st, handle);
 	}
 	if( HPMHooks.count.HP_script_buildin_query_sql_sub_post ) {
-		int (*postHookFunc) (int retVal___, struct script_state *st, Sql *handle);
+		int (*postHookFunc) (int retVal___, struct script_state *st, struct Sql *handle);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_buildin_query_sql_sub_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_script_buildin_query_sql_sub_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, st, handle);
@@ -63801,11 +63964,11 @@ unsigned int HP_script_array_highest_key(struct script_state *st, struct map_ses
 	}
 	return retVal___;
 }
-int HP_script_array_free_db(DBKey key, DBData *data, va_list ap) {
+int HP_script_array_free_db(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_script_array_free_db_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_array_free_db_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -63824,7 +63987,7 @@ int HP_script_array_free_db(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_script_array_free_db_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_array_free_db_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_script_array_free_db_post[hIndex].func;
@@ -63886,11 +64049,11 @@ void HP_script_reg_destroy_single(struct map_session_data *sd, int64 reg, struct
 	}
 	return;
 }
-int HP_script_reg_destroy(DBKey key, DBData *data, va_list ap) {
+int HP_script_reg_destroy(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_script_reg_destroy_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_reg_destroy_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -63909,7 +64072,7 @@ int HP_script_reg_destroy(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_script_reg_destroy_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_reg_destroy_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_script_reg_destroy_post[hIndex].func;
@@ -64104,11 +64267,11 @@ void HP_script_load_translation(const char *file, uint8 lang_id, uint32 *total) 
 	}
 	return;
 }
-int HP_script_translation_db_destroyer(DBKey key, DBData *data, va_list ap) {
+int HP_script_translation_db_destroyer(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_script_translation_db_destroyer_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_translation_db_destroyer_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -64127,7 +64290,7 @@ int HP_script_translation_db_destroyer(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_script_translation_db_destroyer_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_script_translation_db_destroyer_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_script_translation_db_destroyer_post[hIndex].func;
@@ -68805,6 +68968,39 @@ int HP_skill_unit_effect(struct block_list *bl, va_list ap) {
 	}
 	return retVal___;
 }
+int HP_skill_bind_trap(struct block_list *bl, va_list ap) {
+	int hIndex = 0;
+	int retVal___ = 0;
+	if( HPMHooks.count.HP_skill_bind_trap_pre ) {
+		int (*preHookFunc) (struct block_list *bl, va_list ap);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_skill_bind_trap_pre; hIndex++ ) {
+			va_list ap___copy; va_copy(ap___copy, ap);
+			preHookFunc = HPMHooks.list.HP_skill_bind_trap_pre[hIndex].func;
+			retVal___ = preHookFunc(bl, ap___copy);
+			va_end(ap___copy);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return retVal___;
+		}
+	}
+	{
+		va_list ap___copy; va_copy(ap___copy, ap);
+		retVal___ = HPMHooks.source.skill.bind_trap(bl, ap___copy);
+		va_end(ap___copy);
+	}
+	if( HPMHooks.count.HP_skill_bind_trap_post ) {
+		int (*postHookFunc) (int retVal___, struct block_list *bl, va_list ap);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_skill_bind_trap_post; hIndex++ ) {
+			va_list ap___copy; va_copy(ap___copy, ap);
+			postHookFunc = HPMHooks.list.HP_skill_bind_trap_post[hIndex].func;
+			retVal___ = postHookFunc(retVal___, bl, ap___copy);
+			va_end(ap___copy);
+		}
+	}
+	return retVal___;
+}
 int HP_skill_unit_timer_sub_onplace(struct block_list *bl, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
@@ -69006,11 +69202,11 @@ int HP_skill_unit_timer(int tid, int64 tick, int id, intptr_t data) {
 	}
 	return retVal___;
 }
-int HP_skill_unit_timer_sub(DBKey key, DBData *data, va_list ap) {
+int HP_skill_unit_timer_sub(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_skill_unit_timer_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_skill_unit_timer_sub_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -69029,7 +69225,7 @@ int HP_skill_unit_timer_sub(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_skill_unit_timer_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_skill_unit_timer_sub_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_skill_unit_timer_sub_post[hIndex].func;
@@ -69521,15 +69717,15 @@ int HP_skill_spellbook(struct map_session_data *sd, int nameid) {
 	}
 	return retVal___;
 }
-int HP_skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_id) {
+int HP_skill_block_check(struct block_list *bl, int src_id, int skill_id) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_skill_block_check_pre ) {
-		int (*preHookFunc) (struct block_list *bl, enum sc_type *type, uint16 *skill_id);
+		int (*preHookFunc) (struct block_list *bl, int *src_id, int *skill_id);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_skill_block_check_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_skill_block_check_pre[hIndex].func;
-			retVal___ = preHookFunc(bl, &type, &skill_id);
+			retVal___ = preHookFunc(bl, &src_id, &skill_id);
 		}
 		if( *HPMforce_return ) {
 			*HPMforce_return = false;
@@ -69537,13 +69733,13 @@ int HP_skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_
 		}
 	}
 	{
-		retVal___ = HPMHooks.source.skill.block_check(bl, type, skill_id);
+		retVal___ = HPMHooks.source.skill.block_check(bl, src_id, skill_id);
 	}
 	if( HPMHooks.count.HP_skill_block_check_post ) {
-		int (*postHookFunc) (int retVal___, struct block_list *bl, enum sc_type *type, uint16 *skill_id);
+		int (*postHookFunc) (int retVal___, struct block_list *bl, int *src_id, int *skill_id);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_skill_block_check_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_skill_block_check_post[hIndex].func;
-			retVal___ = postHookFunc(retVal___, bl, &type, &skill_id);
+			retVal___ = postHookFunc(retVal___, bl, &src_id, &skill_id);
 		}
 	}
 	return retVal___;
@@ -71447,11 +71643,11 @@ void HP_sockt_net_config_read(const char *filename) {
 	return;
 }
 /* SQL */
-int HP_SQL_Connect(Sql *self, const char *user, const char *passwd, const char *host, uint16 port, const char *db) {
+int HP_SQL_Connect(struct Sql *self, const char *user, const char *passwd, const char *host, uint16 port, const char *db) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_Connect_pre ) {
-		int (*preHookFunc) (Sql *self, const char *user, const char *passwd, const char *host, uint16 *port, const char *db);
+		int (*preHookFunc) (struct Sql *self, const char *user, const char *passwd, const char *host, uint16 *port, const char *db);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_Connect_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_Connect_pre[hIndex].func;
@@ -71466,7 +71662,7 @@ int HP_SQL_Connect(Sql *self, const char *user, const char *passwd, const char *
 		retVal___ = HPMHooks.source.SQL.Connect(self, user, passwd, host, port, db);
 	}
 	if( HPMHooks.count.HP_SQL_Connect_post ) {
-		int (*postHookFunc) (int retVal___, Sql *self, const char *user, const char *passwd, const char *host, uint16 *port, const char *db);
+		int (*postHookFunc) (int retVal___, struct Sql *self, const char *user, const char *passwd, const char *host, uint16 *port, const char *db);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_Connect_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_Connect_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self, user, passwd, host, &port, db);
@@ -71474,11 +71670,11 @@ int HP_SQL_Connect(Sql *self, const char *user, const char *passwd, const char *
 	}
 	return retVal___;
 }
-int HP_SQL_GetTimeout(Sql *self, uint32 *out_timeout) {
+int HP_SQL_GetTimeout(struct Sql *self, uint32 *out_timeout) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_GetTimeout_pre ) {
-		int (*preHookFunc) (Sql *self, uint32 *out_timeout);
+		int (*preHookFunc) (struct Sql *self, uint32 *out_timeout);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_GetTimeout_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_GetTimeout_pre[hIndex].func;
@@ -71493,7 +71689,7 @@ int HP_SQL_GetTimeout(Sql *self, uint32 *out_timeout) {
 		retVal___ = HPMHooks.source.SQL.GetTimeout(self, out_timeout);
 	}
 	if( HPMHooks.count.HP_SQL_GetTimeout_post ) {
-		int (*postHookFunc) (int retVal___, Sql *self, uint32 *out_timeout);
+		int (*postHookFunc) (int retVal___, struct Sql *self, uint32 *out_timeout);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_GetTimeout_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_GetTimeout_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self, out_timeout);
@@ -71501,11 +71697,11 @@ int HP_SQL_GetTimeout(Sql *self, uint32 *out_timeout) {
 	}
 	return retVal___;
 }
-int HP_SQL_GetColumnNames(Sql *self, const char *table, char *out_buf, size_t buf_len, char sep) {
+int HP_SQL_GetColumnNames(struct Sql *self, const char *table, char *out_buf, size_t buf_len, char sep) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_GetColumnNames_pre ) {
-		int (*preHookFunc) (Sql *self, const char *table, char *out_buf, size_t *buf_len, char *sep);
+		int (*preHookFunc) (struct Sql *self, const char *table, char *out_buf, size_t *buf_len, char *sep);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_GetColumnNames_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_GetColumnNames_pre[hIndex].func;
@@ -71520,7 +71716,7 @@ int HP_SQL_GetColumnNames(Sql *self, const char *table, char *out_buf, size_t bu
 		retVal___ = HPMHooks.source.SQL.GetColumnNames(self, table, out_buf, buf_len, sep);
 	}
 	if( HPMHooks.count.HP_SQL_GetColumnNames_post ) {
-		int (*postHookFunc) (int retVal___, Sql *self, const char *table, char *out_buf, size_t *buf_len, char *sep);
+		int (*postHookFunc) (int retVal___, struct Sql *self, const char *table, char *out_buf, size_t *buf_len, char *sep);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_GetColumnNames_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_GetColumnNames_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self, table, out_buf, &buf_len, &sep);
@@ -71528,11 +71724,11 @@ int HP_SQL_GetColumnNames(Sql *self, const char *table, char *out_buf, size_t bu
 	}
 	return retVal___;
 }
-int HP_SQL_SetEncoding(Sql *self, const char *encoding) {
+int HP_SQL_SetEncoding(struct Sql *self, const char *encoding) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_SetEncoding_pre ) {
-		int (*preHookFunc) (Sql *self, const char *encoding);
+		int (*preHookFunc) (struct Sql *self, const char *encoding);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_SetEncoding_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_SetEncoding_pre[hIndex].func;
@@ -71547,7 +71743,7 @@ int HP_SQL_SetEncoding(Sql *self, const char *encoding) {
 		retVal___ = HPMHooks.source.SQL.SetEncoding(self, encoding);
 	}
 	if( HPMHooks.count.HP_SQL_SetEncoding_post ) {
-		int (*postHookFunc) (int retVal___, Sql *self, const char *encoding);
+		int (*postHookFunc) (int retVal___, struct Sql *self, const char *encoding);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_SetEncoding_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_SetEncoding_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self, encoding);
@@ -71555,11 +71751,11 @@ int HP_SQL_SetEncoding(Sql *self, const char *encoding) {
 	}
 	return retVal___;
 }
-int HP_SQL_Ping(Sql *self) {
+int HP_SQL_Ping(struct Sql *self) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_Ping_pre ) {
-		int (*preHookFunc) (Sql *self);
+		int (*preHookFunc) (struct Sql *self);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_Ping_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_Ping_pre[hIndex].func;
@@ -71574,7 +71770,7 @@ int HP_SQL_Ping(Sql *self) {
 		retVal___ = HPMHooks.source.SQL.Ping(self);
 	}
 	if( HPMHooks.count.HP_SQL_Ping_post ) {
-		int (*postHookFunc) (int retVal___, Sql *self);
+		int (*postHookFunc) (int retVal___, struct Sql *self);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_Ping_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_Ping_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self);
@@ -71582,11 +71778,11 @@ int HP_SQL_Ping(Sql *self) {
 	}
 	return retVal___;
 }
-size_t HP_SQL_EscapeString(Sql *self, char *out_to, const char *from) {
+size_t HP_SQL_EscapeString(struct Sql *self, char *out_to, const char *from) {
 	int hIndex = 0;
 	size_t retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_EscapeString_pre ) {
-		size_t (*preHookFunc) (Sql *self, char *out_to, const char *from);
+		size_t (*preHookFunc) (struct Sql *self, char *out_to, const char *from);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_EscapeString_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_EscapeString_pre[hIndex].func;
@@ -71601,7 +71797,7 @@ size_t HP_SQL_EscapeString(Sql *self, char *out_to, const char *from) {
 		retVal___ = HPMHooks.source.SQL.EscapeString(self, out_to, from);
 	}
 	if( HPMHooks.count.HP_SQL_EscapeString_post ) {
-		size_t (*postHookFunc) (size_t retVal___, Sql *self, char *out_to, const char *from);
+		size_t (*postHookFunc) (size_t retVal___, struct Sql *self, char *out_to, const char *from);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_EscapeString_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_EscapeString_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self, out_to, from);
@@ -71609,11 +71805,11 @@ size_t HP_SQL_EscapeString(Sql *self, char *out_to, const char *from) {
 	}
 	return retVal___;
 }
-size_t HP_SQL_EscapeStringLen(Sql *self, char *out_to, const char *from, size_t from_len) {
+size_t HP_SQL_EscapeStringLen(struct Sql *self, char *out_to, const char *from, size_t from_len) {
 	int hIndex = 0;
 	size_t retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_EscapeStringLen_pre ) {
-		size_t (*preHookFunc) (Sql *self, char *out_to, const char *from, size_t *from_len);
+		size_t (*preHookFunc) (struct Sql *self, char *out_to, const char *from, size_t *from_len);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_EscapeStringLen_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_EscapeStringLen_pre[hIndex].func;
@@ -71628,7 +71824,7 @@ size_t HP_SQL_EscapeStringLen(Sql *self, char *out_to, const char *from, size_t 
 		retVal___ = HPMHooks.source.SQL.EscapeStringLen(self, out_to, from, from_len);
 	}
 	if( HPMHooks.count.HP_SQL_EscapeStringLen_post ) {
-		size_t (*postHookFunc) (size_t retVal___, Sql *self, char *out_to, const char *from, size_t *from_len);
+		size_t (*postHookFunc) (size_t retVal___, struct Sql *self, char *out_to, const char *from, size_t *from_len);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_EscapeStringLen_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_EscapeStringLen_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self, out_to, from, &from_len);
@@ -71636,11 +71832,11 @@ size_t HP_SQL_EscapeStringLen(Sql *self, char *out_to, const char *from, size_t 
 	}
 	return retVal___;
 }
-int HP_SQL_QueryV(Sql *self, const char *query, va_list args) {
+int HP_SQL_QueryV(struct Sql *self, const char *query, va_list args) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_QueryV_pre ) {
-		int (*preHookFunc) (Sql *self, const char *query, va_list args);
+		int (*preHookFunc) (struct Sql *self, const char *query, va_list args);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_QueryV_pre; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
@@ -71659,7 +71855,7 @@ int HP_SQL_QueryV(Sql *self, const char *query, va_list args) {
 		va_end(args___copy);
 	}
 	if( HPMHooks.count.HP_SQL_QueryV_post ) {
-		int (*postHookFunc) (int retVal___, Sql *self, const char *query, va_list args);
+		int (*postHookFunc) (int retVal___, struct Sql *self, const char *query, va_list args);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_QueryV_post; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
 			postHookFunc = HPMHooks.list.HP_SQL_QueryV_post[hIndex].func;
@@ -71669,11 +71865,11 @@ int HP_SQL_QueryV(Sql *self, const char *query, va_list args) {
 	}
 	return retVal___;
 }
-int HP_SQL_QueryStr(Sql *self, const char *query) {
+int HP_SQL_QueryStr(struct Sql *self, const char *query) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_QueryStr_pre ) {
-		int (*preHookFunc) (Sql *self, const char *query);
+		int (*preHookFunc) (struct Sql *self, const char *query);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_QueryStr_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_QueryStr_pre[hIndex].func;
@@ -71688,7 +71884,7 @@ int HP_SQL_QueryStr(Sql *self, const char *query) {
 		retVal___ = HPMHooks.source.SQL.QueryStr(self, query);
 	}
 	if( HPMHooks.count.HP_SQL_QueryStr_post ) {
-		int (*postHookFunc) (int retVal___, Sql *self, const char *query);
+		int (*postHookFunc) (int retVal___, struct Sql *self, const char *query);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_QueryStr_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_QueryStr_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self, query);
@@ -71696,11 +71892,11 @@ int HP_SQL_QueryStr(Sql *self, const char *query) {
 	}
 	return retVal___;
 }
-uint64 HP_SQL_LastInsertId(Sql *self) {
+uint64 HP_SQL_LastInsertId(struct Sql *self) {
 	int hIndex = 0;
 	uint64 retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_LastInsertId_pre ) {
-		uint64 (*preHookFunc) (Sql *self);
+		uint64 (*preHookFunc) (struct Sql *self);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_LastInsertId_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_LastInsertId_pre[hIndex].func;
@@ -71715,7 +71911,7 @@ uint64 HP_SQL_LastInsertId(Sql *self) {
 		retVal___ = HPMHooks.source.SQL.LastInsertId(self);
 	}
 	if( HPMHooks.count.HP_SQL_LastInsertId_post ) {
-		uint64 (*postHookFunc) (uint64 retVal___, Sql *self);
+		uint64 (*postHookFunc) (uint64 retVal___, struct Sql *self);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_LastInsertId_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_LastInsertId_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self);
@@ -71723,11 +71919,11 @@ uint64 HP_SQL_LastInsertId(Sql *self) {
 	}
 	return retVal___;
 }
-uint32 HP_SQL_NumColumns(Sql *self) {
+uint32 HP_SQL_NumColumns(struct Sql *self) {
 	int hIndex = 0;
 	uint32 retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_NumColumns_pre ) {
-		uint32 (*preHookFunc) (Sql *self);
+		uint32 (*preHookFunc) (struct Sql *self);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_NumColumns_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_NumColumns_pre[hIndex].func;
@@ -71742,7 +71938,7 @@ uint32 HP_SQL_NumColumns(Sql *self) {
 		retVal___ = HPMHooks.source.SQL.NumColumns(self);
 	}
 	if( HPMHooks.count.HP_SQL_NumColumns_post ) {
-		uint32 (*postHookFunc) (uint32 retVal___, Sql *self);
+		uint32 (*postHookFunc) (uint32 retVal___, struct Sql *self);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_NumColumns_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_NumColumns_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self);
@@ -71750,11 +71946,11 @@ uint32 HP_SQL_NumColumns(Sql *self) {
 	}
 	return retVal___;
 }
-uint64 HP_SQL_NumRows(Sql *self) {
+uint64 HP_SQL_NumRows(struct Sql *self) {
 	int hIndex = 0;
 	uint64 retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_NumRows_pre ) {
-		uint64 (*preHookFunc) (Sql *self);
+		uint64 (*preHookFunc) (struct Sql *self);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_NumRows_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_NumRows_pre[hIndex].func;
@@ -71769,7 +71965,7 @@ uint64 HP_SQL_NumRows(Sql *self) {
 		retVal___ = HPMHooks.source.SQL.NumRows(self);
 	}
 	if( HPMHooks.count.HP_SQL_NumRows_post ) {
-		uint64 (*postHookFunc) (uint64 retVal___, Sql *self);
+		uint64 (*postHookFunc) (uint64 retVal___, struct Sql *self);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_NumRows_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_NumRows_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self);
@@ -71777,11 +71973,11 @@ uint64 HP_SQL_NumRows(Sql *self) {
 	}
 	return retVal___;
 }
-int HP_SQL_NextRow(Sql *self) {
+int HP_SQL_NextRow(struct Sql *self) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_NextRow_pre ) {
-		int (*preHookFunc) (Sql *self);
+		int (*preHookFunc) (struct Sql *self);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_NextRow_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_NextRow_pre[hIndex].func;
@@ -71796,7 +71992,7 @@ int HP_SQL_NextRow(Sql *self) {
 		retVal___ = HPMHooks.source.SQL.NextRow(self);
 	}
 	if( HPMHooks.count.HP_SQL_NextRow_post ) {
-		int (*postHookFunc) (int retVal___, Sql *self);
+		int (*postHookFunc) (int retVal___, struct Sql *self);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_NextRow_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_NextRow_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self);
@@ -71804,11 +72000,11 @@ int HP_SQL_NextRow(Sql *self) {
 	}
 	return retVal___;
 }
-int HP_SQL_GetData(Sql *self, size_t col, char **out_buf, size_t *out_len) {
+int HP_SQL_GetData(struct Sql *self, size_t col, char **out_buf, size_t *out_len) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_GetData_pre ) {
-		int (*preHookFunc) (Sql *self, size_t *col, char **out_buf, size_t *out_len);
+		int (*preHookFunc) (struct Sql *self, size_t *col, char **out_buf, size_t *out_len);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_GetData_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_GetData_pre[hIndex].func;
@@ -71823,7 +72019,7 @@ int HP_SQL_GetData(Sql *self, size_t col, char **out_buf, size_t *out_len) {
 		retVal___ = HPMHooks.source.SQL.GetData(self, col, out_buf, out_len);
 	}
 	if( HPMHooks.count.HP_SQL_GetData_post ) {
-		int (*postHookFunc) (int retVal___, Sql *self, size_t *col, char **out_buf, size_t *out_len);
+		int (*postHookFunc) (int retVal___, struct Sql *self, size_t *col, char **out_buf, size_t *out_len);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_GetData_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_GetData_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self, &col, out_buf, out_len);
@@ -71831,10 +72027,10 @@ int HP_SQL_GetData(Sql *self, size_t col, char **out_buf, size_t *out_len) {
 	}
 	return retVal___;
 }
-void HP_SQL_FreeResult(Sql *self) {
+void HP_SQL_FreeResult(struct Sql *self) {
 	int hIndex = 0;
 	if( HPMHooks.count.HP_SQL_FreeResult_pre ) {
-		void (*preHookFunc) (Sql *self);
+		void (*preHookFunc) (struct Sql *self);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_FreeResult_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_FreeResult_pre[hIndex].func;
@@ -71849,7 +72045,7 @@ void HP_SQL_FreeResult(Sql *self) {
 		HPMHooks.source.SQL.FreeResult(self);
 	}
 	if( HPMHooks.count.HP_SQL_FreeResult_post ) {
-		void (*postHookFunc) (Sql *self);
+		void (*postHookFunc) (struct Sql *self);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_FreeResult_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_FreeResult_post[hIndex].func;
 			postHookFunc(self);
@@ -71857,10 +72053,10 @@ void HP_SQL_FreeResult(Sql *self) {
 	}
 	return;
 }
-void HP_SQL_ShowDebug_(Sql *self, const char *debug_file, const unsigned long debug_line) {
+void HP_SQL_ShowDebug_(struct Sql *self, const char *debug_file, const unsigned long debug_line) {
 	int hIndex = 0;
 	if( HPMHooks.count.HP_SQL_ShowDebug__pre ) {
-		void (*preHookFunc) (Sql *self, const char *debug_file, const unsigned long *debug_line);
+		void (*preHookFunc) (struct Sql *self, const char *debug_file, const unsigned long *debug_line);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_ShowDebug__pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_ShowDebug__pre[hIndex].func;
@@ -71875,7 +72071,7 @@ void HP_SQL_ShowDebug_(Sql *self, const char *debug_file, const unsigned long de
 		HPMHooks.source.SQL.ShowDebug_(self, debug_file, debug_line);
 	}
 	if( HPMHooks.count.HP_SQL_ShowDebug__post ) {
-		void (*postHookFunc) (Sql *self, const char *debug_file, const unsigned long *debug_line);
+		void (*postHookFunc) (struct Sql *self, const char *debug_file, const unsigned long *debug_line);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_ShowDebug__post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_ShowDebug__post[hIndex].func;
 			postHookFunc(self, debug_file, &debug_line);
@@ -71883,10 +72079,10 @@ void HP_SQL_ShowDebug_(Sql *self, const char *debug_file, const unsigned long de
 	}
 	return;
 }
-void HP_SQL_Free(Sql *self) {
+void HP_SQL_Free(struct Sql *self) {
 	int hIndex = 0;
 	if( HPMHooks.count.HP_SQL_Free_pre ) {
-		void (*preHookFunc) (Sql *self);
+		void (*preHookFunc) (struct Sql *self);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_Free_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_Free_pre[hIndex].func;
@@ -71901,7 +72097,7 @@ void HP_SQL_Free(Sql *self) {
 		HPMHooks.source.SQL.Free(self);
 	}
 	if( HPMHooks.count.HP_SQL_Free_post ) {
-		void (*postHookFunc) (Sql *self);
+		void (*postHookFunc) (struct Sql *self);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_Free_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_Free_post[hIndex].func;
 			postHookFunc(self);
@@ -71936,11 +72132,11 @@ struct Sql* HP_SQL_Malloc(void) {
 	}
 	return retVal___;
 }
-struct SqlStmt* HP_SQL_StmtMalloc(Sql *sql) {
+struct SqlStmt* HP_SQL_StmtMalloc(struct Sql *sql) {
 	int hIndex = 0;
 	struct SqlStmt* retVal___ = NULL;
 	if( HPMHooks.count.HP_SQL_StmtMalloc_pre ) {
-		struct SqlStmt* (*preHookFunc) (Sql *sql);
+		struct SqlStmt* (*preHookFunc) (struct Sql *sql);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtMalloc_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_StmtMalloc_pre[hIndex].func;
@@ -71955,7 +72151,7 @@ struct SqlStmt* HP_SQL_StmtMalloc(Sql *sql) {
 		retVal___ = HPMHooks.source.SQL.StmtMalloc(sql);
 	}
 	if( HPMHooks.count.HP_SQL_StmtMalloc_post ) {
-		struct SqlStmt* (*postHookFunc) (struct SqlStmt* retVal___, Sql *sql);
+		struct SqlStmt* (*postHookFunc) (struct SqlStmt* retVal___, struct Sql *sql);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtMalloc_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_StmtMalloc_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, sql);
@@ -71963,11 +72159,11 @@ struct SqlStmt* HP_SQL_StmtMalloc(Sql *sql) {
 	}
 	return retVal___;
 }
-int HP_SQL_StmtPrepareV(SqlStmt *self, const char *query, va_list args) {
+int HP_SQL_StmtPrepareV(struct SqlStmt *self, const char *query, va_list args) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_StmtPrepareV_pre ) {
-		int (*preHookFunc) (SqlStmt *self, const char *query, va_list args);
+		int (*preHookFunc) (struct SqlStmt *self, const char *query, va_list args);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtPrepareV_pre; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
@@ -71986,7 +72182,7 @@ int HP_SQL_StmtPrepareV(SqlStmt *self, const char *query, va_list args) {
 		va_end(args___copy);
 	}
 	if( HPMHooks.count.HP_SQL_StmtPrepareV_post ) {
-		int (*postHookFunc) (int retVal___, SqlStmt *self, const char *query, va_list args);
+		int (*postHookFunc) (int retVal___, struct SqlStmt *self, const char *query, va_list args);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtPrepareV_post; hIndex++ ) {
 			va_list args___copy; va_copy(args___copy, args);
 			postHookFunc = HPMHooks.list.HP_SQL_StmtPrepareV_post[hIndex].func;
@@ -71996,11 +72192,11 @@ int HP_SQL_StmtPrepareV(SqlStmt *self, const char *query, va_list args) {
 	}
 	return retVal___;
 }
-int HP_SQL_StmtPrepareStr(SqlStmt *self, const char *query) {
+int HP_SQL_StmtPrepareStr(struct SqlStmt *self, const char *query) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_StmtPrepareStr_pre ) {
-		int (*preHookFunc) (SqlStmt *self, const char *query);
+		int (*preHookFunc) (struct SqlStmt *self, const char *query);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtPrepareStr_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_StmtPrepareStr_pre[hIndex].func;
@@ -72015,7 +72211,7 @@ int HP_SQL_StmtPrepareStr(SqlStmt *self, const char *query) {
 		retVal___ = HPMHooks.source.SQL.StmtPrepareStr(self, query);
 	}
 	if( HPMHooks.count.HP_SQL_StmtPrepareStr_post ) {
-		int (*postHookFunc) (int retVal___, SqlStmt *self, const char *query);
+		int (*postHookFunc) (int retVal___, struct SqlStmt *self, const char *query);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtPrepareStr_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_StmtPrepareStr_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self, query);
@@ -72023,11 +72219,11 @@ int HP_SQL_StmtPrepareStr(SqlStmt *self, const char *query) {
 	}
 	return retVal___;
 }
-size_t HP_SQL_StmtNumParams(SqlStmt *self) {
+size_t HP_SQL_StmtNumParams(struct SqlStmt *self) {
 	int hIndex = 0;
 	size_t retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_StmtNumParams_pre ) {
-		size_t (*preHookFunc) (SqlStmt *self);
+		size_t (*preHookFunc) (struct SqlStmt *self);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtNumParams_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_StmtNumParams_pre[hIndex].func;
@@ -72042,7 +72238,7 @@ size_t HP_SQL_StmtNumParams(SqlStmt *self) {
 		retVal___ = HPMHooks.source.SQL.StmtNumParams(self);
 	}
 	if( HPMHooks.count.HP_SQL_StmtNumParams_post ) {
-		size_t (*postHookFunc) (size_t retVal___, SqlStmt *self);
+		size_t (*postHookFunc) (size_t retVal___, struct SqlStmt *self);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtNumParams_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_StmtNumParams_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self);
@@ -72050,11 +72246,11 @@ size_t HP_SQL_StmtNumParams(SqlStmt *self) {
 	}
 	return retVal___;
 }
-int HP_SQL_StmtBindParam(SqlStmt *self, size_t idx, SqlDataType buffer_type, void *buffer, size_t buffer_len) {
+int HP_SQL_StmtBindParam(struct SqlStmt *self, size_t idx, enum SqlDataType buffer_type, const void *buffer, size_t buffer_len) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_StmtBindParam_pre ) {
-		int (*preHookFunc) (SqlStmt *self, size_t *idx, SqlDataType *buffer_type, void *buffer, size_t *buffer_len);
+		int (*preHookFunc) (struct SqlStmt *self, size_t *idx, enum SqlDataType *buffer_type, const void *buffer, size_t *buffer_len);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtBindParam_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_StmtBindParam_pre[hIndex].func;
@@ -72069,7 +72265,7 @@ int HP_SQL_StmtBindParam(SqlStmt *self, size_t idx, SqlDataType buffer_type, voi
 		retVal___ = HPMHooks.source.SQL.StmtBindParam(self, idx, buffer_type, buffer, buffer_len);
 	}
 	if( HPMHooks.count.HP_SQL_StmtBindParam_post ) {
-		int (*postHookFunc) (int retVal___, SqlStmt *self, size_t *idx, SqlDataType *buffer_type, void *buffer, size_t *buffer_len);
+		int (*postHookFunc) (int retVal___, struct SqlStmt *self, size_t *idx, enum SqlDataType *buffer_type, const void *buffer, size_t *buffer_len);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtBindParam_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_StmtBindParam_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self, &idx, &buffer_type, buffer, &buffer_len);
@@ -72077,11 +72273,11 @@ int HP_SQL_StmtBindParam(SqlStmt *self, size_t idx, SqlDataType buffer_type, voi
 	}
 	return retVal___;
 }
-int HP_SQL_StmtExecute(SqlStmt *self) {
+int HP_SQL_StmtExecute(struct SqlStmt *self) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_StmtExecute_pre ) {
-		int (*preHookFunc) (SqlStmt *self);
+		int (*preHookFunc) (struct SqlStmt *self);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtExecute_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_StmtExecute_pre[hIndex].func;
@@ -72096,7 +72292,7 @@ int HP_SQL_StmtExecute(SqlStmt *self) {
 		retVal___ = HPMHooks.source.SQL.StmtExecute(self);
 	}
 	if( HPMHooks.count.HP_SQL_StmtExecute_post ) {
-		int (*postHookFunc) (int retVal___, SqlStmt *self);
+		int (*postHookFunc) (int retVal___, struct SqlStmt *self);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtExecute_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_StmtExecute_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self);
@@ -72104,11 +72300,11 @@ int HP_SQL_StmtExecute(SqlStmt *self) {
 	}
 	return retVal___;
 }
-uint64 HP_SQL_StmtLastInsertId(SqlStmt *self) {
+uint64 HP_SQL_StmtLastInsertId(struct SqlStmt *self) {
 	int hIndex = 0;
 	uint64 retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_StmtLastInsertId_pre ) {
-		uint64 (*preHookFunc) (SqlStmt *self);
+		uint64 (*preHookFunc) (struct SqlStmt *self);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtLastInsertId_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_StmtLastInsertId_pre[hIndex].func;
@@ -72123,7 +72319,7 @@ uint64 HP_SQL_StmtLastInsertId(SqlStmt *self) {
 		retVal___ = HPMHooks.source.SQL.StmtLastInsertId(self);
 	}
 	if( HPMHooks.count.HP_SQL_StmtLastInsertId_post ) {
-		uint64 (*postHookFunc) (uint64 retVal___, SqlStmt *self);
+		uint64 (*postHookFunc) (uint64 retVal___, struct SqlStmt *self);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtLastInsertId_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_StmtLastInsertId_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self);
@@ -72131,11 +72327,11 @@ uint64 HP_SQL_StmtLastInsertId(SqlStmt *self) {
 	}
 	return retVal___;
 }
-size_t HP_SQL_StmtNumColumns(SqlStmt *self) {
+size_t HP_SQL_StmtNumColumns(struct SqlStmt *self) {
 	int hIndex = 0;
 	size_t retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_StmtNumColumns_pre ) {
-		size_t (*preHookFunc) (SqlStmt *self);
+		size_t (*preHookFunc) (struct SqlStmt *self);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtNumColumns_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_StmtNumColumns_pre[hIndex].func;
@@ -72150,7 +72346,7 @@ size_t HP_SQL_StmtNumColumns(SqlStmt *self) {
 		retVal___ = HPMHooks.source.SQL.StmtNumColumns(self);
 	}
 	if( HPMHooks.count.HP_SQL_StmtNumColumns_post ) {
-		size_t (*postHookFunc) (size_t retVal___, SqlStmt *self);
+		size_t (*postHookFunc) (size_t retVal___, struct SqlStmt *self);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtNumColumns_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_StmtNumColumns_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self);
@@ -72158,11 +72354,11 @@ size_t HP_SQL_StmtNumColumns(SqlStmt *self) {
 	}
 	return retVal___;
 }
-int HP_SQL_StmtBindColumn(SqlStmt *self, size_t idx, SqlDataType buffer_type, void *buffer, size_t buffer_len, uint32 *out_length, int8 *out_is_null) {
+int HP_SQL_StmtBindColumn(struct SqlStmt *self, size_t idx, enum SqlDataType buffer_type, void *buffer, size_t buffer_len, uint32 *out_length, int8 *out_is_null) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_StmtBindColumn_pre ) {
-		int (*preHookFunc) (SqlStmt *self, size_t *idx, SqlDataType *buffer_type, void *buffer, size_t *buffer_len, uint32 *out_length, int8 *out_is_null);
+		int (*preHookFunc) (struct SqlStmt *self, size_t *idx, enum SqlDataType *buffer_type, void *buffer, size_t *buffer_len, uint32 *out_length, int8 *out_is_null);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtBindColumn_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_StmtBindColumn_pre[hIndex].func;
@@ -72177,7 +72373,7 @@ int HP_SQL_StmtBindColumn(SqlStmt *self, size_t idx, SqlDataType buffer_type, vo
 		retVal___ = HPMHooks.source.SQL.StmtBindColumn(self, idx, buffer_type, buffer, buffer_len, out_length, out_is_null);
 	}
 	if( HPMHooks.count.HP_SQL_StmtBindColumn_post ) {
-		int (*postHookFunc) (int retVal___, SqlStmt *self, size_t *idx, SqlDataType *buffer_type, void *buffer, size_t *buffer_len, uint32 *out_length, int8 *out_is_null);
+		int (*postHookFunc) (int retVal___, struct SqlStmt *self, size_t *idx, enum SqlDataType *buffer_type, void *buffer, size_t *buffer_len, uint32 *out_length, int8 *out_is_null);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtBindColumn_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_StmtBindColumn_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self, &idx, &buffer_type, buffer, &buffer_len, out_length, out_is_null);
@@ -72185,11 +72381,11 @@ int HP_SQL_StmtBindColumn(SqlStmt *self, size_t idx, SqlDataType buffer_type, vo
 	}
 	return retVal___;
 }
-uint64 HP_SQL_StmtNumRows(SqlStmt *self) {
+uint64 HP_SQL_StmtNumRows(struct SqlStmt *self) {
 	int hIndex = 0;
 	uint64 retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_StmtNumRows_pre ) {
-		uint64 (*preHookFunc) (SqlStmt *self);
+		uint64 (*preHookFunc) (struct SqlStmt *self);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtNumRows_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_StmtNumRows_pre[hIndex].func;
@@ -72204,7 +72400,7 @@ uint64 HP_SQL_StmtNumRows(SqlStmt *self) {
 		retVal___ = HPMHooks.source.SQL.StmtNumRows(self);
 	}
 	if( HPMHooks.count.HP_SQL_StmtNumRows_post ) {
-		uint64 (*postHookFunc) (uint64 retVal___, SqlStmt *self);
+		uint64 (*postHookFunc) (uint64 retVal___, struct SqlStmt *self);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtNumRows_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_StmtNumRows_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self);
@@ -72212,11 +72408,11 @@ uint64 HP_SQL_StmtNumRows(SqlStmt *self) {
 	}
 	return retVal___;
 }
-int HP_SQL_StmtNextRow(SqlStmt *self) {
+int HP_SQL_StmtNextRow(struct SqlStmt *self) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_SQL_StmtNextRow_pre ) {
-		int (*preHookFunc) (SqlStmt *self);
+		int (*preHookFunc) (struct SqlStmt *self);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtNextRow_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_StmtNextRow_pre[hIndex].func;
@@ -72231,7 +72427,7 @@ int HP_SQL_StmtNextRow(SqlStmt *self) {
 		retVal___ = HPMHooks.source.SQL.StmtNextRow(self);
 	}
 	if( HPMHooks.count.HP_SQL_StmtNextRow_post ) {
-		int (*postHookFunc) (int retVal___, SqlStmt *self);
+		int (*postHookFunc) (int retVal___, struct SqlStmt *self);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtNextRow_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_StmtNextRow_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, self);
@@ -72239,10 +72435,10 @@ int HP_SQL_StmtNextRow(SqlStmt *self) {
 	}
 	return retVal___;
 }
-void HP_SQL_StmtFreeResult(SqlStmt *self) {
+void HP_SQL_StmtFreeResult(struct SqlStmt *self) {
 	int hIndex = 0;
 	if( HPMHooks.count.HP_SQL_StmtFreeResult_pre ) {
-		void (*preHookFunc) (SqlStmt *self);
+		void (*preHookFunc) (struct SqlStmt *self);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtFreeResult_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_StmtFreeResult_pre[hIndex].func;
@@ -72257,7 +72453,7 @@ void HP_SQL_StmtFreeResult(SqlStmt *self) {
 		HPMHooks.source.SQL.StmtFreeResult(self);
 	}
 	if( HPMHooks.count.HP_SQL_StmtFreeResult_post ) {
-		void (*postHookFunc) (SqlStmt *self);
+		void (*postHookFunc) (struct SqlStmt *self);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtFreeResult_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_StmtFreeResult_post[hIndex].func;
 			postHookFunc(self);
@@ -72265,10 +72461,10 @@ void HP_SQL_StmtFreeResult(SqlStmt *self) {
 	}
 	return;
 }
-void HP_SQL_StmtFree(SqlStmt *self) {
+void HP_SQL_StmtFree(struct SqlStmt *self) {
 	int hIndex = 0;
 	if( HPMHooks.count.HP_SQL_StmtFree_pre ) {
-		void (*preHookFunc) (SqlStmt *self);
+		void (*preHookFunc) (struct SqlStmt *self);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtFree_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_StmtFree_pre[hIndex].func;
@@ -72283,7 +72479,7 @@ void HP_SQL_StmtFree(SqlStmt *self) {
 		HPMHooks.source.SQL.StmtFree(self);
 	}
 	if( HPMHooks.count.HP_SQL_StmtFree_post ) {
-		void (*postHookFunc) (SqlStmt *self);
+		void (*postHookFunc) (struct SqlStmt *self);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtFree_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_StmtFree_post[hIndex].func;
 			postHookFunc(self);
@@ -72291,10 +72487,10 @@ void HP_SQL_StmtFree(SqlStmt *self) {
 	}
 	return;
 }
-void HP_SQL_StmtShowDebug_(SqlStmt *self, const char *debug_file, const unsigned long debug_line) {
+void HP_SQL_StmtShowDebug_(struct SqlStmt *self, const char *debug_file, const unsigned long debug_line) {
 	int hIndex = 0;
 	if( HPMHooks.count.HP_SQL_StmtShowDebug__pre ) {
-		void (*preHookFunc) (SqlStmt *self, const char *debug_file, const unsigned long *debug_line);
+		void (*preHookFunc) (struct SqlStmt *self, const char *debug_file, const unsigned long *debug_line);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtShowDebug__pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_SQL_StmtShowDebug__pre[hIndex].func;
@@ -72309,7 +72505,7 @@ void HP_SQL_StmtShowDebug_(SqlStmt *self, const char *debug_file, const unsigned
 		HPMHooks.source.SQL.StmtShowDebug_(self, debug_file, debug_line);
 	}
 	if( HPMHooks.count.HP_SQL_StmtShowDebug__post ) {
-		void (*postHookFunc) (SqlStmt *self, const char *debug_file, const unsigned long *debug_line);
+		void (*postHookFunc) (struct SqlStmt *self, const char *debug_file, const unsigned long *debug_line);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_SQL_StmtShowDebug__post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_SQL_StmtShowDebug__post[hIndex].func;
 			postHookFunc(self, debug_file, &debug_line);
@@ -75659,11 +75855,11 @@ void HP_storage_sortitem(struct item *items, unsigned int size) {
 	}
 	return;
 }
-int HP_storage_reconnect_sub(DBKey key, DBData *data, va_list ap) {
+int HP_storage_reconnect_sub(union DBKey key, struct DBData *data, va_list ap) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_storage_reconnect_sub_pre ) {
-		int (*preHookFunc) (DBKey *key, DBData *data, va_list ap);
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_storage_reconnect_sub_pre; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
@@ -75682,7 +75878,7 @@ int HP_storage_reconnect_sub(DBKey key, DBData *data, va_list ap) {
 		va_end(ap___copy);
 	}
 	if( HPMHooks.count.HP_storage_reconnect_sub_post ) {
-		int (*postHookFunc) (int retVal___, DBKey *key, DBData *data, va_list ap);
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_storage_reconnect_sub_post; hIndex++ ) {
 			va_list ap___copy; va_copy(ap___copy, ap);
 			postHookFunc = HPMHooks.list.HP_storage_reconnect_sub_post[hIndex].func;
