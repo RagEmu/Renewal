@@ -8725,9 +8725,8 @@ int pc_setcart(struct map_session_data *sd,int type) {
 				sd->sc.data[SC_PUSH_CART]->val1 = type;
 			break;
 	}
-
-	if(pc->checkskill(sd, MC_PUSHCART) < 10)
-		status_calc_pc(sd,SCO_NONE); //Recalc speed penalty.
+	if (pc->checkskill(sd, MC_PUSHCART) < 10)
+		status_calc_pc(sd, SCO_NONE); //Recalc speed penalty.
 #else
 	// Update option
 	option = sd->sc.option;

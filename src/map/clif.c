@@ -10948,33 +10948,35 @@ void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
 {// TODO: State tracking?
 	int type;
 
-	if( pc->checkskill(sd, MC_CHANGECART) < 1 )
+	if (!pc->checkskill(sd, MC_CHANGECART))
 		return;
 
-	if( sd->npc_id || sd->state.workinprogress&1 ){
+	if (sd->npc_id || sd->state.workinprogress&1 ) {
 		clif->msgtable(sd, MSG_NPC_WORK_IN_PROGRESS);
 		return;
 	}
 
-	type = RFIFOW(fd,2);
+	type = RFIFOW(fd, 2);
+	
 #ifdef NEW_CARTS
-	if( (type == 9 && sd->status.base_level > 131) ||
-		(type == 8 && sd->status.base_level > 121) ||
-		(type == 7 && sd->status.base_level > 111) ||
-		(type == 6 && sd->status.base_level > 101) ||
-		(type == 5 && sd->status.base_level >  90) ||
-		(type == 4 && sd->status.base_level >  80) ||
-		(type == 3 && sd->status.base_level >  65) ||
-		(type == 2 && sd->status.base_level >  40) ||
+	if ((type == 9 && sd->status.base_level >= 131) ||
+		(type == 8 && sd->status.base_level >= 121) ||
+		(type == 7 && sd->status.base_level >= 111) ||
+		(type == 6 && sd->status.base_level >= 101) ||
+		(type == 5 && sd->status.base_level >= 91) ||
+		(type == 4 && sd->status.base_level >= 81) ||
+		(type == 3 && sd->status.base_level >= 66) ||
+		(type == 2 && sd->status.base_level >= 41) ||
 		(type == 1))
 #else
-	if( (type == 5 && sd->status.base_level > 90) ||
-	    (type == 4 && sd->status.base_level > 80) ||
-	    (type == 3 && sd->status.base_level > 65) ||
-	    (type == 2 && sd->status.base_level > 40) ||
+	if ((type == 5 && sd->status.base_level >= 91) ||
+	    (type == 4 && sd->status.base_level >= 81) ||
+	    (type == 3 && sd->status.base_level >= 66) ||
+	    (type == 2 && sd->status.base_level >= 41) ||
 	    (type == 1))
 #endif
-		pc->setcart(sd,type);
+
+	pc->setcart(sd, type);
 }
 
 /// Request to select cart's visual look for new cart design (CZ_SELECTCART).
@@ -10984,7 +10986,7 @@ void clif_parse_SelectCart(int fd, struct map_session_data *sd)
 #if PACKETVER >= 20150805 // RagexeRE
 	int type;
 	
-	if (pc->checkskill(sd, MC_CHANGECART) < 1)
+	if (!pc->checkskill(sd, MC_CARTDECORATE))
 		return;
 
 	if (sd->npc_id || sd->state.workinprogress&1) {
@@ -10995,7 +10997,7 @@ void clif_parse_SelectCart(int fd, struct map_session_data *sd)
 	if (!sd || !pc->checkskill(sd, MC_CARTDECORATE) || RFIFOL(fd, 2) != sd->status.account_id)
 		return;
 
-	type = RFIFOB(fd, 6);
+	type = (int)RFIFOB(fd, 6);
 
 	if (type <= MAX_BASE_CARTS || type > MAX_CARTS)
 		return;
