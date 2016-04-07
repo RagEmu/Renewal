@@ -4,6 +4,7 @@
 # http://ragemu.org - https://github.com/RagEmu/Renewal
 #
 # Copyright (C) 2016  RagEmu Dev Team
+# Copyright (C) 2014-2015  Hercules Dev Team
 #
 # RagEmu is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -71,6 +72,7 @@ print FH <<"EOF";
  * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
  * Copyright (C) 2016-$year  RagEmu Dev Team
+ * Copyright (C) 2014-2015  Hercules Dev Team
  *
  * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
