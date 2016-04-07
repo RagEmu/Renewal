@@ -8957,7 +8957,6 @@ bool clif_process_message(struct map_session_data *sd, int format, const char **
 	char srcmessage[CHAT_SIZE_MAX + 1];
 	size_t namelen, messagelen;
 	int fd = sd->fd;
-	int offset = 1;
 
 	nullpo_retr(false, sd);
 	nullpo_retr(false, name_);
@@ -9024,19 +9023,19 @@ bool clif_process_message(struct map_session_data *sd, int format, const char **
 	
 #if PACKETVER >= 20151001
 	if (message[messagelen - 1] != '\0') {	// Normal Chat Message don't have null terminator's
-		textlen++;
 		safestrncpy(srcmessage, message, textlen);
-		offset = 0;
+		message = srcmessage;
+		messagelen++;
 	}
 #endif
 
-	if (messagelen != strnlen(message, messagelen) + offset) {
+	if (messagelen != strnlen(message, messagelen) + 1) {
 		// the declared length must match real length
 		ShowWarning("clif_process_message: Received malformed packet from player '%s' (length is incorrect)!\n", sd->status.name);
 		return false;
 	}
 	// verify <message> part of the packet
-	if (offset == 1 && message[messagelen - 1] != '\0') {
+	if (message[messagelen - 1] != '\0') {
 		// message must be zero-terminated
 		ShowWarning("clif_process_message: Player '%s' sent an unterminated message string!\n", sd->status.name);
 		return false;
