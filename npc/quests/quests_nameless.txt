@@ -6382,7 +6382,7 @@ OnInit:
 }
 
 //== Z-Gang Quest ==========================================
-prontera,150,326,0	script	Wanted Notice#edq	HIDDEN_NPC,{
+prontera,149,328,0	script	Wanted Notice#edq	HIDDEN_NPC,{
 	if (zdan_edq == 0) {
 		mes "====National Wanted Notice====";
 		mes "Please report any information";
