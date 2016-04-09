@@ -9711,34 +9711,35 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 		case ECL_PEONYMAMY:
 		case ECL_SADAGUI:
 		case ECL_SEQUOIADUST:
-			switch( skill_id ) {
+			switch (skill_id) {
 				case ECL_SNOWFLIP:
-					status_change_end(bl,SC_SLEEP,INVALID_TIMER);
-					status_change_end(bl,SC_BLOODING,INVALID_TIMER);
-					status_change_end(bl,SC_BURNING,INVALID_TIMER);
-					status_change_end(bl,SC_DEEP_SLEEP,INVALID_TIMER);
+					status_change_end(bl, SC_BURNING, INVALID_TIMER);
+					status_change_end(bl, SC_BLOODING, INVALID_TIMER);
+					status_change_end(bl, SC_DEEP_SLEEP, INVALID_TIMER);
+					status_change_end(bl, SC_SLEEP, INVALID_TIMER);
 					break;
 				case ECL_PEONYMAMY:
-					status_change_end(bl,SC_FREEZE,INVALID_TIMER);
-					status_change_end(bl,SC_FROSTMISTY,INVALID_TIMER);
-					status_change_end(bl,SC_COLD,INVALID_TIMER);
+					status_change_end(bl, SC_COLD, INVALID_TIMER);
+					status_change_end(bl, SC_FREEZE, INVALID_TIMER);
+					status_change_end(bl, SC_FROSTMISTY, INVALID_TIMER);
 					break;
 				case ECL_SADAGUI:
-					status_change_end(bl,SC_STUN,INVALID_TIMER);
-					status_change_end(bl,SC_CONFUSION,INVALID_TIMER);
-					status_change_end(bl,SC_ILLUSION,INVALID_TIMER);
-					status_change_end(bl,SC_FEAR,INVALID_TIMER);
+					status_change_end(bl, SC_STUN, INVALID_TIMER);
+					status_change_end(bl, SC_FEAR, INVALID_TIMER);
+					status_change_end(bl, SC_CONFUSION, INVALID_TIMER);
+					status_change_end(bl, SC_ILLUSION, INVALID_TIMER);
 					break;
 				case ECL_SEQUOIADUST:
-					status_change_end(bl,SC_STONE,INVALID_TIMER);
-					status_change_end(bl,SC_POISON,INVALID_TIMER);
-					status_change_end(bl,SC_CURSE,INVALID_TIMER);
-					status_change_end(bl,SC_BLIND,INVALID_TIMER);
-					status_change_end(bl,SC_ORCISH,INVALID_TIMER);
+					status_change_end(bl, SC_STONE, INVALID_TIMER);
+					status_change_end(bl, SC_BLIND, INVALID_TIMER);
+					status_change_end(bl, SC_CURSE, INVALID_TIMER);
+					status_change_end(bl, SC_ORCISH, INVALID_TIMER);
+					status_change_end(bl, SC_POISON, INVALID_TIMER);
+					status_change_end(bl, SC_DEC_AGI, INVALID_TIMER);
 					break;
 			}
-			clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
-			clif->skill_damage(src,bl,tick, status_get_amotion(src), 0, 0, 1, skill_id, -2, BDT_SKILL);
+			clif->skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			clif->skill_damage(src, bl, tick, status_get_amotion(src), 0, 0, 1, skill_id, -2, BDT_SKILL);
 			break;
 
 		case SU_HIDE:
