@@ -68,25 +68,26 @@ struct {
 /*======================================
  * CORE : Display title
  *--------------------------------------*/
-void display_title(void) {
+void display_title(void)
+{
 	const char *vcstype = sysinfo->vcstype();
 
 	ShowMessage("\n");
-	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                                                              "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_BLUE"        "CL_BT_WHITE"               RagEmu Team presents              "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                                                         "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     ______            _____                "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     | ___ \\          |  ___|               "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     | |_/ /__ _  __ _| |__ _ __ ___  _   _ "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     |    // _` |/ _` |  __| '_ ` _ \\| | | |"CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     | |\\ \\ (_| | (_| | |__| | | | | | |_| |"CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"     \\_| \\_\\__,_|\\__, \\____/_| |_| |_|\\__,_|"CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                  __/ |                     "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                 |___/                      "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                                                          "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_BLUE"	     "CL_BT_GREEN"        Ragnarok Renewal Emulator                         "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                                                         "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_BLUE"        "CL_BOLD"                                                         "CL_BG_BLUE""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN"                 "CL_BOLD"                                                              "CL_BG_GREEN""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN"                 "CL_BT_WHITE"               RagEmu Team presents              "CL_BG_GREEN""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN"                 "CL_BOLD"                                                         "CL_BG_GREEN""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN"                 "CL_BOLD"     ______            _____                "CL_BG_GREEN""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN"                 "CL_BOLD"     | ___ \\          |  ___|               "CL_BG_GREEN""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN"                 "CL_BOLD"     | |_/ /__ _  __ _| |__ _ __ ___  _   _ "CL_BG_GREEN""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN"                 "CL_BOLD"     |    // _` |/ _` |  __| '_ ` _ \\| | | |"CL_BG_GREEN""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN"                 "CL_BOLD"     | |\\ \\ (_| | (_| | |__| | | | | | |_| |"CL_BG_GREEN""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN"                 "CL_BOLD"     \\_| \\_\\__,_|\\__, \\____/_| |_| |_|\\__,_|"CL_BG_GREEN""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN"                 "CL_BOLD"                  __/ |                     "CL_BG_GREEN""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN"                 "CL_BOLD"                 |___/                      "CL_BG_GREEN""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN"                 "CL_BOLD"                                                          "CL_BG_GREEN""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN"	              "CL_BT_YELLOW"        Ragnarok Renewal Emulator                         "CL_BG_GREEN""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN"                 "CL_BOLD"                                                         "CL_BG_GREEN""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN"                 "CL_BOLD"                                                         "CL_BG_GREEN""CL_CLL""CL_NORMAL"\n");
 
 	ShowInfo("RagEmu %d-bit for %s\n", sysinfo->is64bit() ? 64 : 32, sysinfo->platform());
 	ShowInfo("%s revision (src): '"CL_WHITE"%s"CL_RESET"'\n", vcstype, sysinfo->vcsrevision_src());
