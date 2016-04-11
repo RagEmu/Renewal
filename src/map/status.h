@@ -2354,7 +2354,7 @@ struct status_interface {
 	bool (*readdb_sizefix) (char *fields[], int columns, int current);
 	int (*readdb_refine_libconfig) (const char *filename);
 	int (*readdb_refine_libconfig_sub) (struct config_setting_t *r, const char *name, const char *source);
-	void (*read_scconfig) (void);
+	void (*read_sc_config) (const char *filename);
 	void (*read_job_db) (void);
 	void (*read_job_db_sub) (int idx, const char *name, struct config_setting_t *jdb);
 };

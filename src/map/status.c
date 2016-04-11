@@ -2623,7 +2623,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 				pc->setreg(sd, script->add_str("@val2"), sc->data[i]->val2);
 				pc->setreg(sd, script->add_str("@val3"), sc->data[i]->val3);
 				pc->setreg(sd, script->add_str("@val4"), sc->data[i]->val4);
-				script->run(status->SCConfiguration[i].script, 0, sd->bl.id, 0);
+				script->run(status->dbs->SCConfiguration[i].script, 0, sd->bl.id, 0);
 				if (!calculating)
 					return 1;
 			}
@@ -12456,7 +12456,7 @@ int status_get_sc_type(sc_type type) {
 	if( type <= SC_NONE || type >= SC_MAX )
 		return 0;
 
-	return status->SCConfiguration[type].config;
+	return status->dbs->SCConfiguration[type].config;
 }
 
 void status_read_job_db_sub(int idx, const char *name, struct config_setting_t *jdb)
@@ -12849,12 +12849,14 @@ int status_readdb_refine_libconfig(const char *filename) {
 }
 
 /* [malufett/RagEmu] */
-void status_read_sc_config(void){
-	config_t sc_conf;
-	config_setting_t *cssc = NULL, *entry = NULL;
+void status_read_sc_config(const char *filename){
+	struct config_t sc_conf;
+	struct config_setting_t *cssc = NULL, *entry = NULL;
 	const char *config_filename = "db/sc_config.conf";
+	char filepath[256];
+	sprintf(filepath, "%s/%s", map->db_path, filename);
 
-	if (libconfig->read_file(&sc_conf, config_filename))
+	if (!libconfig->load_file(&sc_conf, filepath))
 		return;
 
 	cssc = libconfig->lookup(&sc_conf, "sc_conf");
@@ -12863,9 +12865,9 @@ void status_read_sc_config(void){
 		int i;
 		int channel_count = libconfig->setting_length(entry);
 		for ( i = 0; i < channel_count; i++ ) {
-			config_setting_t *sc = libconfig->setting_get_elem(entry, i);
+			struct config_setting_t *sc = libconfig->setting_get_elem(entry, i);
 			const char *name = config_setting_name(sc);
-			config_setting_t *temp;
+			struct config_setting_t *temp;
 			const char *svalue;
 			int value;
 
@@ -12879,47 +12881,47 @@ void status_read_sc_config(void){
 				continue;
 			}
 
-			if (status->SCConfiguration[value].config != 0 || status->SCConfiguration[value].script != NULL) {
+			if (status->get_sc_type(value) != 0 || status->dbs->SCConfiguration[value].script != NULL) {
 				ShowError("read_sc_config: Duplicate entry for '%s'. Skipping...\n", name);
 				continue;
 			}
 
 			if ((temp = libconfig->setting_get_member(sc, "NoResetDead"))
 				&& libconfig->setting_get_bool(temp))
-				status->SCConfiguration[value].config |= SC_NO_REM_DEATH;
+				status->dbs->SCConfiguration[value].config |= SC_NO_REM_DEATH;
 
 			if ((temp = libconfig->setting_get_member(sc, "NoSave"))
 				&& libconfig->setting_get_bool(temp))
-				status->SCConfiguration[value].config |= SC_NO_SAVE;
+				status->dbs->SCConfiguration[value].config |= SC_NO_SAVE;
 
 			if ((temp = libconfig->setting_get_member(sc, "NoResetDispel"))
 				&& libconfig->setting_get_bool(temp))
-				status->SCConfiguration[value].config |= SC_NO_DISPELL;
+				status->dbs->SCConfiguration[value].config |= SC_NO_DISPELL;
 
 			if ((temp = libconfig->setting_get_member(sc, "NoResetClearance"))
 				&& libconfig->setting_get_bool(temp))
-				status->SCConfiguration[value].config |= SC_NO_CLEARANCE;
+				status->dbs->SCConfiguration[value].config |= SC_NO_CLEARANCE;
 
 			if ((temp = libconfig->setting_get_member(sc, "Buff"))
 				&& libconfig->setting_get_bool(temp))
-				status->SCConfiguration[value].config |= SC_BUFF;
+				status->dbs->SCConfiguration[value].config |= SC_BUFF;
 
 			if ((temp = libconfig->setting_get_member(sc, "DeBuff"))
 				&& libconfig->setting_get_bool(temp))
-				status->SCConfiguration[value].config |= SC_DEBUFF;
+				status->dbs->SCConfiguration[value].config |= SC_DEBUFF;
 
 			if ((temp = libconfig->setting_get_member(sc, "NoResetMADO"))
-				&& libconfig->setting_get_bool(temp) )
-				status->SCConfiguration[value].config |= SC_MADO_NO_RESET;
+				&& libconfig->setting_get_bool(temp))
+				status->dbs->SCConfiguration[value].config |= SC_MADO_NO_RESET;
 
 			if ((temp = libconfig->setting_get_member(sc, "NoReset"))
 				&& libconfig->setting_get_bool(temp))
-				status->SCConfiguration[value].config |= SC_NO_CLEAR;
+				status->dbs->SCConfiguration[value].config |= SC_NO_CLEAR;
 
 			if (libconfig->setting_lookup_string(sc, "Script", &svalue)) {
-				status->SCConfiguration[value].script = *svalue ? script->parse(svalue, config_filename, i, SCRIPT_IGNORE_EXTERNAL_BRACKETS, NULL) : NULL;
-				if (status->SCConfiguration[value].script != NULL)
-					status->ChangeFlagTable[value] |= SCB_ALL;
+				status->dbs->SCConfiguration[value].script = *svalue ? script->parse(svalue, config_filename, i, SCRIPT_IGNORE_EXTERNAL_BRACKETS, NULL) : NULL;
+				if (status->dbs->SCConfiguration[value].script != NULL)
+					status->dbs->ChangeFlagTable[value] |= SCB_ALL;
 			}
 		}
 
@@ -12973,8 +12975,7 @@ int status_readdb(void)
 	sv->readdb(map->db_path, "job_db2.txt",         ',', 1,                 1+MAX_LEVEL,       -1,                       status->readdb_job2);
 	sv->readdb(map->db_path, "size_fix.txt", ',', MAX_SINGLE_WEAPON_TYPE, MAX_SINGLE_WEAPON_TYPE, ARRAYLENGTH(status->dbs->atkmods), status->readdb_sizefix);
 	status->readdb_refine_libconfig("refine_db.conf");
-	sv->readdb(map->db_path, "sc_config.txt",       ',', 2,                 2,                 SC_MAX,                   status->readdb_scconfig);
-	status->read_scconfig();
+	status->read_sc_config("sc_config.conf");
 	status->read_job_db();
 
 	return 0;
@@ -13150,7 +13151,7 @@ void status_defaults(void) {
 	status->readdb_sizefix = status_readdb_sizefix;
 	status->readdb_refine_libconfig = status_readdb_refine_libconfig;
 	status->readdb_refine_libconfig_sub = status_readdb_refine_libconfig_sub;
-	status->read_scconfig = status_read_sc_config;
+	status->read_sc_config = status_read_sc_config;
 	status->read_job_db = status_read_job_db;
 	status->read_job_db_sub = status_read_job_db_sub;
 }
