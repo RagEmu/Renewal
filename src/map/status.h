@@ -2106,6 +2106,12 @@ struct status_change_entry {
 	bool infinite_duration;
 };
 
+struct status_config {
+	unsigned short config;
+	struct script_code *script;
+};
+
+
 struct status_change {
 	unsigned int option;// effect state (bitfield)
 	unsigned int opt3;// skill state (bitfield)
@@ -2212,7 +2218,7 @@ BEGIN_ZEROED_BLOCK; /* Everything within this block will be memset to 0 when sta
 	/* */
 	int atkmods[3][MAX_SINGLE_WEAPON_TYPE];//ATK weapon modification for size (size_fix.txt)
 	char job_bonus[CLASS_COUNT][MAX_LEVEL];
-	sc_conf_type sc_conf[SC_MAX];
+	struct status_config SCConfiguration[SC_MAX]; /* status -> configuration [malufett/RagEmu] */
 END_ZEROED_BLOCK; /* End */
 };
 
@@ -2348,7 +2354,7 @@ struct status_interface {
 	bool (*readdb_sizefix) (char *fields[], int columns, int current);
 	int (*readdb_refine_libconfig) (const char *filename);
 	int (*readdb_refine_libconfig_sub) (struct config_setting_t *r, const char *name, const char *source);
-	bool (*readdb_scconfig) (char *fields[], int columns, int current);
+	void (*read_scconfig) (void);
 	void (*read_job_db) (void);
 	void (*read_job_db_sub) (int idx, const char *name, struct config_setting_t *jdb);
 };

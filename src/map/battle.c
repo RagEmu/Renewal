@@ -1013,8 +1013,6 @@ int64 battle_calc_cardfix(int attack_type, struct block_list *src, struct block_
 
 				cardfix = cardfix * ( 100 - tsd->bonus.magic_def_rate ) / 100;
 
-				if( tsd->sc.data[SC_PROTECT_MDEF] )
-					cardfix = cardfix * ( 100 - tsd->sc.data[SC_PROTECT_MDEF]->val1 ) / 100;
 			}
 			if ( cardfix != 100 )
 				damage += damage * (cardfix - 100) / 100;
@@ -1166,8 +1164,6 @@ int64 battle_calc_cardfix(int attack_type, struct block_list *src, struct block_
 							break;
 						}
 					}
-					if( tsd->sc.data[SC_PROTECT_DEF] )
-						cardfix = cardfix * (100 - tsd->sc.data[SC_PROTECT_DEF]->val1) / 100;
 					if ( cardfix != 100 )
 						damage += damage * (cardfix - 100) / 100;
 				}
@@ -4471,10 +4467,14 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 			tsc && tsc->data[SC_FOGWALL])
 			hitrate -= 50;
 
-		if(sd && flag.arrow)
+		if (sd && flag.arrow)
 			hitrate += sd->bonus.arrow_hit;
-		if( sd ) //in Renewal hit bonus from Vultures Eye is not anymore shown in status window
+		if (sd) //in Renewal hit bonus from Vultures Eye is not anymore shown in status window
 			hitrate += pc->checkskill(sd,AC_VULTURE);
+		if (sd->hit_rate < 0)
+			sd->hit_rate = 0;
+		if (sd->hit_rate != 100)
+			hitrate = hitrate * sd->hit_rate / 100;
 		switch(skill_id) {
 			//Hit skill modifiers
 			//It is proven that bonus is applied on final hitrate, not hit.
@@ -4663,13 +4663,10 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 				}
 
 				//Add any bonuses that modify the base baseatk+watk (pre-skills)
-				if(sd) {
-					if(flag.cri && sd->bonus.crit_atk_rate)
+				if (sd) {
+					if (flag.cri && sd->bonus.crit_atk_rate)
 						ATK_ADDRATE(sd->bonus.crit_atk_rate);
-					if(flag.cri && sc && sc->data[SC_MTF_CRIDAMAGE])
-						ATK_ADDRATE(25);// temporary it should be 'bonus.crit_atk_rate'
-
-					}
+				}
 				break;
 			} //End default case
 		} //End switch(skill_id)
@@ -4929,10 +4926,8 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 		if( sd ) {
 			if (skill_id && (i = pc->skillatk_bonus(sd, skill_id)))
 				ATK_ADDRATE(i);
-			if( wd.flag&BF_LONG )
+			if (wd.flag&BF_LONG)
 				ATK_ADDRATE(sd->bonus.long_attack_atk_rate);
-			if( sc && sc->data[SC_MTF_RANGEATK] )
-				ATK_ADDRATE(sc->data[SC_MTF_RANGEATK]->val1);// temporary it should be 'bonus.long_attack_atk_rate'
 			if (sc && sc->data[SC_ARCLOUSEDASH] && sc->data[SC_ARCLOUSEDASH]->val4) {
  				ATK_ADDRATE(sc->data[SC_ARCLOUSEDASH]->val4);
  			}
@@ -5767,15 +5762,12 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			return ret_val;
 		}
 		if (sc->data[SC_MAGICALATTACK]) {
-			if( skill->attack(BF_MAGIC,src,src,target,NPC_MAGICALATTACK,sc->data[SC_MAGICALATTACK]->val1,tick,0) )
+			if(skill->attack(BF_MAGIC,src,src,target,NPC_MAGICALATTACK,sc->data[SC_MAGICALATTACK]->val1,tick,0))
 				return ATK_DEF;
 			return ATK_MISS;
 		}
 
-		if( tsc && tsc->data[SC_MTF_MLEATKED] && rnd()%100 < 20 )
-			clif->skill_nodamage(target, target, SM_ENDURE, 5,
-				sc_start(target,target, SC_ENDURE, 100, 5, skill->get_time(SM_ENDURE, 5)));
-		if ( hd && (sce = sc->data[SC_STYLE_CHANGE]) && sce->val1 == FIGHTER_STYLE && rand()%100 < sce->val2 )
+		if (hd && (sce = sc->data[SC_STYLE_CHANGE]) && sce->val1 == FIGHTER_STYLE && rand()%100 < sce->val2)
 			homun->addspiritball(hd,MAX_HOMUN_SPHERES);
 	}
 
