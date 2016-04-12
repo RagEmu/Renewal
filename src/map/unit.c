@@ -1247,7 +1247,10 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		((skill->get_inf2(skill_id)&INF2_NO_TARGET_SELF) ||
 		(skill_id == RL_QD_SHOT && sc && sc->data[SC_QD_SHOT_READY])) )
 	{
-		target_id = ud->target; //Auto-select target. [Skotlex]
+		if( skill_id ==  RL_QD_SHOT )
+			target_id = sc->data[SC_QD_SHOT_READY]->val1;
+		else
+			target_id = ud->target; //Auto-select target. [Skotlex]
 		temp = 1;
 	}
 
@@ -1389,8 +1392,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 						if( i == MAX_SKILL_CRIMSON_MARKER ) { //No free slots, skill Fail
 							clif->skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 							return 0;
-		}
-	}
+						}
+					}
 				}
 				break;
 		}

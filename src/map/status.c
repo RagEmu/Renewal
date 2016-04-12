@@ -5367,8 +5367,8 @@ unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc
 						val = max(val, sc->data[SC_ROCK_CRUSHER_ATK]->val2);
 					if (sc->data[SC_POWER_OF_GAIA])
 						val = max(val, sc->data[SC_POWER_OF_GAIA]->val2);
-					if (sc->data[SC_B_TRAP])
-						val = max(val, sc->data[SC_B_TRAP]->val2);
+					if( sc->data[SC_B_TRAP] )
+						val = max( val, 90 );
 					if (sc->data[SC_MELON_BOMB])
 						val = max(val, sc->data[SC_MELON_BOMB]->val2);
 					if (sc->data[SC_STOMACHACHE])
@@ -5606,8 +5606,8 @@ short status_calc_fix_aspd(struct block_list *bl, struct status_change *sc, int 
 		aspd -= (bl->type == BL_PC ? pc->checkskill(BL_UCAST(BL_PC, bl), RK_RUNEMASTERY) : 10) / 10 * 40;
 	if (sc->data[SC_MTF_ASPD])
 		aspd -= sc->data[SC_MTF_ASPD]->val1;
-	if (sc->data[SC_HEAT_BARREL] && sc->data[SC_HEAT_BARREL]->val3)
-		aspd -= sc->data[SC_HEAT_BARREL]->val3;
+	if (sc->data[SC_HEAT_BARREL])
+		aspd -= 10 * sc->data[SC_HEAT_BARREL]->val1;
 
 	if (sc->data[SC_OVERED_BOOST]) // should be final and unmodifiable by any means
 		aspd = (200 - sc->data[SC_OVERED_BOOST]->val3) * 10;
@@ -9401,14 +9401,11 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				tick_time = 1000;
 				val4 = tick / tick_time;
 				break;
-			case SC_B_TRAP:
-				val2 = val1 * 25; //-Speed (Custom)
-				break;
 			case SC_HEAT_BARREL: {
 					uint8 n = (uint8)(sd ? sd->spiritball_old : 10);
 
-					val2 = n * 5; //-%Fixed cast
-					val3 = val1 * 10; // ASPD
+					val2 = (6 + 2 * val1) * n; //+Atk
+					val3 = 5 * n; //-%Fixed cast
 					val4 = 75 - 5 * val1; //-Flee
 				}
 				break;
@@ -9675,6 +9672,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 		case SC_CAMOUFLAGE:
 		case SC_SIREN:
 		case SC_ALL_RIDING:
+		case SC_HEAT_BARREL_AFTER:
 		case SC_SUHIDE:
 			unit->stop_attack(bl);
 			break;
@@ -10604,21 +10602,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				}
 			}
 			break;
-		/*case SC_H_MINE: { //Drop the material from target if expired
-				struct item it;
-				struct map_session_data *sd = NULL;
-
-				if (sce->val3 || status_isdead(bl) || !(sd = map->id2sd(sce->val2)))
-					break;
-				if (!itemdb->exists(skill_get_itemid(RL_H_MINE,0)))
-					break;
-				memset(&it,0,sizeof(it));
-				it.nameid = skill_get_itemid(RL_H_MINE,0);
-				it.amount = max(skill_get_itemqty(RL_H_MINE,0),1);
-				it.identify = 1;
-				map->addflooritem(bl,&it,it.amount,bl->m,bl->x,bl->y,sd->status.char_id,0,0,4);
-			}
-			break;*/
 	}
 
 	opt_flag = 1;
@@ -11820,7 +11803,7 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 				clif->crimson_marker(temp_sd, bl, 0); //Update target position
 				sc_timer_next(1000 + tick,status->change_timer,bl->id,data);
 				return 0;
-	}
+			}
 			break;
 		case SC_BITESCAR:
 			if (--(sce->val4) >= 0) {

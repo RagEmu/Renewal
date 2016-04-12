@@ -1383,11 +1383,11 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			sc_start2(src, bl, SC_BLOODING, 10 * skill_lv, skill_lv, src->id, skill->get_time(skill_id,skill_lv));
 			break;
 		case RL_MASS_SPIRAL:
-			sc_start(src,bl,SC_BLOODING,rnd()%50 + skill_lv * 10,skill_lv,skill->get_time2(skill_id,skill_lv)); //Custom
+			sc_start(src,bl,SC_BLOODING,50,skill_lv,skill_get_time(skill_id,skill_lv));
 			break;
 		case RL_SLUGSHOT:
 			if( dstmd )
-				sc_start(src,bl,SC_STUN,rnd()%50 + skill_lv * 10,skill_lv,skill->get_time2(skill_id,skill_lv)); //Custom
+				sc_start(src,bl,SC_STUN,rnd()%50 + skill_lv * 10,skill_lv,skill_get_time2(skill_id,skill_lv)); //Custom
 			break;
 		case RL_BANISHING_BUSTER: {
 			uint16 i, n = skill_lv;
@@ -1422,18 +1422,12 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				}
 			}
 			break;
-		case RL_S_STORM: {
-			uint16 pos[] = { EQP_HEAD_LOW, EQP_HEAD_MID, EQP_HEAD_TOP, EQP_HAND_R, EQP_HAND_L, EQP_ARMOR, EQP_SHOES, EQP_GARMENT, EQP_ACC_L, EQP_ACC_R };
-			skill->break_equip(bl,pos[rnd()%ARRAYLENGTH(pos)],
-				max(skill_lv * 500,(sstatus->dex * skill_lv * 10) - (tstatus->agi * 20)), BCT_ENEMY); // Custom
-			}
-			break;
 		case RL_AM_BLAST:
-			sc_start(src,bl,SC_ANTI_M_BLAST,status_get_dex(src) * skill_lv / 10,skill_lv,skill->get_time2(skill_id,skill_lv)); // Custom
+			if( bl->type == BL_PC )
+				sc_start(src,bl,SC_ANTI_M_BLAST,skill_lv * 10 + status_get_dex(src) / 10,skill_lv,skill->get_time2(skill_id,skill_lv));
 			break;
 		case RL_HAMMER_OF_GOD:
 			sc_start(src,bl,SC_STUN,100,skill_lv,skill->get_time2(skill_id,skill_lv));
-			status_change_end(bl, SC_C_MARKER, INVALID_TIMER);
 			break;
 		case SU_SCRATCH:
 			sc_start2(src, bl, SC_BLOODING, (skill_lv * 3), skill_lv, src->id, skill->get_time(skill_id, skill_lv)); // TODO: What's the chance/time?
@@ -1450,7 +1444,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		//	break;
 		case SU_LUNATICCARROTBEAT:
 			if (skill->area_temp[3] == 1)
-				sc_start(src, bl, SC_STUN, 10, skill_lv, skill_get_time(skill_id, skill_lv)); // TODO: What's the chance/time?
+				sc_start(src, bl, SC_STUN, 10, skill_lv, skill->get_time(skill_id, skill_lv)); // TODO: What's the chance/time?
 			break;
 		default:
 			skill->additional_effect_unknown(src, bl, &skill_id, &skill_lv, &attack_type, &dmg_lv, &tick);
@@ -2614,10 +2608,9 @@ int skill_attack(int attack_type, struct block_list* src, struct block_list *dsr
 			dmg.amotion = status_get_amotion(src) * 2;
 		case LG_OVERBRAND_PLUSATK:
 		case NC_MAGMA_ERUPTION:
-		case RL_R_TRIP_PLUSATK:
 		case RL_BANISHING_BUSTER:
 		case RL_S_STORM:
-		case RL_SLUGSHOT:
+		case RL_R_TRIP_PLUSATK:
 			dmg.dmotion = clif->skill_damage(dsrc,bl,tick,status_get_amotion(src),dmg.dmotion,damage,dmg.div_,skill_id,-1,BDT_SPLASH);
 			break;
 		case EL_FIRE_BOMB:
@@ -2964,6 +2957,16 @@ int skill_attack(int attack_type, struct block_list* src, struct block_list *dsr
 				break;
 			case SR_TIGERCANNON:
 				status_zap(bl, 0, damage/10); // 10% of damage dealt
+				break;
+			case RL_S_STORM: {
+					uint16 pos[] = { EQP_HELM,EQP_WEAPON,EQP_SHIELD,EQP_ARMOR,EQP_SHOES,EQP_GARMENT };
+					uint16 rate, max_rate;
+
+					max_rate = 500 * skill_lv;
+					rate = (status_get_dex(src) * skill_lv * 10) - (status_get_agi(bl) * status->get_lv(bl) / 5); //Custom
+					rate = max(rate, max_rate);
+					skill->break_equip(bl, pos[rnd()%6], rate, BCT_ENEMY);
+				}
 				break;
 			default:
 				skill->attack_post_unknown(&attack_type, src, dsrc, bl, &skill_id, &skill_lv, &tick, &flag);
@@ -3662,21 +3665,6 @@ int skill_timerskill(int tid, int64 tick, int id, intptr_t data) {
 						skill->unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,0);
 					}
 					break;
-				case RL_FALLEN_ANGEL:
-					{
-						struct map_session_data *sd = (src->type == BL_PC) ? map->id2sd(src->id): NULL;
-						if (sd) {
-							if (!skill->check_condition_castend(sd,GS_DESPERADO,skl->skill_lv))
-								break;
-							sd->state.autocast = 1;
-						}
-						skill->castend_pos2(src,skl->x,skl->y,GS_DESPERADO,skl->skill_lv,tick,skl->flag);
-						if (sd) {
-							battle->consume_ammo(sd,GS_DESPERADO,skl->skill_lv);
-							sd->state.autocast = 0;
-						}
-					}
-					break;
 				default:
 					skill->timerskill_notarget_unknown(tid, tick, src, ud, skl);
 					break;
@@ -4246,6 +4234,7 @@ int skill_castend_damage_id(struct block_list* src, struct block_list *bl, uint1
 					case NJ_BAKUENRYU:
 					case LG_EARTHDRIVE:
 					case GN_CARTCANNON:
+					case RL_S_STORM:
 					case SU_LUNATICCARROTBEAT:
 					case SU_SCRATCH:
 						clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -5294,6 +5283,7 @@ int skill_castend_id(int tid, int64 tick, int id, intptr_t data) {
 				return skill->castend_pos(tid,tick,id,data);
 			case GN_WALLOFTHORN:
 			case SC_ESCAPE:
+			case RL_B_TRAP:
 			case SU_CN_POWDERING:
  			case SU_SV_ROOTTWIST:
 				ud->skillx = target->x;
@@ -10376,6 +10366,8 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 				else
 					map->foreachinrange(skill->area_sub,src,skill->get_splash(skill_id,skill_lv),BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|SD_ANIMATION|SD_SPLASH|1,skill->castend_damage_id);
 			}
+			//Main target always receives damage
+			skill->attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
 			break;
 
 		case RL_C_MARKER:
@@ -11565,35 +11557,20 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			break;
 
 		case RL_FALLEN_ANGEL:
-			if (unit->movepos(src,x,y,1,true)) {
-				uint8 skill_use_lv = sd ? pc->checkskill(sd,GS_DESPERADO) : 10;
-				if (!skill_use_lv) {
-					clif->skill_nodamage(src, src, skill_id, skill_lv, 0);
-					break;
-				}
-				clif->fixpos(src);
-				clif->skill_nodamage(src, src, skill_id, skill_lv, 1);
-				skill->addtimerskill(src, tick+500, 0, x, y, RL_FALLEN_ANGEL, skill_use_lv, BF_WEAPON, flag|SD_LEVEL|SD_ANIMATION|SD_SPLASH);
-			}
-			else {
-				if (sd)
-					clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-			}
-			break;
+			if( sd ) {
+				if( unit->movepos(src,x,y,1,true) ) {
+					enum e_skill skill_use_id = GS_DESPERADO;
+					uint8 skill_use_lv = pc->checkskill(sd,skill_use_id);
 
-		case RL_HAMMER_OF_GOD: {
-				int i;
-				i = skill_get_splash(skill_id, skill_lv);
-				if (sd) {
-					skill->area_temp[0] = map->foreachinarea(skill->area_sub, src->m, x-i, y-i, x+i, y+i, BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill->area_sub_count);
-					if (!skill->area_temp[0]) {
-						clif->skill_nodamage(src, src, skill_id, 0, 1);
-						break;
+					clif->blown(src);
+					if( skill_use_lv && skill->check_condition_castend(sd,skill_use_id,skill_use_lv) ) {
+						sd->skill_id_old = RL_FALLEN_ANGEL;
+						skill->castend_pos2(src,src->x,src->y,skill_use_id,skill_use_lv,tick,SD_LEVEL|SD_ANIMATION|SD_SPLASH);
+						battle->consume_ammo(sd,skill_use_id,skill_use_lv);
 					}
-				}
-				map->foreachinarea(skill_area_sub, src->m, x-i, y-i, x+i, y+i, BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|SD_ANIMATION|8, skill->castend_damage_id);
-				skill->area_temp[0] = 0;
-				break;
+					sd->skill_id_old = 0;
+				} else
+					clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			}
 			break;
 
@@ -14741,8 +14718,9 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 		return 0;
 	}
 
-	if( require.spiritball > 0 && sd->spiritball < require.spiritball) {
-		clif->skill_fail(sd,skill_id,USESKILL_FAIL_SPIRITS,require.spiritball);
+	if( ((require.spiritball > 0 && sd->spiritball < require.spiritball) ||
+		(require.spiritball == -1 && sd->spiritball < 1)) ) {
+		clif->skill_fail(sd,skill_id,USESKILL_FAIL_SPIRITS,(require.spiritball == -1) ? 1 : require.spiritball);
 		return 0;
 	}
 
@@ -14788,25 +14766,6 @@ int skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id, 
 
 	if( sd->chatID )
 		return 0;
-
-	// This is a self skill, and doesn't seem to abide to max count
-	// Logic here to only allow only the maxcount usage
-	if (skill_id == RL_B_TRAP) {
-		if (ud) {
-			int maxcount = skill->get_maxcount(skill_id, skill_lv);
-			if (battle_config.land_skill_limit && maxcount > 0) {
-				for (i = 0; i < MAX_SKILLUNITGROUP && ud->skillunit[i] && maxcount; i++) {
-					if (ud->skillunit[i]->skill_id == ud->skill_id)
-						maxcount--;
-				}
-				if (maxcount == 0)
-				{
-					if (sd) clif->skill_fail(sd, ud->skill_id, USESKILL_FAIL_LEVEL, 0);
-					return 0;
-				}
-			}
-		}
-	}
 
 	if( pc_has_permission(sd, PC_PERM_SKILL_UNCONDITIONAL) && sd->skillitem != skill_id ) {
 		//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]
@@ -15032,15 +14991,11 @@ int skill_consume_requirement( struct map_session_data *sd, uint16 skill_id, uin
 		if(req.hp || req.sp)
 			status_zap(&sd->bl, req.hp, req.sp);
 
-		if(req.spiritball > 0) {
+		if(req.spiritball > 0)
 			pc->delspiritball(sd,req.spiritball,0);
-		}
-		// Special Case for Rebellion's Heat Barrel - Use all spiritballs available
-		else if (req.spiritball == -1 && (skill_id == RL_HEAT_BARREL)) {
-			if (sd->spiritball > 0) {
-				req.spiritball = sd->spiritball;
-				pc->delspiritball(sd, req.spiritball, 0);
-			}
+		else if( req.spiritball == -1 ) {
+			sd->spiritball_old = sd->spiritball;
+			pc->delspiritball(sd,sd->spiritball,0);
 		}
 
 		if(req.zeny > 0)
@@ -15422,11 +15377,6 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 			if( sc && (sc->data[SC_HEATER_OPTION] || sc->data[SC_COOLER_OPTION] || sc->data[SC_BLAST_OPTION] ||  sc->data[SC_CURSED_SOIL_OPTION] ))
 				req.sp += req.sp * 150 / 100;
 			break;
-		case RL_BANISHING_BUSTER:
-		case RL_HEAT_BARREL:
-		case RL_HAMMER_OF_GOD:
-			req.spiritball = sd->spiritball;
-			break;
 		default:
 			skill->get_requirement_unknown(sc, sd, &skill_id, &skill_lv, &req);
 			break;
@@ -15591,7 +15541,7 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 
 		// Fixed cast reduction bonuses
 		if( sc->data[SC_HEAT_BARREL] )
-			fixcast_r = max(fixcast_r, sc->data[SC_HEAT_BARREL]->val2);
+			fixcast_r = max(fixcast_r, sc->data[SC_HEAT_BARREL]->val3);
 		if( sc->data[SC__LAZINESS] )
 			fixcast_r = max(fixcast_r, sc->data[SC__LAZINESS]->val2);
 		if( sc->data[SC_DANCE_WITH_WUG])

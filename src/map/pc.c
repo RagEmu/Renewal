@@ -262,7 +262,7 @@ int pc_delspiritball(struct map_session_data *sd,int count,int type)
 		return 0;
 	}
 
-	if(count <= 0)
+	if(!count)
 		return 0;
 	if(count > sd->spiritball)
 		count = sd->spiritball;
