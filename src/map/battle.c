@@ -655,6 +655,7 @@ int64 battle_calc_sizefix(struct map_session_data *sd, int64 damage, int type, i
 int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,int64 dmg,int type) {
 	int64 damage;
 	struct status_data *st = status->get_status_data(target);
+	struct status_change *tsc = status->get_sc(target);
 	int weapon, skill_lv;
 	damage = dmg;
 
@@ -677,6 +678,9 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 		damage += (skill_lv * 4);
 		if (sd->sc.data[SC_SOULLINK] && sd->sc.data[SC_SOULLINK]->val2 == SL_HUNTER)
 			damage += sd->status.str;
+	if(target->type == BL_MOB && tsc && tsc->count && tsc->data[SC_P_ALTER] && //If the Platinum Alter is activated
+		(battle->check_undead(st->race, st->def_ele) || st->race == RC_UNDEAD)) //Undead attacker
+		damage += tsc->data[SC_P_ALTER]->val3;
 	}
 
 	if(type == 0)
@@ -780,6 +784,7 @@ int64 battle_calc_masteryfix(struct block_list *src, struct block_list *target, 
 		case CR_GRANDCROSS:
 		case NJ_ISSEN:
 		case CR_ACIDDEMONSTRATION:
+		case RL_MASS_SPIRAL:
 			return damage;
 		case NJ_SYURIKEN:
 			if( (skill2_lv = pc->checkskill(sd,NJ_TOBIDOUGU)) > 0 )
@@ -2477,13 +2482,16 @@ int battle_calc_skillratio(int attack_type, struct block_list *src, struct block
 					skillratio += -100 + 200 * skill_lv;
 					break;
 				case RL_FIREDANCE:
-					skillratio += -100 + 100 * skill_lv * status->get_lv(src) / 160; //Custom values
+					skillratio += -100 + 100 * skill_lv;
+					RE_LVL_DMOD(100);
 					break;
 				case RL_BANISHING_BUSTER:
-					skillratio += -100 + (1000 + 200 * skill_lv) * status->get_lv(src) / 100;
+					skillratio += 900 + 200 * skill_lv;
+					RE_LVL_DMOD(100);
 					break;
 				case RL_S_STORM:
-					skillratio += -100 + (1000 + 100 * skill_lv) * status->get_lv(src) / 100;
+					skillratio += 900 + 100 * skill_lv;
+					RE_LVL_DMOD(100);
 					break;
 				case RL_SLUGSHOT: {
 						uint16 w = 50;
@@ -2491,33 +2499,32 @@ int battle_calc_skillratio(int attack_type, struct block_list *src, struct block
 
 						if(sd && (idx = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[idx])
 							w = sd->inventory_data[idx]->weight / 10;
-						skillratio += -100 + skill_lv * (max(w,1) * 32);
+						skillratio += -100 + max(w,1) * 32 * skill_lv;
 					}
 					break;
 				case RL_D_TAIL:
-					skillratio += -100 + (2500 + 500 * skill_lv);
+					skillratio += 2400 + 500 * skill_lv;
 					break;
 				case RL_R_TRIP:
-					skillratio  += -100 + (status_get_dex(src)/2)*(10+(skill_lv*3));
-					break;
 				case RL_R_TRIP_PLUSATK:
-					skillratio += -100 + ((status_get_dex(src)/2)*(10+(skill_lv*3)))/2;
+					skillratio += -100 + (status_get_dex(src) / 2) * (10 + 3 * skill_lv);
+					if(skill_id == RL_R_TRIP_PLUSATK)
+						skillratio >>= 1; //Half damage
+					break;
 				case RL_H_MINE:
 					skillratio += 100 + 200 * skill_lv;
 					if(sd && sd->flicker) //Explode bonus damage
-						skillratio += 800 + (skill_lv - 1) * 300;
+						skillratio += 500 + 300 * skill_lv;
 					break;
 				case RL_HAMMER_OF_GOD:
-					skillratio += -100 + (1600+skill_lv*800) + (((sd ? sd->spiritball_old : 1) + 1) / 2) * 200;
-					break;
-				case RL_QD_SHOT:
-					skillratio += -100 + max(pc->checkskill(sd,GS_CHAINACTION),1) * status_get_dex(src) / 5; //Custom values
+					skillratio += 1500 + 800 * skill_lv + (((sd ? sd->spiritball_old : 1) + 1) / 2) * 200;
 					break;
 				case RL_FIRE_RAIN:
-					skillratio += -100 + (2000 + ( skill_lv * status_get_dex(src) ) * status->get_lv(src)) / 100;
+					skillratio += 1900 + status_get_dex(src) * skill_lv;
+					RE_LVL_DMOD(100);
 					break;
 				case RL_AM_BLAST:
-					skillratio += -100 + 2000 + skill_lv * 200;
+					skillratio += 1900 + 200 * skill_lv;
 					break;
 				default:
 					battle->calc_skillratio_weapon_unknown(&attack_type, src, target, &skill_id, &skill_lv, &skillratio, &flag);
@@ -2557,7 +2564,7 @@ int battle_calc_skillratio(int attack_type, struct block_list *src, struct block
 				if(sc->data[SC_P_ALTER])
 					skillratio += sc->data[SC_P_ALTER]->val2;
 				if(sc->data[SC_HEAT_BARREL])
-					skillratio += 200;
+					skillratio += sc->data[SC_HEAT_BARREL]->val2;
 			}
 	}
 	if( skillratio < 1 )
@@ -4197,8 +4204,16 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 					wd.div_ = 10;
 				break;
 
+			case RL_R_TRIP: //Knock's back target out of skill range
+				wd.blewcount -= distance_bl(src, target);
+				break;
+
+			case EL_STONE_RAIN:
+				if(!(wd.flag==1))
+					wd.div_ = 1;
+				break;
+
 			case MO_INVESTIGATE:
-			case RL_MASS_SPIRAL:
 				flag.pdef = flag.pdef2 = 2;
 				break;
 
@@ -4225,6 +4240,7 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 			case KO_BAKURETSU:
 			case RK_DRAGONBREATH:
 			case RK_DRAGONBREATH_WATER:
+			case RL_MASS_SPIRAL:
 				flag.distinct = 1;
 				/* Fall through */
 			case NJ_KUNAI:
@@ -4349,8 +4365,8 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 					wd.div_ = min(wd.div_, sd->status.inventory[i].amount);
 					sc->data[SC_FEARBREEZE]->val4 = wd.div_ - 1;
 					wd.type = BDT_MULTIHIT;
-					if(sc && sc->data[SC_E_CHAIN])
-						sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill->get_time(RL_QD_SHOT,1));
+					if(sc && sc->data[SC_E_CHAIN] && !sc->data[SC_QD_SHOT_READY])
+						sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill->get_time(RL_QD_SHOT,1) + status_get_dex(src) * 4);
 				}
 		}
 	}
@@ -4922,7 +4938,7 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 				ATK_ADDRATE(sd->bonus.long_attack_atk_rate);
 			if( sc && sc->data[SC_MTF_RANGEATK] )
 				ATK_ADDRATE(sc->data[SC_MTF_RANGEATK]->val1);// temporary it should be 'bonus.long_attack_atk_rate'
-			if (sc->data[SC_ARCLOUSEDASH] && sc->data[SC_ARCLOUSEDASH]->val4) {
+			if (sc && sc->data[SC_ARCLOUSEDASH] && sc->data[SC_ARCLOUSEDASH]->val4) {
  				ATK_ADDRATE(sc->data[SC_ARCLOUSEDASH]->val4);
  			}
 			if( (i=pc->checkskill(sd,AB_EUCHARISTICA)) > 0 &&
