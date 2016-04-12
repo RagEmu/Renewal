@@ -539,6 +539,35 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 	if(!(flag&2) && (!(status_get_mode(bl)&MD_CANMOVE) || !unit->can_move(bl)))
 		return 0;
 
+#ifdef ENABLE_WEST_PICKUP
+	if (ud->xy_log_counter >= 11) {
+		int counter = 0, i, index = -1;
+
+		ud->xy_log_counter = 0;
+
+		for (i = 0; i <= 7; i = i + 2) {
+			if (index == -1){
+				if (ud->x_log[i] == ud->x_log[i + 2] && ud->y_log[i] == ud->y_log[i + 2])
+					index = 0;
+				else if (ud->x_log[i + 1] == ud->x_log[i + 3] && ud->y_log[i + 1] == ud->y_log[i + 3])
+					index = 1;
+
+			}
+			if (index >= 0 &&
+				ud->x_log[i + index] == ud->x_log[i + 2 + index] && ud->y_log[i + index] == ud->y_log[i + 2 + index]) {
+				++counter;
+			}
+
+		}
+		if (counter >= 3) {
+			return 1;
+		}
+	}
+	ud->x_log[ud->xy_log_counter] = x;
+	ud->y_log[ud->xy_log_counter] = y;
+	ud->xy_log_counter++;
+#endif
+
 	ud->state.walk_easy = flag&1;
 	ud->to_x = x;
 	ud->to_y = y;

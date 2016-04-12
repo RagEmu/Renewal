@@ -85,6 +85,9 @@
 /// Comment to disable autotrade persistency (where autotrading merchants survive server restarts)
 #define AUTOTRADE_PERSISTENCY
 
+/// Comment to disable official behavior when picking up item on the west
+#define ENABLE_WEST_PICKUP
+
 /**
  * No settings past this point
  **/

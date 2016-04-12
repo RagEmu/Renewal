@@ -78,6 +78,11 @@ struct unit_data {
 		unsigned running : 1;
 		unsigned speed_changed : 1;
 	} state;
+#ifdef ENABLE_WEST_PICKUP
+	/* Dastgir/RagEmu */
+	short x_log[10], y_log[10];	// Recently Used x/y
+	short xy_log_counter;
+#endif
 };
 
 struct view_data {
