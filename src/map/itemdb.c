@@ -440,6 +440,7 @@ void itemdb_jobid2mapid(uint64 *bclass, int job_id, bool enable)
 			break;
 		case JOB_SUMMONER:
 			mask[0] = 1ULL << MAPID_SUMMONER;
+			break;
 		// Other Classes
 		case JOB_GANGSI: //Bongun/Munak
 			mask[0] = 1ULL << MAPID_GANGSI;
