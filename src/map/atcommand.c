@@ -1719,8 +1719,16 @@ ACMD(model)
 ACMD(bodystyle)
 {
 	int body_style = 0;
+	nullpo_retr(false, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	
+	if (!((sd->class_&MAPID_THIRDMASK) == MAPID_GUILLOTINE_CROSS || (sd->class_&MAPID_THIRDMASK) == MAPID_GENETIC
+		|| (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC || (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD
+		|| (sd->class_&MAPID_THIRDMASK) == MAPID_ARCH_BISHOP)) {
+		clif->message(fd, msg_txt(35));	// This job has no alternate body styles.
+		return false;
+	}
 
 	if (!*message || sscanf(message, "%d", &body_style) < 1) {
 		sprintf(atcmd_output, "Please, enter a body style (usage: @bodystyle <body ID: %d-%d>).", MIN_BODY_STYLE, MAX_BODY_STYLE);
