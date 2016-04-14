@@ -5542,13 +5542,18 @@ ACMD(autotrade)
 		return false;
 	}
 
-	if( pc_isdead(sd) ) {
+	if (pc_isdead(sd)) {
 		clif->message(fd, msg_fd(fd,1180)); // You cannot autotrade when dead.
 		return false;
 	}
 
-	if( !sd->state.vending && !sd->state.buyingstore ) { //check if player is vending or buying
-		clif->message(fd, msg_fd(fd,549)); // "You should have a shop open in order to use @autotrade."
+	if (!sd->state.vending && !sd->state.buyingstore) { //check if player is vending or buying
+		clif->message(fd, msg_fd(fd, 549)); // "You should have a shop open in order to use @autotrade."
+		return false;
+	}
+	
+	if (sd->state.buyingstore && battle_config.feature_buying_store_autotrade == 0) {
+		clif->message(fd, msg_fd(fd, 1292)); // Buyingstore Autotrading is disabled.
 		return false;
 	}
 
@@ -5562,10 +5567,6 @@ ACMD(autotrade)
 	channel->quit(sd);
 
 	clif->authfail_fd(sd->fd, 15);
-
-	/* currently standalone is not supporting buyingstores, so we rely on the previous method */
-	if( sd->state.buyingstore )
-		return true;
 
 #ifdef AUTOTRADE_PERSISTENCY
 	sd->state.autotrade = 2;/** state will enter pre-save, we use it to rule out some criterias **/

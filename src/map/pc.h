@@ -737,12 +737,6 @@ struct item_cd {
 	short nameid[MAX_ITEMDELAYS];//skill id
 };
 
-enum e_pc_autotrade_update_action {
-	PAUC_START,
-	PAUC_REFRESH,
-	PAUC_REMOVE,
-};
-
 /**
  * Flag values for pc->skill
  */
@@ -772,6 +766,7 @@ struct pc_interface {
 
 	/* */
 	struct DBMap *at_db;/* char id -> struct autotrade_vending */
+	struct DBMap *bs_at_db;/* char id -> struct buyingstore */
 	/* */
 	struct DBMap *itemcd_db;
 	/* */

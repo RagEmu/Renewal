@@ -230,6 +230,13 @@ enum {
 // No ViewID
 #define map_no_view(m, view) (map->list[m].flag.noviewid & (view))
 
+/// Autotrader Constants
+enum e_pc_autotrade_update_action {
+	PAUC_START,
+	PAUC_REFRESH,
+	PAUC_REMOVE,
+};
+
 //This stackable implementation does not means a BL can be more than one type at a time, but it's
 // meant to make it easier to check for multiple types at a time on invocations such as map_foreach* calls [Skotlex]
 enum bl_type {
@@ -986,6 +993,8 @@ struct map_interface {
 	char autotrade_merchants_db[32];
 	char autotrade_data_db[32];
 	char npc_market_data_db[32];
+	char buyingstore_merchants_db[32];
+	char buyingstore_data_db[32];
 
 	char default_codepage[32];
 	char default_lang_str[64];

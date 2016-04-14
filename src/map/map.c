@@ -1850,8 +1850,10 @@ int map_quit(struct map_session_data *sd) {
 	if( sd->bg_id && !sd->bg_queue.arena ) /* TODO: dump this chunk after bg_queue is fully enabled */
 		bg->team_leave(sd,BGTL_QUIT);
 
-	if (sd->state.autotrade && core->runflag != MAPSERVER_ST_SHUTDOWN && !channel->config->closing)
-		pc->autotrade_update(sd,PAUC_REMOVE);
+	if (sd->state.autotrade && core->runflag != MAPSERVER_ST_SHUTDOWN && !channel->config->closing) {
+		pc->autotrade_update(sd, PAUC_REMOVE);
+		buyingstore->autotrade_update(sd, PAUC_REMOVE);
+	}
 
 	skill->cooldown_save(sd);
 	pc->itemcd_do(sd,false);
@@ -3983,6 +3985,10 @@ int inter_config_read(char *cfgName) {
 			safestrncpy(map->autotrade_data_db, w2, sizeof(map->autotrade_data_db));
 		else if(strcmpi(w1,"npc_market_data_db")==0)
 			safestrncpy(map->npc_market_data_db, w2, sizeof(map->npc_market_data_db));
+		else if(strcmpi(w1,"buyingstore_merchants_db")==0)
+			safestrncpy(map->buyingstore_merchants_db, w2, sizeof(map->buyingstore_merchants_db));
+		else if(strcmpi(w1,"buyingstore_data_db")==0)
+			safestrncpy(map->buyingstore_data_db, w2, sizeof(map->buyingstore_data_db));
 		/* sql log db */
 		else if(strcmpi(w1,"log_db_ip")==0)
 			safestrncpy(logs->db_ip, w2, sizeof(logs->db_ip));

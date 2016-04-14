@@ -25,6 +25,7 @@
 #include "chrif.h"
 
 #include "map/battle.h"
+#include "map/buyingstore.h"
 #include "map/clif.h"
 #include "map/elemental.h"
 #include "map/guild.h"
@@ -525,9 +526,10 @@ void chrif_on_ready(void) {
 	//Re-save any guild castles that were modified in the disconnection time.
 	guild->castle_reconnect(-1, 0, 0);
 
-	if( !once ) {
+	if (!once) {
 #ifdef AUTOTRADE_PERSISTENCY
 		pc->autotrade_load();
+		buyingstore->autotrade_load();
 #endif
 		once = true;
 	}
