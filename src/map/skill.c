@@ -9745,7 +9745,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 
 		case SU_TUNABELLY:
 		{
-			int heal;
+			int heal = 0;
 			if (!dstmd || dstmd->class_ != MOBID_EMPELIUM || !mob_is_battleground(dstmd)) {
 				heal = ((2 * skill_lv - 1) * 10) * status_get_max_hp(bl) / 100;
 				status->heal(bl, heal, 0, 0);
@@ -14760,7 +14760,6 @@ int skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id, 
 	struct status_data *st;
 	int i;
 	int index[MAX_SKILL_ITEM_REQUIRE];
-	struct unit_data *ud = unit->bl2ud(&sd->bl);
 
 	nullpo_ret(sd);
 
