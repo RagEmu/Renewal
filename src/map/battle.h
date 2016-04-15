@@ -543,6 +543,9 @@ struct Battle_Config {
 	int save_body_style;
 
 	int mob_eye_range_bonus; //Vulture's Eye and Snake's Eye range bonus
+
+	// RagEmu
+	int feature_buying_store_autotrade; // BuyingStore Autotrader [Dastgir/RagEmu]
 };
 
 /* criteria for battle_config.idletime_critera */

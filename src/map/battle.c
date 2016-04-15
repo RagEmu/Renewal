@@ -6852,6 +6852,8 @@ static const struct battle_data {
 	{ "max_body_style",                     &battle_config.max_body_style,                  4,      0,      SHRT_MAX,       },
 	{ "save_body_style",                    &battle_config.save_body_style,                 0,      0,      1,              },
 	{ "monster_eye_range_bonus",            &battle_config.mob_eye_range_bonus,             0,      0,      10,             },
+	// RagEmu
+	{ "feature.buying_store_autotrade",     &battle_config.feature_buying_store_autotrade,  1,      0,      1,              },
 };
 #ifndef STATS_OPT_OUT
 /**

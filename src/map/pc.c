@@ -7802,12 +7802,14 @@ int pc_dead(struct map_session_data *sd,struct block_list *src) {
 	}
 
 	// Remove autotrade to prevent autotrading from save point
-	if( (sd->state.standalone || sd->state.autotrade)
+	if( (sd->state.standalone || sd->state.autotrade || sd->state.buyingstore)
 	 && (map->list[sd->bl.m].flag.pvp || map->list[sd->bl.m].flag.gvg)
 	  ) {
 		sd->state.autotrade = 0;
 		sd->state.standalone = 0;
+		sd->state.buyingstore = false;
 		pc->autotrade_update(sd,PAUC_REMOVE);
+		buyingstore->autotrade_update(sd, PAUC_REMOVE);
 		map->quit(sd);
 	}
 
@@ -11190,10 +11192,16 @@ void pc_scdata_received(struct map_session_data *sd) {
 		pc->expire_check(sd);
 	}
 
-	if( sd->state.standalone ) {
+	if (sd->state.standalone) {
 		clif->pLoadEndAck(0,sd);
-		pc->autotrade_populate(sd);
-		pc->autotrade_start(sd);
+		if (sd->state.buyingstore) {
+			buyingstore->autotrade_populate(sd);
+			buyingstore->autotrade_start(sd);
+		}
+		else {
+			pc->autotrade_populate(sd);
+			pc->autotrade_start(sd);
+		}
 	}
 }
 int pc_expiration_timer(int tid, int64 tick, int id, intptr_t data) {
@@ -11374,26 +11382,45 @@ void pc_autotrade_update(struct map_session_data *sd, enum e_pc_autotrade_update
  * Handles characters upon @autotrade usage
  **/
 void pc_autotrade_prepare(struct map_session_data *sd) {
-	struct autotrade_vending *data;
-	int i, cursor = 0;
 	int account_id, char_id;
 	char title[MESSAGE_SIZE];
 	unsigned char sex;
+	bool buying_store = false;
+	int i;
+	if (sd->state.buyingstore == true) {
+		struct s_buyingstore *data;
 
-	CREATE(data, struct autotrade_vending, 1);
-
-	memcpy(data->vending, sd->vending, sizeof(sd->vending));
-
-	for(i = 0; i < sd->vend_num; i++) {
-		if( sd->vending[i].amount ) {
-			memcpy(&data->list[cursor],&sd->status.cart[sd->vending[i].index],sizeof(struct item));
-			cursor++;
+		CREATE(data, struct s_buyingstore, 1);
+		/*
+		data->zenylimit = sd->buyingstore.zenylimit;
+		data->slots = sd->buyingstore.slots;
+		for (i = 0; i < data->slots; i++) {
+			data->items[i].nameid = sd->buyingstore.items[i].nameid;
+			data->items[i].amount = sd->buyingstore.items[i].amount;
+			data->items[i].price = sd->buyingstore.items[i].price;
 		}
+		*/
+		memcpy(data, &(sd->buyingstore), sizeof(sd->buyingstore));
+		idb_put(pc->bs_at_db, sd->status.char_id, data);
+		
+		buying_store = true;
+	} else {
+		int cursor = 0;
+		struct autotrade_vending *data;
+
+		CREATE(data, struct autotrade_vending, 1);
+		memcpy(data->vending, sd->vending, sizeof(sd->vending));
+		for (i = 0; i < sd->vend_num; i++) {
+			if( sd->vending[i].amount ) {
+				memcpy(&data->list[cursor],&sd->status.cart[sd->vending[i].index],sizeof(struct item));
+				cursor++;
+			}
+		}
+
+		data->vend_num = (unsigned char)cursor;
+
+		idb_put(pc->at_db, sd->status.char_id, data);
 	}
-
-	data->vend_num = (unsigned char)cursor;
-
-	idb_put(pc->at_db, sd->status.char_id, data);
 
 	account_id = sd->status.account_id;
 	char_id = sd->status.char_id;
@@ -11415,6 +11442,7 @@ void pc_autotrade_prepare(struct map_session_data *sd) {
 
 	safestrncpy(sd->message, title, MESSAGE_SIZE);
 	sd->state.standalone = 1;
+	sd->state.buyingstore = buying_store;
 	sd->group = pcg->get_dummy_group();
 
 	chrif->authreq(sd,true);
@@ -11508,7 +11536,8 @@ int pc_have_magnifier(struct map_session_data *sd)
 
 void do_final_pc(void) {
 	db_destroy(pc->itemcd_db);
-	pc->at_db->destroy(pc->at_db,pc->autotrade_final);
+	pc->at_db->destroy(pc->at_db, pc->autotrade_final);
+	pc->bs_at_db->destroy(pc->bs_at_db, buyingstore->autotrade_final);
 
 	pcg->final();
 
@@ -11527,6 +11556,7 @@ void do_init_pc(bool minimal) {
 
 	pc->itemcd_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	pc->at_db = idb_alloc(DB_OPT_RELEASE_DATA);
+	pc->bs_at_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
 	pc->readdb();
 
@@ -11585,6 +11615,7 @@ void pc_defaults(void) {
 
 	/* vars */
 	pc->at_db = NULL;
+	pc->bs_at_db = NULL;
 	pc->itemcd_db = NULL;
 	/* */
 	pc->day_timer_tid = INVALID_TIMER;
