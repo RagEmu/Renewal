@@ -592,6 +592,7 @@ all items are sold, or the mapserver closes.
 
 ---------------------------------------
 
+/monster <monster name>
 @monster <monster name/ID> {<amount>}
 @monstersmall <monster name/ID> {<amount>}
 @monsterbig <monster name/ID> {<amount>}
@@ -621,7 +622,7 @@ Spawns a clone of the specified player.
 ---------------------------------------
 
 @item <item name/ID> {<amount>}
-/item <item name/ID>
+/item <item name>
 @delitem <item name/ID> <amount>
 
 Creates or removes the specified item.
@@ -1024,12 +1025,6 @@ Changes the gender attached to the player's account.
 @divorce <player>
 
 Marries or divorces two players.
-
----------------------------------------
-
-@adopt <player>
-
-Adopts the specified player with the attached character as one of the parents.
 
 ---------------------------------------
 
