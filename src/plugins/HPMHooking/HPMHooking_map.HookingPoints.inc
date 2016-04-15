@@ -160,6 +160,11 @@ struct HookingPointData HookingPoints[] = {
 	{ HP_POP(buyingstore->search, HP_buyingstore_search) },
 	{ HP_POP(buyingstore->searchall, HP_buyingstore_searchall) },
 	{ HP_POP(buyingstore->getuid, HP_buyingstore_getuid) },
+	{ HP_POP(buyingstore->autotrade_final, HP_buyingstore_autotrade_final) },
+	{ HP_POP(buyingstore->autotrade_update, HP_buyingstore_autotrade_update) },
+	{ HP_POP(buyingstore->autotrade_populate, HP_buyingstore_autotrade_populate) },
+	{ HP_POP(buyingstore->autotrade_start, HP_buyingstore_autotrade_start) },
+	{ HP_POP(buyingstore->autotrade_load, HP_buyingstore_autotrade_load) },
 /* channel */
 	{ HP_POP(channel->init, HP_channel_init) },
 	{ HP_POP(channel->final, HP_channel_final) },

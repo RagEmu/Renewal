@@ -3448,31 +3448,32 @@ bool HP_buyingstore_setup(struct map_session_data *sd, unsigned char slots) {
 	}
 	return retVal___;
 }
-void HP_buyingstore_create(struct map_session_data *sd, int zenylimit, unsigned char result, const char *storename, const uint8 *itemlist, unsigned int count) {
+bool HP_buyingstore_create(struct map_session_data *sd, int zenylimit, unsigned char result, const char *storename, const uint8 *itemlist, unsigned int count) {
 	int hIndex = 0;
+	bool retVal___ = false;
 	if( HPMHooks.count.HP_buyingstore_create_pre ) {
-		void (*preHookFunc) (struct map_session_data *sd, int *zenylimit, unsigned char *result, const char *storename, const uint8 *itemlist, unsigned int *count);
+		bool (*preHookFunc) (struct map_session_data *sd, int *zenylimit, unsigned char *result, const char *storename, const uint8 *itemlist, unsigned int *count);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_buyingstore_create_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_buyingstore_create_pre[hIndex].func;
-			preHookFunc(sd, &zenylimit, &result, storename, itemlist, &count);
+			retVal___ = preHookFunc(sd, &zenylimit, &result, storename, itemlist, &count);
 		}
 		if( *HPMforce_return ) {
 			*HPMforce_return = false;
-			return;
+			return retVal___;
 		}
 	}
 	{
-		HPMHooks.source.buyingstore.create(sd, zenylimit, result, storename, itemlist, count);
+		retVal___ = HPMHooks.source.buyingstore.create(sd, zenylimit, result, storename, itemlist, count);
 	}
 	if( HPMHooks.count.HP_buyingstore_create_post ) {
-		void (*postHookFunc) (struct map_session_data *sd, int *zenylimit, unsigned char *result, const char *storename, const uint8 *itemlist, unsigned int *count);
+		bool (*postHookFunc) (bool retVal___, struct map_session_data *sd, int *zenylimit, unsigned char *result, const char *storename, const uint8 *itemlist, unsigned int *count);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_buyingstore_create_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_buyingstore_create_post[hIndex].func;
-			postHookFunc(sd, &zenylimit, &result, storename, itemlist, &count);
+			retVal___ = postHookFunc(retVal___, sd, &zenylimit, &result, storename, itemlist, &count);
 		}
 	}
-	return;
+	return retVal___;
 }
 void HP_buyingstore_close(struct map_session_data *sd) {
 	int hIndex = 0;
@@ -3632,6 +3633,143 @@ unsigned int HP_buyingstore_getuid(void) {
 		}
 	}
 	return retVal___;
+}
+int HP_buyingstore_autotrade_final(union DBKey key, struct DBData *data, va_list ap) {
+	int hIndex = 0;
+	int retVal___ = 0;
+	if( HPMHooks.count.HP_buyingstore_autotrade_final_pre ) {
+		int (*preHookFunc) (union DBKey *key, struct DBData *data, va_list ap);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_buyingstore_autotrade_final_pre; hIndex++ ) {
+			va_list ap___copy; va_copy(ap___copy, ap);
+			preHookFunc = HPMHooks.list.HP_buyingstore_autotrade_final_pre[hIndex].func;
+			retVal___ = preHookFunc(&key, data, ap___copy);
+			va_end(ap___copy);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return retVal___;
+		}
+	}
+	{
+		va_list ap___copy; va_copy(ap___copy, ap);
+		retVal___ = HPMHooks.source.buyingstore.autotrade_final(key, data, ap___copy);
+		va_end(ap___copy);
+	}
+	if( HPMHooks.count.HP_buyingstore_autotrade_final_post ) {
+		int (*postHookFunc) (int retVal___, union DBKey *key, struct DBData *data, va_list ap);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_buyingstore_autotrade_final_post; hIndex++ ) {
+			va_list ap___copy; va_copy(ap___copy, ap);
+			postHookFunc = HPMHooks.list.HP_buyingstore_autotrade_final_post[hIndex].func;
+			retVal___ = postHookFunc(retVal___, &key, data, ap___copy);
+			va_end(ap___copy);
+		}
+	}
+	return retVal___;
+}
+void HP_buyingstore_autotrade_update(struct map_session_data *sd, enum e_pc_autotrade_update_action action) {
+	int hIndex = 0;
+	if( HPMHooks.count.HP_buyingstore_autotrade_update_pre ) {
+		void (*preHookFunc) (struct map_session_data *sd, enum e_pc_autotrade_update_action *action);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_buyingstore_autotrade_update_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_buyingstore_autotrade_update_pre[hIndex].func;
+			preHookFunc(sd, &action);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return;
+		}
+	}
+	{
+		HPMHooks.source.buyingstore.autotrade_update(sd, action);
+	}
+	if( HPMHooks.count.HP_buyingstore_autotrade_update_post ) {
+		void (*postHookFunc) (struct map_session_data *sd, enum e_pc_autotrade_update_action *action);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_buyingstore_autotrade_update_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_buyingstore_autotrade_update_post[hIndex].func;
+			postHookFunc(sd, &action);
+		}
+	}
+	return;
+}
+void HP_buyingstore_autotrade_populate(struct map_session_data *sd) {
+	int hIndex = 0;
+	if( HPMHooks.count.HP_buyingstore_autotrade_populate_pre ) {
+		void (*preHookFunc) (struct map_session_data *sd);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_buyingstore_autotrade_populate_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_buyingstore_autotrade_populate_pre[hIndex].func;
+			preHookFunc(sd);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return;
+		}
+	}
+	{
+		HPMHooks.source.buyingstore.autotrade_populate(sd);
+	}
+	if( HPMHooks.count.HP_buyingstore_autotrade_populate_post ) {
+		void (*postHookFunc) (struct map_session_data *sd);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_buyingstore_autotrade_populate_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_buyingstore_autotrade_populate_post[hIndex].func;
+			postHookFunc(sd);
+		}
+	}
+	return;
+}
+void HP_buyingstore_autotrade_start(struct map_session_data *sd) {
+	int hIndex = 0;
+	if( HPMHooks.count.HP_buyingstore_autotrade_start_pre ) {
+		void (*preHookFunc) (struct map_session_data *sd);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_buyingstore_autotrade_start_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_buyingstore_autotrade_start_pre[hIndex].func;
+			preHookFunc(sd);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return;
+		}
+	}
+	{
+		HPMHooks.source.buyingstore.autotrade_start(sd);
+	}
+	if( HPMHooks.count.HP_buyingstore_autotrade_start_post ) {
+		void (*postHookFunc) (struct map_session_data *sd);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_buyingstore_autotrade_start_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_buyingstore_autotrade_start_post[hIndex].func;
+			postHookFunc(sd);
+		}
+	}
+	return;
+}
+void HP_buyingstore_autotrade_load(void) {
+	int hIndex = 0;
+	if( HPMHooks.count.HP_buyingstore_autotrade_load_pre ) {
+		void (*preHookFunc) (void);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_buyingstore_autotrade_load_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_buyingstore_autotrade_load_pre[hIndex].func;
+			preHookFunc();
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return;
+		}
+	}
+	{
+		HPMHooks.source.buyingstore.autotrade_load();
+	}
+	if( HPMHooks.count.HP_buyingstore_autotrade_load_post ) {
+		void (*postHookFunc) (void);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_buyingstore_autotrade_load_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_buyingstore_autotrade_load_post[hIndex].func;
+			postHookFunc();
+		}
+	}
+	return;
 }
 /* channel */
 int HP_channel_init(bool minimal) {
