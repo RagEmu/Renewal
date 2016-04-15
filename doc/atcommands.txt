@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= RagEmu Dev Team
 //===== Current Version: =====================================
-//= 20130115
+//= 20160415
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -40,7 +40,7 @@ Displays SVN version of the server.
 Displays the server rates.
 
 Output Example:
-Experience rates: Base 1.00x / Job 1.00x
+Experience Rates: Base 1.00x / Job 1.00x
 Normal Drop Rates: Common 1.00x / Healing 1.00x / Usable 1.00x Equipment 1.00x / Card 1.00x
 Boss Drop Rates:  Common 1.00x / Healing 1.00x / Usable 1.00x Equipment 1.00x / Card 1.00x
 Other Drop Rates: MvP 1.00x / Card-Based 1.00x / Treasure 1.00x
@@ -1024,6 +1024,12 @@ Changes the gender attached to the player's account.
 @divorce <player>
 
 Marries or divorces two players.
+
+---------------------------------------
+
+@adopt <player>
+
+Adopts the specified player with the attached character as one of the parents.
 
 ---------------------------------------
 
