@@ -5812,11 +5812,13 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if( tsc ) {
 		if( tsc->data[SC_DEVOTION] ) {
 			struct block_list *d_bl;
-			struct mercenary_data *d_md = BL_CAST(BL_MER, d_bl);
-			struct map_session_data *d_sd = BL_CAST(BL_PC, d_bl);
+			struct mercenary_data *d_md;
+			struct map_session_data *d_sd;
 			
 			sce = tsc->data[SC_DEVOTION];
 			d_bl = map->id2bl(sce->val1);
+			d_md = BL_CAST(BL_MER, d_bl);
+			d_sd = BL_CAST(BL_PC, d_bl);
 
 			if (d_bl != NULL
 			 && ((d_bl->type == BL_MER && d_md->master != NULL && d_md->master->bl.id == target->id)

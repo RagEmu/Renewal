@@ -158,18 +158,14 @@ Helpful Links
 The following list of links point to various help files within the GIT, articles or
 pages on the Wiki or topics within the RagEmu forum.
 
-* RagEmu Forums
-	PlaceHolder
+* RagEmu Forums:
+	http://ragemu.org/board/
 
-* RagEmu Wiki
+* RagEmu Wiki:
 	PlaceHolder
 
 * GIT Repository URL:
 	https://github.com/RagEmu/Renewal
-
-* RagEmu IRC Channel
-	irc.rizon.net
-	Channel: #RagEmu
 
 
 More Documentation
