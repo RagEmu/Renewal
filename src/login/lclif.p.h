@@ -1,10 +1,11 @@
 /**
- * This file is part of Hercules.
- * http://herc.ws - http://github.com/HerculesWS/Hercules
+ * This file is part of RagEmu.
+ * http://ragemu.org - https://github.com/RagEmu/Renewal
  *
+ * Copyright (C) 2016  RagEmu Dev Team
  * Copyright (C) 2016  Hercules Dev Team
  *
- * Hercules is free software: you can redistribute it and/or modify
+ * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -26,7 +27,7 @@
 
 #include "login/lclif.h"
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 #include "common/mmo.h"
 
 /* Definitions and macros */
@@ -52,7 +53,7 @@ enum login_packet_id {
 	PACKET_ID_CA_LOGIN_HAN            = 0x02b0,
 	PACKET_ID_CA_SSO_LOGIN_REQ        = 0x0825,
 	PACKET_ID_CA_REQ_HASH             = 0x01db,
-	PACKET_ID_CA_CHARSERVERCONNECT    = 0x2710, // Custom Hercules Packet
+	PACKET_ID_CA_CHARSERVERCONNECT    = 0x2710, // Custom Packet
 	//PACKET_ID_CA_SSO_LOGIN_REQa       = 0x825a, /* unused */
 
 	// AC (Login to Client)
