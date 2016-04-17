@@ -30,6 +30,8 @@
 #define HPM_HOOKS_INCLUDE "HPMHooking/HPMHooking_login.Hooks.inc"
 #define HPM_POINTS_INCLUDE "HPMHooking/HPMHooking_login.HookingPoints.inc"
 #define HPM_SOURCES_INCLUDE "HPMHooking/HPMHooking_login.sources.inc"
+#include "login/lclif.h"
+#include "login/lclif.p.h"
 #include "login/login.h"
 #elif defined (HPMHOOKING_CHAR)
 #define HPM_SERVER_TYPE SERVER_TYPE_CHAR

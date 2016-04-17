@@ -27,6 +27,11 @@
 #include "common/cbasetypes.h"
 #include "common/mmo.h"
 
+// Packet DB
+#define MIN_PACKET_DB 0x0064
+#define MAX_PACKET_DB 0x0F00
+#define MAX_PACKET_POS 20
+
 /**
  *
  **/

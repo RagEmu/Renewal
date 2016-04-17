@@ -425,13 +425,12 @@ int strlib_strline(const char *str, size_t pos)
 /// @param output Output string
 /// @param input Binary input buffer
 /// @param count Number of bytes to convert
-bool strlib_bin2hex(char *output, unsigned char *input, size_t count)
+bool strlib_bin2hex(char *output, const unsigned char *input, size_t count)
 {
 	char toHex[] = "0123456789abcdef";
 	size_t i;
 
-	for( i = 0; i < count; ++i )
-	{
+	for (i = 0; i < count; ++i) {
 		*output++ = toHex[(*input & 0xF0) >> 4];
 		*output++ = toHex[(*input & 0x0F) >> 0];
 		++input;
