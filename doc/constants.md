@@ -13485,6 +13485,7 @@
 - `Octo_kitchen_Knife`: 13081
 - `TE_Woe_Knife`: 13083
 - `Volcano_Knife`: 13085
+- `Goldsmithing_Dagger`: 13086
 - `Greater_Lease`: 13088
 - `FaceWorm_Leg`: 13089
 - `Faceworm_Queen's_Leg`: 13090
@@ -13692,6 +13693,7 @@
 - `P_Saber3`: 13434
 - `Magical_Blade`: 13438
 - `TE_Woe_Sword`: 13439
+- `Ceremonial_Sword`: 13440
 - `Old_Parasol`: 13442
 - `Pala`: 13444
 - `Crimson_Saber`: 13454
@@ -14728,6 +14730,7 @@
 - `TE_Woe_Coat`: 15062
 - `TE_Woe_Chain_Mail`: 15063
 - `TE_Woe_Mage_Coat`: 15064
+- `Engraved_Armor`: 15066
 - `Rune_Suit`: 15067
 - `Adv_Angel's_Protection`: 15068
 - `Anti-Magic_Suit`: 15073
