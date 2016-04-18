@@ -861,6 +861,10 @@ struct {
 	struct HPMHookPoint *HP_mapif_elemental_saved_post;
 	struct HPMHookPoint *HP_mapif_parse_elemental_save_pre;
 	struct HPMHookPoint *HP_mapif_parse_elemental_save_post;
+	struct HPMHookPoint *HP_mapif_parse_elemental_request_sc_load_pre;
+	struct HPMHookPoint *HP_mapif_parse_elemental_request_sc_load_post;
+	struct HPMHookPoint *HP_mapif_parse_elemental_request_sc_save_pre;
+	struct HPMHookPoint *HP_mapif_parse_elemental_request_sc_save_post;
 	struct HPMHookPoint *HP_mapif_guild_created_pre;
 	struct HPMHookPoint *HP_mapif_guild_created_post;
 	struct HPMHookPoint *HP_mapif_guild_noinfo_pre;
@@ -2266,6 +2270,10 @@ struct {
 	int HP_mapif_elemental_saved_post;
 	int HP_mapif_parse_elemental_save_pre;
 	int HP_mapif_parse_elemental_save_post;
+	int HP_mapif_parse_elemental_request_sc_load_pre;
+	int HP_mapif_parse_elemental_request_sc_load_post;
+	int HP_mapif_parse_elemental_request_sc_save_pre;
+	int HP_mapif_parse_elemental_request_sc_save_post;
 	int HP_mapif_guild_created_pre;
 	int HP_mapif_guild_created_post;
 	int HP_mapif_guild_noinfo_pre;

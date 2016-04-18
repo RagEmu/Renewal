@@ -463,6 +463,8 @@ struct HookingPointData HookingPoints[] = {
 	{ HP_POP(mapif->parse_elemental_delete, HP_mapif_parse_elemental_delete) },
 	{ HP_POP(mapif->elemental_saved, HP_mapif_elemental_saved) },
 	{ HP_POP(mapif->parse_elemental_save, HP_mapif_parse_elemental_save) },
+	{ HP_POP(mapif->parse_elemental_request_sc_load, HP_mapif_parse_elemental_request_sc_load) },
+	{ HP_POP(mapif->parse_elemental_request_sc_save, HP_mapif_parse_elemental_request_sc_save) },
 	{ HP_POP(mapif->guild_created, HP_mapif_guild_created) },
 	{ HP_POP(mapif->guild_noinfo, HP_mapif_guild_noinfo) },
 	{ HP_POP(mapif->guild_info, HP_mapif_guild_info) },
