@@ -751,9 +751,11 @@ void read_elementaldb(void) {
 		for (i = EL_KIND_AGNI; i < MAX_EL_KIND; i++) {
 			int j = 0;
 			int k = 0;
-			struct elemental_data db = { 0 };
+			struct elemental_data db;
 			const char *modes[] = { "Passive", "Defensive", "Offensive" };
 			struct config_setting_t *mobs = libconfig->setting_get_elem(kinds, i);
+			
+			memset(&db, 0, sizeof(db));
 
 			if (mobs == NULL)
 				continue;

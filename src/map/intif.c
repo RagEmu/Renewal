@@ -2182,7 +2182,7 @@ void intif_parse_ElementalSCReceived(int fd) {
 	count = RFIFOW(fd, 12); //sc_count
 
 	for (i = 0; i < count; i++) {
-		struct status_change_data *data = (struct status_change_data*)RFIFOP(fd, 14 + i*sizeof(struct status_change_data));
+		const struct status_change_data *data = (const struct status_change_data*)RFIFOP(fd, 14 + i*sizeof(struct status_change_data));
 		status->change_start(NULL, &sd->ed->bl, (sc_type)data->type, 10000, data->val1, data->val2, data->val3, data->val4,
 			data->tick, SCFLAG_NOAVOID | SCFLAG_FIXEDTICK | SCFLAG_LOADED | SCFLAG_FIXEDRATE);
 	}

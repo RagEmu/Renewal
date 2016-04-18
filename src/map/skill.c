@@ -9813,7 +9813,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 					elemental->delete(sd->ed, 0);
 				else
 					clif->skill_nodamage(src, bl, skill_id, skill_lv,
-						sc_start(src, &sd->ed->bl, SC_EL_PASSIVE + --skill_lv, 100, skill_lv, INVALID_TIMER));
+						sc_start(src, &sd->ed->bl, SC_EL_PASSIVE + (--skill_lv), 100, skill_lv, INVALID_TIMER));
 			}
 			break;
 

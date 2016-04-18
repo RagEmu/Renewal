@@ -2105,7 +2105,6 @@ struct skill_interface {
 	int (*select_menu) (struct map_session_data *sd,uint16 skill_id);
 	int (*elementalanalysis) (struct map_session_data *sd, uint16 skill_lv, const struct itemlist *item_list);
 	int (*changematerial) (struct map_session_data *sd, const struct itemlist *item_list);
-	int (*get_elemental_type) (uint16 skill_id, uint16 skill_lv);
 	void (*cooldown_save) (struct map_session_data * sd);
 	int (*get_new_group_id) (void);
 	bool (*check_shadowform) (struct block_list *bl, int64 damage, int hit);
