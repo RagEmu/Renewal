@@ -5229,8 +5229,6 @@ struct {
 	struct HPMHookPoint *HP_skill_elementalanalysis_post;
 	struct HPMHookPoint *HP_skill_changematerial_pre;
 	struct HPMHookPoint *HP_skill_changematerial_post;
-	struct HPMHookPoint *HP_skill_get_elemental_type_pre;
-	struct HPMHookPoint *HP_skill_get_elemental_type_post;
 	struct HPMHookPoint *HP_skill_cooldown_save_pre;
 	struct HPMHookPoint *HP_skill_cooldown_save_post;
 	struct HPMHookPoint *HP_skill_get_new_group_id_pre;
@@ -11134,8 +11132,6 @@ struct {
 	int HP_skill_elementalanalysis_post;
 	int HP_skill_changematerial_pre;
 	int HP_skill_changematerial_post;
-	int HP_skill_get_elemental_type_pre;
-	int HP_skill_get_elemental_type_post;
 	int HP_skill_cooldown_save_pre;
 	int HP_skill_cooldown_save_post;
 	int HP_skill_get_new_group_id_pre;

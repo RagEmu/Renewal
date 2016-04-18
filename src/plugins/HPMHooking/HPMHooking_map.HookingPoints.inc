@@ -2671,7 +2671,6 @@ struct HookingPointData HookingPoints[] = {
 	{ HP_POP(skill->select_menu, HP_skill_select_menu) },
 	{ HP_POP(skill->elementalanalysis, HP_skill_elementalanalysis) },
 	{ HP_POP(skill->changematerial, HP_skill_changematerial) },
-	{ HP_POP(skill->get_elemental_type, HP_skill_get_elemental_type) },
 	{ HP_POP(skill->cooldown_save, HP_skill_cooldown_save) },
 	{ HP_POP(skill->get_new_group_id, HP_skill_get_new_group_id) },
 	{ HP_POP(skill->check_shadowform, HP_skill_check_shadowform) },

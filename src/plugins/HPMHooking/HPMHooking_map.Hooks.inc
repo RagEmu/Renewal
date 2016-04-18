@@ -70076,33 +70076,6 @@ int HP_skill_changematerial(struct map_session_data *sd, const struct itemlist *
 	}
 	return retVal___;
 }
-int HP_skill_get_elemental_type(uint16 skill_id, uint16 skill_lv) {
-	int hIndex = 0;
-	int retVal___ = 0;
-	if( HPMHooks.count.HP_skill_get_elemental_type_pre ) {
-		int (*preHookFunc) (uint16 *skill_id, uint16 *skill_lv);
-		*HPMforce_return = false;
-		for(hIndex = 0; hIndex < HPMHooks.count.HP_skill_get_elemental_type_pre; hIndex++ ) {
-			preHookFunc = HPMHooks.list.HP_skill_get_elemental_type_pre[hIndex].func;
-			retVal___ = preHookFunc(&skill_id, &skill_lv);
-		}
-		if( *HPMforce_return ) {
-			*HPMforce_return = false;
-			return retVal___;
-		}
-	}
-	{
-		retVal___ = HPMHooks.source.skill.get_elemental_type(skill_id, skill_lv);
-	}
-	if( HPMHooks.count.HP_skill_get_elemental_type_post ) {
-		int (*postHookFunc) (int retVal___, uint16 *skill_id, uint16 *skill_lv);
-		for(hIndex = 0; hIndex < HPMHooks.count.HP_skill_get_elemental_type_post; hIndex++ ) {
-			postHookFunc = HPMHooks.list.HP_skill_get_elemental_type_post[hIndex].func;
-			retVal___ = postHookFunc(retVal___, &skill_id, &skill_lv);
-		}
-	}
-	return retVal___;
-}
 void HP_skill_cooldown_save(struct map_session_data *sd) {
 	int hIndex = 0;
 	if( HPMHooks.count.HP_skill_cooldown_save_pre ) {
