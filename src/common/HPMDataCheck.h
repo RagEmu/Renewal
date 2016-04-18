@@ -380,7 +380,6 @@ HPExport const struct s_HPMDataCheck HPMDataCheck[] = {
 		{ "elemental_data", sizeof(struct elemental_data), SERVER_TYPE_MAP },
 		{ "elemental_interface", sizeof(struct elemental_interface), SERVER_TYPE_MAP },
 		{ "elemental_skill", sizeof(struct elemental_skill), SERVER_TYPE_MAP },
-		{ "s_elemental_db", sizeof(struct s_elemental_db), SERVER_TYPE_MAP },
 	#else
 		#define MAP_ELEMENTAL_H
 	#endif // MAP_ELEMENTAL_H
