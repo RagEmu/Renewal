@@ -298,10 +298,10 @@ int inter_elemental_parse_frommap(int fd) {
 	switch ( cmd ) {
 		case 0x307a: mapif->parse_elemental_request_sc_save(fd); break;
 		case 0x307b: mapif->parse_elemental_request_sc_load(fd, (int)RFIFOL(fd, 4), (int)RFIFOL(fd, 8)); break;
-		case 0x307c: mapif->parse_elemental_create(fd, (struct s_elemental*)RFIFOP(fd,4)); break;
+		case 0x307c: mapif->parse_elemental_create(fd, (const struct s_elemental*)RFIFOP(fd,4)); break;
 		case 0x307d: mapif->parse_elemental_load(fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6)); break;
 		case 0x307e: mapif->parse_elemental_delete(fd, (int)RFIFOL(fd,2)); break;
-		case 0x307f: mapif->parse_elemental_save(fd, (struct s_elemental*)RFIFOP(fd, 4)); break;
+		case 0x307f: mapif->parse_elemental_save(fd, (const struct s_elemental*)RFIFOP(fd, 4)); break;
 		default:
 			return 0;
 	}

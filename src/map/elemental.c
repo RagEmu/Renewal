@@ -89,7 +89,7 @@ int elemental_create(struct map_session_data *sd, enum elemental_type kind, int 
 
 	nullpo_retr(1, sd);
 
-	if (kind < EL_KIND_AGNI || kind > EL_KIND_TERA)
+	if (kind >= MAX_EL_KIND)
 		return 0;
 
 	memset(&ele, 0, sizeof(struct s_elemental));

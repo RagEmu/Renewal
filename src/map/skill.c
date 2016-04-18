@@ -9809,11 +9809,13 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 
 		case SO_EL_CONTROL:
 			if (sd && sd->ed) {
-				if (skill_lv == 4)
+				if (skill_lv == 4) {
 					elemental->delete(sd->ed, 0);
-				else
+				} else {
 					clif->skill_nodamage(src, bl, skill_id, skill_lv,
-						sc_start(src, &sd->ed->bl, SC_EL_PASSIVE + (--skill_lv), 100, skill_lv, INVALID_TIMER));
+						sc_start(src, &sd->ed->bl, SC_EL_PASSIVE + (skill_lv-1), 100, skill_lv, INVALID_TIMER));
+						skill_lv--;
+				}
 			}
 			break;
 
