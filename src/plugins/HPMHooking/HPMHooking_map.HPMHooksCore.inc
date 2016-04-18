@@ -1969,8 +1969,6 @@ struct {
 	struct HPMHookPoint *HP_elemental_save_post;
 	struct HPMHookPoint *HP_elemental_change_mode_ack_pre;
 	struct HPMHookPoint *HP_elemental_change_mode_ack_post;
-	struct HPMHookPoint *HP_elemental_change_mode_pre;
-	struct HPMHookPoint *HP_elemental_change_mode_post;
 	struct HPMHookPoint *HP_elemental_heal_pre;
 	struct HPMHookPoint *HP_elemental_heal_post;
 	struct HPMHookPoint *HP_elemental_dead_pre;
@@ -1995,12 +1993,8 @@ struct {
 	struct HPMHookPoint *HP_elemental_action_post;
 	struct HPMHookPoint *HP_elemental_skill_get_requirements_pre;
 	struct HPMHookPoint *HP_elemental_skill_get_requirements_post;
-	struct HPMHookPoint *HP_elemental_read_skilldb_pre;
-	struct HPMHookPoint *HP_elemental_read_skilldb_post;
 	struct HPMHookPoint *HP_elemental_reload_db_pre;
 	struct HPMHookPoint *HP_elemental_reload_db_post;
-	struct HPMHookPoint *HP_elemental_reload_skilldb_pre;
-	struct HPMHookPoint *HP_elemental_reload_skilldb_post;
 	struct HPMHookPoint *HP_elemental_search_index_pre;
 	struct HPMHookPoint *HP_elemental_search_index_post;
 	struct HPMHookPoint *HP_elemental_summon_init_pre;
@@ -2485,6 +2479,10 @@ struct {
 	struct HPMHookPoint *HP_intif_elemental_delete_post;
 	struct HPMHookPoint *HP_intif_elemental_save_pre;
 	struct HPMHookPoint *HP_intif_elemental_save_post;
+	struct HPMHookPoint *HP_intif_elemental_sc_load_pre;
+	struct HPMHookPoint *HP_intif_elemental_sc_load_post;
+	struct HPMHookPoint *HP_intif_elemental_sc_save_pre;
+	struct HPMHookPoint *HP_intif_elemental_sc_save_post;
 	struct HPMHookPoint *HP_intif_request_accinfo_pre;
 	struct HPMHookPoint *HP_intif_request_accinfo_post;
 	struct HPMHookPoint *HP_intif_CheckForCharServer_pre;
@@ -2593,6 +2591,8 @@ struct {
 	struct HPMHookPoint *HP_intif_pMercenarySaved_post;
 	struct HPMHookPoint *HP_intif_pElementalReceived_pre;
 	struct HPMHookPoint *HP_intif_pElementalReceived_post;
+	struct HPMHookPoint *HP_intif_pElementalSCReceived_pre;
+	struct HPMHookPoint *HP_intif_pElementalSCReceived_post;
 	struct HPMHookPoint *HP_intif_pElementalDeleted_pre;
 	struct HPMHookPoint *HP_intif_pElementalDeleted_post;
 	struct HPMHookPoint *HP_intif_pElementalSaved_pre;
@@ -7874,8 +7874,6 @@ struct {
 	int HP_elemental_save_post;
 	int HP_elemental_change_mode_ack_pre;
 	int HP_elemental_change_mode_ack_post;
-	int HP_elemental_change_mode_pre;
-	int HP_elemental_change_mode_post;
 	int HP_elemental_heal_pre;
 	int HP_elemental_heal_post;
 	int HP_elemental_dead_pre;
@@ -7900,12 +7898,8 @@ struct {
 	int HP_elemental_action_post;
 	int HP_elemental_skill_get_requirements_pre;
 	int HP_elemental_skill_get_requirements_post;
-	int HP_elemental_read_skilldb_pre;
-	int HP_elemental_read_skilldb_post;
 	int HP_elemental_reload_db_pre;
 	int HP_elemental_reload_db_post;
-	int HP_elemental_reload_skilldb_pre;
-	int HP_elemental_reload_skilldb_post;
 	int HP_elemental_search_index_pre;
 	int HP_elemental_search_index_post;
 	int HP_elemental_summon_init_pre;
@@ -8390,6 +8384,10 @@ struct {
 	int HP_intif_elemental_delete_post;
 	int HP_intif_elemental_save_pre;
 	int HP_intif_elemental_save_post;
+	int HP_intif_elemental_sc_load_pre;
+	int HP_intif_elemental_sc_load_post;
+	int HP_intif_elemental_sc_save_pre;
+	int HP_intif_elemental_sc_save_post;
 	int HP_intif_request_accinfo_pre;
 	int HP_intif_request_accinfo_post;
 	int HP_intif_CheckForCharServer_pre;
@@ -8498,6 +8496,8 @@ struct {
 	int HP_intif_pMercenarySaved_post;
 	int HP_intif_pElementalReceived_pre;
 	int HP_intif_pElementalReceived_post;
+	int HP_intif_pElementalSCReceived_pre;
+	int HP_intif_pElementalSCReceived_post;
 	int HP_intif_pElementalDeleted_pre;
 	int HP_intif_pElementalDeleted_post;
 	int HP_intif_pElementalSaved_pre;

@@ -11202,6 +11202,58 @@ void HP_mapif_parse_elemental_save(int fd, const struct s_elemental *ele) {
 	}
 	return;
 }
+void HP_mapif_parse_elemental_request_sc_load(int fd, int char_id, int ele_id) {
+	int hIndex = 0;
+	if( HPMHooks.count.HP_mapif_parse_elemental_request_sc_load_pre ) {
+		void (*preHookFunc) (int *fd, int *char_id, int *ele_id);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_mapif_parse_elemental_request_sc_load_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_mapif_parse_elemental_request_sc_load_pre[hIndex].func;
+			preHookFunc(&fd, &char_id, &ele_id);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return;
+		}
+	}
+	{
+		HPMHooks.source.mapif.parse_elemental_request_sc_load(fd, char_id, ele_id);
+	}
+	if( HPMHooks.count.HP_mapif_parse_elemental_request_sc_load_post ) {
+		void (*postHookFunc) (int *fd, int *char_id, int *ele_id);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_mapif_parse_elemental_request_sc_load_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_mapif_parse_elemental_request_sc_load_post[hIndex].func;
+			postHookFunc(&fd, &char_id, &ele_id);
+		}
+	}
+	return;
+}
+void HP_mapif_parse_elemental_request_sc_save(int fd) {
+	int hIndex = 0;
+	if( HPMHooks.count.HP_mapif_parse_elemental_request_sc_save_pre ) {
+		void (*preHookFunc) (int *fd);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_mapif_parse_elemental_request_sc_save_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_mapif_parse_elemental_request_sc_save_pre[hIndex].func;
+			preHookFunc(&fd);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return;
+		}
+	}
+	{
+		HPMHooks.source.mapif.parse_elemental_request_sc_save(fd);
+	}
+	if( HPMHooks.count.HP_mapif_parse_elemental_request_sc_save_post ) {
+		void (*postHookFunc) (int *fd);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_mapif_parse_elemental_request_sc_save_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_mapif_parse_elemental_request_sc_save_post[hIndex].func;
+			postHookFunc(&fd);
+		}
+	}
+	return;
+}
 int HP_mapif_guild_created(int fd, int account_id, struct guild *g) {
 	int hIndex = 0;
 	int retVal___ = 0;
