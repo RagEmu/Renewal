@@ -310,10 +310,10 @@ CREATE TABLE IF NOT EXISTS `elemental_sc` (
   `char_id` INT(11) UNSIGNED NOT NULL,
   `type` SMALLINT(11) UNSIGNED NOT NULL,
   `tick` INT(11) NOT NULL,
-  `val1` INT(11) NOT NULL DEFAULT 0,
-  `val2` INT(11) NOT NULL DEFAULT 0,
-  `val3` INT(11) NOT NULL DEFAULT 0,
-  `val4` INT(11) NOT NULL DEFAULT 0,
+  `val1` INT(11) NOT NULL DEFAULT '0',
+  `val2` INT(11) NOT NULL DEFAULT '0',
+  `val3` INT(11) NOT NULL DEFAULT '0',
+  `val4` INT(11) NOT NULL DEFAULT '0',
   KEY (`ele_id`),
   KEY (`char_id`),
   PRIMARY KEY (`ele_id`,`char_id`, `type`)
@@ -868,6 +868,7 @@ INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1450241859); -- 2015-12-1
 INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1450367880); -- 2015-12-17--15-58.sql
 INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1457638175); -- 2016-03-10--22-18.sql
 INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1460630460); -- 2016-04-14--10-41.sql
+INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1460764800); -- 2016-04-16--00-00.sql
 
 --
 -- Table structure for table `storage`
