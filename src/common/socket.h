@@ -86,6 +86,9 @@ struct config_setting_t;
 #define WFIFO2PTR(fd) ((void *)(sockt->session[fd]->wdata + sockt->session[fd]->wdata_size))
 #define WP2PTR(fd) WFIFO2PTR(fd)
 
+/* [Dastgir/RagEmu] */
+#define RFIFOP_WC(fd,pos) ((void *)(sockt->session[fd]->rdata + sockt->session[fd]->rdata_pos + (pos)))
+
 // buffer I/O macros
 static inline const void *RBUFP_(const void *p, int pos) __attribute__((const, unused));
 static inline const void *RBUFP_(const void *p, int pos)
