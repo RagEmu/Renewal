@@ -63,6 +63,8 @@ struct mapif_interface {
 	void (*parse_elemental_delete) (int fd, int ele_id);
 	void (*elemental_saved) (int fd, unsigned char flag);
 	void (*parse_elemental_save) (int fd, const struct s_elemental *ele);
+	void (*parse_elemental_request_sc_load) (int fd, int char_id, int ele_id);
+	void (*parse_elemental_request_sc_save) (int fd);
 	int (*guild_created) (int fd, int account_id, struct guild *g);
 	int (*guild_noinfo) (int fd, int guild_id);
 	int (*guild_info) (int fd, struct guild *g);

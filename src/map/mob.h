@@ -56,7 +56,7 @@ struct hplugin_data_store;
 #define MOB_CLONE_END MAX_MOB_DB
 
 //Used to determine default enemy type of mobs (for use in each in range calls)
-#define DEFAULT_ENEMY_TYPE(md) ((md)->special_state.ai != AI_NONE ?BL_CHAR:BL_MOB|BL_PC|BL_HOM|BL_MER)
+#define DEFAULT_ENEMY_TYPE(md) ((md)->special_state.ai != AI_NONE ?BL_CHAR:BL_MOB|BL_PC|BL_HOM|BL_MER|BL_ELEM)
 
 #define MAX_MOB_CHAT 250 //Max Skill's messages
 

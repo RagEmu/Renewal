@@ -54,16 +54,6 @@ enum elemental_id {
 #define MIN_ELETHINKTIME 100
 #define MIN_ELEDISTANCE 2
 #define MAX_ELEDISTANCE 5
-#define EL_MODE_AGGRESSIVE (MD_CANMOVE|MD_AGGRESSIVE|MD_CANATTACK)
-#define EL_MODE_ASSIST (MD_CANMOVE|MD_ASSIST)
-#define EL_MODE_PASSIVE MD_CANMOVE
-#define EL_SKILLMODE_PASIVE 0x1
-#define EL_SKILLMODE_ASSIST 0x2
-#define EL_SKILLMODE_AGGRESSIVE 0x4
-#define MAX_ELEMENTAL_CLASS 12
-#define EL_CLASS_BASE ELEID_EL_AGNI_S
-#define EL_CLASS_MAX (EL_CLASS_BASE+MAX_ELEMENTAL_CLASS-1)
-
 #define elemental_stop_walking(ed, type) (unit->stop_walking(&(ed)->bl, (type)))
 #define elemental_stop_attack(ed)        (unit->stop_attack(&(ed)->bl))
 
@@ -72,17 +62,14 @@ enum elemental_id {
  **/
 struct elemental_skill {
 	unsigned short id, lv;
-	short mode;
 };
 
-struct s_elemental_db {
-	int class_;
-	char sprite[NAME_LENGTH], name[NAME_LENGTH];
-	unsigned short lv;
-	short range2, range3;
-	struct status_data status;
-	struct view_data vd;
-	struct elemental_skill skill[MAX_ELESKILLTREE];
+enum elemental_mode {
+	EL_MODE_PASSIVE,
+	EL_MODE_DEFENSIVE,
+	EL_MODE_OFFENSIVE,
+	EL_MODE_WAIT,
+	MAX_EL_MODE
 };
 
 struct elemental_data {
@@ -93,7 +80,7 @@ struct elemental_data {
 	struct status_change sc;
 	struct regen_data regen;
 
-	struct s_elemental_db *db;
+	struct mob_db *db;
 	struct s_elemental elemental;
 
 	struct map_session_data *master;
@@ -103,6 +90,8 @@ struct elemental_data {
 	int64 last_thinktime, last_linktime, last_spdrain_time;
 	short min_chase;
 	int target_id, attacked_id;
+
+	struct elemental_skill skill[MAX_EL_MODE][MAX_EL_SKILL];
 };
 
 /*=====================================
@@ -113,7 +102,7 @@ struct elemental_data {
 struct elemental_interface {
 
 	/* vars */
-	struct s_elemental_db db[MAX_ELEMENTAL_CLASS]; // Elemental Database
+	struct elemental_data db[MAX_ELEMENTAL_CLASS]; // Elemental Database
 
 	/* */
 	int (*init) (bool minimal);
@@ -122,12 +111,11 @@ struct elemental_interface {
 	bool (*class) (int class_);
 	struct view_data * (*get_viewdata) (int class_);
 
-	int (*create) (struct map_session_data *sd, int class_, unsigned int lifetime);
+	int (*create) (struct map_session_data *sd, enum elemental_type kind, int scale, unsigned int lifetime);
 	int (*data_received) (const struct s_elemental *ele, bool flag);
 	int (*save) (struct elemental_data *ed);
 
-	int (*change_mode_ack) (struct elemental_data *ed, int mode);
-	int (*change_mode) (struct elemental_data *ed, uint32 mode);
+	int (*change_mode_ack) (struct elemental_data *ed, enum elemental_mode mode);
 
 	void (*heal) (struct elemental_data *ed, int hp, int sp);
 	int (*dead) (struct elemental_data *ed);
@@ -145,18 +133,16 @@ struct elemental_interface {
 	int (*action) (struct elemental_data *ed, struct block_list *bl, int64 tick);
 	struct skill_condition (*skill_get_requirements) (uint16 skill_id, uint16 skill_lv);
 
-	int (*read_skilldb) (void);
 	void (*reload_db) (void);
-	void (*reload_skilldb) (void);
 
-	int (*search_index) (int class_);
+	int (*search_index) (enum elemental_type kind, int scale, int class_);
 	void (*summon_init) (struct elemental_data *ed);
 	int (*summon_end_timer) (int tid, int64 tick, int id, intptr_t data);
 	int (*ai_sub_timer_activesearch) (struct block_list *bl, va_list ap);
 	int (*ai_sub_timer) (struct elemental_data *ed, struct map_session_data *sd, int64 tick);
 	int (*ai_sub_foreachclient) (struct map_session_data *sd, va_list ap);
 	int (*ai_timer) (int tid, int64 tick, int id, intptr_t data);
-	int (*read_db) (void);
+	void (*read_db) (void);
 };
 
 #ifdef RAGEMU_CORE

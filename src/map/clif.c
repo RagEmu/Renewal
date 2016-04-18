@@ -8954,7 +8954,6 @@ bool clif_process_message(struct map_session_data *sd, int format, const char **
 {
 	const char *text, *name, *message;
 	unsigned int packetlen, textlen;
-	char *srcmessage;
 	size_t namelen, messagelen;
 	int fd = sd->fd;
 
@@ -9023,7 +9022,7 @@ bool clif_process_message(struct map_session_data *sd, int format, const char **
 	
 #if PACKETVER >= 20151001
 	if (message[messagelen - 1] != '\0') {	// Normal Chat Message don't have null terminator's
-		srcmessage = (char*)aMalloc(CHAT_SIZE_MAX + 1);
+		char *srcmessage = (char*)aMalloc(CHAT_SIZE_MAX + 1);
 		safestrncpy(srcmessage, message, textlen);
 		srcmessage[messagelen++] = '\0';
 		message = srcmessage;

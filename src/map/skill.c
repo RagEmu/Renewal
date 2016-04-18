@@ -7456,6 +7456,11 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 							if( bl->type == BL_MOB )
 								continue;
 							break;
+						case SC_EL_WAIT:
+						case SC_EL_PASSIVE:
+						case SC_EL_DEFENSIVE:
+						case SC_EL_OFFENSIVE:
+							continue;
 						case SC_BERSERK:
 						case SC_SATURDAY_NIGHT_FEVER:
 							tsc->data[i]->val2=0;  //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
@@ -8884,6 +8889,11 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 							if( bl->type == BL_MOB )
 								continue;
 							break;
+						case SC_EL_WAIT:
+						case SC_EL_PASSIVE:
+						case SC_EL_DEFENSIVE:
+						case SC_EL_OFFENSIVE:
+							continue;
 						case SC_BERSERK:
 						case SC_SATURDAY_NIGHT_FEVER:
 							tsc->data[i]->val2=0;  //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
@@ -9787,88 +9797,39 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 		case SO_SUMMON_AQUA:
 		case SO_SUMMON_VENTUS:
 		case SO_SUMMON_TERA:
-			if( sd ) {
-				int elemental_class = skill->get_elemental_type(skill_id,skill_lv);
-
+			if (sd) {
 				// Remove previous elemental first.
-				if( sd->ed )
-					elemental->delete(sd->ed,0);
-
+				if (sd->ed)
+					elemental->delete(sd->ed, 0);
 				// Summoning the new one.
-				if( !elemental->create(sd,elemental_class,skill->get_time(skill_id,skill_lv)) ) {
-					clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-					break;
-				}
-				clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
+				clif->skill_nodamage(src, bl, skill_id, skill_lv,
+					elemental->create(sd, skill_id - SO_SUMMON_AGNI, skill_lv, skill->get_time(skill_id, skill_lv)));
 			}
 			break;
 
 		case SO_EL_CONTROL:
-			if( sd ) {
-				uint32 mode = EL_MODE_PASSIVE; // Standard mode.
-
-				if( !sd->ed ) break;
-
-				if( skill_lv == 4 ) {// At level 4 delete elementals.
+			if (sd && sd->ed) {
+				if (skill_lv == 4)
 					elemental->delete(sd->ed, 0);
-					break;
-				}
-				switch( skill_lv ) {// Select mode based on skill level used.
-					case 2: mode = EL_MODE_ASSIST; break;
-					case 3: mode = EL_MODE_AGGRESSIVE; break;
-				}
-				if (!elemental->change_mode(sd->ed, mode)) {
-					clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-					break;
-				}
-				clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
+				else
+					clif->skill_nodamage(src, bl, skill_id, skill_lv,
+						sc_start(src, &sd->ed->bl, SC_EL_PASSIVE + --skill_lv, 100, skill_lv, INVALID_TIMER));
 			}
 			break;
 
 		case SO_EL_ACTION:
-			if( sd ) {
-				int duration = 3000;
-				if( !sd->ed )
-					break;
-
-				switch (sd->ed->db->class_) {
-					case ELEID_EL_AGNI_M:
-					case ELEID_EL_AQUA_M:
-					case ELEID_EL_VENTUS_M:
-					case ELEID_EL_TERA_M:
-						duration = 6000;
-						break;
-					case ELEID_EL_AGNI_L:
-					case ELEID_EL_AQUA_L:
-					case ELEID_EL_VENTUS_L:
-					case ELEID_EL_TERA_L:
-						duration = 9000;
-						break;
-				}
-
+			if (sd && sd->ed) {
 				sd->skill_id_old = skill_id;
 				elemental->action(sd->ed, bl, tick);
-				clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
-
-				skill->blockpc_start(sd, skill_id, duration);
+				clif->skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			}
 			break;
 
 		case SO_EL_CURE:
-			if( sd ) {
-				struct elemental_data *ed = sd->ed;
-				int s_hp = sd->battle_status.hp * 10 / 100, s_sp = sd->battle_status.sp * 10 / 100;
-				int e_hp, e_sp;
-
-				if( !ed ) break;
-				if( !status->charge(&sd->bl,s_hp,s_sp) ) {
-					clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-					break;
-				}
-				e_hp = ed->battle_status.max_hp * 10 / 100;
-				e_sp = ed->battle_status.max_sp * 10 / 100;
-				status->heal(&ed->bl,e_hp,e_sp,3);
-				clif->skill_nodamage(src,&ed->bl,skill_id,skill_lv,1);
+			if (sd && sd->ed) {
+				clif->skill_nodamage(src, bl, skill_id, skill_lv,
+					status->heal(&sd->ed->bl, status_get_max_hp(src) * 10 / 100,
+						status_get_max_sp(src) * 10 / 100, 1));
 			}
 			break;
 
@@ -19353,21 +19314,6 @@ int skill_block_check(struct block_list *bl, int src_id, int skill_id) {
 	return 1; // Can't do
 }
 
-int skill_get_elemental_type( uint16 skill_id , uint16 skill_lv ) {
-	int type = 0;
-
-	switch (skill_id) {
-		case SO_SUMMON_AGNI:   type = ELEID_EL_AGNI_S;   break;
-		case SO_SUMMON_AQUA:   type = ELEID_EL_AQUA_S;   break;
-		case SO_SUMMON_VENTUS: type = ELEID_EL_VENTUS_S; break;
-		case SO_SUMMON_TERA:   type = ELEID_EL_TERA_S;   break;
-	}
-
-	type += skill_lv - 1;
-
-	return type;
-}
-
 /**
  * update stored skill cooldowns for player logout
  * @param   sd     the affected player structure
@@ -20154,7 +20100,6 @@ void skill_defaults(void) {
 	skill->select_menu = skill_select_menu;
 	skill->elementalanalysis = skill_elementalanalysis;
 	skill->changematerial = skill_changematerial;
-	skill->get_elemental_type = skill_get_elemental_type;
 	skill->cooldown_save = skill_cooldown_save;
 	skill->get_new_group_id = skill_get_new_group_id;
 	skill->check_shadowform = skill_check_shadowform;

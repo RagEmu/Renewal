@@ -856,6 +856,12 @@ typedef enum sc_type {
 	SC_SHRIMP,
 	SC_FRESHSHRIMP,
 
+	// Elemental Mode
+	SC_EL_PASSIVE, // 680
+	SC_EL_DEFENSIVE,
+	SC_EL_OFFENSIVE,
+	SC_EL_WAIT,
+	
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
 

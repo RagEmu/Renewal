@@ -3607,7 +3607,6 @@ ACMD(reloadskilldb)
 {
 	skill->reload();
 	homun->reload_skill();
-	elemental->reload_skilldb();
 	mercenary->read_skilldb();
 	clif->message(fd, msg_fd(fd,99)); // Skill database has been reloaded.
 

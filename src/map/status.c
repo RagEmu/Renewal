@@ -1192,6 +1192,11 @@ void initChangeTables(void) {
 	status->dbs->ChangeFlagTable[SC_MAGICAL_FEATHER] |= SCB_NONE;
 	status->dbs->ChangeFlagTable[SC_BLOSSOM_FLUTTERING] |= SCB_NONE;
 
+	status->dbs->ChangeFlagTable[SC_EL_WAIT] |= SCB_REGEN;
+	status->dbs->ChangeFlagTable[SC_EL_PASSIVE] |= SCB_REGEN;
+	status->dbs->ChangeFlagTable[SC_EL_DEFENSIVE] |= SCB_REGEN;
+	status->dbs->ChangeFlagTable[SC_EL_OFFENSIVE] |= SCB_REGEN;
+
 	/* status->dbs->DisplayType Table [Ind/Hercules] */
 	status->dbs->DisplayType[SC_ALL_RIDING]          = true;
 	status->dbs->DisplayType[SC_PUSH_CART]           = true;
@@ -3181,34 +3186,37 @@ int status_calc_elemental_(struct elemental_data *ed, enum e_status_calc_opt opt
 	struct s_elemental *ele = &ed->elemental;
 	struct map_session_data *sd = ed->master;
 
-	if ( !sd )
+	if (!sd)
 		return 0;
 
-	if ( opt&SCO_FIRST ) {
-		memcpy(estatus, &ed->db->status, sizeof(struct status_data));
-		if (ele->mode == MD_NONE)
-			estatus->mode = EL_MODE_PASSIVE;
-		else
-			estatus->mode = ele->mode;
+	status->calc_misc(&ed->bl, estatus, 0);
 
-		status->calc_misc(&ed->bl, estatus, 0);
+	if (opt&SCO_FIRST) {
+		memcpy(estatus, &ed->db->status, sizeof(struct status_data));
 
 		estatus->max_hp = ele->max_hp;
 		estatus->max_sp = ele->max_sp;
 		estatus->hp = ele->hp;
 		estatus->sp = ele->sp;
 		estatus->rhw.atk = ele->atk;
-		estatus->rhw.atk2 = ele->atk2;
-
-		estatus->matk_min += ele->matk;
-		estatus->def += ele->def;
-		estatus->mdef += ele->mdef;
+		estatus->rhw.atk = ele->atk;
+		estatus->rhw.atk2 = ele->atk * 120 / 100;
+		estatus->rhw.matk = ele->matk;
+		estatus->def = ele->def;
+		estatus->mdef = ele->mdef;
 		estatus->flee = ele->flee;
 		estatus->hit = ele->hit;
 
+		estatus->size = ele->scale - 1;
+		estatus->amotion = ele->amotion;
+		if (sd)
+			estatus->speed = status->get_speed(&sd->bl);
+		else
+			estatus->speed = DEFAULT_WALK_SPEED;
+
 		memcpy(&ed->battle_status, estatus, sizeof(struct status_data));
-	} else {
-		status->calc_misc(&ed->bl, estatus, 0);
+	}
+	else {
 		status_cpy(&ed->battle_status, estatus);
 	}
 
@@ -3414,11 +3422,11 @@ void status_calc_regen(struct block_list *bl, struct status_data *st, struct reg
 
 		val = (st->max_sp * (st->int_ + 10) / 750) + 1;
 		regen->sp = cap_value(val, 1, SHRT_MAX);
-	} else if( bl->type == BL_ELEM ) {
-		val = (st->max_hp * st->vit / 10000 + 1) * 6;
+	} else if (bl->type == BL_ELEM) { // Elemental summon recovers 2% of max HP/SP. [malufett/Hercules]
+		val = st->max_hp * 2 / 100;
 		regen->hp = cap_value(val, 1, SHRT_MAX);
 
-		val = (st->max_sp * (st->int_ + 10) / 750) + 1;
+		val = st->max_sp * 2 / 100;
 		regen->sp = cap_value(val, 1, SHRT_MAX);
 	}
 }
@@ -3461,6 +3469,9 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 	 || sc->data[SC_MAGICMUSHROOM]
 	 || sc->data[SC_RAISINGDRAGON]
 	 || sc->data[SC_SATURDAY_NIGHT_FEVER]
+	 || sc->data[SC_EL_PASSIVE]
+	 || sc->data[SC_EL_DEFENSIVE]
+	 || sc->data[SC_EL_OFFENSIVE]
 	)
 		regen->flag = 0; //No regen
 
@@ -3496,7 +3507,12 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 	if (sc->data[SC_MAGNIFICAT]) {
 		regen->rate.sp += 1;
 	}
-	
+
+	if (sc->data[SC_EL_WAIT]) { // regenerates every 3 secs.
+		regen->rate.hp += 3;
+		regen->rate.sp += 3;
+	}
+
 	if (sc->data[SC_GDSKILL_REGENERATION]) {
 		const struct status_change_entry *sce = sc->data[SC_GDSKILL_REGENERATION];
 		if (!sce->val4) {
@@ -3851,6 +3867,9 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag) {
 
 			temp = bst->adelay*st->aspd_rate / 1000;
 			st->adelay = cap_value(temp, battle_config.monster_max_aspd * 2, 4000);
+
+			if (bl->type == BL_ELEM)
+				st->adelay = st->amotion;
 		}
 	}
 
@@ -6030,7 +6049,7 @@ int status_get_class(const struct block_list *bl)
 		case BL_HOM: return BL_UCCAST(BL_HOM, bl)->homunculus.class_;
 		case BL_MER: return BL_UCCAST(BL_MER, bl)->mercenary.class_;
 		case BL_NPC: return BL_UCCAST(BL_NPC, bl)->class_;
-		case BL_ELEM: return BL_UCCAST(BL_ELEM, bl)->elemental.class_;
+		case BL_ELEM: return BL_UCCAST(BL_ELEM, bl)->db->vd.class_;
 	}
 	return 0;
 }
@@ -7668,6 +7687,18 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 			break;
 		case SC_INVINCIBLEOFF:
 			status_change_end(bl, SC_INVINCIBLE, INVALID_TIMER);
+			break;
+		case SC_EL_OFFENSIVE:
+		case SC_EL_DEFENSIVE:
+		case SC_EL_PASSIVE:
+			if (sc->data[type]) {
+				status_change_end(bl, type, INVALID_TIMER);
+				return 0;
+			}
+			status_change_end(bl, SC_EL_WAIT, INVALID_TIMER);
+			status_change_end(bl, SC_EL_OFFENSIVE, INVALID_TIMER);
+			status_change_end(bl, SC_EL_DEFENSIVE, INVALID_TIMER);
+			status_change_end(bl, SC_EL_PASSIVE, INVALID_TIMER);
 			break;
 		case SC_MAGICPOWER:
 			status_change_end(bl, type, INVALID_TIMER);
@@ -9601,6 +9632,29 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 		case SC_OVERLAPEXPUP:
 			val_flag |= 1;
 			break;
+		case SC_EL_WAIT:
+		case SC_EL_PASSIVE:
+		case SC_EL_DEFENSIVE:
+		case SC_EL_OFFENSIVE:
+			if (bl->type == BL_ELEM) {
+				struct elemental_data *ed = BL_CAST(BL_ELEM, bl);
+				elemental->unlocktarget(ed);
+				elemental->clean_effect(ed);
+				switch (type - SC_EL_PASSIVE) {
+				case EL_MODE_DEFENSIVE:
+					ed->battle_status.mode = (MD_CANMOVE | MD_ASSIST);
+					break;
+				case EL_MODE_OFFENSIVE:
+					ed->battle_status.mode = (MD_CANMOVE | MD_AGGRESSIVE | MD_CANATTACK);
+					break;
+				case EL_MODE_WAIT:
+				case EL_MODE_PASSIVE:
+					ed->battle_status.mode = MD_CANMOVE;
+					break;
+				}
+				elemental->change_mode_ack(ed, type - SC_EL_PASSIVE);
+			}
+			break;
 	}
 
 	/* [Ind/Hercules] */
@@ -10601,6 +10655,11 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					temp_sd->c_marker[i] = 0;
 				}
 			}
+			break;
+		case SC_EL_PASSIVE:
+		case SC_EL_DEFENSIVE:
+		case SC_EL_OFFENSIVE:
+			sc_start(bl, bl, SC_EL_WAIT, 100, 1, INVALID_TIMER);
 			break;
 	}
 
@@ -11678,9 +11737,8 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 			if(status->charge(bl, 0, sce->val2) && (sce->val4==-1 || (sce->val4-=sce->val3)>=0)) {
 				sc_timer_next(sce->val3 + tick, status->change_timer, bl->id, data);
 				return 0;
-			} else
-				if (bl->type == BL_ELEM)
-					elemental->change_mode(BL_CAST(BL_ELEM,bl),MAX_ELESKILLTREE);
+			} else if (bl->type == BL_ELEM)
+				sc_start(bl, bl, SC_EL_WAIT, 100, EL_MODE_PASSIVE, INVALID_TIMER);
 			break;
 		case SC_STOMACHACHE:
 			if (--(sce->val4) > 0) {
@@ -11921,7 +11979,7 @@ int status_get_weapon_atk(struct block_list *bl, struct weapon_atk *watk, int fl
 
 		min = (int)(watk->atk - variance + strdex_bonus) + watk->atk2;
 		max = (int)(watk->atk + variance + strdex_bonus) + watk->atk2;
-	} else if ((bl->type == BL_MOB || bl->type == BL_MER) && watk->atk) {
+	} else if ((bl->type == BL_MOB || bl->type == BL_MER || bl->type == BL_ELEM) && watk->atk) {
 		min = watk->atk * 80 / 100;
 		max = watk->atk * 120 / 100;
 	} else if (bl->type == BL_HOM && watk->atk) {
@@ -12020,6 +12078,13 @@ void status_get_matk_sub(struct block_list *bl, int flag, unsigned short *matk_m
 			*matk_max += 130 * mc->battle_status.rhw.atk2 / 100;
 		}
 			break;
+		case BL_ELEM:
+		{
+			const struct elemental_data *ed = BL_UCCAST(BL_ELEM, bl);
+			*matk_min += 70 * ed->battle_status.rhw.atk2 / 100;
+			*matk_max += 130 * ed->battle_status.rhw.atk2 / 100;
+		}
+				break;
 		case BL_MOB:
 		{
 			const struct mob_data *md = BL_UCCAST(BL_MOB, bl);

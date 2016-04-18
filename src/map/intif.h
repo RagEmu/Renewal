@@ -35,6 +35,7 @@ struct mail_message;
 struct map_session_data;
 struct party_member;
 struct s_elemental;
+struct elemental_data;
 struct s_homunculus;
 struct s_mercenary;
 struct s_pet;
@@ -130,6 +131,8 @@ struct intif_interface {
 	int (*elemental_request) (int ele_id, int char_id);
 	int (*elemental_delete) (int ele_id);
 	int (*elemental_save) (struct s_elemental *ele);
+	int (*elemental_sc_load) (int ele_id, int char_id);
+	int (*elemental_sc_save) (struct elemental_data *ed);
 	/* @accinfo */
 	void (*request_accinfo) (int u_fd, int aid, int group_lv, char* query);
 	/* */
@@ -187,6 +190,7 @@ struct intif_interface {
 	void (*pMercenaryDeleted) (int fd);
 	void (*pMercenarySaved) (int fd);
 	void (*pElementalReceived) (int fd);
+	void (*pElementalSCReceived) (int fd);
 	void (*pElementalDeleted) (int fd);
 	void (*pElementalSaved) (int fd);
 	void (*pCreatePet) (int fd);

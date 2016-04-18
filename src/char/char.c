@@ -94,6 +94,7 @@ char mercenary_db[256] = "mercenary";
 char mercenary_owner_db[256] = "mercenary_owner";
 char ragsrvinfo_db[256] = "ragsrvinfo";
 char elemental_db[256] = "elemental";
+char elemental_scdata_db[256] = "elemental_sc";
 char account_data_db[256] = "account_data";
 char acc_reg_num_db[32] = "acc_reg_num_db";
 char acc_reg_str_db[32] = "acc_reg_str_db";
@@ -5419,8 +5420,10 @@ void char_sql_config_read(const char* cfgName)
 			safestrncpy(mercenary_owner_db,w2,sizeof(mercenary_owner_db));
 		else if(!strcmpi(w1,"ragsrvinfo_db"))
 			safestrncpy(ragsrvinfo_db,w2,sizeof(ragsrvinfo_db));
-		else if(!strcmpi(w1,"elemental_db"))
-			safestrncpy(elemental_db,w2,sizeof(elemental_db));
+		else if (!strcmpi(w1, "elemental_db"))
+			safestrncpy(elemental_db, w2, sizeof(elemental_db));
+		else if (!strcmpi(w1, "elemental_scdata_db"))
+			safestrncpy(elemental_scdata_db, w2, sizeof(elemental_db));
 		else if(!strcmpi(w1,"account_data_db"))
 			safestrncpy(account_data_db,w2,sizeof(account_data_db));
 		else if(!strcmpi(w1,"char_reg_num_db"))

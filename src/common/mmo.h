@@ -202,7 +202,8 @@
 // Elemental System
 #define MAX_ELEMENTALSKILL 42
 #define EL_SKILLBASE 8401
-#define MAX_ELESKILLTREE 3
+#define MAX_EL_SKILL 3
+#define MAX_ELEMENTAL_CLASS 12
 
 // The following system marks a different job ID system used by the map server,
 // which makes a lot more sense than the normal one. [Skotlex]
@@ -327,6 +328,14 @@ enum e_item_bound_type {
 	IBT_PARTY     = 0x3,
 	IBT_CHARACTER = 0x4,
 	IBT_MAX       = 0x4,
+};
+
+enum elemental_type {
+	EL_KIND_AGNI,
+	EL_KIND_AQUA,
+	EL_KIND_VENTUS,
+	EL_KIND_TERA,
+	MAX_EL_KIND
 };
 
 enum {
@@ -468,9 +477,9 @@ struct s_mercenary {
 struct s_elemental {
 	int elemental_id;
 	int char_id;
-	short class_;
-	uint32 mode;
-	int hp, sp, max_hp, max_sp, matk, atk, atk2;
+	enum elemental_type kind;
+	int scale;
+	int hp, sp, max_hp, max_sp, matk, atk;
 	short hit, flee, amotion, def, mdef;
 	int life_time;
 };

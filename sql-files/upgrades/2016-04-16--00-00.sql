@@ -1,0 +1,22 @@
+#1429056000
+ALTER TABLE `elemental` 
+ CHANGE COLUMN `atk1` `atk` MEDIUMINT(6) UNSIGNED NOT NULL DEFAULT 0,
+ DROP COLUMN `atk2`,
+ CHANGE COLUMN `class` `kind` SMALLINT(1) NOT NULL,
+ CHANGE COLUMN `mode` `scale` SMALLINT(1) NOT NULL;
+
+CREATE TABLE IF NOT EXISTS `elemental_sc` (
+  `ele_id` INT(11) UNSIGNED NOT NULL,
+  `char_id` INT(11) UNSIGNED NOT NULL,
+  `type` SMALLINT(11) UNSIGNED NOT NULL,
+  `tick` INT(11) NOT NULL,
+  `val1` INT(11) NOT NULL DEFAULT 0,
+  `val2` INT(11) NOT NULL DEFAULT 0,
+  `val3` INT(11) NOT NULL DEFAULT 0,
+  `val4` INT(11) NOT NULL DEFAULT 0,
+  KEY (`ele_id`),
+  KEY (`char_id`),
+  PRIMARY KEY (`ele_id`,`char_id`, `type`)
+)ENGINE=MyISAM;
+
+INSERT INTO `sql_updates` (`timestamp`) VALUES (1429056000);

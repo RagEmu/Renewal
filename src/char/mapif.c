@@ -69,6 +69,8 @@ void mapif_elemental_deleted(int fd, unsigned char flag);
 void mapif_parse_elemental_delete(int fd, int ele_id);
 void mapif_elemental_saved(int fd, unsigned char flag);
 void mapif_parse_elemental_save(int fd, const struct s_elemental *ele);
+void mapif_elemental_request_sc_load(int fd, int ele_id, int char_id);
+void mapif_elemental_request_sc_save(int fd);
 int mapif_guild_created(int fd, int account_id, struct guild *g);
 int mapif_guild_noinfo(int fd, int guild_id);
 int mapif_guild_info(int fd, struct guild *g);
@@ -247,6 +249,8 @@ void mapif_defaults(void) {
 	mapif->parse_elemental_delete = mapif_parse_elemental_delete;
 	mapif->elemental_saved = mapif_elemental_saved;
 	mapif->parse_elemental_save = mapif_parse_elemental_save;
+	mapif->parse_elemental_request_sc_load = mapif_elemental_request_sc_load;
+	mapif->parse_elemental_request_sc_save = mapif_elemental_request_sc_save;
 	mapif->guild_created = mapif_guild_created;
 	mapif->guild_noinfo = mapif_guild_noinfo;
 	mapif->guild_info = mapif_guild_info;

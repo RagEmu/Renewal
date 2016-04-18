@@ -74,7 +74,7 @@ int inter_recv_packet_length[] = {
 	-1, 9, 0, 0,  0, 0, 0, 0,  7, 6,10,10, 10,-1,  0, 0,    // 3040-
 	-1,-1,10,10,  0,-1,12, 0,  0, 0, 0, 0,  0, 0,  0, 0,    // 3050-  Auction System [Zephyrus], Item Bound [Mhalicot]
 	 6,-1, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,    // 3060-  Quest system [Kevin] [Inkfish]
-	-1,10, 6,-1,  0, 0, 0, 0,  0, 0, 0, 0, -1,10,  6,-1,    // 3070-  Mercenary packets [Zephyrus], Elemental packets [pakpil]
+	-1, 10, 6, -1, 0, 0, 0, 0, 0, 0, -1, 12, -1, 10, 6, -1,    // 3070-  Mercenary packets [Zephyrus], Elemental packets [pakpil]
 	48,14,-1, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,    // 3080-
 	-1,10,-1, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,    // 3090-  Homunculus packets [albator]
 };

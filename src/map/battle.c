@@ -5774,6 +5774,12 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			pc->delitem(sd, sd->equip_index[EQI_AMMO], sc->data[SC_FEARBREEZE]->val4, 0, DELITEM_SKILLUSE, LOG_TYPE_CONSUME);
 			sc->data[SC_FEARBREEZE]->val4 = 0;
 		}
+
+		if (src->type == BL_ELEM && sc->data[SC_EL_OFFENSIVE] && (rnd_value(0, 20000) % 100 >= 75)) {
+			struct elemental_data *ed = BL_CAST(BL_ELEM, src);
+			elemental->action(ed, target, tick);
+			return wd.dmg_lv;
+		}
 	}
 	if (sd && sd->state.arrow_atk) //Consume arrow.
 		battle->consume_ammo(sd, 0, 0);
