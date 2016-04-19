@@ -7651,6 +7651,7 @@
 - `Blue_Wand`: 1677
 - `Ru_Gold_Wand`: 1678
 - `Crimson_Rod`: 1680
+- `Short_Foxtail_Staff`: 1681
 - `Bow`: 1701
 - `Bow_`: 1702
 - `Bow__`: 1703
