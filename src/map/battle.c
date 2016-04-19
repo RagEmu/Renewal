@@ -666,46 +666,46 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 		(battle->check_undead(st->race,st->def_ele) || st->race==RC_DEMON) )
 		damage += (int)(skill_lv*(3+sd->status.base_level/20.0));
 		//damage += (skill_lv * 3);
-	if( (skill_lv = pc->checkskill(sd, RA_RANGERMAIN)) > 0 && (st->race == RC_BRUTE || st->race == RC_PLANT || st->race == RC_FISH) )
+	if ((skill_lv = pc->checkskill(sd, RA_RANGERMAIN)) > 0 && (st->race == RC_BRUTE || st->race == RC_PLANT || st->race == RC_FISH))
 		damage += (skill_lv * 5);
-	if( (skill_lv = pc->checkskill(sd,NC_RESEARCHFE)) > 0 && (st->def_ele == ELE_FIRE || st->def_ele == ELE_EARTH) )
+	if ((skill_lv = pc->checkskill(sd,NC_RESEARCHFE)) > 0 && (st->def_ele == ELE_FIRE || st->def_ele == ELE_EARTH))
 		damage += (skill_lv * 10);
-	if( pc_ismadogear(sd) )
+	if (pc_ismadogear(sd))
 		damage += 15 * pc->checkskill(sd, NC_MADOLICENCE);
-	if( (skill_lv = pc->checkskill(sd,BS_WEAPONRESEARCH)) > 0 )
+	if ((skill_lv = pc->checkskill(sd,BS_WEAPONRESEARCH)) > 0)
 		damage += (skill_lv * 2);
-	if((skill_lv = pc->checkskill(sd,HT_BEASTBANE)) > 0 && (st->race==RC_BRUTE || st->race==RC_INSECT) ) {
+	if ((skill_lv = pc->checkskill(sd,HT_BEASTBANE)) > 0 && (st->race==RC_BRUTE || st->race==RC_INSECT)) {
 		damage += (skill_lv * 4);
 		if (sd->sc.data[SC_SOULLINK] && sd->sc.data[SC_SOULLINK]->val2 == SL_HUNTER)
 			damage += sd->status.str;
-	if(target->type == BL_MOB && tsc && tsc->count && tsc->data[SC_P_ALTER] && //If the Platinum Alter is activated
+	if (target->type == BL_MOB && tsc && tsc->count && tsc->data[SC_P_ALTER] && //If the Platinum Alter is activated
 		(battle->check_undead(st->race, st->def_ele) || st->race == RC_UNDEAD)) //Undead attacker
 		damage += tsc->data[SC_P_ALTER]->val3;
 	}
 
-	if(type == 0)
+	if (type == 0)
 		weapon = sd->weapontype1;
 	else
 		weapon = sd->weapontype2;
 	switch(weapon) {
 		case W_1HSWORD:
-				if((skill_lv = pc->checkskill(sd,AM_AXEMASTERY)) > 0)
+				if ((skill_lv = pc->checkskill(sd,AM_AXEMASTERY)) > 0)
 					damage += (skill_lv * 3);
 		case W_DAGGER:
-			if((skill_lv = pc->checkskill(sd,SM_SWORD)) > 0)
+			if ((skill_lv = pc->checkskill(sd,SM_SWORD)) > 0)
 				damage += (skill_lv * 4);
-			if((skill_lv = pc->checkskill(sd,GN_TRAINING_SWORD)) > 0)
+			if ((skill_lv = pc->checkskill(sd,GN_TRAINING_SWORD)) > 0)
 				damage += skill_lv * 10;
 			break;
 		case W_2HSWORD:
-				if((skill_lv = pc->checkskill(sd,AM_AXEMASTERY)) > 0)
+				if ((skill_lv = pc->checkskill(sd,AM_AXEMASTERY)) > 0)
 					damage += (skill_lv * 3);
-			if((skill_lv = pc->checkskill(sd,SM_TWOHAND)) > 0)
+			if ((skill_lv = pc->checkskill(sd,SM_TWOHAND)) > 0)
 				damage += (skill_lv * 4);
 			break;
 		case W_1HSPEAR:
 		case W_2HSPEAR:
-			if ((skill_lv = pc->checkskill(sd,KN_SPEARMASTERY)) > 0) {
+			if  ((skill_lv = pc->checkskill(sd,KN_SPEARMASTERY)) > 0) {
 				if (pc_isridingdragon(sd))
 					damage += (skill_lv * 10);
 				else if (pc_isridingpeco(sd))
@@ -716,40 +716,40 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 			break;
 		case W_1HAXE:
 		case W_2HAXE:
-			if((skill_lv = pc->checkskill(sd,AM_AXEMASTERY)) > 0)
+			if ((skill_lv = pc->checkskill(sd,AM_AXEMASTERY)) > 0)
 				damage += (skill_lv * 3);
-			if((skill_lv = pc->checkskill(sd,NC_TRAININGAXE)) > 0)
+			if ((skill_lv = pc->checkskill(sd,NC_TRAININGAXE)) > 0)
 				damage += (skill_lv * 5);
 			break;
 		case W_MACE:
 		case W_2HMACE:
-			if((skill_lv = pc->checkskill(sd,PR_MACEMASTERY)) > 0)
+			if ((skill_lv = pc->checkskill(sd,PR_MACEMASTERY)) > 0)
 				damage += (skill_lv * 3);
-			if((skill_lv = pc->checkskill(sd,NC_TRAININGAXE)) > 0)
+			if ((skill_lv = pc->checkskill(sd,NC_TRAININGAXE)) > 0)
 				damage += (skill_lv * 5);
 			break;
 		case W_FIST:
-			if((skill_lv = pc->checkskill(sd,TK_RUN)) > 0)
+			if ((skill_lv = pc->checkskill(sd,TK_RUN)) > 0)
 				damage += (skill_lv * 10);
 			// No break, fall through to Knuckles
 		case W_KNUCKLE:
-			if((skill_lv = pc->checkskill(sd,MO_IRONHAND)) > 0)
+			if ((skill_lv = pc->checkskill(sd,MO_IRONHAND)) > 0)
 				damage += (skill_lv * 3);
 			break;
 		case W_MUSICAL:
-			if((skill_lv = pc->checkskill(sd,BA_MUSICALLESSON)) > 0)
+			if ((skill_lv = pc->checkskill(sd,BA_MUSICALLESSON)) > 0)
 				damage += (skill_lv * 3);
 			break;
 		case W_WHIP:
-			if((skill_lv = pc->checkskill(sd,DC_DANCINGLESSON)) > 0)
+			if ((skill_lv = pc->checkskill(sd,DC_DANCINGLESSON)) > 0)
 				damage += (skill_lv * 3);
 			break;
 		case W_BOOK:
-			if((skill_lv = pc->checkskill(sd,SA_ADVANCEDBOOK)) > 0)
+			if ((skill_lv = pc->checkskill(sd,SA_ADVANCEDBOOK)) > 0)
 				damage += (skill_lv * 3);
 			break;
 		case W_KATAR:
-			if((skill_lv = pc->checkskill(sd,AS_KATAR)) > 0)
+			if ((skill_lv = pc->checkskill(sd,AS_KATAR)) > 0)
 				damage += (skill_lv * 3);
 			break;
 	}
