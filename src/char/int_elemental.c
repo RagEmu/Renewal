@@ -91,7 +91,15 @@ bool mapif_elemental_save(const struct s_elemental *ele)
 	return true;
 }
 
-bool mapif_elemental_load(int ele_id, int char_id, struct s_elemental *ele) {
+/**
+ * Loads the elemental data
+ * @param ele_id ElementalID to load
+ * @param char_id CharacterID for which elemental is requested
+ * @param[in,out] ele The elemental's data.
+ * @retval false in case of errors.
+ */
+bool mapif_elemental_load(int ele_id, int char_id, struct s_elemental *ele)
+{
 	char* data;
 
 	nullpo_retr(false, ele);
@@ -99,16 +107,15 @@ bool mapif_elemental_load(int ele_id, int char_id, struct s_elemental *ele) {
 	ele->elemental_id = ele_id;
 	ele->char_id = char_id;
 
-	if( SQL_ERROR == SQL->Query(inter->sql_handle,
+	if (SQL_ERROR == SQL->Query(inter->sql_handle,
 		"SELECT `kind`, `scale`, `hp`, `sp`, `max_hp`, `max_sp`, `atk`, `matk`, `aspd`,"
 		"`def`, `mdef`, `flee`, `hit`, `life_time` FROM `%s` WHERE `ele_id` = '%d' AND `char_id` = '%d'",
-		elemental_db, ele_id, char_id) )
-	{
+		elemental_db, ele_id, char_id)) {
 		Sql_ShowDebug(inter->sql_handle);
 		return false;
 	}
 
-	if( SQL_SUCCESS != SQL->NextRow(inter->sql_handle) ) {
+	if (SQL_SUCCESS != SQL->NextRow(inter->sql_handle)) {
 		SQL->FreeResult(inter->sql_handle);
 		return false;
 	}
@@ -128,50 +135,62 @@ bool mapif_elemental_load(int ele_id, int char_id, struct s_elemental *ele) {
 	SQL->GetData(inter->sql_handle, 12, &data, NULL); ele->hit = atoi(data);
 	SQL->GetData(inter->sql_handle, 13, &data, NULL); ele->life_time = atoi(data);
 	SQL->FreeResult(inter->sql_handle);
-	if( save_log )
+	if (save_log)
 		ShowInfo("Elemental loaded (%d - %d).\n", ele->elemental_id, ele->char_id);
 
 	return true;
 }
 
-void mapif_elemental_request_sc_save(int fd) {
+/**
+ * Saves the elemental data
+ * @param fd target fd which requested to save data
+ */
+void mapif_elemental_request_sc_save(int fd)
+{
 #ifdef ENABLE_SC_SAVING
 	int cid = RFIFOL(fd, 4);
 	int eid = RFIFOL(fd, 8);
 	int count = RFIFOW(fd, 12);
 
-	if ( SQL_ERROR == SQL->Query(inter->sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d' AND `ele_id`='%d'", elemental_scdata_db, cid, eid) )
+	if (SQL_ERROR == SQL->Query(inter->sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d' AND `ele_id`='%d'", elemental_scdata_db, cid, eid))
 		Sql_ShowDebug(inter->sql_handle);
 
-	if ( count > 0 ) {
+	if (count > 0) {
 		struct status_change_data data;
 		StringBuf buf;
 		int i;
 		StrBuf->Init(&buf);
 		StrBuf->Printf(&buf, "INSERT INTO `%s` (`char_id`, `ele_id`, `type`, `tick`, `val1`, `val2`, `val3`, `val4`) VALUES ", elemental_scdata_db);
-		for ( i = 0; i < count; ++i ) {
+		for (i = 0; i < count; ++i) {
 			memcpy(&data, RFIFOP(fd, 14 + i*sizeof(struct status_change_data)), sizeof(struct status_change_data));
-			if ( i > 0 )
+			if (i > 0)
 				StrBuf->AppendStr(&buf, ", ");
 			StrBuf->Printf(&buf, "('%d','%d','%hu','%d','%d','%d','%d','%d')", cid, eid,
 				data.type, data.tick, data.val1, data.val2, data.val3, data.val4);
 		}
-		if ( SQL_ERROR == SQL->QueryStr(inter->sql_handle, StrBuf->Value(&buf)) )
+		if (SQL_ERROR == SQL->QueryStr(inter->sql_handle, StrBuf->Value(&buf)))
 			Sql_ShowDebug(inter->sql_handle);
 		StrBuf->Destroy(&buf);
 	}
 #endif
 }
 
-void mapif_elemental_request_sc_load(int fd, int char_id, int ele_id) {
+/**
+ * Request to load the elemental data
+ * @param fd target fd which requested to save data
+ * @param char_id CharacterID for which elemental is requested
+ * @param ele_id ElementalID to load
+ */
+void mapif_elemental_request_sc_load(int fd, int char_id, int ele_id)
+{
 #ifdef ENABLE_SC_SAVING
-	if ( SQL_ERROR == SQL->Query(inter->sql_handle,
+	if (SQL_ERROR == SQL->Query(inter->sql_handle,
 		"SELECT `type`, `tick`, `val1`, `val2`, `val3`, `val4` FROM `%s` WHERE `char_id` = '%d' AND `ele_id` = '%d'",
-		elemental_scdata_db, char_id, ele_id) ) {
+		elemental_scdata_db, char_id, ele_id)) {
 		Sql_ShowDebug(inter->sql_handle);
 		return;
 	}
-	if ( SQL->NumRows(inter->sql_handle) > 0 ) {
+	if (SQL->NumRows(inter->sql_handle) > 0) {
 		struct status_change_data scdata;
 		int count;
 		char* data;
@@ -181,7 +200,7 @@ void mapif_elemental_request_sc_load(int fd, int char_id, int ele_id) {
 		WFIFOW(fd, 0) = 0x3894;
 		WFIFOL(fd, 4) = char_id;
 		WFIFOL(fd, 8) = ele_id;
-		for ( count = 0; count < 50 && SQL_SUCCESS == SQL->NextRow(inter->sql_handle); ++count ) {
+		for (count = 0; count < 50 && SQL_SUCCESS == SQL->NextRow(inter->sql_handle); ++count) {
 			SQL->GetData(inter->sql_handle, 0, &data, NULL); scdata.type = atoi(data);
 			SQL->GetData(inter->sql_handle, 1, &data, NULL); scdata.tick = atoi(data);
 			SQL->GetData(inter->sql_handle, 2, &data, NULL); scdata.val1 = atoi(data);
@@ -190,9 +209,9 @@ void mapif_elemental_request_sc_load(int fd, int char_id, int ele_id) {
 			SQL->GetData(inter->sql_handle, 5, &data, NULL); scdata.val4 = atoi(data);
 			memcpy(WFIFOP(fd, 14 + count*sizeof(struct status_change_data)), &scdata, sizeof(struct status_change_data));
 		}
-		if ( count >= 50 )
+		if (count >= 50)
 			ShowWarning("Too many status changes for %d:%d, some of them were not loaded.\n", char_id, ele_id);
-		if ( count > 0 ) {
+		if (count > 0) {
 			WFIFOW(fd, 2) = 14 + count*sizeof(struct status_change_data);
 			WFIFOW(fd, 12) = count;
 			WFIFOSET(fd, WFIFOW(fd, 2));
@@ -214,13 +233,14 @@ void mapif_elemental_request_sc_load(int fd, int char_id, int ele_id) {
 #endif
 }
 
-bool mapif_elemental_delete(int ele_id) {
-	if( SQL_ERROR == SQL->Query(inter->sql_handle, "DELETE FROM `%s` WHERE `ele_id` = '%d'", elemental_db, ele_id) ) {
+bool mapif_elemental_delete(int ele_id)
+{
+	if (SQL_ERROR == SQL->Query(inter->sql_handle, "DELETE FROM `%s` WHERE `ele_id` = '%d'", elemental_db, ele_id)) {
 		Sql_ShowDebug(inter->sql_handle);
 		return false;
 	}
 #ifdef ENABLE_SC_SAVING
-	if ( SQL_ERROR == SQL->Query(inter->sql_handle, "DELETE FROM `%s` WHERE `ele_id` = '%d'", elemental_scdata_db, ele_id) ) {
+	if (SQL_ERROR == SQL->Query(inter->sql_handle, "DELETE FROM `%s` WHERE `ele_id` = '%d'", elemental_scdata_db, ele_id)) {
 		Sql_ShowDebug(inter->sql_handle);
 		return false;
 	}
@@ -228,7 +248,8 @@ bool mapif_elemental_delete(int ele_id) {
 	return true;
 }
 
-void mapif_elemental_send(int fd, struct s_elemental *ele, unsigned char flag) {
+void mapif_elemental_send(int fd, struct s_elemental *ele, unsigned char flag)
+{
 	int size = sizeof(struct s_elemental) + 5;
 
 	nullpo_retv(ele);
@@ -251,25 +272,29 @@ void mapif_parse_elemental_create(int fd, const struct s_elemental *ele)
 	mapif->elemental_send(fd, &ele_, result);
 }
 
-void mapif_parse_elemental_load(int fd, int ele_id, int char_id) {
+void mapif_parse_elemental_load(int fd, int ele_id, int char_id)
+{
 	struct s_elemental ele;
 	bool result = mapif->elemental_load(ele_id, char_id, &ele);
 	mapif->elemental_send(fd, &ele, result);
 }
 
-void mapif_elemental_deleted(int fd, unsigned char flag) {
+void mapif_elemental_deleted(int fd, unsigned char flag)
+{
 	WFIFOHEAD(fd,3);
 	WFIFOW(fd,0) = 0x387d;
 	WFIFOB(fd,2) = flag;
 	WFIFOSET(fd,3);
 }
 
-void mapif_parse_elemental_delete(int fd, int ele_id) {
+void mapif_parse_elemental_delete(int fd, int ele_id)
+{
 	bool result = mapif->elemental_delete(ele_id);
 	mapif->elemental_deleted(fd, result);
 }
 
-void mapif_elemental_saved(int fd, unsigned char flag) {
+void mapif_elemental_saved(int fd, unsigned char flag)
+{
 	WFIFOHEAD(fd,3);
 	WFIFOW(fd,0) = 0x387e;
 	WFIFOB(fd,2) = flag;
@@ -282,20 +307,23 @@ void mapif_parse_elemental_save(int fd, const struct s_elemental *ele)
 	mapif->elemental_saved(fd, result);
 }
 
-void inter_elemental_sql_init(void) {
+void inter_elemental_sql_init(void)
+{
 	return;
 }
 
-void inter_elemental_sql_final(void) {
+void inter_elemental_sql_final(void)
+{
 	return;
 }
 
 /*==========================================
  * Inter Packets
  *------------------------------------------*/
-int inter_elemental_parse_frommap(int fd) {
+int inter_elemental_parse_frommap(int fd)
+{
 	unsigned short cmd = RFIFOW(fd,0);
-	switch ( cmd ) {
+	switch (cmd) {
 		case 0x307a: mapif->parse_elemental_request_sc_save(fd); break;
 		case 0x307b: mapif->parse_elemental_request_sc_load(fd, (int)RFIFOL(fd, 4), (int)RFIFOL(fd, 8)); break;
 		case 0x307c: mapif->parse_elemental_create(fd, (const struct s_elemental*)RFIFOP(fd,4)); break;

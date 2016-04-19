@@ -283,7 +283,7 @@ AC_ARG_ENABLE(
 		case $enableval in
 			"no");;
 			"yes");;
-			*) AC_MSG_ERROR([[invalid argument --enable-lto=$disableval... stopping]]);;
+			*) AC_MSG_ERROR([[invalid argument --enable-lto=$enableval... stopping]]);;
 		esac
 	],
 	[enable_lto="no"]
@@ -306,7 +306,7 @@ AC_ARG_ENABLE(
 		case $enableval in
 			"no");;
 			"yes");;
-			*) AC_MSG_ERROR([[invalid argument --enable-static=$disableval... stopping]]);;
+			*) AC_MSG_ERROR([[invalid argument --enable-static=$enableval... stopping]]);;
 		esac
 	],
 	[enable_static="no"]
@@ -331,11 +331,37 @@ AC_ARG_ENABLE(
 			"no");;
 			"yes");;
 			"full");;
-			*) AC_MSG_ERROR([[invalid argument --enable-sanitize=$disableval... stopping]]);;
+			*) AC_MSG_ERROR([[invalid argument --enable-sanitize=$enableval... stopping]]);;
 		esac
 	],
 	[enable_sanitize="no"]
 )
+
+#
+# -Werror compiler flag
+# It's not always possible (if at all) to pass -Werror in the CFLAGS, since
+# autoconf often generates test-code that produces warnings.
+# Reference: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=734104
+#
+AC_ARG_ENABLE(
+	[Werror],
+	AC_HELP_STRING(
+		[--enable-Werror],
+		[
+			Enables -Werror in the compiler flags. (disabled by default)
+		]
+	),
+	[
+		enable_Werror="$enableval"
+		case $enableval in
+			"no");;
+			"yes");;
+			*) AC_MSG_ERROR([[invalid argument --enable-Werror=$enableval... stopping]]);;
+		esac
+	],
+	[enable_Werror="no"]
+)
+
 
 #
 # Optionally set the max number of network conenctions
@@ -1341,6 +1367,35 @@ if test "$enable_static" != "no" ; then
 	CFLAGS="$OLD_CFLAGS"
 	LDFLAGS="$OLD_LDFLAGS"
 	LIBS="$OLD_LIBS"
+fi
+
+#
+# -Werror compiler flag
+#
+if test "$enable_Werror" != "no" ; then
+
+	OLD_CFLAGS="$CFLAGS"
+	CFLAGS="$CFLAGS -Werror"
+
+	AC_MSG_CHECKING([whether $CC supports -Werror])
+	AC_RUN_IFELSE(
+		[AC_LANG_SOURCE([
+			int main(int argc, char **argv){
+				return 0;
+			}
+		])],
+		[
+			AC_MSG_RESULT([yes])
+		],
+		[
+			AC_MSG_RESULT([no])
+			CFLAGS="$OLD_CFLAGS"
+			LDFLAGS="$OLD_LDFLAGS"
+		],
+		[
+			AC_MSG_RESULT([guessing no])
+		]
+	)
 fi
 
 AC_SUBST(STATIC, ${STATIC})
