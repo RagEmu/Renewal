@@ -944,7 +944,7 @@ enum {
 
 enum {
 	RACE_HUMAN = 0,
-	RACE_DORAM
+	RACE_DORAM = 4218
 };
 
 //Total number of classes (for data storage)

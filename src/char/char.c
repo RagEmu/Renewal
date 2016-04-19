@@ -138,6 +138,7 @@ int gm_allow_group = -1;
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 int start_zeny = 0;
 int start_items[MAX_START_ITEMS*3];
+int start_items_doram[MAX_START_ITEMS*3];
 int guild_exp_rate = 100;
 
 //Custom limits for the fame lists. [Skotlex]
@@ -152,6 +153,7 @@ struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 
 // Initial position (it's possible to set it in conf file)
 struct point start_point = { 0, 97, 90 };
+struct point start_point_doram = { 0, 49, 296 };
 
 unsigned short skillid2idx[MAX_SKILL_ID];
 
@@ -1529,11 +1531,15 @@ int char_check_char_name(char * name, char * esc_name)
  *  -5: 'Symbols in Character Names are forbidden'
  *  char_id: Success
  **/
-int char_make_new_char_sql(struct char_session_data* sd, const char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style, int starting_job)
+int char_make_new_char_sql(struct char_session_data* sd, const char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style, int race)
 {
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
 	int char_id, flag, k, l;
+	int *items = start_items;
+	int items_length = ARRAYLENGTH(start_items);
+	const char *starting_point_map = mapindex_id2name(start_point.map);
+	short starting_point_x = start_point.x, starting_point_y = start_point.y;
 
 	nullpo_retr(-2, sd);
 	nullpo_retr(-2, name_);
@@ -1563,28 +1569,41 @@ int char_make_new_char_sql(struct char_session_data* sd, const char* name_, int 
 	// check char slot
 	if( sd->found_char[slot] != -1 )
 		return -2; /* character account limit exceeded */
+	
+	switch(race) {
+	case RACE_HUMAN:
+		break;
+	case RACE_DORAM:
+		items = start_items_doram;
+		starting_point_map = mapindex_id2name(start_point_doram.map);
+		starting_point_x = start_point_doram.x;
+		starting_point_y = start_point_doram.y;
+		items_length = ARRAYLENGTH(start_items_doram);
+		break;
+	default:
+		ShowWarning("char_make_new_char_sql: Detected character creation packet with invalid race(%d) on account: %d.\n", race, sd->account_id);
+		return -2;
+	}
 
 #if PACKETVER >= 20120307
 	//Insert the new char entry to the database
-	if( SQL_ERROR == SQL->Query(inter->sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `class`, `zeny`, `status_point`,`str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
+	if (SQL_ERROR == SQL->Query(inter->sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `class`, `zeny`, `status_point`,`str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
 		"'%d', '%d', '%s', '%d', '%d',  '%d','%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
-		char_db, sd->account_id , slot, esc_name, starting_job, start_zeny, 48, str, agi, vit, int_, dex, luk,
+		char_db, sd->account_id , slot, esc_name, race, start_zeny, 48, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
-		mapindex_id2name(start_point.map), start_point.x, start_point.y, mapindex_id2name(start_point.map), start_point.x, start_point.y) )
-	{
-		Sql_ShowDebug(inter->sql_handle);
-		return -2; //No, stop the procedure!
+		starting_point_map, starting_point_x, starting_point_y, starting_point_map, starting_point_x, starting_point_y)) {
+			Sql_ShowDebug(inter->sql_handle);
+			return -2; //No, stop the procedure!
 	}
 #else
 	//Insert the new char entry to the database
-	if( SQL_ERROR == SQL->Query(inter->sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
+	if (SQL_ERROR == SQL->Query(inter->sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 							   "`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
 							   "'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
 							   char_db, sd->account_id , slot, esc_name, start_zeny, str, agi, vit, int_, dex, luk,
 							   (40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
-							   mapindex_id2name(start_point.map), start_point.x, start_point.y, mapindex_id2name(start_point.map), start_point.x, start_point.y) )
-	{
+							   starting_point_map, starting_point_x, starting_point_y, starting_point_map, starting_point_x, starting_point_y)) {
 		Sql_ShowDebug(inter->sql_handle);
 		return -2; //No, stop the procedure!
 	}
@@ -1592,37 +1611,31 @@ int char_make_new_char_sql(struct char_session_data* sd, const char* name_, int 
 	//Retrieve the newly auto-generated char id
 	char_id = (int)SQL->LastInsertId(inter->sql_handle);
 
-	if( !char_id )
+	if (!char_id)
 		return -2;
 
 	// Validation success, log result
 	if (log_char) {
-		if( SQL_ERROR == SQL->Query(inter->sql_handle, "INSERT INTO `%s` (`time`, `char_msg`,`account_id`,`char_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
+		if (SQL_ERROR == SQL->Query(inter->sql_handle, "INSERT INTO `%s` (`time`, `char_msg`,`account_id`,`char_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
 			"VALUES (NOW(), '%s', '%d', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-			charlog_db, "make new char", sd->account_id, char_id, slot, esc_name, str, agi, vit, int_, dex, luk, hair_style, hair_color) )
+			charlog_db, "make new char", sd->account_id, char_id, slot, esc_name, str, agi, vit, int_, dex, luk, hair_style, hair_color))
 			Sql_ShowDebug(inter->sql_handle);
 	}
-
 	//Give the char the default items
-	for (k = 0; k < ARRAYLENGTH(start_items) && start_items[k] != 0; k += 3) {
+	for (k = 0; k < items_length && items[k] != 0; k += 3) {
 		// FIXME: How to define if an item is stackable without having to lookup itemdb? [panikon]
-		if( start_items[k+2] == 1 )
-		{
-			if( SQL_ERROR == SQL->Query(inter->sql_handle,
+		if (items[k+2] == 1) {
+			if (SQL_ERROR == SQL->Query(inter->sql_handle,
 				"INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `identify`) VALUES ('%d', '%d', '%d', '%d')",
-				inventory_db, char_id, start_items[k], start_items[k + 1], 1) )
+				inventory_db, char_id, items[k], items[k + 1], 1))
 					Sql_ShowDebug(inter->sql_handle);
-		}
-		else if( start_items[k+2] == 0 )
-		{
+		} else if (items[k+2] == 0) {
 			// Non-stackable items should have their own entries (issue: 7279)
-			for( l = 0; l < start_items[k+1]; l++ )
-			{
-				if( SQL_ERROR == SQL->Query(inter->sql_handle,
+			for (l = 0; l < items[k+1]; l++) {
+				if (SQL_ERROR == SQL->Query(inter->sql_handle,
 					"INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `identify`) VALUES ('%d', '%d', '%d', '%d')",
-					inventory_db, char_id, start_items[k], 1, 1)
-					)
-					Sql_ShowDebug(inter->sql_handle);
+					inventory_db, char_id, items[k], 1, 1))
+						Sql_ShowDebug(inter->sql_handle);
 			}
 		}
 	}
@@ -4609,9 +4622,9 @@ void char_parse_char_create_new_char(int fd, struct char_session_data* sd)
 #if PACKETVER >= 20151001
 		result = chr->make_new_char_sql(sd, RFIFOP(fd,2), 1, 1, 1, 1, 1, 1, RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29), RFIFOW(fd,31));
 #elif PACKETVER >= 20120307
-		result = chr->make_new_char_sql(sd, RFIFOP(fd,2), 1, 1, 1, 1, 1, 1, RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29), JOB_NOVICE);
+		result = chr->make_new_char_sql(sd, RFIFOP(fd,2), 1, 1, 1, 1, 1, 1, RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29), RACE_HUMAN);
 #else
-		result = chr->make_new_char_sql(sd, RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35), JOB_NOVICE);
+		result = chr->make_new_char_sql(sd, RFIFOP(fd,2), RFIFOB(fd,26), RFIFOB(fd,27), RFIFOB(fd,28), RFIFOB(fd,29), RFIFOB(fd,30), RFIFOB(fd,31), RFIFOB(fd,32), RFIFOW(fd,33), RFIFOW(fd,35), RACE_HUMAN);
 #endif
 	}
 
@@ -5550,31 +5563,47 @@ int char_config_read(const char* cfgName)
 			start_point.x = x;
 			start_point.y = y;
 		}
-		else if (strcmpi(w1, "start_items") == 0) {
+		else if (strcmpi(w1, "start_point_doram") == 0) {
+			char map[MAP_NAME_LENGTH_EXT];
+			int x, y;
+			if (sscanf(w2, "%15[^,],%d,%d", map, &x, &y) < 3)
+				continue;
+			start_point_doram.map = mapindex->name2id(map);
+			if (!start_point_doram.map)
+				ShowError("Specified start_point_re '%s' not found in map-index cache.\n", map);
+			start_point_doram.x = x;
+			start_point_doram.y = y;
+		}
+		else if (strcmpi(w1, "start_items") == 0 || strcmpi(w1, "start_items_doram") == 0) {
 			int i;
 			char *split;
+			int *items;
+
+			if (strcmpi(w1, "start_items_doram") == 0)
+				items = start_items_doram;
+			else
+				items = start_items;
 
 			i = 0;
 			split = strtok(w2, ",");
 			while (split != NULL && i < MAX_START_ITEMS * 3) {
 				char *split2 = split;
 				split = strtok(NULL, ",");
-				start_items[i] = atoi(split2);
+				items[i] = atoi(split2);
 
-				if (start_items[i] < 0)
-					start_items[i] = 0;
+				if (items[i] < 0)
+					items[i] = 0;
 
 				++i;
 			}
 
 			// Format is: id1,quantity1,stackable1,idN,quantityN,stackableN
-			if( i%3 )
-			{
-				ShowWarning("chr->config_read: There are not enough parameters in start_items, ignoring last item...\n");
-				if( i%3 == 1 )
-					start_items[i-1] = 0;
+			if (i%3) {
+				ShowWarning("char_config_read: There are not enough parameters in %s, ignoring last item...\n", w1);
+				if (i%3 == 1)
+					items[i-1] = 0;
 				else
-					start_items[i-2] = 0;
+					items[i-2] = 0;
 			}
 		} else if (strcmpi(w1, "start_zeny") == 0) {
 			start_zeny = atoi(w2);
@@ -5778,6 +5807,7 @@ int do_init(int argc, char **argv) {
 	mapindex->init();
 
 	start_point.map = mapindex->name2id("iz_int");
+	start_point_doram.map = mapindex->name2id("lasa_fild01");
 
 	cmdline->exec(argc, argv, CMDLINE_OPT_NORMAL);
 	chr->config_read(chr->CHAR_CONF_NAME);
