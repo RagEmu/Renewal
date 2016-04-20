@@ -3666,7 +3666,6 @@
 ### temp fix
 
 - `RENEWAL`: 1
-- `RENEWAL_EXP`: 1
 
 
 ## Hardcoded Constants (source)
