@@ -3663,6 +3663,11 @@
 - `SEX_FEMALE`: 0
 - `SEX_MALE`: 1
 
+### temp fix
+
+- `RENEWAL`: 1
+- `RENEWAL_EXP`: 1
+
 
 ## Hardcoded Constants (source)
 
