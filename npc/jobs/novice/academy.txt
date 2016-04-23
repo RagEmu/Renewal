@@ -521,7 +521,6 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 					mes "Do you by any chance need a ship?";
 					mes "I usually travel to the port in Paros.";
 					mes "If you need to go to Paros later, come see me.";
-					close;
 				}
 			}
 		}
@@ -550,15 +549,15 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 						mes "[Carocc]";
 						mes "Sorry but you are short of the boarding fee.";
 						mes "I need 2800z to operate.";
-						close;
 					}
+				} else {
+					mes "[Carocc]";
+					mes "OK.";
+					mes "Do you know this, by the way?";
+					mes "^4d4dffThere's a Rogue hideout at Pharos Lighthouse^000000.";
+					mes "You already knew this?";
 				}
-				mes "[Carocc]";
-				mes "OK.";
-				mes "Do you know this, by the way?";
-				mes "^4d4dffThere's a Rogue hideout at Pharos Lighthouse^000000.";
-				mes "You already knew this?";
-				close;
+				break;
 			case 2:
 				mes "[Carocc]";
 				mes "I thought you knew that I only go to Pharos?";
@@ -566,7 +565,7 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 				next;
 				mes "[Carocc]";
 				mes "There are plenty of other ships that travel to Alberta and Byalan Islands.";
-				close;
+				break;
 			case 3:
 				mes "[Carocc]";
 				mes "Hmm. I'm content with the well being of you and other adventurers who passed me by.";
@@ -574,7 +573,7 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 				mes "[Carocc]";
 				mes "Lumin must be doing well too.";
 				mes "I wonder why you feel like my own child even though we've only met from the sea.";
-				close;
+				break;
 			}
 		} else {
 			mes "[Carocc]";
@@ -594,29 +593,29 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 					mes "[Carocc]";
 					mes "Sorry but you are short of the boarding fee.";
 					mes "I need 2800z to operate.";
-					close;
 				}
+			} else {
+				mes "[Carocc]";
+				mes "Then use it next time.";
 			}
-			mes "[Carocc]";
-			mes "Then use it next time.";
-			close;
 		}
 	}
+	close2;
 	cutin "", 255;
 	end;
 
-	OnInit:
-		questinfo 7472, QTYPE_QUEST, 1, Job_Novice;
-		//SetQuestLevel 7472 1 14
-		//SetQuestQuest 7472 7473 0
-		end;
+OnInit:
+	questinfo 7472, QTYPE_QUEST, 1, Job_Novice;
+	//SetQuestLevel 7472 1 14
+	//SetQuestQuest 7472 7473 0
+	end;
 
-	OnTouch:
-		if (Class == Job_Novice && BaseLevel < 15 && !questprogress(4269))
-			emotion e_gasp;
-		else
-			emotion e_heh;
-		end;
+OnTouch:
+	if (Class == Job_Novice && BaseLevel < 15 && !questprogress(4269))
+		emotion e_gasp;
+	else
+		emotion e_heh;
+	end;
 }
 
 izlude_a,198,213,3	duplicate(Captain Carocc#iz)	Captain Carocc#iz_a	4_M_REINDEER,5,5
@@ -645,7 +644,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 			completequest 7472;
 			getexp 200, 0;
 			setquest 7473;
-			getitem Apple_Juice, 1; // Apple_Juice
+			getitem Apple_Juice, 1;
 			next;
 			mes "[Hun]";
 			mes "You can open the Item window by clicking on the 'item' icon on top left portion of the screen.";
@@ -693,7 +692,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 				mes "It's joyous to see new adventurers starting out.";
 				mes "You want something to drink while you are resting?";
 				setquest 7473;
-				getitem Apple_Juice, 1; // Apple_Juice
+				getitem Apple_Juice, 1;
 				next;
 				mes "[Hun]";
 				mes "Right clicking on the item icon ^4d4dffon the basic item window at the upper left corner brings up the detailed info on the item";
@@ -737,7 +736,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 						mes "I want to give you more but that was the last of it";
 						mes "Anyways here's some potions. They'll come in handy when you start fighting.";
 						completequest 7473;
-						getitem Novice_Potion, 30; // Novice_Potion
+						getitem Novice_Potion, 30;
 						getexp 200, 0;
 						next;
 						mes "[Hun]";
@@ -756,7 +755,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 						mes "I want to give you more but that was the last of it";
 						mes "Anyways here's some potions. They'll come in handy when you start fighting.";
 						completequest 7473;
-						getitem Novice_Potion, 30; // Novice_Potion
+						getitem Novice_Potion, 30;
 						getexp 200, 0;
 						next;
 						mes "[Hun]";
@@ -926,17 +925,17 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 		close;
 	}
 
-	OnInit:
-		questinfo 7473, QTYPE_QUEST, 1, Job_Novice;
-		//SetQuestLevel 7473 1 14
-		end;
+OnInit:
+	questinfo 7473, QTYPE_QUEST, 1, Job_Novice;
+	//SetQuestLevel 7473 1 14
+	end;
 
-	OnTouch:
-		if (!questprogress(4269))
-			emotion e_gasp;
-		else
-			emotion e_heh;
-		end;
+OnTouch:
+	if (!questprogress(4269))
+		emotion e_gasp;
+	else
+		emotion e_heh;
+	end;
 }
 
 izlude_a,122,207,3	duplicate(Criatura Academy Staff#0)	Criatura Academy Staff#a	4_M_KHKYEL,3,3
@@ -1246,9 +1245,9 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 			erasequest 7476;
 			erasequest 7477;
 			getexp 300, 20;
-			getitem N_Fly_Wing, 20; // N_Fly_Wing
-			getitem N_Butterfly_Wing, 10; // N_Butterfly_Wing
-			getitem Novice_Potion, 20; // Novice_Potion
+			getitem N_Fly_Wing, 20;
+			getitem N_Butterfly_Wing, 10;
+			getitem Novice_Potion, 20;
 			next;
 			mes "[Information Staff]";
 			mes "Have a wonderful journey.";
@@ -1448,14 +1447,14 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 		}
 	}
 
-	OnInit:
-		// AddQuestInfo 7474 1 0
-		// SetQuestLevel 7474 1 14
-		// AddQuestInfo 7495 1 0
-		// SetQuestQuest 7495 7475 1
-		// SetQuestQuest 7495 7476 1
-		// SetQuestQuest 7495 7477 1
-		end;
+OnInit:
+	// AddQuestInfo 7474 1 0
+	// SetQuestLevel 7474 1 14
+	// AddQuestInfo 7495 1 0
+	// SetQuestQuest 7495 7475 1
+	// SetQuestQuest 7495 7476 1
+	// SetQuestQuest 7495 7477 1
+	end;
 }
 
 izlude_a,120,207,4	duplicate(Information Staff#0)	Information Staff#a	8W_SOLDIER
@@ -1591,15 +1590,15 @@ izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 		close;
 	}
 
-	OnInit:
-		// AddQuestInfo 7475 0 0
-		// SetQuestQuest 7475 7474 1
-		end;
+OnInit:
+	// AddQuestInfo 7475 0 0
+	// SetQuestQuest 7475 7474 1
+	end;
 
-	OnTouch:
-		if (questprogress(7474) == 1 && !questprogress(7475))
-			emotion e_gasp;
-		end;
+OnTouch:
+	if (questprogress(7474) == 1 && !questprogress(7475))
+		emotion e_gasp;
+	end;
 }
 
 izlude_a,179,75,3	duplicate(Airship#iz)	Airship#iz_a	4_BULLETIN_BOARD2,3,3
@@ -1736,15 +1735,15 @@ izlude,207,167,3	script	Arena#iz	4_BULLETIN_BOARD2,3,3,{
 		close;
 	}
 
-	OnInit:
-		// AddQuestInfo 7476 0 0
-		// SetQuestQuest 7476 7474 1
-		end;
+OnInit:
+	// AddQuestInfo 7476 0 0
+	// SetQuestQuest 7476 7474 1
+	end;
 
-	OnTouch:
-		if (questprogress(7474) == 1 && !questprogress(7476))
-			emotion e_gasp;
-		end;
+OnTouch:
+	if (questprogress(7474) == 1 && !questprogress(7476))
+		emotion e_gasp;
+	end;
 }
 
 izlude_a,207,167,3	duplicate(Arena#iz)	Arena#iz_a	4_BULLETIN_BOARD2,3,3
@@ -1881,15 +1880,15 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 		close;
 	}
 
-	OnInit:
-		// AddQuestInfo 7477 0 0
-		// SetQuestQuest 7477 7474 1
-		end;
+OnInit:
+	// AddQuestInfo 7477 0 0
+	// SetQuestQuest 7477 7474 1
+	end;
 
-	OnTouch:
-		if (questprogress(7474) == 1 && !questprogress(7477))
-			emotion e_gasp;
-		end;
+OnTouch:
+	if (questprogress(7474) == 1 && !questprogress(7477))
+		emotion e_gasp;
+	end;
 }
 
 izlude_a,45,94,3	duplicate(Bulletin Board#iz)	Bulletin Board#iz_a	4_BULLETIN_BOARD2,3,3
@@ -2041,11 +2040,11 @@ iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 				mes "You can make it easily by ^4d4dffusing the combination kit or cooking tool^000000.";
 				completequest 7478;
 				getexp 2000, 50;
-				getitem Novice_Potion, 30; // Novice_Potion
-				getitem Novice_Combi_Book, 1; // Novice_Combi_Book
-				getitem Combination_Kit, 10; // Combination_Kit
-				getitem Red_Herb, 1; // Red_Herb
-				getitem Apple, 1; // Apple
+				getitem Novice_Potion, 30;
+				getitem Novice_Combi_Book, 1;
+				getitem Combination_Kit, 10;
+				getitem Red_Herb, 1;
+				getitem Apple, 1;
 				next;
 				mes "[Therapist]";
 				mes "Not only potions but also other easily attainable things can be turned to various tools. Please make use of them.";
@@ -2094,10 +2093,10 @@ iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 		close;
 	}
 
-	OnInit:
-		// AddQuestInfo 7478 0 0
-		// SetQuestQuest 7478 4269 2
-		end;
+OnInit:
+	// AddQuestInfo 7478 0 0
+	// SetQuestQuest 7478 4269 2
+	end;
 }
 
 iz_ac01_a,59,43,3	duplicate(Therapist#ac)	Therapist#ac_a	4_M_6THPRIN1
@@ -2109,23 +2108,23 @@ iz_ac01_d,59,43,3	duplicate(Therapist#ac)	Therapist#ac_d	4_M_6THPRIN1
 izlude,141,251,0	script	Cultivated Red Plant#0	RED_PLANT,3,3,{
 	end;
 
-	OnTouch:
-		if (questprogress(7478) == 1 && !questprogress(7479))
-			donpcevent "Cultivated Red Plant#"+strnpcinfo(2)+"::OnDisable";
-		end;
+OnTouch:
+	if (questprogress(7478) == 1 && !questprogress(7479))
+		donpcevent "Cultivated Red Plant#"+strnpcinfo(2)+"::OnDisable";
+	end;
 
-	OnDisable:
-		specialeffect EF_STEAL;
-		disablenpc "Cultivated Red Plant#"+strnpcinfo(2);
-		emotion e_gasp, 1;
-		emotion e_heh, 0, "Academy Student#"+strnpcinfo(2);
-		initnpctimer;
-		end;
+OnDisable:
+	specialeffect EF_STEAL;
+	disablenpc "Cultivated Red Plant#"+strnpcinfo(2);
+	emotion e_gasp, 1;
+	emotion e_heh, 0, "Academy Student#"+strnpcinfo(2);
+	initnpctimer;
+	end;
 
-	OnTimer30000:
-		enablenpc "Cultivated Red Plant#"+strnpcinfo(2);
-		stopnpctimer;
-		end;
+OnTimer30000:
+	enablenpc "Cultivated Red Plant#"+strnpcinfo(2);
+	stopnpctimer;
+	end;
 }
 
 izlude_a,141,251,0	duplicate(Cultivated Red Plant#0)	Cultivated Red Plant#a	RED_PLANT,3,3
@@ -2199,7 +2198,7 @@ izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 		cutin "nov_lumin01.bmp", 2;
 		setquest 7479;
 		completequest 7479;
-		getitem Red_Herb, 1; // Red_Herb
+		getitem Red_Herb, 1;
 		next;
 		mes "[Lumin]";
 		mes "Ah... see it's growing back.";
@@ -2235,10 +2234,10 @@ izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 	cutin "", 255;
 	end;
 
-	OnInit:
-		//AddQuestInfo 7479 1 0
-		//SetQuestQuest 7479 7478 1
-		end;
+OnInit:
+	//AddQuestInfo 7479 1 0
+	//SetQuestQuest 7479 7478 1
+	end;
 }
 
 izlude_a,140,249,7	duplicate(Academy Student#0)	Academy Student#a	4_M_NOV_RUMIN
@@ -2404,9 +2403,9 @@ izlude,140,260,3	script	Instructor Argos#iz	4_M_LIEMAN,{
 		close;
 	}
 
-	OnInit:
-		questinfo 15001, QTYPE_QUEST, 0, Job_Novice;
-		end;
+OnInit:
+	questinfo 15001, QTYPE_QUEST, 0, Job_Novice;
+	end;
 }
 
 izlude_a,140,260,3	duplicate(Instructor Argos#iz)	Instructor Argos#iz_a	4_M_LIEMAN
@@ -2464,15 +2463,15 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 				mes "Be careful with it as it won't be provided again.";
 				setquest 4269;
 				completequest 4269;
-				getitem Novice_Plate, 1; // Novice_Plate
-				getitem Novice_Hood, 1; // Novice_Hood
-				getitem Novice_Boots, 1; // Novice_Boots
-				getitem Novice_Egg_Cap, 1; // Novice_Egg_Cap
-				getitem Novice_Knife, 1; // Novice_Knife
-				getitem Novice_Guard, 1; // Novice_Guard
-				getitem Criatura_Academy_Hat, 1; // Criatura_Academy_Hat
-				getitem Criatura_Hair_Coupon, 1; // Criatura_Hair_Coupon
-				getitem Novice_Potion, 300; // Novice_Potion
+				getitem Novice_Plate, 1;
+				getitem Novice_Hood, 1;
+				getitem Novice_Boots, 1;
+				getitem Novice_Egg_Cap, 1;
+				getitem Novice_Knife, 1;
+				getitem Novice_Guard, 1;
+				getitem Criatura_Academy_Hat, 1;
+				getitem Criatura_Hair_Coupon, 1;
+				getitem Novice_Potion, 300;
 				next;
 				mes "[Receptionist]";
 				mes "It is your first step to be an adventurer that you have made a visit to us.";
@@ -2615,9 +2614,9 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 		}
 	}
 
-	OnInit:
-		questinfo 4269, QTYPE_QUEST, 0, Job_Novice;
-		end;
+OnInit:
+	questinfo 4269, QTYPE_QUEST, 0, Job_Novice;
+	end;
 }
 
 iz_ac01_a,100,39,5	duplicate(Academy Receptionist#1)	Academy Receptionist#1_a	4_F_01
@@ -2787,7 +2786,7 @@ iz_ac01,134,47,5	script	Trainer Mainz#ac	4_M_KY_KNT,4,4,{
 		mes "[Mainz]";
 		mes "Wish you have good luck in your adventures!";
 		completequest 15000;
-		getitem Apple, 10; // Apple
+		getitem Apple, 10;
 		getexp 180, 100;
 		close;
 	} else if (questprogress(4269) && !questprogress(15000)) {
@@ -3079,9 +3078,9 @@ iz_ac01,134,47,5	script	Trainer Mainz#ac	4_M_KY_KNT,4,4,{
 		}
 	}
 
-	OnTouch:
-		emotion e_otl;
-		end;
+OnTouch:
+	emotion e_otl;
+	end;
 }
 
 iz_ac01_a,134,47,5	duplicate(Trainer Mainz#ac)	Trainer Mainz#ac_a	4_M_KY_KNT,4,4
@@ -3324,7 +3323,7 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 				mes "As a reward I'll give you a couple of ^ff0000Fly Wing^000000s.";
 				completequest 1238;
 				setquest 1239;
-				getitem N_Fly_Wing, 50; // N_Fly_Wing
+				getitem N_Fly_Wing, 50;
 				getexp 1300, 100;
 				close;
 			}
@@ -3369,7 +3368,7 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 						mes "Go sell one ^ff0000Poor Can^000000 that I gave you to the shop.";
 						completequest 1239;
 						setquest 1240;
-						getitem Bad_Can,1; // Bad_Can
+						getitem Bad_Can,1;
 						close;
 					case 3:
 						mes "[Shop Helper Leonie]";
@@ -3382,7 +3381,7 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 					mes "Good work, here's the reward for it.";
 					mes "The things I haven't told you, you will learn throughout your travels.";
 					completequest 1240;
-					getitem N_Butterfly_Wing,10; // N_Butterfly_Wing
+					getitem N_Butterfly_Wing,10;
 					getexp 1000,50;
 					close;
 				}
@@ -3492,9 +3491,9 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 		}
 	}
 
-	OnInit:
-		questinfo 1237, QTYPE_QUEST, 0;
-		end;
+OnInit:
+	questinfo 1237, QTYPE_QUEST, 0;
+	end;
 }
 
 izlude_a,115,181,5	duplicate(Shop Helper#iz)	Shop Helper#iz_a	4_F_KHELLISIA
@@ -3677,9 +3676,9 @@ iz_ac01,53,74,3	script	Attribute Expert#ac	1_M_WIZARD,{
 		}
 	}
 
-	OnInit:
-		questinfo 2299, QTYPE_NONE, 0;
-		end;
+OnInit:
+	questinfo 2299, QTYPE_NONE, 0;
+	end;
 }
 
 iz_ac01_a,53,74,3	duplicate(Attribute Expert#ac)	Attribute Expert#ac_a	1_M_WIZARD
@@ -3961,10 +3960,10 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					mes "Kya... Sir Orleans!!";
 					emotion e_lv, 0, "Mille Feuille#"+strnpcinfo(2);
 					close2;
-					delitem Clover, 1; // Clover
-					delitem Green_Herb, 1; // Green_Herb
-					delitem Red_Herb, 1; // Red_Herb
-					getitem Savory_Herb_Salad, 1; // Savory_Herb_Salad
+					delitem Clover, 1;
+					delitem Green_Herb, 1;
+					delitem Red_Herb, 1;
+					getitem Savory_Herb_Salad, 1;
 					erasequest 14154;
 					end;
 				}
@@ -3982,9 +3981,9 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					mes "If you really want to cook, go and see ^0000ffSir. Charles Orleans at the basement of Prontera castle^000000!! You must be attracted by him!!";
 					emotion e_lv, 0, "Mille Feuille#"+strnpcinfo(2);
 					close2;
-					delitem Apple, 1; // Apple
-					delitem Carrot, 2; // Carrot
-					getitem Apple_Carrot_Salad, 1; // Apple_Carrot_Salad
+					delitem Apple, 1;
+					delitem Carrot, 2;
+					getitem Apple_Carrot_Salad, 1;
 					erasequest 14155;
 					end;
 				}
@@ -4002,10 +4001,10 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					mes "If you are really curious about the cooking, go seek Sir. Charles Orleans at the basement of Prontera Castle.";
 					emotion e_lv, 0, "Mille Feuille#"+strnpcinfo(2);
 					close2;
-					delitem Jellopy, 1; // Jellopy
-					delitem Fluff, 1; // Fluff
-					delitem Feather, 1; // Feather
-					getitem Casual_Stew, 1; // Casual_Stew
+					delitem Jellopy, 1;
+					delitem Fluff, 1;
+					delitem Feather, 1;
+					getitem Casual_Stew, 1;
 					erasequest 14156;
 					end;
 				}
@@ -4025,9 +4024,9 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					mes "You can learn real cooking from him!";
 					emotion e_lv, 0, "Mille Feuille#"+strnpcinfo(2);
 					close2;
-					delitem Apple, 1; // Apple
-					delitem Clover, 1; // Clover
-					getitem Golden_Roasted_Apple, 1; // Golden_Roasted_Apple
+					delitem Apple, 1;
+					delitem Clover, 1;
+					getitem Golden_Roasted_Apple, 1;
 					erasequest 14157;
 					end;
 				}
@@ -4229,12 +4228,12 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 		close;
 	}
 
-	OnInit:
-		questinfo 14154, QTYPE_QUEST, 1, Job_Novice;
-		questinfo 14155, QTYPE_QUEST, 1, Job_Novice;
-		questinfo 14156, QTYPE_QUEST, 1, Job_Novice;
-		questinfo 14157, QTYPE_QUEST, 1, Job_Novice;
-		end;
+OnInit:
+	questinfo 14154, QTYPE_QUEST, 1, Job_Novice;
+	questinfo 14155, QTYPE_QUEST, 1, Job_Novice;
+	questinfo 14156, QTYPE_QUEST, 1, Job_Novice;
+	questinfo 14157, QTYPE_QUEST, 1, Job_Novice;
+	end;
 }
 
 iz_ac01_a,147,50,3	duplicate(Dacquoise#ac)	Dacquoise#ac_a	4_COOK
@@ -4287,7 +4286,7 @@ iz_ac01,68,49,3	script	General Store Owner#ac	4_F_03,{
 				mes "Here you are.";
 				mes "This book is for the beginners. But it will allow you combine the useful tools together, if you use it correctly.";
 				Zeny -= 1000;
-				getitem Novice_Combi_Book, 1; // Novice_Combi_Book
+				getitem Novice_Combi_Book, 1;
 			} else {
 				mes "[Querrie]";
 				mes "The book price is 1000 zeny.";
@@ -4330,7 +4329,7 @@ iz_ac01,68,49,3	script	General Store Owner#ac	4_F_03,{
 		}
 		mes "Thank you. Come back again.";
 		Zeny -= .@cost;
-		getitem Combination_Kit, .@input; // Combination_Kit
+		getitem Combination_Kit, .@input;
 		close;
 	case 3:
 		close;
@@ -4375,7 +4374,7 @@ iz_ac01,59,83,3	script	Battle Instructor#08	4_M_NOV_HUNT,{
 						if(countitem(.@material[.@i]) >= .@count[i]) {
 							delitem .@material[.@i],.@count[.@i];
 							getexp .@bexp[.@i],.@jexp[.@i];
-							getitem Cargo_Free_Ticket, 1; // Cargo_Free_Ticket
+							getitem Cargo_Free_Ticket, 1;
 						}
 					}
 				}
@@ -4564,13 +4563,13 @@ iz_ac01,59,83,3	script	Battle Instructor#08	4_M_NOV_HUNT,{
 			erasequest getarg(0);
 			delitem getarg(3), getarg(4);
 			getexp getarg(1), getarg(2);
-			getitem Cargo_Free_Ticket, 1; // Cargo_Free_Ticket
+			getitem Cargo_Free_Ticket, 1;
 			close;
 		}
 
-	OnInit:
-		//questinfo QTYPE_QUEST,4269,2,0,0,1,0,EAJ_NOVICE;
-		end;
+OnInit:
+	//questinfo QTYPE_QUEST,4269,2,0,0,1,0,EAJ_NOVICE;
+	end;
 }
 
 iz_ac01_a,59,83,3	duplicate(Battle Instructor#08)	Battle Instructor#08a	4_M_NOV_HUNT
@@ -4727,9 +4726,9 @@ iz_ac01,45,80,5	script	Adept Adventurer#ac	4_M_JOB_BLACKSMITH,{
 		close;
 	}
 
-	OnInit:
-		questinfo 2298, QTYPE_QUEST, 0;
-		end;
+OnInit:
+	questinfo 2298, QTYPE_QUEST, 0;
+	end;
 }
 
 iz_ac01_a,45,80,5	duplicate(Adept Adventurer#ac)	Adept Adventurer#ac_a	4_M_JOB_BLACKSMITH
@@ -4741,28 +4740,28 @@ iz_ac01_d,45,80,5	duplicate(Adept Adventurer#ac)	Adept Adventurer#ac_d	4_M_JOB_B
 iz_ac01,43,80,7	script	Adventurer's Pet#ac	4_DEVIRUCHI,{
 	end;
 
-	OnTimer60000:
-		switch(rand(1, 4)) {
-		case 1:
-			npctalk "Yawn~ I am so bored!";
-			break;
-		case 2:
-			npctalk "Red Potion.. Is it delicious? Herb does not look delicious.. I bet that is bitter.";
-			break;
-		case 3:
-			npctalk "Ha. You are lucky to have this Devi.";
-			break;
-		case 4:
-			npctalk "Isn't the floor cold? Well.. For me, Undead is more familiar.";
-			break;
-		}
+OnTimer60000:
+	switch(rand(1, 4)) {
+	case 1:
+		npctalk "Yawn~ I am so bored!";
+		break;
+	case 2:
+		npctalk "Red Potion.. Is it delicious? Herb does not look delicious.. I bet that is bitter.";
+		break;
+	case 3:
+		npctalk "Ha. You are lucky to have this Devi.";
+		break;
+	case 4:
+		npctalk "Isn't the floor cold? Well.. For me, Undead is more familiar.";
+		break;
+	}
 
-		initnpctimer;
-		end;
+	initnpctimer;
+	end;
 
-	OnInit:
-		initnpctimer;
-		end;
+OnInit:
+	initnpctimer;
+	end;
 }
 
 iz_ac01_a,43,80,7	duplicate(Adventurer's Pet#ac)	Adventurer's Pet#ac_a	4_DEVIRUCHI
@@ -5032,7 +5031,7 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		cutin "", 255;
 		completequest 2295;
 		setquest 2296;
-		getitem Little_Unripe_Apple, 5; // Little_Unripe_Apple
+		getitem Little_Unripe_Apple, 5;
 		close;
 	} else if (questprogress(2296) == 1) {
 		if (countitem(Novice_Poring_Egg) > 0) {
@@ -5116,8 +5115,8 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		completequest 2298;
 		if (Class == Job_Novice)
 			getexp 500, 50;
-		getitem Apple_Juice, 3; // Apple_Juice
-		getitem Pet_Incubator, 1; // Pet_Incubator
+		getitem Apple_Juice, 3;
+		getitem Pet_Incubator, 1;
 		close;
 	} else {
 		mes "[Poring]";
@@ -5207,7 +5206,7 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 						mes "To use the storage, you need to be raised the beginner level 6 and higher.";
 					} else if (countitem(Cargo_Free_Ticket) || Zeny >= 500) {
 						if (countitem(Cargo_Free_Ticket)) {
-							delitem Cargo_Free_Ticket, 1; // Cargo_Free_Ticket
+							delitem Cargo_Free_Ticket, 1;
 						} else {
 							Zeny -= 500;
 							RESRVPTS += 5;
@@ -5551,9 +5550,9 @@ izlude,97,144,1	script	Etinifni#iz	4_M_DEWBOY,{
 	mes "Once you have time, come to Orc Dungeon!";
 	close;
 
-	OnInit:
-		disablenpc "Etinifni#"+strnpcinfo(2);
-		end;
+OnInit:
+	disablenpc "Etinifni#"+strnpcinfo(2);
+	end;
 }
 
 izlude_a,97,144,1	duplicate(Etinifni#iz)	Etinifni#iz_a	4_M_DEWBOY
@@ -5645,23 +5644,23 @@ izlude,93,143,3	script	Manufacturing Maniac#0	FAKE_NPC,{
 	mes "I am feeling good!";
 	close;
 
-	OnTimer30000:
-		.@npc_potion = rand(1,2);
-		if (.@npc_potion == 1) {
-			emotion e_no1;
-			specialeffect EF_PHARMACY_OK;
-		} else {
-			emotion e_omg;
-			specialeffect EF_PHARMACY_FAIL;
-		}
-		end;
+OnTimer30000:
+	.@npc_potion = rand(1,2);
+	if (.@npc_potion == 1) {
+		emotion e_no1;
+		specialeffect EF_PHARMACY_OK;
+	} else {
+		emotion e_omg;
+		specialeffect EF_PHARMACY_FAIL;
+	}
+	end;
 
-	OnTimer35000:
-		stopnpctimer;
+OnTimer35000:
+	stopnpctimer;
 
-	OnInit:
-		initnpctimer;
-		end;
+OnInit:
+	initnpctimer;
+	end;
 }
 
 izlude_a,93,143,3	duplicate(Manufacturing Maniac#0)	Manufacturing Maniac#a	2_M_ALCHE
@@ -5678,9 +5677,9 @@ izlude,147,131,5	script	Repairing Blacksmith#0	4_F_JOB_BLACKSMITH,5,7,{
 	mes "He can use safe refining... I don't understand why he takes such risks.";
 	close;
 
-	OnTouch:
-		specialeffect EF_REPAIRWEAPON;
-		end;
+OnTouch:
+	specialeffect EF_REPAIRWEAPON;
+	end;
 }
 
 izlude_a,147,131,5	duplicate(Repairing Blacksmith#0)	Repairing Blacksmith#a	4_F_JOB_BLACKSMITH,5,7
@@ -6016,7 +6015,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 				mes "- Chikak, crack, crack.. -";
 				mes "- Snap, snap, snap.. Crack -";
 				next;
-				delitem Criatura_Hair_Coupon, 1; // Criatura_Hair_Coupon
+				delitem Criatura_Hair_Coupon, 1;
 				cutin "", 255;
 				mes "[Otter Samssoon]";
 				mes "Oh my! Oh my! Oh my!";
@@ -7225,7 +7224,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 			if (.@has_manual == 1) {
 				mes "Hey! What kind of con is this?! You already had a manual!";
 			} else {
-				getitem Gunslinger_Manual, 1; // Gunslinger_Manual
+				getitem Gunslinger_Manual, 1;
 				mes "Here take this manual, I ain't too good at that there book learnin' but I can answer your questions.";
 			}
 			next;
@@ -7494,7 +7493,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 					next;
 					erasequest 5149;
 					getexp 700, 450;
-					getitem Cargo_Free_Ticket, 1; // Cargo_Free_Ticket
+					getitem Cargo_Free_Ticket, 1;
 					mes "After looking over the report, you receive experience and a Kafra Storage Coupon.";
 					next;
 					.@gun_tok = 1;
@@ -7511,7 +7510,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 					next;
 					erasequest 5150;
 					getexp 950, 590;
-					getitem Cargo_Free_Ticket, 1; // Cargo_Free_Ticket
+					getitem Cargo_Free_Ticket, 1;
 					mes "After looking over the report, you receive experience and a Kafra Storage Coupon.";
 					next;
 					.@gun_tok = 1;
@@ -7528,7 +7527,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 					next;
 					erasequest 5151;
 					getexp 850, 540;
-					getitem Cargo_Free_Ticket, 1; // Cargo_Free_Ticket
+					getitem Cargo_Free_Ticket, 1;
 					mes "After looking over the report, you receive experience and a Kafra Storage Coupon.";
 					next;
 					.@gun_tok = 1;
@@ -7545,7 +7544,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 					next;
 					erasequest 5152;
 					getexp 690, 470;
-					getitem Cargo_Free_Ticket, 1; // Cargo_Free_Ticket
+					getitem Cargo_Free_Ticket, 1;
 					mes "After looking over the report, you receive experience and a Kafra Storage Coupon.";
 					next;
 				}
@@ -7724,7 +7723,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 				if (questprogress(5152))
 					erasequest 5152;
 				if (.@gun_quest_01 == 2 || .@gun_quest_02 == 2 || .@gun_quest_03 == 2 || .@gun_quest_04 == 2) {
-					getitem Cargo_Free_Ticket, 1; // Cargo_Free_Ticket
+					getitem Cargo_Free_Ticket, 1;
 					mes "After looking over the report, you receive experience and a Kafra Storage Coupon.";
 				}
 				next;
@@ -8101,7 +8100,7 @@ iz_ac02,162,86,4	script	Guild Staff#ac	4W_M_02,{
 			end;
 		} else {
 			delequip EQI_HAND_R;
-			getitem Novice_Revolver, 1; // Novice_Revolver
+			getitem Novice_Revolver, 1;
 		}
 		break;
 	case 2:
@@ -8113,7 +8112,7 @@ iz_ac02,162,86,4	script	Guild Staff#ac	4W_M_02,{
 			end;
 		} else {
 			delequip EQI_HAND_R;
-			getitem Novice_Rifle, 1; // Novice_Rifle
+			getitem Novice_Rifle, 1;
 		}
 		break;
 	case 3:
@@ -8125,7 +8124,7 @@ iz_ac02,162,86,4	script	Guild Staff#ac	4W_M_02,{
 			end;
 		} else {
 			delequip EQI_HAND_R;
-			getitem Novice_Shotgun, 1; // Novice_Shotgun
+			getitem Novice_Shotgun, 1;
 		}
 		break;
 	case 4:
@@ -8137,7 +8136,7 @@ iz_ac02,162,86,4	script	Guild Staff#ac	4W_M_02,{
 			end;
 		} else {
 			delequip EQI_HAND_R;
-			getitem Novice_Gatling, 1; // Novice_Gatling
+			getitem Novice_Gatling, 1;
 		}
 		break;
 	case 5:
@@ -8149,7 +8148,7 @@ iz_ac02,162,86,4	script	Guild Staff#ac	4W_M_02,{
 			end;
 		} else {
 			delequip EQI_HAND_R;
-			getitem Novice_Grenade_Launcher, 1; // Novice_Grenade_Launcher
+			getitem Novice_Grenade_Launcher, 1;
 		}
 		break;
 	case 6:
@@ -8220,7 +8219,7 @@ iz_ac02,70,85,5	script	Arang#ac	4_F_TAEKWON,{
 								mes "Every adventurer may have their own job! Hope you can find what you want!";
 								next;
 							} else {
-								getitem Taekwon_Manual, 1; // Taekwon_Manual
+								getitem Taekwon_Manual, 1;
 								mes "[Arang]";
 								mes "Go to the [Misc] tab on Skill Window after equipping the Manual and there you will see some skills.";
 								next;
@@ -8363,16 +8362,16 @@ iz_ac02_d,70,85,5	duplicate(Arang#ac)	Arang#ac_d	4_F_TAEKWON
 iz_ac01,53,49,0	script	#acKick	HIDDEN_NPC,5,5,{
 	end;
 
-	OnTouch:
-		if (questprogress(13102) == 1) {
-			mes "As I can't recall, I feel the shock that something hit me on my head.";
-			mes "^FF0000I should look for somebody to heal me nearby.^000000.";
-			erasequest 13102;
-			close;
-		} else if (questprogress(13102) == 2) {
-			erasequest 13102;
-			end;
-		}
+OnTouch:
+	if (questprogress(13102) == 1) {
+		mes "As I can't recall, I feel the shock that something hit me on my head.";
+		mes "^FF0000I should look for somebody to heal me nearby.^000000.";
+		erasequest 13102;
+		close;
+	} else if (questprogress(13102) == 2) {
+		erasequest 13102;
+		end;
+	}
 }
 
 iz_ac01_a,53,49,0	duplicate(#acKick)	#acKick_a	HIDDEN_NPC,5,5
@@ -8542,7 +8541,7 @@ iz_ac02,65,109,5	script	Archer Teacher#ac	4_M_ARCHER,{
 						if (questprogress(14158) != 2) {
 							setquest 14158;
 							completequest 14158;
-							getitem Archer_Manual, 1; // Archer_Manual
+							getitem Archer_Manual, 1;
 						}
 						cutin "", 255;
 						end;
@@ -8743,7 +8742,7 @@ iz_ac02,60,51,5	script	Swordman Trainer#ac	4_M_SWORDMAN,{
 				mes "Calm down, lets's start over.";
 				mes "First, I'll give you a ^FF0000Swordman Manual^000000";
 				mes "Read it carefuly before asking any questions.";
-				getitem Swordman_Manual, 1; // Swordman_Manual
+				getitem Swordman_Manual, 1;
 				nov_3_swordman = 1;
 				setquest 1229;
 				cutin "", 255;
@@ -9247,7 +9246,7 @@ iz_ac02,148,110,3	script	Mage Chuck#ac	4_M_JOB_WIZARD,{
 								mes "[Mage Chuck]";
 								mes "It's a valuable item so don't lose it.";
 								mes "If you want to become a genius ^0000FFMage^000000 like me, follow in my path.";
-								getitem Mage_Manual, 1; // Mage_Manual
+								getitem Mage_Manual, 1;
 								break;
 							} else {
 								mes "[Mage Chuck]";
@@ -9360,30 +9359,30 @@ iz_ac02_d,148,110,3	duplicate(Mage Chuck#ac)	Mage Chuck#ac_d	4_M_JOB_WIZARD
 gef_fild07,90,208,6	script	#acmageguide	HIDDEN_NPC,7,7,{
 	end;
 
-	OnTouch:
-		if (questprogress(9264) == 1) {
-			mes "[Magician's Guild Guide]";
-			mes "It seems that you've come from Criatura Academy.";
-			next;
-			mes "[Magician's Guild Guide]";
-			mes "You look a little exhausted...";
-			mes "Though.. to become a magician is exhausting in a way...";
-			next;
-			mes "[Magician's Guild Guide]";
-			mes "First off, my task is to guide you to the Mage's guild!";
-			mes "Go straight to the right!";
-			mes "After ^8B4513crossing the bridge^000000, you will see the entrance to ^FF0000Geffen^000000!";
-			next;
-			mes "[Magician's Guild Guide]";
-			mes "Once there,";
-			mes "You should find our <NAVI>^4D4DFF[Magician's Guild Guide]^000000<INFO>geffen,43,123,</INFO></NAVI>.";
-			mes "Speak to him, he will continue to guide you to the Magician's Guild!";
-			nov_3_magician = 2;
-			completequest 9264;
-			erasequest 9264;
-			setquest 9265;
-			close;
-		}
+OnTouch:
+	if (questprogress(9264) == 1) {
+		mes "[Magician's Guild Guide]";
+		mes "It seems that you've come from Criatura Academy.";
+		next;
+		mes "[Magician's Guild Guide]";
+		mes "You look a little exhausted...";
+		mes "Though.. to become a magician is exhausting in a way...";
+		next;
+		mes "[Magician's Guild Guide]";
+		mes "First off, my task is to guide you to the Mage's guild!";
+		mes "Go straight to the right!";
+		mes "After ^8B4513crossing the bridge^000000, you will see the entrance to ^FF0000Geffen^000000!";
+		next;
+		mes "[Magician's Guild Guide]";
+		mes "Once there,";
+		mes "You should find our <NAVI>^4D4DFF[Magician's Guild Guide]^000000<INFO>geffen,43,123,</INFO></NAVI>.";
+		mes "Speak to him, he will continue to guide you to the Magician's Guild!";
+		nov_3_magician = 2;
+		completequest 9264;
+		erasequest 9264;
+		setquest 9265;
+		close;
+	}
 }
 
 //- Magician's Guild Guide -
@@ -9405,10 +9404,10 @@ gef_fild07,89,208,6	script	Magician's Guild Guide#1	2_F_MAGICMASTER,{
 	}
 	close;
 
-	OnInit:
-		//AddQuestInfo 9265 1 0
-		//SetQuestQuest 9265 9264 1
-		end;
+OnInit:
+	//AddQuestInfo 9265 1 0
+	//SetQuestQuest 9265 9264 1
+	end;
 }
 
 //- Magician's Guild Guide -
@@ -9449,10 +9448,10 @@ geffen,43,123,6	script	Magician's Guild Guide#2	2_F_MAGICMASTER,{
 	}
 	close;
 
-	OnInit:
-		//AddQuestInfo 9266 1 0
-		//SetQuestQuest 9266 9265 1
-		end;
+OnInit:
+	//AddQuestInfo 9266 1 0
+	//SetQuestQuest 9266 9265 1
+	end;
 }
 
 //== Merchant ==============================================
@@ -9635,7 +9634,7 @@ iz_ac02,50,169,3	script	Salim Hamid#ac	1_M_MERCHANT,{
 			next;
 			mes "[Salim Hamid]";
 			mes "Now~ as we should go to the next course, equip the guide and see the skill, then speak to me again.";
-			getitem Merchant_Manual, 1; // Merchant_Manual
+			getitem Merchant_Manual, 1;
 			completequest 12303;
 			close2;
 			cutin "", 255;
@@ -9917,7 +9916,7 @@ iz_ac02,53,171,3	script	Steward Aydin#ac	4_M_MANAGER,{
 						mes "[Steward Aydin]";
 						mes "I anticipate to see you next time in a good shape.";
 						completequest 12304;
-						getitem Old_Equipment_Box, 1; // Old_Equipment_Box
+						getitem Old_Equipment_Box, 1;
 						close;
 					}
 					mes "[Steward Aydin]";
@@ -10125,8 +10124,8 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 					setquest 7483;
 					completequest 7483;
 					getexp 800, 50;
-					getitem Novice_Potion, 30; // Novice_Potion
-					getitem N_Magnifier, 20; // N_Magnifier
+					getitem Novice_Potion, 30;
+					getitem N_Magnifier, 20;
 				} else {
 					mes "[Mayssel]";
 					mes "I only play the role to inform you of there is this one that one...";
@@ -10142,7 +10141,7 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 					erasequest 7481;
 					erasequest 7482;
 					setquest 7483;
-					getitem Thief_Manual, 1; // Thief_Manual
+					getitem Thief_Manual, 1;
 				}
 				close2;
 				cutin "", 255;
@@ -10199,8 +10198,8 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 					setquest 7483;
 					completequest 7483;
 					getexp 800, 50;
-					getitem Novice_Potion, 30; // Novice_Potion
-					getitem N_Magnifier, 20; // N_Magnifier
+					getitem Novice_Potion, 30;
+					getitem N_Magnifier, 20;
 				} else {
 					mes "[Mayssel]";
 					mes "I only play the role to inform you of there is this one that one...";
@@ -10216,7 +10215,7 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 					erasequest 7481;
 					erasequest 7482;
 					setquest 7483;
-					getitem Thief_Manual, 1; // Thief_Manual
+					getitem Thief_Manual, 1;
 				}
 				close2;
 				cutin "", 255;
@@ -10247,8 +10246,8 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 					mes "Thank you for you hard work.";
 					completequest 7483;
 					getexp 800, 50;
-					getitem Novice_Potion, 30; // Novice_Potion
-					getitem N_Magnifier, 20; // N_Magnifier
+					getitem Novice_Potion, 30;
+					getitem N_Magnifier, 20;
 					close2;
 					cutin "", 255;
 					end;
@@ -10287,7 +10286,7 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 						mes "These are not your aptitude.";
 						nude;
 						if (countitem(Thief_Manual) > 0)
-							delitem Thief_Manual, countitem(Thief_Manual); // Thief_Manual
+							delitem Thief_Manual, countitem(Thief_Manual);
 						erasequest 7483;
 						erasequest 7484;
 						erasequest 7485;
@@ -10635,17 +10634,17 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 		}
 	}
 
-	OnInit:
-		//AddQuestInfo 7480 0 0
-		//SetQuestQuest 7480 4269 2
-		//SetQuestJob 7480 NOVICE
-		//AddQuestInfo 7483 0 0
-		//SetQuestQuest 7483 7481 1
-		//SetQuestQuest 7483 7482 1
-		//AddQuestInfo 7495 0 0
-		//SetQuestQuest 7495 7484 2
-		//SetQuestQuest 7495 7485 3
-		end;
+OnInit:
+	//AddQuestInfo 7480 0 0
+	//SetQuestQuest 7480 4269 2
+	//SetQuestJob 7480 NOVICE
+	//AddQuestInfo 7483 0 0
+	//SetQuestQuest 7483 7481 1
+	//SetQuestQuest 7483 7482 1
+	//AddQuestInfo 7495 0 0
+	//SetQuestQuest 7495 7484 2
+	//SetQuestQuest 7495 7485 3
+	end;
 }
 
 iz_ac02_a,52,136,3	duplicate(Guest Lecturer Mayssel#0)	Guest Lecturer Mayssel#a	4_F_MAYSEL
@@ -10764,7 +10763,7 @@ iz_ac02,49,134,5	script	Vicente#ac	4_M_HUMAN_02,{
 					mes "Important thing is not theory but actual fighting.";
 					mes "Do you agree?";
 					setquest 7481;
-					getitem Novice_Potion, 30; // Novice_Potion
+					getitem Novice_Potion, 30;
 					close2;
 					cutin "", 255;
 					end;
@@ -11164,12 +11163,12 @@ iz_ac02,49,134,5	script	Vicente#ac	4_M_HUMAN_02,{
 		}
 	}
 
-	OnInit:
-		//AddQuestInfo 7481 0 0
-		//SetQuestQuest 7481 7480 1
-		//AddQuestInfo 7484 0 0
-		//SetQuestQuest 7484 7483 1
-		end;
+OnInit:
+	//AddQuestInfo 7481 0 0
+	//SetQuestQuest 7481 7480 1
+	//AddQuestInfo 7484 0 0
+	//SetQuestQuest 7484 7483 1
+	end;
 }
 
 iz_ac02_a,49,134,5	duplicate(Vicente#ac)	Vicente#ac_a	4_M_HUMAN_02
@@ -11603,12 +11602,12 @@ iz_ac02,55,134,3	script	Verkhasel#ac	4_M_GUILLOTINE,{
 		}
 	}
 
-	OnInit:
-		//AddQuestInfo 7482 0 0
-		//SetQuestQuest 7482 7480 1
-		//AddQuestInfo 7485 0 0
-		//SetQuestQuest 7485 7483 1
-		end;
+OnInit:
+	//AddQuestInfo 7482 0 0
+	//SetQuestQuest 7482 7480 1
+	//AddQuestInfo 7485 0 0
+	//SetQuestQuest 7485 7483 1
+	end;
 }
 
 iz_ac02_a,55,134,3	duplicate(Verkhasel#ac)	Verkhasel#ac_a	4_M_GUILLOTINE
@@ -11702,10 +11701,10 @@ iz_ac02,62,139,3	script	Lumin#ac	4_M_NOV_RUMIN,{
 			cutin "nov_lumin05.bmp", 2;
 			completequest 7487;
 			getexp 800, 50;
-			getitem Apple, 3; // Apple
-			getitem Green_Herb, 2; // Green_Herb
-			getitem Novice_Potion, 22; // Novice_Potion
-			getitem Rainbow_Carrot, 1; // Rainbow_Carrot
+			getitem Apple, 3;
+			getitem Green_Herb, 2;
+			getitem Novice_Potion, 22;
+			getitem Rainbow_Carrot, 1;
 			close2;
 			cutin "", 255;
 			end;
@@ -11721,7 +11720,7 @@ iz_ac02,62,139,3	script	Lumin#ac	4_M_NOV_RUMIN,{
 			cutin "nov_lumin03.bmp", 2;
 			completequest 7487;
 			getexp 800, 50;
-			getitem Apple, 22; // Apple
+			getitem Apple, 22;
 			next;
 			select("Why are you treating me like this?", "Didn't I loose?");
 			mes "[Lumin]";
@@ -11773,10 +11772,10 @@ iz_ac02,62,139,3	script	Lumin#ac	4_M_NOV_RUMIN,{
 		}
 	}
 
-	OnInit:
-		//AddQuestInfo 7487 0 0
-		//SetQuestQuest 7487 7485 1
-		end;
+OnInit:
+	//AddQuestInfo 7487 0 0
+	//SetQuestQuest 7487 7485 1
+	end;
 }
 
 iz_ac02_a,62,139,3	duplicate(Lumin#ac)	Lumin#ac_a	4_M_NOV_RUMIN
@@ -11788,27 +11787,27 @@ iz_ac02_d,62,139,3	duplicate(Lumin#ac)	Lumin#ac_d	4_M_NOV_RUMIN
 iz_ac02,1,1,0	script	#nbacStone01	CLEAR_NPC,{
 	end;
 
-	OnInit:
+OnInit:
+	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
+	end;
+
+OnReset:
+	killmonster strnpcinfo(4),"#"+strnpcinfo(2)+"::OnMyMobDead";
+	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
+	end;
+
+OnMyMobDead:
+	.@dead_num = mobcount(""+strnpcinfo(4)+"", "#"+strnpcinfo(2)+"::OnMyMobDead");
+	if (.@dead_num < 1)
 		donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
-		end;
+	end;
 
-	OnReset:
-		killmonster strnpcinfo(4),"#"+strnpcinfo(2)+"::OnMyMobDead";
-		donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
-		end;
-
-	OnMyMobDead:
-		.@dead_num = mobcount(""+strnpcinfo(4)+"", "#"+strnpcinfo(2)+"::OnMyMobDead");
-		if (.@dead_num < 1)
-			donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
-		end;
-
-	OnSpawn:
-		monster strnpcinfo(4),59,143,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
-		monster strnpcinfo(4),60,143,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
-		monster strnpcinfo(4),61,143,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
-		monster strnpcinfo(4),62,143,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
-		end;
+OnSpawn:
+	monster strnpcinfo(4),59,143,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
+	monster strnpcinfo(4),60,143,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
+	monster strnpcinfo(4),61,143,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
+	monster strnpcinfo(4),62,143,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
+	end;
 }
 
 iz_ac02_a,1,1,0	duplicate(#nbacStone01)	#nbacStone01_a	CLEAR_NPC
@@ -11820,27 +11819,27 @@ iz_ac02_d,1,1,0	duplicate(#nbacStone01)	#nbacStone01_d	CLEAR_NPC
 iz_ac02,1,1,0	script	#nbacStone02	CLEAR_NPC,{
 	end;
 
-	OnInit:
+OnInit:
+	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
+	end;
+
+OnReset:
+	killmonster strnpcinfo(4),"#"+strnpcinfo(2)+"::OnMyMobDead";
+	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
+	end;
+
+OnMyMobDead:
+	.@dead_num = mobcount(""+strnpcinfo(4)+"", "#"+strnpcinfo(2)+"::OnMyMobDead");
+	if (.@dead_num < 1)
 		donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
-		end;
+	end;
 
-	OnReset:
-		killmonster strnpcinfo(4),"#"+strnpcinfo(2)+"::OnMyMobDead";
-		donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
-		end;
-
-	OnMyMobDead:
-		.@dead_num = mobcount(""+strnpcinfo(4)+"", "#"+strnpcinfo(2)+"::OnMyMobDead");
-		if (.@dead_num < 1)
-			donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
-		end;
-
-	OnSpawn:
-		monster strnpcinfo(4),59,137,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
-		monster strnpcinfo(4),60,137,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
-		monster strnpcinfo(4),61,137,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
-		monster strnpcinfo(4),62,137,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
-		end;
+OnSpawn:
+	monster strnpcinfo(4),59,137,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
+	monster strnpcinfo(4),60,137,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
+	monster strnpcinfo(4),61,137,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
+	monster strnpcinfo(4),62,137,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
+	end;
 }
 
 iz_ac02_a,1,1,0	duplicate(#nbacStone02)	#nbacStone02_a	CLEAR_NPC
@@ -11852,27 +11851,27 @@ iz_ac02_d,1,1,0	duplicate(#nbacStone02)	#nbacStone02_d	CLEAR_NPC
 iz_ac02,1,1,0	script	#nbacStone03	CLEAR_NPC,{
 	end;
 
-	OnInit:
+OnInit:
+	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
+	end;
+
+OnReset:
+	killmonster strnpcinfo(4),"#"+strnpcinfo(2)+"::OnMyMobDead";
+	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
+	end;
+
+OnMyMobDead:
+	.@dead_num = mobcount(""+strnpcinfo(4)+"", "#"+strnpcinfo(2)+"::OnMyMobDead");
+	if (.@dead_num < 1)
 		donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
-		end;
+	end;
 
-	OnReset:
-		killmonster strnpcinfo(4),"#"+strnpcinfo(2)+"::OnMyMobDead";
-		donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
-		end;
-
-	OnMyMobDead:
-		.@dead_num = mobcount(""+strnpcinfo(4)+"", "#"+strnpcinfo(2)+"::OnMyMobDead");
-		if (.@dead_num < 1)
-			donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
-		end;
-
-	OnSpawn:
-		monster strnpcinfo(4),59,131,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
-		monster strnpcinfo(4),60,131,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
-		monster strnpcinfo(4),61,131,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
-		monster strnpcinfo(4),62,131,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
-		end;
+OnSpawn:
+	monster strnpcinfo(4),59,131,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
+	monster strnpcinfo(4),60,131,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
+	monster strnpcinfo(4),61,131,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
+	monster strnpcinfo(4),62,131,"Poring",R_PORING,1,"#"+strnpcinfo(2)+"::OnMyMobDead";
+	end;
 }
 
 iz_ac02_a,1,1,0	duplicate(#nbacStone03)	#nbacStone03_a	CLEAR_NPC
@@ -12122,7 +12121,7 @@ iz_ac02,152,165,5	script	A Nun#2	4_F_SISTER,{
 				mes "[A nun]";
 				mes "Then, use it for good.";
 				mes "^ff0000Equip (double click or drag to equipment window)^000000 and open the ^ff0000skill window(Alt+S)^000000 to see the skills in manual.";
-				getitem Acolyte_Manual, 1; // Acolyte_Manual
+				getitem Acolyte_Manual, 1;
 				close;
 			}
 		}
@@ -12262,15 +12261,15 @@ iz_ac02,140,139,5	script	Ninja Guide#ac	4_M_NINJA_BLUE,{
 						mes "[Ninja Guide]";
 						mes "He will give you some quests to complete. Use the Manual to help you in battle.";
 						if (countitem(Light_Shuriken) < 10)
-							getitem Light_Shuriken, 10; // Light_Shuriken
+							getitem Light_Shuriken, 10;
 						next;
 					} else {
 						mes "[Ninja Guide]";
 						mes "Make every useful moment count.";
 						mes "You can equip this manual to experience some skills.";
 						mes "Open up your skill window by pressing <Alt+S> and find the skills in the Misc TAB.";
-						getitem Ninja_Manual, 1; // Ninja_Manual
-						getitem Light_Shuriken, 10; // Light_Shuriken
+						getitem Ninja_Manual, 1;
+						getitem Light_Shuriken, 10;
 						next;
 						mes "[Ninja Guide]";
 						mes "The Academy has a trainer downstairs who will give you battle field training. Meet him and train your skills.";
@@ -12563,7 +12562,7 @@ izlude,153,126,1	script	Refinery Owner Han#iz	4_M_02,{
 		if (Class == Job_Novice)
 			getexp 1200, 500;
 		mes "Got a lesson about the refining and Kafra storage free coupon.";
-		getitem Cargo_Free_Ticket, 1; // Cargo_Free_Ticket
+		getitem Cargo_Free_Ticket, 1;
 		close;
 	} else if (.@jerun_tutorial == 8) {
 		mes "[Refinery Owner Han]";
@@ -12611,10 +12610,10 @@ izlude,153,126,1	script	Refinery Owner Han#iz	4_M_02,{
 		close;
 	}
 
-	OnInit:
-		//AddQuestInfo 5153 1 0
-		//SetQuestLevel 5153 1 20
-		end;
+OnInit:
+	//AddQuestInfo 5153 1 0
+	//SetQuestLevel 5153 1 20
+	end;
 }
 
 izlude_a,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_a	4_M_02
@@ -12936,7 +12935,7 @@ izlude,145,122,7	script	Tadde#iz	4_M_04,{
 			close;
 		}
 		Zeny -= .@sell;
-		getitem Phracon, .@amount; // Phracon
+		getitem Phracon, .@amount;
 		mes "[Tadde]";
 		mes "This is what you wanted. Thank you very much!";
 		close;
@@ -12971,7 +12970,7 @@ izlude,145,122,7	script	Tadde#iz	4_M_04,{
 			mes "Er...please sorts your inventory before you take these...";
 			close;
 		}
-		getitem Emveretarcon, .@amount; // Emveretarcon
+		getitem Emveretarcon, .@amount;
 		Zeny -= .@sell;
 		mes "[Tadde]";
 		mes "This is what you wanted. Thank you very much!";
@@ -13229,8 +13228,8 @@ izlude,155,132,3	script	Locas#iz	4_M_02,{
 		next;
 		if(select("Exchange 5 for 1", "Exchange all.") == 1) {
 			if (countitem(Oridecon_Stone) > 4) {
-				delitem Oridecon_Stone, 5; // Oridecon_Stone
-				getitem Oridecon, 1; // Oridecon
+				delitem Oridecon_Stone, 5;
+				getitem Oridecon, 1;
 				mes "[Locas]";
 				mes "Refined Rough Oridecon to Oridecon.";
 				close;
@@ -13244,8 +13243,8 @@ izlude,155,132,3	script	Locas#iz	4_M_02,{
 			if (countitem(Oridecon_Stone) > 4) {
 				.@ston_max = countitem(Oridecon_Stone) / 5;
 				.@ston_full = .@ston_max * 5;
-				delitem Oridecon_Stone, .@ston_full; // Oridecon_Stone
-				getitem Oridecon, .@ston_max; // Oridecon
+				delitem Oridecon_Stone, .@ston_full;
+				getitem Oridecon, .@ston_max;
 				mes "[Locas]";
 				mes "Refined "+.@ston_full+" Rough Oridecon into "+.@ston_max+" Oridecon. Thank you for your business.";
 				close;
@@ -13262,8 +13261,8 @@ izlude,155,132,3	script	Locas#iz	4_M_02,{
 		next;
 		if(select("Exchange 5 for 1", "Exchange all.") == 1) {
 			if (countitem(Elunium_Stone) > 4) {
-				delitem Elunium_Stone, 5; // Elunium_Stone
-				getitem Elunium, 1; // Elunium
+				delitem Elunium_Stone, 5;
+				getitem Elunium, 1;
 				mes "[Locas]";
 				mes "Refined Rough Elunium to Elunium.";
 				close;
@@ -13277,8 +13276,8 @@ izlude,155,132,3	script	Locas#iz	4_M_02,{
 			if (countitem(Elunium_Stone) > 4) {
 				.@ston_max = countitem(Elunium_Stone) / 5;
 				.@ston_full = .@ston_max * 5;
-				delitem Elunium_Stone, .@ston_full; // Elunium_Stone
-				getitem Elunium, .@ston_max; // Elunium
+				delitem Elunium_Stone, .@ston_full;
+				getitem Elunium, .@ston_max;
 				mes "[Locas]";
 				mes "Refined "+.@ston_full+" Rough Elunium into "+.@ston_max+" Elunium. Thank you for your business.";
 				close;
@@ -13601,8 +13600,8 @@ izlude,96,125,7	script	Enchanter Mounds#iz	4_CAT_SAILOR2,{
 		next;
 		specialeffect2 EF_SANCTUARY;
 		completequest 5158;
-		delitem Cotton_Shirt, 1; // Cotton_Shirt
-		getitem Cotton_Shirt_, 1; // Cotton_Shirt_
+		delitem Cotton_Shirt, 1;
+		getitem Cotton_Shirt_, 1;
 		mes "[Mounds]";
 		mes "You have suceeded in socket enchant.";
 		close;
@@ -13704,7 +13703,7 @@ izlude,96,125,7	script	Enchanter Mounds#iz	4_CAT_SAILOR2,{
 		} else {
 			mes "Received the explanation and Kafra free storage coupon.";
 		}
-		getitem Cargo_Free_Ticket, 1; // Cargo_Free_Ticket
+		getitem Cargo_Free_Ticket, 1;
 		next;
 		mes "[Mounds]";
 		mes "Then, I will see you later.";
@@ -13778,10 +13777,10 @@ izlude,96,125,7	script	Enchanter Mounds#iz	4_CAT_SAILOR2,{
 		close;
 	}
 
-	OnInit:
-		//AddQuestInfo 5157 1 0
-		//SetQuestLevel 5157 1 20
-		end;
+OnInit:
+	//AddQuestInfo 5157 1 0
+	//SetQuestLevel 5157 1 20
+	end;
 }
 
 izlude_a,96,125,7	duplicate(Enchanter Mounds#iz)	Enchanter Mounds#iz_a	4_CAT_SAILOR2
@@ -13865,7 +13864,7 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 		completequest 5159;
 		delequip .@part;
 		setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
-		getitem2 2302,1,1,.@refineCount,0,.@equip_card[0],.@equip_card[1],SP50,HP100; // Cotton_Shirt_
+		getitem2 2302,1,1,.@refineCount,0,.@equip_card[0],.@equip_card[1],SP50,HP100;
 		mes "[Almond J]";
 		mes "Zzazanzn!! Completed!!";
 		next;
