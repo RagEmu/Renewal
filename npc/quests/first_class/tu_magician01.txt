@@ -36,7 +36,7 @@
 //================= Description ===========================================
 //= Magician training quest.
 //================= Current Version =======================================
-//= 1.4
+//= 1.4.1
 //=========================================================================
 
 //== Sign ==================================================
@@ -48,7 +48,7 @@ geffen,61,174,4	script	Sign#M	HIDDEN_NPC,{
 //== New Mage Manager ======================================
 geffen,67,180,4	script	New Mage Manager#M	8_F,{
 	mes "[Mana]";
-	if(Class == Job_Novice){
+	if (Class == Job_Novice) {
 		mes "[Mana]";
 		mes "You're not ready for";
 		mes "any of the training I have";
@@ -57,7 +57,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "a Mage first. Alright, dear?";
 		close;
 	}
-	if(BaseClass != Job_Mage){
+	if (BaseClass != Job_Mage) {
 		mes "You know, sometimes";
 		mes "other jobs might look a";
 		mes "little better in some battle";
@@ -66,7 +66,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "anyone can do what you do~";
 		close;
 	}
-	if(eaclass()&(EAJL_UPPER|EAJL_2|EAJL_THIRD) && tu_magician01 < 7){
+	if (eaclass()&(EAJL_UPPER | EAJL_2 | EAJL_THIRD) && tu_magician01 < 7) {
 		mes "[Mana]";
 		mes "Although I offer magic";
 		mes "training, it's not very helpful";
@@ -76,7 +76,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "own self to hone your skills.";
 		close;
 	}
-	switch(tu_magician01){
+	switch (tu_magician01) {
 	case 0:
 		mes "Ah, welcome~";
 		mes "My name is Mana,";
@@ -92,7 +92,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "you want to learn more on";
 		mes "the basics of the Mage job.";
 		next;
-		switch(select("Will you teach me?", "Perhaps later...")) {
+		switch (select("Will you teach me?", "Perhaps later...")) {
 		case 1:
 			mes "[Mana]";
 			mes "Of course!";
@@ -155,9 +155,9 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "continue this later, okay?";
 		tu_magician01 = 1;
 		if (RENEWAL_EXP)
-			getexp BaseLevel*3,BaseLevel*2;
+			getexp BaseLevel * 3, BaseLevel * 2;
 		else
-			getexp BaseLevel*30,BaseLevel*15;
+			getexp BaseLevel * 30, BaseLevel * 15;
 		specialeffect2 EF_HIT5;
 		close;
 	case 1:
@@ -186,8 +186,8 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "have different features that must be considered.";
 		mes "I will explain the properties now.";
 		next;
-		while((1)){
-			switch(select("^ff0000Fire^000000", "^5C4033Earth^000000", "^93DB70Wind^000000", "^0000FFWater^000000", "^CFB53BGhost^000000", "Quit.")){
+		while ((1)) {
+			switch (select("^ff0000Fire^000000", "^5C4033Earth^000000", "^93DB70Wind^000000", "^0000FFWater^000000", "^CFB53BGhost^000000", "Quit.")) {
 			case 1:
 				mes "[Mana]";
 				mes "Monsters with the ^ff0000Fire^000000";
@@ -386,18 +386,18 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 				mes "ready, we'll cover some new";
 				mes "material for you to learn.";
 				next;
-				if(select("W-wait, not yet!", "I'm ready to go on.") == 2) {
+				if (select("W-wait, not yet!", "I'm ready to go on.") == 2) {
 					mes "[Mana]";
 					mes "Alrighty, we'll";
 					mes "move on to the next";
 					mes "subject then. Ho ho ho~!";
 					tu_magician01 = 2;
 					specialeffect2 EF_HIT5;
-					if(.@eread_1) getexp 150,70;
-					if(.@eread_2) getexp 150,70;
-					if(.@eread_3) getexp 150,70;
-					if(.@eread_4) getexp 150,70;
-					if(.@eread_5) getexp 150,70;
+					if (.@eread_1) getexp 150, 70;
+					if (.@eread_2) getexp 150, 70;
+					if (.@eread_3) getexp 150, 70;
+					if (.@eread_4) getexp 150, 70;
+					if (.@eread_5) getexp 150, 70;
 				}
 				close;
 			}
@@ -479,7 +479,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "10 Chrysalis from them.";
 		mes "Then bring them to me, okay?";
 		tu_magician01 = 3;
-		getexp 400,200;
+		getexp 400, 200;
 		specialeffect2 EF_HIT5;
 		close;
 	case 3:
@@ -497,7 +497,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 			mes "to get more Chrysalis, okay?";
 			mes "For now, I'll just heal you up.";
 			tu_magician01 = 4;
-			percentheal 100,100;
+			percentheal 100, 100;
 			close;
 		} else {
 			mes "[Mana]";
@@ -507,7 +507,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 			mes "used to using your skills, huh?";
 			mes "Anyway, let me know when you're ready for the next lesson, okay?";
 			tu_magician01 = 5;
-			getexp 400,200;
+			getexp 400, 200;
 			specialeffect2 EF_HIT5;
 			close;
 		}
@@ -519,7 +519,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "like I asked? I hope so...";
 		mes "Because I'm going to check~";
 		next;
-		if(countitem(Chrysalis) < 10){
+		if (countitem(Chrysalis) < 10) {
 			mes "[Mana]";
 			mes "Whoa, you need";
 			mes "more than just this.";
@@ -535,7 +535,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 			mes "used to using your skills, huh?";
 			mes "Anyway, let me know when you're ready for the next lesson, okay?";
 			tu_magician01 = 5;
-			getexp 400,200;
+			getexp 400, 200;
 			specialeffect2 EF_HIT5;
 			close;
 		}
@@ -546,8 +546,8 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "skills. Which one would";
 		mes "you like me to explain?";
 		next;
-		while(1){
-			switch(select("Soul Strike", "Safety Wall", "Fire Ball", "Frost Diver", "Thunderstorm", "Fire Wall", "Energy Coat", "Quit.")) {
+		while (1){
+			switch (select("Soul Strike", "Safety Wall", "Fire Ball", "Frost Diver", "Thunderstorm", "Fire Wall", "Energy Coat", "Quit.")) {
 			case 1:
 				mes "[Mana]";
 				mes "Soul Strike is a ^CFB53BGhost^000000";
@@ -672,7 +672,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 				next;
 				mes "[Mana]";
 				mes "So if you can use";
-				mes "Fire Well strategically";
+				mes "Fire Wall strategically";
 				mes "and effectively, it can";
 				mes "be a very powerful skill~";
 				.@skill_e6 = 1;
@@ -713,15 +713,15 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 				mes "training. I hope it comes";
 				mes "in handy when fighting...";
 				tu_magician01 = 6;
-				getitem Wand,1;
+				getitem Wand, 1;
 				specialeffect2 EF_HIT5;
-				if(.@skill_e1) getexp 300,100;
-				if(.@skill_e2) getexp 300,100;
-				if(.@skill_e3) getexp 300,100;
-				if(.@skill_e4) getexp 300,100;
-				if(.@skill_e5) getexp 300,100;
-				if(.@skill_e6) getexp 300,100;
-				if(.@skill_e7) getexp 300,100;
+				if (.@skill_e1) getexp 300, 100;
+				if (.@skill_e2) getexp 300, 100;
+				if (.@skill_e3) getexp 300, 100;
+				if (.@skill_e4) getexp 300, 100;
+				if (.@skill_e5) getexp 300, 100;
+				if (.@skill_e6) getexp 300, 100;
+				if (.@skill_e7) getexp 300, 100;
 				close;
 			default:
 				break;
@@ -744,7 +744,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "give you some support.";
 		mes "So what do you think?";
 		next;
-		switch(select("I'll do it.", "Sorry, but...")) {
+		switch (select("I'll do it.", "Sorry, but...")) {
 		case 1:
 			mes "[Mana]";
 			mes "Great! Alright,";
@@ -761,7 +761,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 			mes "and report to me, okay?";
 			tu_magician01 = 7;
 			emotion e_heh;
-			warp "morocc",182,286;
+			warp "morocc", 182, 286;
 			close;
 		case 2:
 			mes "[Mana]";
@@ -784,7 +784,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "a message, saying that";
 		mes "you've done a great job in";
 		mes "completing your mission.";
-		mes "Very nice work, "+PcName+"~";
+		mes "Very nice work, " + strcharinfo(0) + "~";
 		next;
 		mes "[Mana]";
 		mes "It seems like there are";
@@ -807,12 +807,12 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "out both of our guilds. Once";
 		mes "again, thanks very much~";
 		tu_magician01 = 28;
-		getitem Silk_Robe,1;
+		getitem Silk_Robe, 1;
 		Zeny += 3000;
-		getexp 3000,1000;
+		getexp 3000, 1000;
 		close;
 	default:
-		if(tu_magician01 < 27){
+		if (tu_magician01 < 27) {
 			mes "So...";
 			mes "It looks like something is";
 			mes "going on in the Rune-Midgarts";
