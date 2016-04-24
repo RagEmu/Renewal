@@ -46,7 +46,7 @@
 //================= Description ===========================================
 //= Amatsu Town Script
 //================= Current Version =======================================
-//= 1.4
+//= 1.4.1
 //=========================================================================
 
 //= Amatsu Transportation ==================================
@@ -57,7 +57,7 @@
 	mes "are totally different countries";
 	mes "than the Rune-Midgard Kingdom?";
 	next;
-	switch(select("About Amatsu...", "Go to Amatsu", "Cancel")) {
+	switch (select("About Amatsu...", "Go to Amatsu", "Cancel")) {
 	case 1:
 		mes "[Walter Moers]";
 		mes "I heard that a drifting ship";
@@ -132,7 +132,7 @@
 				mes "Alright, I will start the engine!";
 				close2;
 				Zeny -= 10000;
-				warp "amatsu",197,83;
+				warp "amatsu", 197, 83;
 				end;
 			}
 			mes "[Walter Moers]";
@@ -170,10 +170,7 @@ amatsu,194,79,5	script	Sea Captain#ama2	4_M_SEAMAN,{
 		mes "so many things to talk about,";
 		mes "right? All aboard now.";
 		close2;
-		if (RENEWAL)
-			warp "alberta",244,72;
-		else
-			warp "alberta",243,91;
+		warp "alberta", 244, 72;
 		end;
 	}
 	mes "[Walter Moers]";
