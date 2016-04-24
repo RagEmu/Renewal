@@ -33,7 +33,7 @@
 //================= Description ===========================================
 //= Moscovia Town Script
 //================= Current Version =======================================
-//= 1.2
+//= 1.2.1
 //=========================================================================
 
 //== Moscovia Transportation :: mosk_trans =================
@@ -44,7 +44,7 @@
 	mes "Welcome to Moscovia";
 	mes "It's adventurous and mystic.";
 	next;
-	switch(select("About Moscovia...", "Go to Moscovia.", "Cancel")) {
+	switch (select("About Moscovia...", "Go to Moscovia.", "Cancel")) {
 		case 1:
 			mes "[Moscovia P.R. Officer]";
 			mes "Moscovia is a beautiful kingdom";
@@ -100,7 +100,7 @@
 				mes "Ok then, we're leaving now.";
 				close2;
 				Zeny -= 10000;
-				warp "moscovia",163,55;
+				warp "moscovia", 163, 55;
 				end;
 			}
 		case 3:
@@ -129,10 +129,7 @@ moscovia,166,53,4	script	Moscovia P.R. Officer#2	4_F_RUSWOMAN2,{
 	mes "Please come and visit soon.";
 	mes "Ok then, Let's get going.";
 	close2;
-	if (RENEWAL)
-		warp "alberta",244,52;
-	else
-		warp "alberta",243,67;
+	warp "alberta", 244, 52;
 	end;
 }
 
