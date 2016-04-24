@@ -39,7 +39,7 @@
 //================= Description ===========================================
 //= Kunlun Town Script
 //================= Current Version =======================================
-//= 1.6
+//= 1.6.1
 //=========================================================================
 
 //== Kunlun Transportation =================================
@@ -52,7 +52,7 @@
 	mes "such distinguished quests from";
 	mes "the Rune-Midgard kingdom.";
 	next;
-	switch(select("About Kunlun", "Visit Kunlun", "Cancel")) {
+	switch (select("About Kunlun", "Visit Kunlun", "Cancel")) {
 	case 1:
 		mes "[Wa Bai Hu]";
 		mes "Kunlun is a beautiful place,";
@@ -129,7 +129,7 @@
 				mes "Thank you, let me guide you there immediately.";
 				close2;
 				Zeny -= 10000;
-				warp "gon_fild01",258,82;
+				warp "gon_fild01", 258, 82;
 				end;
 			}
 			mes "[Wa Bai Hu]";
@@ -170,10 +170,7 @@ gon_fild01,255,79,7	script	Kunlun Envoy#gon2	4_M_TWMIDMAN,{
 		mes "back. Now, let me guide you";
 		mes "back to Alberta.";
 		close2;
-		if (RENEWAL)
-			warp "alberta",244,60;
-		else
-			warp "alberta",243,67;
+		warp "alberta", 244, 60;
 		end;
 	}
 	mes "[Wa Bai Hu]";
@@ -204,7 +201,7 @@ gonryun,153,64,7	script	Kunlun Envoy#gon4	4_M_TWMIDMAN,{
 		mes "Now, let me guide you back";
 		mes "to the harbor.";
 		close2;
-		warp "gon_fild01",258,82;
+		warp "gon_fild01", 258, 82;
 		end;
 	}
 	mes "[Zhang Quing Long]";
