@@ -69,7 +69,7 @@ prontera,160,155,4	script	Disguise Event	4_M_NFDEADMAN,{
 			case 2:
 				mes .@n$;
 				mes "Input the number of rounds you want the event to last.";
-				mes "Current number: [^0000FF"+.Rounds+"^000000]";
+				mes "Current number: [^0000FF" + .Rounds + "^000000]";
 				next;
 				input .@Rounds;
 				.Rounds = .@Rounds;
@@ -129,7 +129,7 @@ OnInit:
 	.Winner = 0;
 	.ResetCounter = 0;
 	.Rounds = 10;
-	.Prize = Apple;
+	.Prize = 512;
 	.PrizeAmt = 1;
 	.Rule = 1;
 	setarray .MVP[0], OSIRIS, BAPHOMET, DOPPELGANGER, MISTRESS, GOLDEN_BUG, ORK_HERO, DRAKE, EDDGA, MAYA, MOONLIGHT,
