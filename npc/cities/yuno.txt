@@ -37,12 +37,12 @@
 //================= Description ===========================================
 //= NPCs for the City of Juno
 //================= Current Version =======================================
-//= 1.5
+//= 1.5.1
 //=========================================================================
 
 //== Juno ==================================================
 yuno,184,173,4	script	Freidrich#juno	4_F_NOVICE,{
-	if (rand(1,5) == 1) {
+	if (rand(1, 5) == 1) {
 		mes "[Freidrich]";
 		mes "^3355FFJuno^000000 is kept aloft in the air by an ancient and mysterious force.";
 		next;
@@ -76,7 +76,7 @@ yuno,184,173,4	script	Freidrich#juno	4_F_NOVICE,{
 
 yuno,337,227,4	script	Juno Granny#juno	8_F_GRANDMOTHER,{
 	mes "[Granny]";
-	if (rand(1,50) == 1) {
+	if (rand(1, 50) == 1) {
 		if (Zeny > 999) {
 			mes "So, do you enjoy candy?";
 			next;
@@ -94,7 +94,7 @@ yuno,337,227,4	script	Juno Granny#juno	8_F_GRANDMOTHER,{
 				mes "*Giggle*";
 				mes "There you go~";
 				Zeny -= 1000;
-				getitem Candy,1;
+				getitem Candy, 1;
 				next;
 				mes "[Granny]";
 				mes "*Giggle*";
@@ -144,7 +144,7 @@ yuno,328,239,4	script	Juno Fighter#juno	4_M_JOB_HUNTER,{
 
 yuno,343,68,4	script	Juno Despot#juno	4_M_JOB_ASSASSIN,{
 	mes "[Ninno]";
-	if (rand(1,1000) == 1) {
+	if (rand(1, 1000) == 1) {
 		mes "You are very lucky to have me tell you this story. This only happens by ^FF33551 out of a 1,000 chance^000000.";
 		next;
 		mes "[Ninno]";
@@ -153,7 +153,7 @@ yuno,343,68,4	script	Juno Despot#juno	4_M_JOB_ASSASSIN,{
 		mes "[Ninno]";
 		mes "Open your eyes! Stop being manipulated by virtual reality!";
 		close2;
-		warp "prontera",182,206;
+		warp "prontera", 182, 206;
 		end;
 	}
 	mes "Have you ever heard of an Egyptian king who was once believed to be a son of a god? His name is ^3355FFPharoah^000000.";
@@ -168,7 +168,7 @@ yuno,343,68,4	script	Juno Despot#juno	4_M_JOB_ASSASSIN,{
 
 yuno,165,111,4	script	Juno Sage#juno	2_F_MAGICMASTER,,{
 	mes "[Le Morpheus]";
-	if (rand(1,50) == 25) {
+	if (rand(1, 50) == 25) {
 		if (Zeny > 4999) {
 			mes "Look in my hand. I am holding two different kinds of herbs.";
 			next;
@@ -185,17 +185,17 @@ yuno,165,111,4	script	Juno Sage#juno	2_F_MAGICMASTER,,{
 				mes "[Le Morpheus]";
 				mes "As you have chosen, you will forget everything, and remain in this virtual reality.";
 				Zeny -= 5000;
-				getitem Red_Herb,1;
+				getitem Red_Herb, 1;
 				close2;
-				warp "prontera",182,206;
+				warp "prontera", 182, 206;
 				end;
 			}
 			mes "[Le Morpheus]";
 			mes "You will see the truth.";
 			Zeny -= 5000;
-			getitem Blue_Herb,1;
+			getitem Blue_Herb, 1;
 			close2;
-			warp "pay_dun03",200,222;
+			warp "pay_dun03", 200, 222;
 			end;
 		}
 		else {
@@ -220,7 +220,7 @@ yuno,157,205,4	script	Juno Artisan#juno	1_M_JOBGUIDER,{
 	mes "[Artisan]";
 	mes "Oh, hello there. Let me introduce myself. I am an artisan who tries to succeed the rights and duties of item makers in Juno.";
 	next;
-	switch(select("About Powerful Equipment", "About Unique Items", "About Authentic Food", "End Conversation")) {
+	switch (select("About Powerful Equipment", "About Unique Items", "About Authentic Food", "End Conversation")) {
 	case 1:
 		mes "[Artisan]";
 		mes "Let me suggest the ^3355FFHoly Guard^000000 and ^3355FFHoly Avenger^000000 which are special items for Crusaders.";
@@ -383,20 +383,20 @@ yuno,142,183,5	script	Airship Representative	4W_SAILOR,{
 	mes "The teleport fee is 1,800 zeny, regardless of where you want to go. Please let me know your desired destination.";
 	next;
 	switch(select("Prontera", "Izlude", "Geffen", "Morroc", "Payon", "Alberta", "Comodo", "Cancel")) {
-		case 1: callsub S_Warp,"prontera",116,72;
-		case 2: if (RENEWAL) callsub S_Warp,"izlude",128,98; else callsub S_Warp,"izlude",94,103;
-		case 3: callsub S_Warp,"geffen",120,39;
-		case 4: callsub S_Warp,"morocc",156,46;
-		case 5: if (RENEWAL) callsub S_Warp,"payon",162,59; else callsub S_Warp,"payon",69,100;
-		case 6: callsub S_Warp,"alberta",117,56;
-		case 7: callsub S_Warp,"comodo",209,143;
+		case 1: callsub S_Warp, "prontera", 116, 72;
+		case 2: callsub S_Warp, "izlude", 128, 98;
+		case 3: callsub S_Warp, "geffen", 120, 39;
+		case 4: callsub S_Warp, "morocc", 156, 46;
+		case 5: callsub S_Warp, "payon", 162, 59;
+		case 6: callsub S_Warp, "alberta", 117, 56;
+		case 7: callsub S_Warp, "comodo", 209, 143;
 		case 8: close;
 	}
 
 S_Warp:
 	if (Zeny >= 1800) {
 		Zeny -= 1800;
-		warp getarg(0),getarg(1),getarg(2);
+		warp getarg(0), getarg(1), getarg(2);
 		end;
 	}
 	else {
