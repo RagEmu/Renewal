@@ -39,7 +39,7 @@
 //= Super Novice Cart Rental Npc
 //= Some Other Useless Super Novice Npc
 //================= Current Version =======================================
-//= 2.4
+//= 2.4.1
 //=========================================================================
 
 aldeba_in,223,167,3	script	Tzerero#sn	4_M_SEAMAN,{
@@ -57,9 +57,9 @@ aldeba_in,223,167,3	script	Tzerero#sn	4_M_SEAMAN,{
 		mes "...and a master of none.";
 		close;
 	}
-	if (countitem(Sticky_Mucus) > 29 && countitem(Resin) > 29 && SUPNOV_Q == 1) {
-		delitem Sticky_Mucus,30;
-		delitem Resin,30;
+	if (countitem(Sticky_Mucus) >= 30 && countitem(Resin) >= 30 && SUPNOV_Q == 1) {
+		delitem Sticky_Mucus, 30;
+		delitem Resin, 30;
 		mes "[Tzerero]";
 		mes "Ah, you've brought the";
 		mes "items I've requested!";
@@ -80,9 +80,9 @@ aldeba_in,223,167,3	script	Tzerero#sn	4_M_SEAMAN,{
 		next;
 		completequest 6010;
 		callfunc "F_ClearJobVar";
-		getitem G_Strings,1;
-		if (Upper==0) jobchange Job_SuperNovice;
-		if (Upper==2) jobchange Job_Super_Baby;
+		getitem G_Strings, 1;
+		if (Upper == 0) jobchange Job_SuperNovice;
+		if (Upper == 2) jobchange Job_Super_Baby;
 		mes "[Tzerero]";
 		mes "Bwaha! I got you!";
 		mes "So...how do you like my joke?";
@@ -162,7 +162,7 @@ aldeba_in,223,167,3	script	Tzerero#sn	4_M_SEAMAN,{
 		mes "[Tzerero]";
 		mes "...a ^CE6300Super Novice^000000.";
 		next;
-		switch(select("Accept his offer.", "Reject his offer.", "Listen more carefully.")) {
+		switch (select("Accept his offer.", "Reject his offer.", "Listen more carefully.")) {
 		case 1:
 			if (getskilllv("NV_BASIC") < 9) {
 				mes "[Tzerero]";
@@ -358,8 +358,7 @@ aldeba_in,216,169,5	script	Esseray#sn	4_M_04,{
 		close;
 	}
 	if (BaseJob == Job_SuperNovice) {
-		if (RENEWAL)
-			callfunc "Esseray_Ex";
+		callfunc "Esseray_Ex";
 		mes "[Esseray]";
 		mes "Hm? Hey, you're a member";
 		mes "of our great Novice Society,";
@@ -453,7 +452,7 @@ aldebaran,54,238,5	script	Kafra Employee#sn	4_F_KAFRA1,{
 					mes "Oh, you've already equipped a cart.";
 					close;
 				}
-				if (Zeny >= 1899) {
+				if (Zeny >= 1900) {
 					RESRVPTS += 190;
 					Zeny -= 1900;
 					if (getskilllv("MC_PUSHCART") > 0) setcart;
