@@ -36,7 +36,7 @@
 //================= Description ===========================================
 //= Town-specific Alberta NPCs
 //================= Current Version =======================================
-//= 1.6
+//= 1.6.1
 //=========================================================================
 
 alberta,97,51,0	script	Fabian	4_M_02,{
@@ -89,12 +89,12 @@ alberta,131,139,2	script	Drunken Old Man	1_M_JOBGUIDER,{
 	mes "Wh-what are you";
 	mes "staring at? Get lost!!";
 	next;
-	switch(select("Say nothing.","Leave him alone.")) {
+	switch (select("Say nothing.", "Leave him alone.")) {
 		case 1:
 			mes "[Deagle]";
 			mes "Hahahaha ^666666*hiccup*^000000... You've got some nerve. I may look worthless now, but I used to be a sailor on the 'Going Mary.'";
 			next;
-			switch(select("Never heard of it.","Really? No kidding!")) {
+			switch (select("Never heard of it.", "Really? No kidding!")) {
 				case 1:
 					mes "[Deagle]";
 					mes "Never heard of it?! Everybody knows th'notorious pirate ship 'Going Mary!' ^666666*Hiccup~*^000000";
@@ -159,7 +159,7 @@ alberta,58,80,2	script	Shakir	4W_M_03,{
 
 alberta,62,156,2	script	Sonya	8_F,{
 	mes "[Sonya]";
-	switch(rand(3)){
+	switch (rand(3)){
 	case 0:
 		mes "Hey, you know, this one time I was walking through the forest and I saw this little green stem moving around.";
 		next;
@@ -220,7 +220,7 @@ alberta,189,151,5	script	Fisk	4W_SAILOR,{
 	mes "where'd ya";
 	mes "wanna go?";
 	next;
-	switch(select("Sunken Ship -> 250 zeny.","Izlude Marina -> 500 zeny.","Never mind.")) {
+	switch (select("Sunken Ship -> 250 zeny.", "Izlude Marina -> 500 zeny.", "Never mind.")) {
 		case 1:
 			if (Zeny < 250) {
 				mes "[Fisk]";
@@ -228,7 +228,7 @@ alberta,189,151,5	script	Fisk	4W_SAILOR,{
 				close;
 			}
 			Zeny -= 250;
-			warp "alb2trea",43,53;
+			warp "alb2trea", 43, 53;
 			end;
 		case 2:
 			if (Zeny < 500) {
@@ -237,10 +237,7 @@ alberta,189,151,5	script	Fisk	4W_SAILOR,{
 				close;
 			}
 			Zeny -= 500;
-			if (RENEWAL)
-				warp "izlude",195,212;
-			else
-				warp "izlude",176,182;
+			warp "izlude", 195, 212;
 			end;
 		case 3:
 			mes "[Fisk]";
@@ -254,8 +251,8 @@ alb2trea,39,50,6	script	Fisk#a2t	4W_SAILOR,{
 	mes "[Fisk]";
 	mes "So you wanna head back to the mainland in Alberta, eh?";
 	next;
-	if(select("Yes please.","I changed my mind.")==1)
-		warp "alberta",192,169;
+	if (select("Yes please.", "I changed my mind.") == 1)
+		warp "alberta", 192, 169;
 	close;
 }
 
@@ -277,7 +274,7 @@ alberta,195,151,2	script	Paul	4_M_04,{
 	mes "fee is only";
 	mes "200 Zeny.";
 	next;
-	switch(select("Sign me up!","Uh, no thanks.")) {
+	switch (select("Sign me up!", "Uh, no thanks.")) {
 		case 1:
 			if (Zeny < 200) {
 				mes "[Paul]";
@@ -285,7 +282,7 @@ alberta,195,151,2	script	Paul	4_M_04,{
 				close;
 			} else {
 				Zeny -= 200;
-				warp "alb2trea",62,69;
+				warp "alb2trea", 62, 69;
 				close;
 			}
 		case 2:
@@ -324,7 +321,7 @@ alberta,190,173,4	script	Phelix	4_M_03,{
 	} else {
 		mes "Hmm.. you want to exchange jellopies for Red Potions or some Carrots eh? Well.. which one?";
 		next;
-		switch(select("Red Potions please.","Carrots please.")) {
+		switch (select("Red Potions please.", "Carrots please.")) {
 		case 1:
 			mes "[Phelix]";
 			mes "Alright...";
@@ -336,15 +333,15 @@ alberta,190,173,4	script	Phelix	4_M_03,{
 				mes "Hey! Weren't you listening?. I said 10 jellopies for 1 Red Potion.. are ya deaf?";
 				close;
 			} else {
-				.@max = countitem(Jellopy)/10;
+				.@max = countitem(Jellopy) / 10;
 				mes "Hmm, not bad...";
 				mes "How many potions";
 				mes "do you want to get?";
 				next;
-				switch(select("As many as I can, please.","I want this many.","Never mind, I like my jellopy.")) {
+				switch (select("As many as I can, please.", "I want this many.", "Never mind, I like my jellopy.")) {
 				case 1:
-					delitem Jellopy,.@max*10;	// Jellopy
-					getitem Red_Potion,.@max;	// Red_Potion
+					delitem Jellopy, .@max * 10;
+					getitem Red_Potion, .@max;
 					break;
 				case 2:
 					mes "[Phelix]";
@@ -361,12 +358,12 @@ alberta,190,173,4	script	Phelix	4_M_03,{
 						mes "Hey, what'd I say? 100 at a time at most, you're trying to kill me aren't you!";
 						close;
 					}
-					if (countitem(Jellopy) < .@amount*10) {
+					if (countitem(Jellopy) < .@amount * 10) {
 						mes "Hmm, it looks like you don't have enough. Go get more jellopies if you want anything else from me.";
 						close;
 					}
-					delitem Jellopy,.@amount*10;	// Jellopy
-					getitem Red_Potion,.@amount;	// Red_Potion
+					delitem Jellopy, .@amount * 10;
+					getitem Red_Potion, .@amount;
 					break;
 				case 3:
 					mes "[Phelix]";
@@ -387,14 +384,14 @@ alberta,190,173,4	script	Phelix	4_M_03,{
 				mes "Hmm, look pansy ass, I said 3 jellopies for 1 Carrot.. got it?";
 				close;
 			} else {
-				.@max = countitem(Jellopy)/3;
+				.@max = countitem(Jellopy) / 3;
 				mes "Not too bad pansy...";
 				mes "How many do you want?";
 				next;
-				switch(select("As many as I can get, please","I want this many.","Never mind, I like my jellopy.")) {
+				switch (select("As many as I can get, please", "I want this many.", "Never mind, I like my jellopy.")) {
 				case 1:
-					delitem Jellopy,.@max*3;	// Jellopy
-					getitem Carrot,.@max;	// Carrot
+					delitem Jellopy, .@max * 3;
+					getitem Carrot, .@max;
 					break;
 				case 2:
 					mes "[Phelix]";
@@ -410,12 +407,12 @@ alberta,190,173,4	script	Phelix	4_M_03,{
 						mes "Hey pansy ass, I said 100 at most, no more then that! I'm not going to break my back for the likes of you!";
 						close;
 					}
-					if (countitem(Jellopy) < .@amount*10) {
+					if (countitem(Jellopy) < .@amount * 10) {
 						mes "Seems you don't have enough. Go get some more if you want anything else.";
 						close;
 					}
-					delitem Jellopy,.@amount*3;	// Jellopy
-					getitem Carrot,.@amount;	// Carrot
+					delitem Jellopy, .@amount * 3;
+					getitem Carrot, .@amount;
 					break;
 				case 3:
 					mes "[Phelix]";

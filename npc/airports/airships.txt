@@ -1385,8 +1385,8 @@ function	script	applegamble	{
 	next;
 	select("Cast Dice.");
 	mes "^3355FF*Rolling and rumbling*^000000";
-	.@player1 = rand(1,6);
-	.@player2 = rand(1,6);
+	.@player1 = rand(1, 6);
+	.@player2 = rand(1, 6);
 	.@playersub = .@player1 + .@player2;
 	if (.@playersub > 9 && .@amount > 39) {
 		.@player1 = rand(1, 6);
@@ -1410,7 +1410,7 @@ function	script	applegamble	{
 	switch (select("Cast dice.", "Cancel.")) {
 	case 1:
 		mes "^3355FF*Rolling and rumbling*^000000";
-		.@player3 = rand(1,6);
+		.@player3 = rand(1, 6);
 		.@playertotal += .@player3;
 		next;
 		mes "[" + getarg(0) + "]";
