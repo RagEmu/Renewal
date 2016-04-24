@@ -43,7 +43,7 @@
 //================= Description ===========================================
 //= Job Change quest for Wizard class.
 //================= Current Version =======================================
-//= 3.3
+//= 3.3.1
 //=========================================================================
 
 gef_tower,111,37,4	script	Wizard Guildsman	1_F_GYPSY,{
@@ -216,11 +216,11 @@ gef_tower,111,37,4	script	Wizard Guildsman	1_F_GYPSY,{
 			mes "Perfect! You got all the items. I like!~";
 			mes "These items will be put to great use in our guild. ~Hehehee.";
 			next;
-			delitem Red_Gemstone,10;
-			delitem Blue_Gemstone,10;
-			delitem Yellow_Gemstone,10;
+			delitem Red_Gemstone, 10;
+			delitem Blue_Gemstone, 10;
+			delitem Yellow_Gemstone, 10;
 			WIZ_Q = 3;
-			changequest 9013,9015;
+			changequest 9013, 9015;
 			mes "[Catherine]";
 			mes "Good for you! You passed the first test.";
 			mes "But there are still two more left, so don't get too relaxed.";
@@ -254,12 +254,12 @@ gef_tower,111,37,4	script	Wizard Guildsman	1_F_GYPSY,{
 			mes "Perfect! Good job...I'm satisfied! ~Hehe";
 			mes "Our guild greatly appreciates these items and will use them wisely.";
 			next;
-			delitem Crystal_Blue,5;
-			delitem Yellow_Live,5;
-			delitem Boody_Red,5;
-			delitem Wind_Of_Verdure,5;
+			delitem Crystal_Blue, 5;
+			delitem Yellow_Live, 5;
+			delitem Boody_Red, 5;
+			delitem Wind_Of_Verdure, 5;
 			WIZ_Q = 3;
-			changequest 9014,9015;
+			changequest 9014, 9015;
 			mes "[Catherine]";
 			mes "Good. You've passed the first test now.";
 			mes "But you still have two more tests to go, so don't get too laid back, because it only gets harder from here. ~Hehehe";
@@ -306,7 +306,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	1_F_GYPSY,{
 		switch(select("Give me some hints, please.", "I want to try again on my own!")) {
 		case 1:
 			if (countitem(Apple_Juice) > 0) {
-				delitem Apple_Juice,1;
+				delitem Apple_Juice, 1;
 				mes "[Catherine]";
 				mes "Yummers, Apple Juice is the best...";
 				mes "Gulp gulp gulp... Haaaaaah... ~Hehe";
@@ -436,8 +436,8 @@ gef_tower,111,37,4	script	Wizard Guildsman	1_F_GYPSY,{
 		mes "Well, no need to wait, I congratulate you. I hearby deem you Wizard.";
 		next;
 		completequest 9018;
-		callfunc "Job_Change",Job_Wizard;
-		callfunc "F_ClearJobVar";		// clears all job variables for the current player
+		callfunc "Job_Change", Job_Wizard;
+		callfunc "F_ClearJobVar"; // clears all job variables for the current player
 		mes "[Catherine]";
 		mes "Since you're a Wizard now, act like a Wizard, got it?";
 		mes "Us wizards have to be careful since we possess the ultimate power of magic.";
@@ -504,7 +504,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	4_M_JOB_WIZARD,{
 			mes "Why did a little one like you come here?!";
 			mes "Get lost! ~Hahahahaha";
 			close2;
-			warp "geffen",120,110;
+			warp "geffen", 120, 110;
 			end;
 		}
 		mes "[Raulel]";
@@ -567,7 +567,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	4_M_JOB_WIZARD,{
 			mes "I'll give you 10 questions so give me the right answers.";
 			mes "If you get something wrong, I won't tell you what it is!";
 			if (!questprogress(9016)) {
-				changequest 9015,9016;
+				changequest 9015, 9016;
 			}
 			next;
 			mes "[Raulel]";
@@ -766,7 +766,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	4_M_JOB_WIZARD,{
 			mes "Your score is... " + .@wizard_t + "points.....";
 			if (.@wizard_t == 100) {
 				WIZ_Q = 5;
-				changequest 9016,9017;
+				changequest 9016, 9017;
 				mes "Hahahahahahah~ Well done, you passed the second test.";
 				mes "It wasn't done in one try like mine was, but I'll let you slide...";
 				next;
@@ -777,7 +777,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	4_M_JOB_WIZARD,{
 			}
 			else if (.@wizard_t == 90) {
 				WIZ_Q = 5;
-				changequest 9016,9017;
+				changequest 9016, 9017;
 				mes "Hahaha~ Since you only missed one problem, you passed the second test.";
 				mes "It wasn't done in one try like mine was, but I'll let you slide...";
 				next;
@@ -788,7 +788,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	4_M_JOB_WIZARD,{
 			}
 			else if (.@wizard_t == 80) {
 				WIZ_Q = 5;
-				changequest 9016,9017;
+				changequest 9016, 9017;
 				mes "Sheez... You didn't do very well, but you passed the second test.";
 				mes "It wasn't done in one try like mine was, but I'll let you slide...";
 				next;
@@ -812,7 +812,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	4_M_JOB_WIZARD,{
 		mes "Your score is... " + .@wizard_t + " points!";
 		if (.@wizard_t == 100) {
 			WIZ_Q = 5;
-			changequest 9016,9017;
+			changequest 9016, 9017;
 			mes "*cough* *Cough* Well done, you passed the second test.";
 			next;
 			mes "[Raulel]";
@@ -822,7 +822,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	4_M_JOB_WIZARD,{
 		}
 		else if (.@wizard_t == 90) {
 			WIZ_Q = 5;
-			changequest 9016,9017;
+			changequest 9016, 9017;
 			mes "Hahahaha~ I'll let you slide by since you only missed one problem. You passed the second test.";
 			next;
 			mes "[Raulel]";
@@ -854,12 +854,12 @@ gef_tower,102,24,2	script	Gloomy Wizard	4_M_JOB_WIZARD,{
 			mes "Just consider yourself a glass cannon...because the monsters are going to break you into pieces. Hahahahahahahahaha~";
 			next;
 			WIZ_Q = 6;
-			savepoint "geffen",120,107;
+			savepoint "geffen", 120, 107;
 			mes "[Raulel]";
 			mes "Then, as you wish. I'll send you there right now.";
 			mes "Oh, if you see a white light at the end of a tunnel, that means your pathetic cause you failed! Hahahahahah~";
 			close2;
-			warp "job_wiz",57,154;
+			warp "job_wiz", 57, 154;
 			end;
 		}
 		mes "[Raulel]";
@@ -888,12 +888,12 @@ gef_tower,102,24,2	script	Gloomy Wizard	4_M_JOB_WIZARD,{
 		next;
 		if (select("Continue testing.", "I want to go back because I have butterflies in my stomach.") == 1) {
 			WIZ_Q = 6;
-			savepoint "geffen",120,107;
+			savepoint "geffen", 120, 107;
 			mes "[Raulel]";
 			mes "You are indeed, very determined. Ok! Hahahahahaha~";
 			mes "*Cough* *cough* As you wish, we shall begin the final test!";
 			close2;
-			warp "job_wiz",57,154;
+			warp "job_wiz", 57, 154;
 			end;
 		}
 		WIZ_Q = 6;
@@ -901,7 +901,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	4_M_JOB_WIZARD,{
 		mes "Good thinking. This is a better choice for you. Hahahahah~";
 		mes "Go back and live a easy life, Greater Magic is a force that should not be wield by types like yourself.";
 		close2;
-		warp "geffen",120,110;
+		warp "geffen", 120, 110;
 		end;
 	}
 	else if (WIZ_Q == 6) {
@@ -919,7 +919,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	4_M_JOB_WIZARD,{
 			mes "If not, you can take the test again...";
 			mes "Well, I'll send you to take the test for now. Hahahaha~";
 			close2;
-			warp "job_wiz",57,154;
+			warp "job_wiz", 57, 154;
 			end;
 		}
 		else if (WIZ_Q2 > 6) {
@@ -928,16 +928,16 @@ gef_tower,102,24,2	script	Gloomy Wizard	4_M_JOB_WIZARD,{
 			mes "*Cough* Cough* Do you want to take the test again? Or did you bring the ^3355FFWorn Out Scroll^000000?";
 			next;
 			if (select("Continue the test.", "Worn Out Scroll...") == 1) {
-				savepoint "geffen",120,107;
+				savepoint "geffen", 120, 107;
 				mes "[Raulel]";
 				mes "Hahaha~ Ok, at least you have some spirit.";
 				mes "I'll send you in again, try dying once more will yah? Hahahahahahahahaha~";
 				close2;
-				warp "job_wiz",57,154;
+				warp "job_wiz", 57, 154;
 				end;
 			}
 			if (countitem(Worn_Out_Scroll) > 0) {
-				delitem Worn_Out_Scroll,1;
+				delitem Worn_Out_Scroll, 1;
 				mes "[Raulel]";
 				mes "Hahahahahahahaha~ *Cough* *cough* So you ended up bringing one of these eh? Good job...";
 				mes "I think I can continue my research with this...";
@@ -1012,12 +1012,12 @@ gef_tower,102,24,2	script	Gloomy Wizard	4_M_JOB_WIZARD,{
 			mes "Nobody is going to help you become a Wizard. Hahahahahahahaha~";
 			mes "*Cough* *cough* No point in crying after dying...";
 			next;
-			percentheal 100,100;
+			percentheal 100, 100;
 			mes "[Raulel]";
 			mes "Then, as you wish. I'll send you to fight.";
 			mes "Oh! If you see some tall pearly gates and hear a booming deep voice from behind it, that means that your a failure when it comes to Magic. Hahahahahahahahaha~";
 			close2;
-			warp "job_wiz",57,154;
+			warp "job_wiz", 57, 154;
 			end;
 		}
 		mes "[Raulel]";
@@ -1045,19 +1045,19 @@ gef_tower,102,24,2	script	Gloomy Wizard	4_M_JOB_WIZARD,{
 		mes "*Cough* *cough* You can give up and go back to town! Just forget about the Greater Magic and live a normal life. What do yah say?";
 		next;
 		if (select("Continue with the test.", "I'm too scared, I would like to quit.") == 1) {
-			percentheal 100,100;
+			percentheal 100, 100;
 			mes "[Raulel]";
 			mes "This time when you die, don't come back crying. Hahahahahahahahah~ *Cough *cough*";
 			mes "As you wish, let's begin the final test!";
 			close2;
-			warp "job_wiz",57,154;
+			warp "job_wiz", 57, 154;
 			end;
 		}
 		mes "[Raulel]";
 		mes "Comming from you, thats some darn good thinking. That's more a fit for you anyways. Hahahahahahahahaha~";
 		mes "Go back and live a quiet and peaceful life!";
 		close2;
-		warp "geffen",120,110;
+		warp "geffen", 120, 110;
 		end;
 	}
 	else if (WIZ_Q == 7) {
@@ -1087,13 +1087,13 @@ job_wiz,50,165,4	script	Arena Assistant	8_F_GIRL,{
 	close;
 
 OnInit:
-	waitingroom "Waiting Room",20,"Arena Assistant::OnStartArena",1;
+	waitingroom "Waiting Room", 20, "Arena Assistant::OnStartArena", 1;
 	enablewaitingroomevent;
 	end;
 
 OnStartArena:
 	killmonsterall "job_wiz";
-	warpwaitingpc "job_wiz",114,169;
+	warpwaitingpc "job_wiz", 114, 169;
 	donpcevent "Room of Water::OnEnable";
 	disablewaitingroomevent;
 	end;
@@ -1112,17 +1112,13 @@ OnInit:
 OnEnable:
 	enablenpc "Room of Water";
 	.MyMobs = 7;
-	if (!RENEWAL) {
-		.MyMobs += 1;
-		monster "job_wiz",129,170,"Obeaune",1044,1,"Room of Water::OnMyMobDead";
-	}
-	monster "job_wiz",109,174,"Phen",1158,1,"Room of Water::OnMyMobDead";
-	monster "job_wiz",118,174,"Shellfish",1074,1,"Room of Water::OnMyMobDead";
-	monster "job_wiz",109,165,"Vadon",1066,1,"Room of Water::OnMyMobDead";
-	monster "job_wiz",118,165,"Cornutus",1067,1,"Room of Water::OnMyMobDead";
-	monster "job_wiz",101,157,"Marina",1141,1,"Room of Water::OnMyMobDead";
-	monster "job_wiz",126,157,"Marin",1242,1,"Room of Water::OnMyMobDead";
-	monster "job_wiz",98,170,"Magnolia",1138,1,"Room of Water::OnMyMobDead";
+	monster "job_wiz", 109, 174, "Phen", 1158, 1, "Room of Water::OnMyMobDead";
+	monster "job_wiz", 118, 174, "Shellfish", 1074, 1, "Room of Water::OnMyMobDead";
+	monster "job_wiz", 109, 165, "Vadon", 1066, 1, "Room of Water::OnMyMobDead";
+	monster "job_wiz", 118, 165, "Cornutus", 1067, 1, "Room of Water::OnMyMobDead";
+	monster "job_wiz", 101, 157, "Marina", 1141, 1, "Room of Water::OnMyMobDead";
+	monster "job_wiz", 126, 157, "Marin", 1242, 1, "Room of Water::OnMyMobDead";
+	monster "job_wiz", 98, 170, "Magnolia", 1138, 1, "Room of Water::OnMyMobDead";
 	initnpctimer;
 	end;
 
@@ -1135,50 +1131,50 @@ OnMyMobDead:
 	--.MyMobs;
 	if (.MyMobs < 1) {
 		++WIZ_Q2;
-		mapannounce "job_wiz",strcharinfo(0)+" has succeeded in eliminating the monsters.",bc_map;
+		mapannounce "job_wiz", strcharinfo(0)+" has succeeded in eliminating the monsters.",bc_map;
 		donpcevent "Room of Water#Door::OnEnable";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer1000:
-	mapannounce "job_wiz","Water Room; The job change test will now proceed.",bc_map;
+	mapannounce "job_wiz", "Water Room; The job change test will now proceed.", bc_map;
 	end;
 
 OnTimer2000:
-	mapannounce "job_wiz","Time limit is 3 minutes. We will now start the test.",bc_map;
+	mapannounce "job_wiz", "Time limit is 3 minutes. We will now start the test.", bc_map;
 	end;
 
 OnTimer3000:
-	mapannounce "job_wiz","Please eliminate all monsters within the time limit.",bc_map;
+	mapannounce "job_wiz", "Please eliminate all monsters within the time limit.", bc_map;
 	end;
 
 OnTimer33000:
-	mapannounce "job_wiz","2 minutes and 30 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "2 minutes and 30 seconds remaining.", bc_map;
 	end;
 
 OnTimer63000:
-	mapannounce "job_wiz","2 minutes remaining.",bc_map;
+	mapannounce "job_wiz", "2 minutes remaining.", bc_map;
 	end;
 
 OnTimer93000:
-	mapannounce "job_wiz","1 minute and 30 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "1 minute and 30 seconds remaining.", bc_map;
 	end;
 
 OnTimer123000:
-	mapannounce "job_wiz","1 minute remaining.",bc_map;
+	mapannounce "job_wiz", "1 minute remaining.", bc_map;
 	end;
 
 OnTimer153000:
-	mapannounce "job_wiz","30 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "30 seconds remaining.", bc_map;
 	end;
 
 OnTimer173000:
-	mapannounce "job_wiz","10 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "10 seconds remaining.", bc_map;
 	end;
 
 OnTimer183000:
-	mapannounce "job_wiz","Time is up.",bc_map;
+	mapannounce "job_wiz", "Time is up.", bc_map;
 	donpcevent "Room of Water::OnDisable";
 	end;
 
@@ -1187,7 +1183,7 @@ OnTimer184000:
 	end;
 
 OnTimer185000:
-	mapannounce "job_wiz","Next candidate, please enter.",bc_map;
+	mapannounce "job_wiz", "Next candidate, please enter.", bc_map;
 	end;
 
 OnTimer186000:
@@ -1206,11 +1202,11 @@ OnEnable:
 	enablenpc "Room of Water#Door";
 	donpcevent "Room of Water::OnDisable";
 	.MyMobs = 5;
-	monster "job_wiz",114,169,"Marine Sphere",1142,1,"Room of Water#Door::OnMyMobDead";
-	monster "job_wiz",112,169,"Hydra",1068,1,"Room of Water#Door::OnMyMobDead";
-	monster "job_wiz",116,169,"Hydra",1068,1,"Room of Water#Door::OnMyMobDead";
-	monster "job_wiz",114,171,"Hydra",1068,1,"Room of Water#Door::OnMyMobDead";
-	monster "job_wiz",114,167,"Hydra",1068,1,"Room of Water#Door::OnMyMobDead";
+	monster "job_wiz", 114, 169, "Marine Sphere", 1142, 1, "Room of Water#Door::OnMyMobDead";
+	monster "job_wiz", 112, 169, "Hydra", 1068, 1, "Room of Water#Door::OnMyMobDead";
+	monster "job_wiz", 116, 169, "Hydra", 1068, 1, "Room of Water#Door::OnMyMobDead";
+	monster "job_wiz", 114, 171, "Hydra", 1068, 1, "Room of Water#Door::OnMyMobDead";
+	monster "job_wiz", 114, 167, "Hydra", 1068, 1, "Room of Water#Door::OnMyMobDead";
 	initnpctimer;
 	end;
 
@@ -1222,9 +1218,9 @@ OnDisable:
 OnMyMobDead:
 	--.MyMobs;
 	if (.MyMobs < 1) {
-		mapannounce "job_wiz",strcharinfo(0)+" has succeeded in eliminating the monsters.",bc_map;
-		percentheal 100,100;
-		warp "job_wiz",116,97;
+		mapannounce "job_wiz", strcharinfo(0)+" has succeeded in eliminating the monsters.", bc_map;
+		percentheal 100, 100;
+		warp "job_wiz", 116, 97;
 		donpcevent "Room of Water#Door::OnDisable";
 		donpcevent "Room of Earth::OnEnable";
 		stopnpctimer;
@@ -1232,19 +1228,19 @@ OnMyMobDead:
 	end;
 
 OnTimer1000:
-	mapannounce "job_wiz","The guard monster has appeared. You have 1 minute.",bc_map;
+	mapannounce "job_wiz", "The guard monster has appeared. You have 1 minute.", bc_map;
 	end;
 
 OnTimer30000:
-	mapannounce "job_wiz","30 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "30 seconds remaining.", bc_map;
 	end;
 
 OnTimer50000:
-	mapannounce "job_wiz","10 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "10 seconds remaining.", bc_map;
 	end;
 
 OnTimer60000:
-	mapannounce "job_wiz","Time is up.",bc_map;
+	mapannounce "job_wiz", "Time is up.", bc_map;
 	donpcevent "Room of Water#Door::OnDisable";
 	end;
 
@@ -1253,7 +1249,7 @@ OnTimer61000:
 	end;
 
 OnTimer62000:
-	mapannounce "job_wiz","Next candidate, please enter.",bc_map;
+	mapannounce "job_wiz", "Next candidate, please enter.", bc_map;
 	end;
 
 OnTimer63000:
@@ -1269,8 +1265,8 @@ OnInit:
 	end;
 
 OnTouch:
-	mapannounce "job_wiz",strcharinfo(0)+" has not succeeded.",bc_map;
-	warp "geffen",120,110;
+	mapannounce "job_wiz", strcharinfo(0)+" has not succeeded.", bc_map;
+	warp "geffen", 120, 110;
 	end;
 }
 
@@ -1283,19 +1279,13 @@ OnInit:
 OnEnable:
 	enablenpc "Room of Earth";
 	.MyMobs = 7;
-	if (!RENEWAL) {
-		.MyMobs += 3;
-		monster "job_wiz",120,102,"Hode",1127,1,"Room of Earth::OnMyMobDead";
-		monster "job_wiz",111,93,"Savage",1166,1,"Room of Earth::OnMyMobDead";
-		monster "job_wiz",127,86,"Mantis",1139,1,"Room of Earth::OnMyMobDead";
-	}
-	monster "job_wiz",111,102,"Yoyo",1057,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",120,102,"Deniro",1105,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",111,102,"Caramel",1103,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",120,93,"Giearth",1121,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",107,98,"Bigfoot",1060,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",124,98,"Orc Warrior",1023,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",104,86,"Vitata",1176,1,"Room of Earth::OnMyMobDead";
+	monster "job_wiz", 111, 102, "Yoyo", 1057, 1, "Room of Earth::OnMyMobDead";
+	monster "job_wiz", 120, 102, "Deniro", 1105, 1, "Room of Earth::OnMyMobDead";
+	monster "job_wiz", 111, 102, "Caramel", 1103, 1, "Room of Earth::OnMyMobDead";
+	monster "job_wiz", 120, 93, "Giearth", 1121, 1, "Room of Earth::OnMyMobDead";
+	monster "job_wiz", 107, 98, "Bigfoot", 1060, 1, "Room of Earth::OnMyMobDead";
+	monster "job_wiz", 124, 98, "Orc Warrior", 1023, 1, "Room of Earth::OnMyMobDead";
+	monster "job_wiz", 104, 86, "Vitata", 1176, 1, "Room of Earth::OnMyMobDead";
 	initnpctimer;
 	end;
 
@@ -1307,50 +1297,50 @@ OnDisable:
 OnMyMobDead:
 	--.MyMobs;
 	if (.MyMobs < 1) {
-		mapannounce "job_wiz",strcharinfo(0) + " has succeeded in eliminating the monsters.",bc_map;
+		mapannounce "job_wiz", strcharinfo(0) + " has succeeded in eliminating the monsters.", bc_map;
 		donpcevent "Room of Earth#Door::OnEnable";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer1000:
-	mapannounce "job_wiz","Earth Room; The job change test will now proceed.",bc_map;
+	mapannounce "job_wiz", "Earth Room; The job change test will now proceed.", bc_map;
 	end;
 
 OnTimer2000:
-	mapannounce "job_wiz","The time limit is 3 minutes.",bc_map;
+	mapannounce "job_wiz", "The time limit is 3 minutes.", bc_map;
 	end;
 
 OnTimer3000:
-	mapannounce "job_wiz","Eliminate all monster within the time limit.",bc_map;
+	mapannounce "job_wiz", "Eliminate all monster within the time limit.", bc_map;
 	end;
 
 OnTimer33000:
-	mapannounce "job_wiz","2 minutes and 30 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "2 minutes and 30 seconds remaining.", bc_map;
 	end;
 
 OnTimer63000:
-	mapannounce "job_wiz","2 minutes remaining.",bc_map;
+	mapannounce "job_wiz", "2 minutes remaining.",bc_map;
 	end;
 
 OnTimer93000:
-	mapannounce "job_wiz","1 minute and 30 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "1 minute and 30 seconds remaining.",bc_map;
 	end;
 
 OnTimer123000:
-	mapannounce "job_wiz","1 minute remaining.",bc_map;
+	mapannounce "job_wiz", "1 minute remaining.", bc_map;
 	end;
 
 OnTimer153000:
-	mapannounce "job_wiz","30 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "30 seconds remaining.", bc_map;
 	end;
 
 OnTimer173000:
-	mapannounce "job_wiz","10 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "10 seconds remaining.", bc_map;
 	end;
 
 OnTimer183000:
-	mapannounce "job_wiz","Time is up.",bc_map;
+	mapannounce "job_wiz", "Time is up.", bc_map;
 	donpcevent "Room of Earth::OnDisable";
 	end;
 
@@ -1359,7 +1349,7 @@ OnTimer184000:
 	end;
 
 OnTimer185000:
-	mapannounce "job_wiz","Next candidate, please enter.",bc_map;
+	mapannounce "job_wiz", "Next candidate, please enter.", bc_map;
 	end;
 
 OnTimer186000:
@@ -1378,16 +1368,12 @@ OnEnable:
 	enablenpc "Room of Earth#Door";
 	donpcevent "Room of Earth::OnDisable";
 	.MyMobs = 6;
-	if (!RENEWAL) {
-		.MyMobs += 1;
-		monster "job_wiz",116,97,"Flora",1118,1,"Room of Earth#Door::OnMyMobDead";
-	}
-	monster "job_wiz",114,95,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
-	monster "job_wiz",118,95,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
-	monster "job_wiz",114,99,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
-	monster "job_wiz",118,99,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
-	monster "job_wiz",116,94,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
-	monster "job_wiz",116,100,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
+	monster "job_wiz", 114, 95, "Mandragora", 1020, 1, "Room of Earth#Door::OnMyMobDead";
+	monster "job_wiz", 118, 95, "Mandragora", 1020, 1, "Room of Earth#Door::OnMyMobDead";
+	monster "job_wiz", 114, 99, "Mandragora", 1020, 1, "Room of Earth#Door::OnMyMobDead";
+	monster "job_wiz", 118, 99, "Mandragora", 1020, 1, "Room of Earth#Door::OnMyMobDead";
+	monster "job_wiz", 116, 94, "Mandragora", 1020, 1, "Room of Earth#Door::OnMyMobDead";
+	monster "job_wiz", 116, 100, "Mandragora", 1020, 1, "Room of Earth#Door::OnMyMobDead";
 	initnpctimer;
 	end;
 
@@ -1399,9 +1385,9 @@ OnDisable:
 OnMyMobDead:
 	--.MyMobs;
 	if (.MyMobs < 1) {
-		mapannounce "job_wiz",strcharinfo(0) + " has succeeded in eliminating the monster.",bc_map;
-		percentheal 100,100;
-		warp "job_wiz",46,99;
+		mapannounce "job_wiz", strcharinfo(0) + " has succeeded in eliminating the monster.", bc_map;
+		percentheal 100, 100;
+		warp "job_wiz", 46, 99;
 		donpcevent "Room of Earth#Door::OnDisable";
 		donpcevent "Room of Fire::OnEnable";
 		stopnpctimer;
@@ -1409,28 +1395,28 @@ OnMyMobDead:
 	end;
 
 OnTimer1000:
-	mapannounce "job_wiz","The guard monster has appeared. You have 1 minute.",bc_map;
+	mapannounce "job_wiz", "The guard monster has appeared. You have 1 minute.", bc_map;
 	end;
 
 OnTimer30000:
-	mapannounce "job_wiz","30 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "30 seconds remaining.", bc_map;
 	end;
 
 OnTimer50000:
-	mapannounce "job_wiz","10 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "10 seconds remaining.", bc_map;
 	end;
 
 OnTimer60000:
-	mapannounce "job_wiz","End time.",bc_map;
+	mapannounce "job_wiz", "End time.", bc_map;
 	donpcevent "Room of Earth#Door::OnDisable";
 	end;
 
 OnTimer61000:
-	donpcevent "Room of Earth#Failed::OnEnable";
+	enablenpc "Room of Earth#Failed";
 	end;
 
 OnTimer62000:
-	mapannounce "job_wiz","Next candidate, please enter.",bc_map;
+	mapannounce "job_wiz", "Next candidate, please enter.", bc_map;
 	end;
 
 OnTimer63000:
@@ -1446,8 +1432,8 @@ OnInit:
 	end;
 
 OnTouch:
-	mapannounce "job_wiz",strcharinfo(0) + " has not succeeded.",bc_map;
-	warp "geffen",120,110;
+	mapannounce "job_wiz", strcharinfo(0) + " has not succeeded.", bc_map;
+	warp "geffen", 120, 110;
 	end;
 }
 
@@ -1460,17 +1446,12 @@ OnInit:
 OnEnable:
 	enablenpc "Room of Fire";
 	.MyMobs = 6;
-	if (!RENEWAL) {
-		.MyMobs += 2;
-		monster "job_wiz",58,110,"Zerom",1178,1,"Room of Fire::OnMyMobDead";
-		monster "job_wiz",54,89,"Desert Wolf",1106,1,"Room of Fire::OnMyMobDead";
-	}
-	monster "job_wiz",33,110,"Goblin",1123,1,"Room of Fire::OnMyMobDead";
-	monster "job_wiz",40,103,"Scorpion",1001,1,"Room of Fire::OnMyMobDead";
-	monster "job_wiz",51,103,"Frilldora",1119,1,"Room of Fire::OnMyMobDead";
-	monster "job_wiz",40,92,"PecoPeco",1019,1,"Room of Fire::OnMyMobDead";
-	monster "job_wiz",51,92,"Elder Willow",1033,1,"Room of Fire::OnMyMobDead";
-	monster "job_wiz",37,89,"Metaller",1058,1,"Room of Fire::OnMyMobDead";
+	monster "job_wiz", 33, 110, "Goblin", 1123, 1, "Room of Fire::OnMyMobDead";
+	monster "job_wiz", 40, 103, "Scorpion", 1001, 1, "Room of Fire::OnMyMobDead";
+	monster "job_wiz", 51, 103, "Frilldora", 1119, 1, "Room of Fire::OnMyMobDead";
+	monster "job_wiz", 40, 92, "PecoPeco", 1019, 1, "Room of Fire::OnMyMobDead";
+	monster "job_wiz", 51, 92, "Elder Willow", 1033, 1, "Room of Fire::OnMyMobDead";
+	monster "job_wiz", 37, 89, "Metaller", 1058, 1, "Room of Fire::OnMyMobDead";
 	initnpctimer;
 	end;
 
@@ -1482,59 +1463,59 @@ OnDisable:
 OnMyMobDead:
 	--.MyMobs;
 	if (.MyMobs < 1) {
-		mapannounce "job_wiz",strcharinfo(0) + " has succeeded in eliminating the monsters.",bc_map;
+		mapannounce "job_wiz", strcharinfo(0) + " has succeeded in eliminating the monsters.", bc_map;
 		donpcevent "Room of Fire#Door::OnEnable";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer1000:
-	mapannounce "job_wiz","Fire Room; The job change test shall now proceed.",bc_map;
+	mapannounce "job_wiz", "Fire Room; The job change test shall now proceed.", bc_map;
 	end;
 
 OnTimer2000:
-	mapannounce "job_wiz","Time limit is 3 minutes. We will now start the test.",bc_map;
+	mapannounce "job_wiz", "Time limit is 3 minutes. We will now start the test.", bc_map;
 	end;
 
 OnTimer3000:
-	mapannounce "job_wiz","Please eliminate all monsters within the time limit.",bc_map;
+	mapannounce "job_wiz", "Please eliminate all monsters within the time limit.", bc_map;
 	end;
 
 OnTimer33000:
-	mapannounce "job_wiz","2 minutes and 30 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "2 minutes and 30 seconds remaining.", bc_map;
 	end;
 
 OnTimer63000:
-	mapannounce "job_wiz","2 minutes remaining.",bc_map;
+	mapannounce "job_wiz", "2 minutes remaining.", bc_map;
 	end;
 
 OnTimer93000:
-	mapannounce "job_wiz","1 minute and 30 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "1 minute and 30 seconds remaining.", bc_map;
 	end;
 
 OnTimer123000:
-	mapannounce "job_wiz","1 minute remaining.",bc_map;
+	mapannounce "job_wiz", "1 minute remaining.", bc_map;
 	end;
 
 OnTimer153000:
-	mapannounce "job_wiz","30 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "30 seconds remaining.", bc_map;
 	end;
 
 OnTimer173000:
-	mapannounce "job_wiz","10 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "10 seconds remaining.", bc_map;
 	end;
 
 OnTimer183000:
-	mapannounce "job_wiz","Time is up.",bc_map;
+	mapannounce "job_wiz", "Time is up.", bc_map;
 	donpcevent "Room of Fire::OnDisable";
 	end;
 
 OnTimer184000:
-	donpcevent "Room of Fire#Failed::OnEnable";
+	enablenpc "Room of Fire#Failed";
 	end;
 
 OnTimer185000:
-	mapannounce "job_wiz","Next candidate, please enter.",bc_map;
+	mapannounce "job_wiz", "Next candidate, please enter.", bc_map;
 	end;
 
 OnTimer186000:
@@ -1553,14 +1534,9 @@ OnEnable:
 	enablenpc "Room of Fire#Door";
 	donpcevent "Room of Fire::OnDisable";
 	.MyMobs = 3;
-	monster "job_wiz",44,99,"Greatest General",1277,1,"Room of Fire#Door::OnMyMobDead";
-	if (RENEWAL) {
-		monster "job_wiz",43,99,"Greatest General",1277,1,"Room of Fire#Door::OnMyMobDead";
-		monster "job_wiz",45,99,"Greatest General",1277,1,"Room of Fire#Door::OnMyMobDead";
-	} else {
-		monster "job_wiz",43,99,"Horong",1129,1,"Room of Fire#Door::OnMyMobDead";
-		monster "job_wiz",45,99,"Horong",1129,1,"Room of Fire#Door::OnMyMobDead";
-	}
+	monster "job_wiz", 44, 99, "Greatest General", 1277, 1, "Room of Fire#Door::OnMyMobDead";
+	monster "job_wiz", 43, 99, "Greatest General", 1277, 1, "Room of Fire#Door::OnMyMobDead";
+	monster "job_wiz", 45, 99, "Greatest General", 1277, 1, "Room of Fire#Door::OnMyMobDead";
 	initnpctimer;
 	end;
 
@@ -1572,7 +1548,7 @@ OnDisable:
 OnMyMobDead:
 	--.MyMobs;
 	if (.MyMobs < 1) {
-		mapannounce "job_wiz","Congratulations, " + strcharinfo(0) + ". You have passed the job change test.",bc_map;
+		mapannounce "job_wiz", "Congratulations, " + strcharinfo(0) + ". You have passed the job change test.", bc_map;
 		WIZ_Q = 7;
 		changequest 9017,9018;
 		donpcevent "Room of Fire#Door::OnDisable";
@@ -1582,27 +1558,27 @@ OnMyMobDead:
 	end;
 
 OnTimer1000:
-	mapannounce "job_wiz","The guard monster has appeared. You have 2 minutes.",bc_map;
+	mapannounce "job_wiz", "The guard monster has appeared. You have 2 minutes.", bc_map;
 	end;
 
 OnTimer30000:
-	mapannounce "job_wiz","1 minute and 30 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "1 minute and 30 seconds remaining.", bc_map;
 	end;
 
 OnTimer60000:
-	mapannounce "job_wiz","1 minute remaining.",bc_map;
+	mapannounce "job_wiz", "1 minute remaining.", bc_map;
 	end;
 
 OnTimer90000:
-	mapannounce "job_wiz","30 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "30 seconds remaining.", bc_map;
 	end;
 
 OnTimer110000:
-	mapannounce "job_wiz","10 seconds remaining.",bc_map;
+	mapannounce "job_wiz", "10 seconds remaining.", bc_map;
 	end;
 
 OnTimer120000:
-	mapannounce "job_wiz","Time is up.",bc_map;
+	mapannounce "job_wiz", "Time is up.", bc_map;
 	donpcevent "Room of Fire#Door::OnDisable";
 	end;
 
@@ -1611,7 +1587,7 @@ OnTimer121000:
 	end;
 
 OnTimer122000:
-	mapannounce "job_wiz","Next candidate, please enter.",bc_map;
+	mapannounce "job_wiz", "Next candidate, please enter.", bc_map;
 	end;
 
 OnTimer123000:
@@ -1626,7 +1602,7 @@ OnInit:
 	end;
 
 OnTouch:
-	warp "geffen",120,110;
+	warp "geffen", 120, 110;
 	end;
 }
 
@@ -1646,19 +1622,19 @@ OnDisable:
 	end;
 
 OnTimer2000:
-	mapannounce "job_wiz","Please return and complete the rest of the job change processes.",bc_map;
+	mapannounce "job_wiz", "Please return and complete the rest of the job change processes.", bc_map;
 	end;
 
 OnTimer4000:
-	mapannounce "job_wiz","This is the end of the test. Next candidate, please stand by.",bc_map;
+	mapannounce "job_wiz", "This is the end of the test. Next candidate, please stand by.", bc_map;
 	end;
 
 OnTimer5000:
-	areawarp "job_wiz",33,82,57,113,"gef_tower",110,30;
+	areawarp "job_wiz", 33, 82, 57, 113, "gef_tower", 110, 30;
 	end;
 
 OnTimer7000:
-	mapannounce "job_wiz","Next candidate, please enter.",bc_map;
+	mapannounce "job_wiz", "Next candidate, please enter.", bc_map;
 	end;
 
 OnTimer9000:
@@ -1677,7 +1653,7 @@ gef_tower,107,36,4	script	White Dog#wiz	4_DOG01,{
 			mes "[Maria]";
 			mes "Don't forget that Wizards grow and improve in power each and every day.";
 			close2;
-			cutin "job_wizard_maria01",255;
+			cutin "job_wizard_maria01", 255;
 			end;
 		}
 		else if (BaseClass == Job_Novice) {
@@ -1686,7 +1662,7 @@ gef_tower,107,36,4	script	White Dog#wiz	4_DOG01,{
 			mes "Is a Dog talking so amusing to you?";
 		}
 		else {
-			cutin "job_wizard_maria02",2;
+			cutin "job_wizard_maria02", 2;
 			mes "[Dog]";
 			mes "Sheesh...Why would a person that can't even cast a spell a single spell come up here?";
 			mes "*Pfft* If you're that bored, do the world a favor and climb to the top of this building via the outside, then proceed to do some acrobatics if you get there.";
@@ -1696,11 +1672,11 @@ gef_tower,107,36,4	script	White Dog#wiz	4_DOG01,{
 		mes "*Bark* Get lost!";
 		mes "I don't have time for people like you!";
 		close2;
-		cutin "job_wizard_maria02",255;
+		cutin "job_wizard_maria02", 255;
 		end;
 	}
 	if (WIZ_Q == 0) {
-		cutin "job_wizard_maria01",2;
+		cutin "job_wizard_maria01", 2;
 		mes "[Dog]";
 		mes "Ah...I know what you're about to say. You want to change jobs to a Wizard, right?";
 		next;
@@ -1724,33 +1700,33 @@ gef_tower,107,36,4	script	White Dog#wiz	4_DOG01,{
 			mes "My name is 'Maria Splodofska'. Just call me 'Maria'.";
 			mes "I'm helping candidates that wish to become Wizards.";
 			next;
-			cutin "job_wizard_maria03",2;
+			cutin "job_wizard_maria03", 2;
 			mes "[Maria]";
 			mes "*Bark* Well, the reason I became a dog is...I was helping my boyfriend in experimenting to prepare for his Final for his Magic Degree. Well, *Grrrr* he accidentally turned me into a dog.";
 			mes "Theoretically, in a couple months the chemicals should wear off and I should be returned to normal. When exactly, I have no idea?";
 			next;
-			cutin "job_wizard_maria01",2;
+			cutin "job_wizard_maria01", 2;
 			mes "[Maria]";
 			mes "Well...it doesn't concern you anyways.";
 			mes "Now, where were we.";
 			next;
 			break;
 		case 2:
-			cutin "job_wizard_maria02",2;
+			cutin "job_wizard_maria02", 2;
 			mes "[Dog]";
 			mes "*Bark* *bark* *bark* Don't state the obvious! Alright, I know I'm a dog!";
 			next;
-			cutin "job_wizard_maria01",2;
+			cutin "job_wizard_maria01", 2;
 			mes "[Dog]";
 			mes "My name is 'Maria Splodofska'. People call me 'Maria'.";
 			mes "I'm helping little ones like you that wish to become Wizards.";
 			next;
-			cutin "job_wizard_maria03",2;
+			cutin "job_wizard_maria03", 2;
 			mes "[Dog called 'Maria']";
 			mes "The reason I became a dog is...My boyfriend that was experimenting to prepare for the Magic Degree, accidentally turned me into a dog.";
 			mes "Theoretically, in a couple months, the chemicals should wear off and I should be returned to normal. Exactly when, I have no idea?";
 			next;
-			cutin "job_wizard_maria02",2;
+			cutin "job_wizard_maria02", 2;
 			mes "[Dog called 'Maria']";
 			mes "I'm not a 'dog' called 'Maria'!! Oi!! Listen to me!!";
 			next;
@@ -1762,7 +1738,7 @@ gef_tower,107,36,4	script	White Dog#wiz	4_DOG01,{
 			next;
 			break;
 		}
-		cutin "job_wizard_maria01",2;
+		cutin "job_wizard_maria01", 2;
 		mes "[Maria]";
 		mes "Like I said before, to change jobs, talk to Catherine.";
 		mes "She's a new Wizard too.";
@@ -1773,7 +1749,7 @@ gef_tower,107,36,4	script	White Dog#wiz	4_DOG01,{
 		next;
 		switch(select("Yes, please! I would like that.", "No, it's ok.", "A talking dog...")) {
 		case 1:
-			cutin "job_wizard_maria01",2;
+			cutin "job_wizard_maria01", 2;
 			mes "[Maria]";
 			mes "OK, I will explain the process for you.";
 			next;
@@ -1807,30 +1783,30 @@ gef_tower,107,36,4	script	White Dog#wiz	4_DOG01,{
 			mes "[Maria]";
 			mes "It's better to just try it yourself than to listen to my descriptions.";
 			close2;
-			cutin "job_wizard_maria01",255;
-			warp "gef_dun00",116,102;
+			cutin "job_wizard_maria01", 255;
+			warp "gef_dun00", 116, 102;
 			end;
 		case 2:
 			mes "[Maria]";
 			mes "Really? Ok, then go apply and do your best.";
 			close2;
-			cutin "job_wizard_maria01",255;
+			cutin "job_wizard_maria01", 255;
 			end;
 		case 3:
-			cutin "job_wizard_maria02",2;
+			cutin "job_wizard_maria02", 2;
 			mes "[Maria]";
 			mes "I'm not a DOG!! HOOOOWWWWWWLLLLLLL~";
 			next;
 			mes "[Maria]";
 			mes "Dang it! I hope you FAIL!! Go get lost!!";
 			close2;
-			cutin "job_wizard_maria01",255;
-			warp "gef_dun00",116,102;
+			cutin "job_wizard_maria01", 255;
+			warp "gef_dun00", 116, 102;
 			end;
 		}
 	}
 	else if (WIZ_Q == 1) {
-		cutin "job_wizard_maria01",2;
+		cutin "job_wizard_maria01", 2;
 		mes "[Maria]";
 		mes "You seem lost...";
 		mes "You've applied, and now you're looking for the items right?";
@@ -1863,11 +1839,11 @@ gef_tower,107,36,4	script	White Dog#wiz	4_DOG01,{
 		mes "Anyways, try your best.";
 		mes "This is the basics of being a Wizard.";
 		close2;
-		cutin "job_wizard_maria01",255;
+		cutin "job_wizard_maria01", 255;
 		end;
 	}
 	else if (WIZ_Q == 2) {
-		cutin "job_wizard_maria01",2;
+		cutin "job_wizard_maria01", 2;
 		mes "[Maria]";
 		mes "You seem lost...";
 		mes "You've applied, and now you're looking for the items right?";
@@ -1900,32 +1876,32 @@ gef_tower,107,36,4	script	White Dog#wiz	4_DOG01,{
 		mes "But anyways, always try your best.";
 		mes "It's the basics of being a Wizard.";
 		close2;
-		cutin "job_wizard_maria01",255;
+		cutin "job_wizard_maria01", 255;
 		end;
 	}
 	else if (WIZ_Q == 3) {
-		cutin "job_wizard_maria01",2;
+		cutin "job_wizard_maria01", 2;
 		mes "[Maria]";
 		mes "Don't be too relieved just after the first test.";
 		mes "Try your best, as you still have two more tests to go.";
 		close2;
-		cutin "job_wizard_maria01",255;
+		cutin "job_wizard_maria01", 255;
 		end;
 	}
 	else if (WIZ_Q == 4) {
-		cutin "job_wizard_maria01",2;
+		cutin "job_wizard_maria01", 2;
 		mes "[Maria]";
 		mes "ZzzzZzzzZzzz...";
 		next;
-		cutin "job_wizard_maria02",2;
+		cutin "job_wizard_maria02", 2;
 		mes "[Maria]";
 		mes "*wimper*...Blizadris...you suck...Zzz...";
 		close2;
-		cutin "job_wizard_maria02",255;
+		cutin "job_wizard_maria02", 255;
 		end;
 	}
 	else if (WIZ_Q == 5) {
-		cutin "job_wizard_maria01",2;
+		cutin "job_wizard_maria01", 2;
 		mes "[Maria]";
 		mes "Oh, you're doing well aren't you?";
 		next;
@@ -1933,11 +1909,11 @@ gef_tower,107,36,4	script	White Dog#wiz	4_DOG01,{
 		mes "Well, try your best to the very end.";
 		mes "Laurel is waiting.";
 		close2;
-		cutin "job_wizard_maria01",255;
+		cutin "job_wizard_maria01", 255;
 		end;
 	}
 	else if (WIZ_Q == 6) {
-		cutin "job_wizard_maria01",2;
+		cutin "job_wizard_maria01", 2;
 		mes "[Maria]";
 		mes "*BARK*...you gave up?";
 		mes "*Sigh*...How can you become a Wizard with such a weak heart?";
@@ -1954,11 +1930,11 @@ gef_tower,107,36,4	script	White Dog#wiz	4_DOG01,{
 		mes "*Grrr* Anyways, continue the test.";
 		mes "Don't have a weak mind, *woof* and go back! *Bark* *Bark* Right this moment! *BARK*";
 		close2;
-		cutin "job_wizard_maria01",255;
+		cutin "job_wizard_maria01", 255;
 		end;
 	}
 	else if (WIZ_Q == 7) {
-		cutin "job_wizard_maria01",2;
+		cutin "job_wizard_maria01", 2;
 		mes "[Maria]";
 		mes "As I thought, I knew you'd be able to do it, I could smell it in yah! *Woof*";
 		mes "Now I can call you Wizard.";
@@ -1966,7 +1942,7 @@ gef_tower,107,36,4	script	White Dog#wiz	4_DOG01,{
 		mes "[Maria]";
 		mes "Congratulations. Always give your best at everything, no matter what.";
 		close2;
-		cutin "job_wizard_maria01",255;
+		cutin "job_wizard_maria01", 255;
 		end;
 	}
 }
