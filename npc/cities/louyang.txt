@@ -45,7 +45,7 @@
 //================= Description ===========================================
 //= Louyang Town Script
 //================= Current Version =======================================
-//= 3.0
+//= 3.0.1
 //=========================================================================
 
 //== Louyang Transportation ================================
@@ -57,7 +57,7 @@
 	mes "on a picnic somewhere~";
 	mes "La la la la~";
 	next;
-	switch(select("About Louyang.", "Go to Louyang.", "Cancel.")) {
+	switch (select("About Louyang.", "Go to Louyang.", "Cancel.")) {
 	case 1:
 		mes "[Girl]";
 		mes "Oh, are you";
@@ -101,7 +101,7 @@
 				mes "Have fun!";
 				close2;
 				Zeny -= 10000;
-				warp "lou_fild01",190,101;
+				warp "lou_fild01", 190, 101;
 				end;
 			}
 			mes "[Girl]";
@@ -137,10 +137,7 @@ lou_fild01,190,100,7	script	Girl#1lou	4_F_CHNDRESS1,{
 		mes "see you again!";
 		mes "Bye bye!";
 		close2;
-		if (RENEWAL)
-			warp "alberta",236,40;
-		else
-			warp "alberta",235,45;
+		warp "alberta", 236, 40;
 		end;
 	}
 	mes "[Girl]";
@@ -321,7 +318,7 @@ lou_in01,25,23,5	script	Friendly Looking Lady#lo	4_F_CHNDRESS3,{
 		mes "come again.";
 		next;
 		Zeny -= 500;
-		warp "lou_in01",17,19;
+		warp "lou_in01", 17, 19;
 		end;
 	case 3:
 		mes "[Hong Miao]";
@@ -339,12 +336,12 @@ louyang,84,254,0	script	Exit#lou	HIDDEN_NPC,{
 	next;
 	if (select("Yes.", "No.") == 1) {
 		if (rand(1,100) == 34) {
-			percentheal -99,0;
-			warp "louyang",86,269;
-			mapannounce "louyang",""+strnpcinfo(0)+" : Oh God, I'm faaaaaaaaaaaalling~~!!!!",bc_map;
+			percentheal -99, 0;
+			warp "louyang", 86, 269;
+			mapannounce "louyang", "" + strnpcinfo(0) + " : Oh God, I'm faaaaaaaaaaaalling~~!!!!", bc_map;
 		}
 		else {
-			warp "lou_in01",10,18;
+			warp "lou_in01", 10, 18;
 		}
 		end;
 	}
