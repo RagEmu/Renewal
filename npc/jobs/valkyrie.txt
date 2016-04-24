@@ -39,7 +39,7 @@
 //================= Description ===========================================
 //= Quest to become a Tranceded Class. (Advanced/Rebirthed)
 //================= Current Version =======================================
-//= 3.1
+//= 3.1.1
 //=========================================================================
 
 valkyrie,48,86,4	script	Valkyrie#	4_F_VALKYRIE,{
@@ -56,7 +56,7 @@ valkyrie,48,86,4	script	Valkyrie#	4_F_VALKYRIE,{
 		mes "Honor to the warriors!";
 		close;
 	}
-	else if (BaseLevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
+	else if (BaseLevel >= 99 && JobLevel >= 50 && Class >= Job_Knight && Class <= Job_Crusader2) {
 		mes "[Valkyrie]";
 		mes "Welcome";
 		mes "to Valhalla,";
@@ -68,7 +68,7 @@ valkyrie,48,86,4	script	Valkyrie#	4_F_VALKYRIE,{
 		mes "begin an entirely new life.";
 		mes "Honor to the warriors!";
 		next;
-		if (Weight > 0 || Zeny > 0 || checkcart() || checkfalcon() || checkmount()) {
+		if (Weight >= 1 || Zeny >= 1 || checkcart() || checkfalcon() || checkmount()) {
 			mes "[Valkyrie]";
 			mes "There are a few things you must";
 			mes "do before we start. You must";
@@ -84,7 +84,7 @@ valkyrie,48,86,4	script	Valkyrie#	4_F_VALKYRIE,{
 			mes "please return to me,";
 			mes "brave adventurer.";
 			close2;
-			warp "yuno_in02",93,205;
+			warp "yuno_in02", 93, 205;
 			end;
 		}
 		else {
@@ -92,7 +92,7 @@ valkyrie,48,86,4	script	Valkyrie#	4_F_VALKYRIE,{
 			mes "I see you've already";
 			mes "released yourself from";
 			mes "all worldy attachments,";
-			mes ""+ strcharinfo(0) +".";
+			mes "" + strcharinfo(0) + ".";
 			next;
 			mes "[Valkyrie]";
 			mes "That's an admirable attitude for an adventurer such as yourself. Honor comes when you abandon all personal desires for the sake of mankind.";
@@ -105,7 +105,7 @@ valkyrie,48,86,4	script	Valkyrie#	4_F_VALKYRIE,{
 				mes "current life. Take care of that,";
 				mes "and bring closure to your present life.";
 				close2;
-				warp "yuno_in02",93,205;
+				warp "yuno_in02", 93, 205;
 				end;
 			}
 			mes "[Valkyrie]";
@@ -147,14 +147,14 @@ valkyrie,48,86,4	script	Valkyrie#	4_F_VALKYRIE,{
 			mes "One...";
 			mes "Two......";
 			mes "And Three.";
-			ADVJOB = Class+Job_Novice_High; //memo the target 3rd Job ID
-			if(ADVJOB == Job_Lord_Knight2) ADVJOB = Job_Lord_Knight;
-			if(ADVJOB == Job_Paladin2) ADVJOB = Job_Paladin;
+			ADVJOB = Class + Job_Novice_High; // memo the target 3rd Job ID
+			if (ADVJOB == Job_Lord_Knight2) ADVJOB = Job_Lord_Knight;
+			if (ADVJOB == Job_Paladin2) ADVJOB = Job_Paladin;
 			jobchange Job_Novice_High;
 			resetlvl(1);
 			MISC_QUEST |= 1024; //<-reset Skill Reset Event
-			skill 142,1,0;
-			skill 143,1,0;
+			skill NV_FIRSTAID, 1, 0;
+			skill NV_TRICKDEAD, 1, 0;
 			completequest 1000;
 			next;
 			mes "[Valkyrie]";
@@ -163,8 +163,8 @@ valkyrie,48,86,4	script	Valkyrie#	4_F_VALKYRIE,{
 			mes "into a brand new life.";
 			mes "Please take these small gifts";
 			mes "in preparation for your new adventures.";
-			getitem Knife_,1;
-			getitem Cotton_Shirt_,1;
+			getitem Knife_, 1;
+			getitem Cotton_Shirt_, 1;
 			next;
 			mes "[Valkyrie]";
 			mes "I wish that the release the goddess Urd has granted you proves to be a blessing. I hope that the memories Verdandi has recorded will always honor you.";
@@ -175,27 +175,32 @@ valkyrie,48,86,4	script	Valkyrie#	4_F_VALKYRIE,{
 			switch (ADVJOB) {
 			case 4008:
 			case 4015:
-				if (RENEWAL) warp "izlude",129,97;
-				else warp "izlude",94,103;
+				warp "izlude", 129, 97;
 				break;
 			case 4009:
 			case 4016:
-				warp "prontera",273,354; break;
+				warp "prontera", 273, 354;
+				break;
 			case 4010:
 			case 4017:
-				warp "geffen",120,60; break;
+				warp "geffen", 120, 60;
+				break;
 			case 4011:
 			case 4019:
-				warp "alberta",116,57; break;
+				warp "alberta", 116, 57;
+				break;
 			case 4012:
 			case 4020:
 			case 4021:
-				warp "payon",69,100; break;
+				warp "payon", 69, 100;
+				break;
 			case 4013:
 			case 4018:
-				warp "morocc",154,50; break;
+				warp "morocc", 154, 50;
+				break;
 			default:
-				warp "yuno_in02",93,205; break;
+				warp "yuno_in02", 93, 205;
+				break;
 			}
 			end;
 		}
@@ -209,13 +214,13 @@ valkyrie,48,86,4	script	Valkyrie#	4_F_VALKYRIE,{
 		mes "[Valkyrie]";
 		mes "Unfortunately, you have not yet been invited here. I ask you to leave immediately. Honor to the warriors!";
 		close2;
-		warp "yuno_in02",93,205;
+		warp "yuno_in02", 93, 205;
 		end;
 	}
 }
 
 yuno_in02,88,164,5	script	Metheus Sylphe#Library	2_M_SAGE_B,{
-	if (BaseLevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
+	if (BaseLevel >= 99 && JobLevel >= 50 && Class >= Job_Knight && Class <= Job_Crusader2) {
 		if (valkyrie_Q == 0) {
 			mes "[Metheus Sylphe]";
 			mes "Welcome to the Library of the Schweicherbil Magic Academy.";
@@ -277,10 +282,10 @@ yuno_in02,93,207,1	script	Book of Ymir	HIDDEN_NPC,{
 		mes "[The Book of Ymir]";
 		mes "There is a forgotten path which leads to the Hall of Honor, the closest place to the heavens. The ordinary will never discover this place...";
 		close2;
-		warp "valkyrie",48,8;
+		warp "valkyrie", 48, 8;
 		end;
 	}
-	else if (BaseLevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
+	else if (BaseLevel >= 99 && JobLevel >= 50 && Class >= Job_Knight && Class <= Job_Crusader2) {
 		if (valkyrie_Q != 0) {
 			mes "[The Book of Ymir]";
 			mes "...Therefore, ancient heroes were";
@@ -329,7 +334,7 @@ yuno_in02,93,207,1	script	Book of Ymir	HIDDEN_NPC,{
 			mes "can confirm that Valkyrie and Valhalla actually exist...";
 			next;
 			valkyrie_Q = 2;
-			if(!questprogress(1000)) {
+			if (!questprogress(1000)) {
 				setquest 1000;
 			}
 			mes "[The Book of Ymir]";
@@ -348,15 +353,15 @@ yuno_in02,93,207,1	script	Book of Ymir	HIDDEN_NPC,{
 }
 
 yuno_in05,49,43,1	script	Heart of Ymir	HIDDEN_NPC,{
-	if (BaseLevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
-		if (valkyrie_Q == 2) warp "valkyrie",48,8;
+	if (BaseLevel >= 99 && JobLevel >= 50 && Class >= Job_Knight && Class <= Job_Crusader2) {
+		if (valkyrie_Q == 2) warp "valkyrie", 48, 8;
 	}
 	end;
 }
 
 valkyrie,44,33,5	script	Teleporter	4_F_TELEPORTER,{
 	if (Upper != 1) {
-		.@karma_d = rand(1,10);
+		.@karma_d = rand(1, 10);
 		if (.@karma_d > 4) {
 			mes "[Teleporter]";
 			mes "Congratulations.";
@@ -376,25 +381,23 @@ valkyrie,44,33,5	script	Teleporter	4_F_TELEPORTER,{
 		mes "which place do you wish to go?";
 		next;
 		switch(select("Prontera", "Morroc", "Payon", "Geffen", "Alberta", "Izlude", "Al De Baran", "Comodo", "Juno")) {
-		case 1: callsub S_Warpchar,"prontera",116,72;
-		case 2: callsub S_Warpchar,"morocc",156,46;
-		case 3: callsub S_Warpchar,"payon",69,100;
-		case 4: callsub S_Warpchar,"geffen",120,39;
-		case 5: callsub S_Warpchar,"alberta",117,56;
-		case 6:
-			if (RENEWAL) callsub S_Warpchar,"izlude",129,97;
-			else callsub S_Warpchar,"izlude",94,103;
-		case 7: callsub S_Warpchar,"aldebaran",91,105;
-		case 8: callsub S_Warpchar,"comodo",209,143;
-		case 9: callsub S_Warpchar,"yuno",328,101;
+		case 1: callsub S_Warpchar, "prontera", 116, 72;
+		case 2: callsub S_Warpchar, "morocc", 156, 46;
+		case 3: callsub S_Warpchar, "payon", 69, 100;
+		case 4: callsub S_Warpchar, "geffen", 120, 39;
+		case 5: callsub S_Warpchar, "alberta", 117, 56;
+		case 6: callsub S_Warpchar, "izlude", 129, 97;
+		case 7: callsub S_Warpchar, "aldebaran", 91, 105;
+		case 8: callsub S_Warpchar, "comodo", 209, 143;
+		case 9: callsub S_Warpchar, "yuno", 328, 101;
 		}
 	}
 S_Warpchar:
 	mes "[Teleporter]";
 	mes "Have a nice trip.";
 	close2;
-	savepoint getarg(0),getarg(1),getarg(2);
-	warp getarg(0),getarg(1),getarg(2);
+	savepoint getarg(0), getarg(1), getarg(2);
+	warp getarg(0), getarg(1), getarg(2);
 	end;
 }
 
