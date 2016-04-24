@@ -40,7 +40,7 @@
 //================= Description ===========================================
 //= Jawaii Town NPCs
 //================= Current Version =======================================
-//= 3.7
+//= 3.7.1
 //=========================================================================
 
 //== Jawaii Transportation =================================
@@ -63,10 +63,7 @@ jawaii,239,112,7	script	Mariner#toizu	4W_SAILOR,{
 		mes "guide you to";
 		mes "Izlude.";
 		close2;
-		if (RENEWAL)
-			warp "izlude",195,212;
-		else
-			warp "izlude",176,182;
+		warp "izlude", 195, 212;
 		end;
 	}
 	mes "[Mariner]";
@@ -98,7 +95,7 @@ jawaii,122,263,5	script	Mariner#toalbe	4W_SAILOR,{
 		mes "take you back";
 		mes "to Alberta.";
 		close2;
-		warp "alberta",192,157;
+		warp "alberta", 192, 157;
 		end;
 	}
 	mes "[Mariner]";
@@ -251,7 +248,7 @@ jawaii,141,200,3	script	Employee#sroom	4_M_NFMAN,{
 			mes "Ha-have a good time.";
 			close2;
 			Zeny -= 1000;
-			warp "jawaii_in",116,64;
+			warp "jawaii_in", 116, 64;
 			end;
 		}
 		mes "Oh no! Oh no no no no no.";
@@ -300,7 +297,7 @@ jawaii,108,199,5	script	Employee#antroom	1_F_MERCHANT_02,{
 			mes "comfortable.";
 			close2;
 			Zeny -= 1000;
-			warp "jawaii_in",129,110;
+			warp "jawaii_in", 129, 110;
 			end;
 		}
 		mes "I am sorry, but you don't seem to have enough money. If it's alright, why don't you check your current funds and see what you can do";
@@ -331,7 +328,7 @@ jawaii,107,189,5	script	Employee#horoom	4_F_04,{
 			mes "Let's get going.";
 			close2;
 			Zeny -= 1000;
-			warp "jawaii_in",86,117;
+			warp "jawaii_in", 86, 117;
 			end;
 		}
 		mes "You...";
@@ -374,7 +371,7 @@ jawaii,112,173,7	script	Employee#villroom	4_F_04,{
 			mes "Enjoy your stay.";
 			close2;
 			Zeny -= 1000;
-			warp "jawaii_in",87,75;
+			warp "jawaii_in", 87, 75;
 			end;
 		}
 		mes "Oh what a shame!";
@@ -742,7 +739,7 @@ jawaii_in,15,104,0	script	Waitress#jawaii	1_F_PUBGIRL,{
 				mes "[Waitress]";
 				if (Zeny > 999) {
 					Zeny -= 1000;
-					getitem Meat,1;
+					getitem Meat, 1;
 					mes "There you go~";
 					mes "Enjoy your meal~!";
 					close;
@@ -768,7 +765,7 @@ jawaii_in,15,104,0	script	Waitress#jawaii	1_F_PUBGIRL,{
 				mes "[Waitress]";
 				if (Zeny > 999) {
 					Zeny -= 1000;
-					getitem Yellow_Potion,1; //Yelow_Potion
+					getitem Yellow_Potion, 1;
 					mes "There you go~";
 					mes "Enjoy your meal~!";
 					close;
@@ -841,7 +838,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	1_ETC_01,{
 	mes "like to drink?";
 	next;
 	if (Zeny < 99) {
-		.@r_jaw = rand(1,100);
+		.@r_jaw = rand(1, 100);
 		mes "[Bartender]";
 		if (.@r_jaw > 29) {
 			mes "Hm, I'm sorry";
@@ -852,7 +849,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	1_ETC_01,{
 		}
 		mes "....Hmm...";
 		next;
-		mes "["+strcharinfo(0)+"]";
+		mes "[" + strcharinfo(0) + "]";
 		mes "Hey...!";
 		mes "Bartender...";
 		mes "Gimmie one more.";
@@ -862,14 +859,14 @@ jawaii_in,28,124,0	script	Bartender#jaw	1_ETC_01,{
 		mes "It's on me.";
 		mes "Have a drink.";
 		next;
-		mes "["+strcharinfo(0)+"]";
+		mes "[" + strcharinfo(0) + "]";
 		mes "Thank you.";
 		close2;
-		percentheal -100,0;
+		percentheal -100, 0;
 		end;
 	}
 	while (1) {
-		switch(select("Follow Bartender's Recommendation.", "I want a Gunslinger.", "I want a Cobo.", "I want a Bomb.", "I want a Boogieman.")) {
+		switch (select("Follow Bartender's Recommendation.", "I want a Gunslinger.", "I want a Cobo.", "I want a Bomb.", "I want a Boogieman.")) {
 		case 1:
 			.@roof_jaw += 3;
 			if (.@roof_jaw > 9) {
@@ -879,7 +876,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	1_ETC_01,{
 				mes "had enough to drink.";
 				mes "Are you sure you'll be okay?";
 				next;
-				mes "["+strcharinfo(0)+"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Bartender,";
 				mes "I'm so depressed";
 				mes "because of...";
@@ -892,15 +889,15 @@ jawaii_in,28,124,0	script	Bartender#jaw	1_ETC_01,{
 				mes "a ^0000FF'Special J&Z'^000000 for you.";
 				mes "And this is on me.";
 				next;
-				mes "["+strcharinfo(0)+"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Thank you...";
 				mes "So much...";
 				close2;
-				percentheal -100,0;
+				percentheal -100, 0;
 				end;
 			}
 			if (Zeny > 99) Zeny -= 100;
-			switch(rand(4)) {
+			switch (rand(4)) {
 			case 1:
 				mes "[Bartender]";
 				mes "Hmm...";
@@ -925,7 +922,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	1_ETC_01,{
 				next;
 				mes "^3355FFYou gulped it down.^000000";
 				specialeffect2 EF_VENOMDUST;
-				percentheal -20,0;
+				percentheal -20, 0;
 				next;
 				break;
 			case 2:
@@ -947,7 +944,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	1_ETC_01,{
 				mes "savoring its rich,";
 				mes "robust flavor.^000000";
 				specialeffect2 EF_FIREIVY;
-				percentheal -20,0;
+				percentheal -20, 0;
 				next;
 				break;
 			case 3:
@@ -971,7 +968,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	1_ETC_01,{
 				next;
 				mes "^3355FFYou carefully took a sip.^000000";
 				specialeffect2 EF_DECAGILITY;
-				percentheal -20,0;
+				percentheal -20, 0;
 				next;
 				break;
 			default:
@@ -997,12 +994,12 @@ jawaii_in,28,124,0	script	Bartender#jaw	1_ETC_01,{
 				mes "^3355FFYou gulp the delicious";
 				mes "Margarita down in one sip.^000000";
 				specialeffect2 EF_MAGNUMBREAK;
-				percentheal -20,0;
+				percentheal -20, 0;
 				next;
 			}
 			break;
 		case 2:
-			callsub S_KillChar,2;
+			callsub S_KillChar, 2;
 			mes "When you want to look super cool, this will be the best drink for you. It's a strong drink with a particular scent, so people who drink Gunslingers are usually seen as having impressive of taste.";
 			next;
 			mes "^3355FFYou received a simple glass containing a gray liquid. Although it smells faintly sweet, it looks like industrial strength liquor. It's time to summon your courage and take a sip~";
@@ -1013,18 +1010,18 @@ jawaii_in,28,124,0	script	Bartender#jaw	1_ETC_01,{
 			mes "^3355FFYou slowly drank some";
 			mes "of your Gunslinger drink.^000000";
 			next;
-			mes "["+strcharinfo(0)+"]";
+			mes "[" + strcharinfo(0) + "]";
 			mes "Yeeehaw~!";
 			mes "I'm a cowboy hero!";
 			mes "Bang Bang Bang!";
 			next;
 			specialeffect2 EF_STEAL;
-			percentheal -10,0;
+			percentheal -10, 0;
 			next;
 			break;
 
 		case 3:
-			callsub S_KillChar,2;
+			callsub S_KillChar, 2;
 			mes "People say that the more you drink a mixed Cobo, the tastier it will be. It grows on you, kind of like the company of an old friend. This is a nice drink to have with anyone at anytime.";
 			next;
 			mes "^3355FFThe Bartender brought a beautifully engraved glass holding a cobalt blue liquid and placed it in front of you. It smells pleasantly sweet and sour.";
@@ -1039,16 +1036,16 @@ jawaii_in,28,124,0	script	Bartender#jaw	1_ETC_01,{
 			mes "with a luxurious, sweet and";
 			mes "sour flavor.^000000";
 			next;
-			mes "["+strcharinfo(0)+"]";
+			mes "[" + strcharinfo(0) + "]";
 			mes "Aaaaaahhhhhh~!";
 			mes "This drink is really good!";
 			specialeffect2 EF_SANCTUARY;
-			percentheal -10,0;
+			percentheal -10, 0;
 			next;
 			break;
 
 		case 4:
-			callsub S_KillChar,2;
+			callsub S_KillChar, 2;
 			mes "This is for one who wants to relive wild, youthful days, honor those who have fought for justice and liberty, or just to drink alcohol until they vomit stomach acid.";
 			mes "for one who wants to remember people fighting for liberty...";
 			next;
@@ -1063,12 +1060,12 @@ jawaii_in,28,124,0	script	Bartender#jaw	1_ETC_01,{
 			next;
 			mes "^3355FFYou feel pretty hammered.^000000";
 			specialeffect2 EF_BLASTMINEBOMB;
-			percentheal -10,0;
+			percentheal -10, 0;
 			next;
 			break;
 
 		case 5:
-			callsub S_KillChar,1;
+			callsub S_KillChar, 1;
 			mes "There are not many people who like this drink. But the ones that do like this drink, love it.";
 			next;
 			mes "[Bartender]";
@@ -1085,12 +1082,12 @@ jawaii_in,28,124,0	script	Bartender#jaw	1_ETC_01,{
 			next;
 			mes "^3355FFAnd promised yourself that you would never drink it ever again.^000000";
 			specialeffect2 EF_HIT6;
-			percentheal -10,0;
+			percentheal -10, 0;
 			next;
 			break;
 		}
 
-		mes "["+strcharinfo(0)+"]";
+		mes "[" + strcharinfo(0) + "]";
 		mes "Master...";
 		mes "One more please...";
 		next;
@@ -1102,7 +1099,7 @@ S_KillChar:
 		mes "[Bartender]";
 		mes "It's on me.";
 		next;
-		mes "["+strcharinfo(0)+"]";
+		mes "[" + strcharinfo(0) + "]";
 		mes "Thank you...";
 		mes "Mr. Bartender...";
 		close2;
@@ -1151,14 +1148,14 @@ jawaii_in,43,115,0	script	Customer#jaw_1	4W_M_01,{
 		next;
 		mes "^3355FFHe ordered a JJ special for me.^000000";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "[" + strcharinfo(0) + "]";
 		mes "Damn...!";
 		mes "Damn! I will be";
 		mes "the one who laughs last!";
 		next;
 		mes "^3355FFYou drank to your fill.^000000";
 		close;
-		percentheal -100,0;
+		percentheal -100, 0;
 	}
 	mes "[Buchi]";
 	mes "You look happy...";
@@ -1244,7 +1241,7 @@ prt_in,173,13,4	script	Customer#SoloHan	4_M_04,{
 		next;
 		mes "[Bachewcca]";
 		mes "...!";
-		emotion e_no1,0,"Customer#Bachewcca";
+		emotion e_no1, 0, "Customer#Bachewcca";
 		next;
 		mes "[SoloHan]";
 		mes "It's doesn't really matter whether you're married";
@@ -1255,7 +1252,7 @@ prt_in,173,13,4	script	Customer#SoloHan	4_M_04,{
 		mes "a free drink...^000000";
 		next;
 		mes "^3355FF* Gulp Gulp Gulp *^000000";
-		percentheal -10,0;
+		percentheal -10, 0;
 		next;
 		.@jaw_roof = 1;
 		mes "[SoloHan]";
@@ -1273,7 +1270,7 @@ prt_in,173,13,4	script	Customer#SoloHan	4_M_04,{
 				next;
 				mes "[Bachewcca]";
 				mes "^666666*Grunt!*^000000";
-				specialeffect EF_TALK_SCREAM,AREA,"Customer#Bachewcca";
+				specialeffect EF_TALK_SCREAM, AREA, "Customer#Bachewcca";
 				next;
 				mes "[SoloHan]";
 				mes "To...";
@@ -1281,7 +1278,7 @@ prt_in,173,13,4	script	Customer#SoloHan	4_M_04,{
 				mes "F-Forever!!!";
 				next;
 				mes "^3355FF* Gulp Gulp Gulp *^000000";
-				percentheal -10,0;
+				percentheal -10, 0;
 				next;
 				.@jaw_roof += 2;
 				mes "[SoloHan]";
@@ -1299,7 +1296,7 @@ prt_in,173,13,4	script	Customer#SoloHan	4_M_04,{
 						mes "Take care!";
 						mes "Hahaha!";
 						close2;
-						percentheal 100,0;
+						percentheal 100, 0;
 						break;
 					}
 					mes "[SoloHan]";
@@ -1323,7 +1320,7 @@ prt_in,173,13,4	script	Customer#SoloHan	4_M_04,{
 					mes "Take care and have fun!";
 					mes "Harass some couples over there for me, will you?";
 					close2;
-					percentheal 100,0;
+					percentheal 100, 0;
 					break;
 				}
 				mes "[SoloHan]";
@@ -1345,10 +1342,10 @@ prt_in,173,13,4	script	Customer#SoloHan	4_M_04,{
 			mes "FOR EVER.";
 			next;
 			mes "^3355FF*Gulp Gulp Gulp*^000000";
-			percentheal -10,0;
+			percentheal -10, 0;
 			next;
 		}
-		warp "jawaii_in",44,124;
+		warp "jawaii_in", 44, 124;
 		end;
 	}
 	else if (getpartnerid()) {
@@ -1379,7 +1376,7 @@ prt_in,173,13,4	script	Customer#SoloHan	4_M_04,{
 		next;
 		mes "[Bachewcca]";
 		mes "^666666*Grrr...!*^000000";
-		specialeffect EF_THROWITEM,AREA,"Customer#Bachewcca";
+		specialeffect EF_THROWITEM, AREA, "Customer#Bachewcca";
 		close;
 	}
 	mes "Oh man...";
@@ -1409,7 +1406,7 @@ prt_in,170,14,0	script	Customer#Bachewcca	4_M_ORIENT02,{
 	mes "We invite you to Jawaii,";
 	mes "the honeymoon resort!";
 	next;
-	switch(select("Jawaii?", "Let's go to Jawaii~!", "Cancel.")) {
+	switch (select("Jawaii?", "Let's go to Jawaii~!", "Cancel.")) {
 	case 1:
 		mes "[Helper]";
 		mes "There is an island far, far away from the Rune-Midgard continent.";
@@ -1438,7 +1435,7 @@ prt_in,170,14,0	script	Customer#Bachewcca	4_M_ORIENT02,{
 			mes "Let me guide";
 			mes "you to 'Jawaii!'";
 			close2;
-			warp "jawaii",245,125;
+			warp "jawaii", 245, 125;
 			end;
 		}
 		mes "As I explained, you must have 100,000 zeny in order to visit Jawaii. Why don't you ask your partner for help in gathering the zeny for this trip?";
@@ -1454,7 +1451,6 @@ prt_in,170,14,0	script	Customer#Bachewcca	4_M_ORIENT02,{
 		close;
 	}
 }
-
 
 izlude,180,224,3	duplicate(Honeymoon_Helper_Izlude)	Honeymoon Helper#Izlude	1_F_LIBRARYGIRL
 izlude_a,180,224,3	duplicate(Honeymoon_Helper_Izlude)	Honeymoon Helper#Iz_a	1_F_LIBRARYGIRL
