@@ -12082,7 +12082,7 @@ void clif_parse_PartyMessage(int fd, struct map_session_data *sd)
 	if (clif->process_chat_message(sd, packet, message, sizeof message) == NULL)
 		return;
 
-	party->send_message(sd, message, (int)strlen(message));
+	party->send_message(sd, message);
 }
 
 void clif_parse_PartyChangeLeader(int fd, struct map_session_data* sd) __attribute__((nonnull (2)));
@@ -13028,9 +13028,6 @@ bool clif_validate_emblem(const uint8 *emblem, unsigned long emblem_len) {
 		return false;
 	}
 
-	if (!pc->process_chat_message(sd, out_message))
-		return false;
-
 	return true;
 }
 
@@ -13184,9 +13181,9 @@ void clif_parse_GuildMessage(int fd, struct map_session_data *sd)
 		return;
 
 	if (sd->bg_id)
-		bg->send_message(sd, message, (int)strlen(message));
+		bg->send_message(sd, message);
 	else
-		guild->send_message(sd, message, (int)strlen(message));
+		guild->send_message(sd, message);
 }
 
 void clif_parse_GuildRequestAlliance(int fd, struct map_session_data *sd) __attribute__((nonnull (2)));
@@ -16237,7 +16234,7 @@ void clif_bg_xy_remove(struct map_session_data *sd)
 
 /// Notifies clients of a battleground message (ZC_BATTLEFIELD_CHAT).
 /// 02dc <packet len>.W <account id>.L <name>.24B <message>.?B
-void clif_bg_message(struct battleground_data *bgd, int src_id, const char *name, const char *mes, size_t len)
+void clif_bg_message(struct battleground_data *bgd, int src_id, const char *name, const char *mes)
 {
 	struct map_session_data *sd;
 	unsigned char *buf;
@@ -16279,7 +16276,7 @@ void clif_parse_BattleChat(int fd, struct map_session_data *sd)
 	if (clif->process_chat_message(sd, packet, message, sizeof message) == NULL)
 		return;
 
-	bg->send_message(sd, message, (int)strlen(message));
+	bg->send_message(sd, message);
 }
 
 /// Notifies client of a battleground score change (ZC_BATTLEFIELD_NOTIFY_POINT).
