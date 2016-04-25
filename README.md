@@ -33,27 +33,31 @@ Before installing RagEmu there are certain tools and applications you will
 need.  This differs between the varying operating systems available, so the
 following is broken down into Windows and Unix (incl. Linux) prerequisites.
 
+For a list of supported platforms, please refer to the [Supported
+Platforms](https://github.com/HerculesWS/Hercules/wiki/Supported-Platforms) wiki page.
+
 #### Windows
   - Git client
-  - MySQL-compatible server ([MySQL Community Edition](https://www.mysql.com/products/community/) or [MariaDB](https://mariadb.org/))
-  - Microsoft Visual Studio ([Version 2010 through 2015](https://www.visualstudio.com/))
+  - MySQL-compatible server ([MySQL Community Edition](https://www.mysql.com/products/community/) or
+    [MariaDB](https://mariadb.org/))
+  - Microsoft Visual Studio ([Version 2012 through 2015](https://www.visualstudio.com/))
 
 #### Unix/Linux/BSD (names of packages may require specific version numbers on certain distributions)
   - git
-  - gcc or clang (version 4.1 or newer, recommended 4.8 or newer)
+  - gcc or clang (version 4.5 or newer, recommended 5.0 or newer)
   - GNU make
-  - mysql (mysql-server)
-  - libmysqlclient (mysql-devel)
-  - zlib (zlib-devel)
-  - libpcre (pcre-devel) *optional*
+  - mysql (`mysql-server`) or mariadb
+  - libmysqlclient (`mysql-devel`)
+  - zlib (`zlib-devel`)
+  - libpcre (`pcre-devel`)
   - *Optional dependencies for development only*
-    - perl (required to rebuild the HPM Hooks and HPMDataCheck or to regenerate the mobdb sql table)
+    - perl (required to rebuild the HPM Hooks and HPMDataCheck)
     - Doxygen (required to rebuild the HPM Hooks and HPMDataCheck)
 
 #### Mac OS X
-  - Xcode
-  - MySQL-compatible server (installation of mysql or mariadb through [Homebrew](http://brew.sh/) is recommended)
-  - libpcre (pcre-devel) *optional*
+  - Xcode or the Xcode command-line tools.
+  - MySQL-compatible server (installation of `mysql` or `mariadb` through [Homebrew](http://brew.sh/) is recommended)
+  - PCRE library (installation of `pcre` through [Homebrew](http://brew.sh) is recommended)
   - *Optional dependencies for development only*
     - Doxygen (required to rebuild the HPM Hooks and HPMDataCheck)
 
@@ -62,7 +66,7 @@ following is broken down into Windows and Unix (incl. Linux) prerequisites.
     - [MySQL Workbench](http://www.mysql.com/downloads/workbench/) (cross-platform)
     - [HeidiSQL](http://www.heidisql.com/) (Windows)
     - [Sequel Pro](http://www.sequelpro.com/) (Mac OS X)
-  - Git clients
+  - GUI Git clients
     - [Atlassian SourceTree](https://www.sourcetreeapp.com/) (Windows, Mac OS X)
     - [TortoiseGit](https://tortoisegit.org/) (Windows)
 

@@ -10511,7 +10511,8 @@ BUILDIN(playerattached) {
 
 /*==========================================
  *------------------------------------------*/
-BUILDIN(announce) {
+BUILDIN(announce)
+{
 	const char *mes       = script_getstr(st,2);
 	int         flag      = script_getnum(st,3);
 	const char *fontColor = script_hasdata(st,4) ? script_getstr(st,4) : NULL;
@@ -10519,6 +10520,8 @@ BUILDIN(announce) {
 	int         fontSize  = script_hasdata(st,6) ? script_getnum(st,6) : 12;    // default fontSize
 	int         fontAlign = script_hasdata(st,7) ? script_getnum(st,7) : 0;     // default fontAlign
 	int         fontY     = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontY
+	size_t len = strlen(mes);
+	Assert_retr(false, len < INT_MAX);
 
 	if( flag&(BC_TARGET_MASK|BC_SOURCE_MASK) ) {
 		// Broadcast source or broadcast region defined
@@ -10543,14 +10546,14 @@ BUILDIN(announce) {
 		}
 
 		if (fontColor)
-			clif->broadcast2(bl, mes, (int)strlen(mes)+1, (unsigned int)strtoul(fontColor, (char **)NULL, 0), fontType, fontSize, fontAlign, fontY, target);
+			clif->broadcast2(bl, mes, (int)len+1, (unsigned int)strtoul(fontColor, (char **)NULL, 0), fontType, fontSize, fontAlign, fontY, target);
 		else
-			clif->broadcast(bl, mes, (int)strlen(mes)+1, flag&BC_COLOR_MASK, target);
+			clif->broadcast(bl, mes, (int)len+1, flag&BC_COLOR_MASK, target);
 	} else {
 		if (fontColor)
-			intif->broadcast2(mes, (int)strlen(mes)+1, (unsigned int)strtoul(fontColor, (char **)NULL, 0), fontType, fontSize, fontAlign, fontY);
+			intif->broadcast2(mes, (int)len+1, (unsigned int)strtoul(fontColor, (char **)NULL, 0), fontType, fontSize, fontAlign, fontY);
 		else
-			intif->broadcast(mes, (int)strlen(mes)+1, flag&BC_COLOR_MASK);
+			intif->broadcast(mes, (int)len+1, flag&BC_COLOR_MASK);
 	}
 	return true;
 }
@@ -10558,10 +10561,10 @@ BUILDIN(announce) {
  *------------------------------------------*/
 int buildin_announce_sub(struct block_list *bl, va_list ap)
 {
-	char *mes       = va_arg(ap, char *);
+	const char *mes = va_arg(ap, const char *);
 	int   len       = va_arg(ap, int);
 	int   type      = va_arg(ap, int);
-	char *fontColor = va_arg(ap, char *);
+	const char *fontColor = va_arg(ap, const char *);
 	short fontType  = (short)va_arg(ap, int);
 	short fontSize  = (short)va_arg(ap, int);
 	short fontAlign = (short)va_arg(ap, int);
@@ -10608,7 +10611,8 @@ BUILDIN(itemeffect)
 	return true;
 }
 
-BUILDIN(mapannounce) {
+BUILDIN(mapannounce)
+{
 	const char *mapname   = script_getstr(st,2);
 	const char *mes       = script_getstr(st,3);
 	int         flag      = script_getnum(st,4);
@@ -10618,17 +10622,20 @@ BUILDIN(mapannounce) {
 	int         fontAlign = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontAlign
 	int         fontY     = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY
 	int16 m;
+	size_t len = strlen(mes);
+	Assert_retr(false, len < INT_MAX);
 
 	if ((m = map->mapname2mapid(mapname)) < 0)
 		return true;
 
 	map->foreachinmap(script->buildin_announce_sub, m, BL_PC,
-	                  mes, strlen(mes)+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
+	                  mes, (int)len+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
 	return true;
 }
 /*==========================================
  *------------------------------------------*/
-BUILDIN(areaannounce) {
+BUILDIN(areaannounce)
+{
 	const char *mapname   = script_getstr(st,2);
 	int         x0        = script_getnum(st,3);
 	int         y0        = script_getnum(st,4);
@@ -10642,12 +10649,14 @@ BUILDIN(areaannounce) {
 	int         fontAlign = script_hasdata(st,12) ? script_getnum(st,12) : 0;     // default fontAlign
 	int         fontY     = script_hasdata(st,13) ? script_getnum(st,13) : 0;     // default fontY
 	int16 m;
+	size_t len = strlen(mes);
+	Assert_retr(false, len < INT_MAX);
 
 	if ((m = map->mapname2mapid(mapname)) < 0)
 		return true;
 
 	map->foreachinarea(script->buildin_announce_sub, m, x0, y0, x1, y1, BL_PC,
-	                   mes, strlen(mes)+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
+	                   mes, (int)len+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
 	return true;
 }
 
@@ -13786,7 +13795,7 @@ BUILDIN(dispbottom)
 		int color = script_getnum(st,3);
 		clif->messagecolor_self(sd->fd, color, message);
 	} else {
-		clif_disp_onlyself(sd, message, (int)strlen(message));
+		clif_disp_onlyself(sd, message);
 	}
 
 	return true;
@@ -16483,7 +16492,7 @@ BUILDIN(checkchatting) {
 		sd = script->rid2sd(st);
 
 	if (sd != NULL)
-		script_pushint(st,(sd->chatID != 0));
+		script_pushint(st, (sd->chat_id != 0));
 	else
 		script_pushint(st,0);
 
@@ -18021,7 +18030,8 @@ BUILDIN(instance_init) {
 	return true;
 }
 
-BUILDIN(instance_announce) {
+BUILDIN(instance_announce)
+{
 	int         instance_id = script_getnum(st,2);
 	const char *mes         = script_getstr(st,3);
 	int         flag        = script_getnum(st,4);
@@ -18030,8 +18040,9 @@ BUILDIN(instance_announce) {
 	int         fontSize    = script_hasdata(st,7) ? script_getnum(st,7) : 12;    // default fontSize
 	int         fontAlign   = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontAlign
 	int         fontY       = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY
-
 	int i;
+	size_t len = strlen(mes);
+	Assert_retr(false, len < INT_MAX);
 
 	if( instance_id == -1 ) {
 		if( st->instance_id >= 0 )
@@ -18045,7 +18056,7 @@ BUILDIN(instance_announce) {
 
 	for( i = 0; i < instance->list[instance_id].num_map; i++ )
 		map->foreachinmap(script->buildin_announce_sub, instance->list[instance_id].map[i], BL_PC,
-		                  mes, strlen(mes)+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
+		                  mes, (int)len+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
 
 	return true;
 }
