@@ -4657,9 +4657,6 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 					wd.damage2 = battle->calc_masteryfix(src, target, skill_id, skill_lv, wd.damage2, wd.div_, 1, flag.weapon);
 					wd.damage2 = battle->calc_cardfix2(src, target, wd.damage2, s_ele, nk, wd.flag);
 				}
-				wd.damage = battle->calc_base_damage2(sstatus, &sstatus->rhw, sc, tstatus->size, sd, i);
-				if (flag.lh)
-					wd.damage2 = battle->calc_base_damage2(sstatus, &sstatus->lhw, sc, tstatus->size, sd, i);
 				if (nk&NK_SPLASHSPLIT){ // Divide ATK among targets
 					if(wflag>0)
 						wd.damage/= wflag;
