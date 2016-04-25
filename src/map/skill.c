@@ -9059,6 +9059,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 				if( !pc_isridingwug(sd) && pc_iswug(sd) ) {
 					pc->setoption(sd,sd->sc.option&~OPTION_WUG);
 					pc->setoption(sd,sd->sc.option|OPTION_WUGRIDER);
+					status_change_end(bl, SC_CAMOUFLAGE, INVALID_TIMER);
 				} else if( pc_isridingwug(sd) ) {
 					pc->setoption(sd,sd->sc.option&~OPTION_WUGRIDER);
 					pc->setoption(sd,sd->sc.option|OPTION_WUG);
