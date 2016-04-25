@@ -2633,6 +2633,10 @@ struct {
 	struct HPMHookPoint *HP_ircbot_identify_timer_post;
 	struct HPMHookPoint *HP_ircbot_join_timer_pre;
 	struct HPMHookPoint *HP_ircbot_join_timer_post;
+	struct HPMHookPoint *HP_ircbot_queue_timer_pre;
+	struct HPMHookPoint *HP_ircbot_queue_timer_post;
+	struct HPMHookPoint *HP_ircbot_queue_pre;
+	struct HPMHookPoint *HP_ircbot_queue_post;
 	struct HPMHookPoint *HP_ircbot_send_pre;
 	struct HPMHookPoint *HP_ircbot_send_post;
 	struct HPMHookPoint *HP_ircbot_relay_pre;
@@ -2641,6 +2645,8 @@ struct {
 	struct HPMHookPoint *HP_ircbot_pong_post;
 	struct HPMHookPoint *HP_ircbot_privmsg_pre;
 	struct HPMHookPoint *HP_ircbot_privmsg_post;
+	struct HPMHookPoint *HP_ircbot_privmsg_ctcp_pre;
+	struct HPMHookPoint *HP_ircbot_privmsg_ctcp_post;
 	struct HPMHookPoint *HP_ircbot_userjoin_pre;
 	struct HPMHookPoint *HP_ircbot_userjoin_post;
 	struct HPMHookPoint *HP_ircbot_userleave_pre;
@@ -8542,6 +8548,10 @@ struct {
 	int HP_ircbot_identify_timer_post;
 	int HP_ircbot_join_timer_pre;
 	int HP_ircbot_join_timer_post;
+	int HP_ircbot_queue_timer_pre;
+	int HP_ircbot_queue_timer_post;
+	int HP_ircbot_queue_pre;
+	int HP_ircbot_queue_post;
 	int HP_ircbot_send_pre;
 	int HP_ircbot_send_post;
 	int HP_ircbot_relay_pre;
@@ -8550,6 +8560,8 @@ struct {
 	int HP_ircbot_pong_post;
 	int HP_ircbot_privmsg_pre;
 	int HP_ircbot_privmsg_post;
+	int HP_ircbot_privmsg_ctcp_pre;
+	int HP_ircbot_privmsg_ctcp_post;
 	int HP_ircbot_userjoin_pre;
 	int HP_ircbot_userjoin_post;
 	int HP_ircbot_userleave_pre;
