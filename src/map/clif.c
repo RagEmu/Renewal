@@ -474,7 +474,7 @@ bool clif_send(const void* buf, int len, struct block_list* bl, enum send_target
 					if( (sd = p->data[i].sd) == NULL )
 						continue;
 
-					if( !(fd=sd->fd) )
+					if( !(fd=sd->fd) || fd < 0 )
 						continue;
 
 					if( sd->bl.id == bl->id && (type == PARTY_WOS || type == PARTY_SAMEMAP_WOS || type == PARTY_AREA_WOS) )
