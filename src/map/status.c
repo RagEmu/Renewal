@@ -1132,12 +1132,6 @@ void initChangeTables(void) {
 	status->dbs->ChangeFlagTable[SC_GEFFEN_MAGIC3] |= SCB_ALL;
 	status->dbs->ChangeFlagTable[SC_FENRIR_CARD] |= SCB_MATK | SCB_ALL;
 
-	// MVP Scrolls
-	status->dbs->ChangeFlagTable[SC_MVPCARD_TAOGUNKA] |= SCB_MAXHP | SCB_DEF | SCB_MDEF;
-	status->dbs->ChangeFlagTable[SC_MVPCARD_MISTRESS] |= SCB_ALL;
-	status->dbs->ChangeFlagTable[SC_MVPCARD_ORCHERO] |= SCB_ALL;
-	status->dbs->ChangeFlagTable[SC_MVPCARD_ORCLORD] |= SCB_ALL;
-
 	// Costumes
 	status->dbs->ChangeFlagTable[SC_MOONSTAR] |= SCB_NONE;
 	status->dbs->ChangeFlagTable[SC_SUPER_STAR] |= SCB_NONE;
@@ -5034,8 +5028,6 @@ defType status_calc_def(struct block_list *bl, struct status_change *sc, int def
 		return 1;
 	if (sc->data[SC_ARMORSCROLL])
 		def += sc->data[SC_ARMORSCROLL]->val1;
-	if (sc->data[SC_MVPCARD_TAOGUNKA])
-		def -= sc->data[SC_MVPCARD_TAOGUNKA]->val2;
 
 	return (defType)cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX);
 }
@@ -5141,8 +5133,6 @@ defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int md
 		return 1;
 	if (sc->data[SC_FREYJASCROLL])
 		mdef += sc->data[SC_FREYJASCROLL]->val1;
-	if (sc->data[SC_MVPCARD_TAOGUNKA])
-		mdef -= sc->data[SC_MVPCARD_TAOGUNKA]->val3;
 
 	return (defType)cap_value(mdef, DEFTYPE_MIN, DEFTYPE_MAX);
 }
@@ -5744,8 +5734,6 @@ unsigned int status_calc_maxhp(struct block_list *bl, struct status_change *sc, 
 		maxhp += maxhp * sc->data[SC_SOULSCROLL]->val1 / 100;
 	if (sc->data[SC_ATKER_ASPD])
 		maxhp += maxhp * sc->data[SC_ATKER_ASPD]->val1 / 100;
-	if (sc->data[SC_MVPCARD_TAOGUNKA])
-		maxhp += maxhp * sc->data[SC_MVPCARD_TAOGUNKA]->val1 / 100;
 	if (sc->data[SC_GM_BATTLE])
 		maxhp -= maxhp * sc->data[SC_GM_BATTLE]->val1 / 100;
 	if (sc->data[SC_GM_BATTLE2])
@@ -6691,8 +6679,6 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			sc_def += sc->data[SC_SCRESIST]->val1 * 100; //Status resist
 		else if (sc->data[SC_SIEGFRIED])
 			sc_def += sc->data[SC_SIEGFRIED]->val3 * 100; //Status resistance.
-		if (sc && sc->data[SC_MVPCARD_ORCHERO])
-			sc_def += sc->data[SC_MVPCARD_ORCHERO]->val1 * 100;
 	}
 
 	//When tick def not set, reduction is the same for both.
