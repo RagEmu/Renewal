@@ -5548,23 +5548,24 @@ void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val
 
 /// Send message (modified by [Yor]) (ZC_NOTIFY_PLAYERCHAT).
 /// 008e <packet len>.W <message>.?B
-void clif_displaymessage(const int fd, const char* mes) {
+void clif_displaymessage(const int fd, const char *mes)
+{
 	nullpo_retv(mes);
 
-	if( map->cpsd_active && fd == 0 ) {
+	if (map->cpsd_active && fd == 0) {
 		ShowInfo("HCP: %s\n",mes);
-	} else if ( fd > 0 ) {
+	} else if (fd > 0) {
 	#if PACKETVER == 20141022
 		/** for some reason game client crashes depending on message pattern (only for this packet) **/
 		/** so we redirect to ZC_NPC_CHAT **/
 		clif->messagecolor_self(fd, COLOR_DEFAULT, mes);
 	#else
-		size_t len;
+		int len = (int)strnlen(mes, 255);
 
-		if ( ( len = strnlen(mes, 255) ) > 0 ) { // don't send a void message (it's not displaying on the client chat). @help can send void line.
+		if (len > 0) { // don't send a void message (it's not displaying on the client chat). @help can send void line.
 			WFIFOHEAD(fd, 5 + len);
 			WFIFOW(fd,0) = 0x8e;
-			WFIFOW(fd,2) = 5 + len; // 4 + len + NULL terminate
+			WFIFOW(fd,2) = 5 + len; // 4 + len + NUL terminate
 			safestrncpy(WFIFOP(fd,4), mes, len + 1);
 			WFIFOSET(fd, 5 + len);
 		}
@@ -5872,21 +5873,21 @@ void clif_wis_message(int fd, const char *nick, const char *mes, int mes_len)
 	nullpo_retv(mes);
 
 #if PACKETVER < 20091104
-	WFIFOHEAD(fd, mes_len + NAME_LENGTH + 4);
+	WFIFOHEAD(fd, mes_len + NAME_LENGTH + 5);
 	WFIFOW(fd,0) = 0x97;
-	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 4;
+	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 5;
 	safestrncpy(WFIFOP(fd,4), nick, NAME_LENGTH);
-	safestrncpy(WFIFOP(fd,28), mes, mes_len);
+	safestrncpy(WFIFOP(fd,28), mes, mes_len + 1);
 	WFIFOSET(fd,WFIFOW(fd,2));
 #else
 	ssd = map->nick2sd(nick);
 
-	WFIFOHEAD(fd, mes_len + NAME_LENGTH + 8);
+	WFIFOHEAD(fd, mes_len + NAME_LENGTH + 9);
 	WFIFOW(fd,0) = 0x97;
-	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 8;
+	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 9;
 	safestrncpy(WFIFOP(fd,4), nick, NAME_LENGTH);
 	WFIFOL(fd,28) = (ssd && pc_get_group_level(ssd) == 99) ? 1 : 0; // isAdmin; if nonzero, also displays text above char
-	safestrncpy(WFIFOP(fd,32), mes, mes_len);
+	safestrncpy(WFIFOP(fd,32), mes, mes_len + 1);
 	WFIFOSET(fd,WFIFOW(fd,2));
 #endif
 }
@@ -10347,7 +10348,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	if (dstsd->state.autotrade) {
 		char output[256];
 		sprintf(output, "%s is in autotrade mode and cannot receive whispered messages.", dstsd->status.name);
-		clif->wis_message(fd, map->wisp_server_name, output, (int)strlen(output) + 1);
+		clif->wis_message(fd, map->wisp_server_name, output, (int)strlen(output));
 		return;
 	}
 
