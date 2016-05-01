@@ -337,6 +337,7 @@ AC_ARG_ENABLE(
 	[enable_sanitize="no"]
 )
 
+
 #
 # -Werror compiler flag
 # It's not always possible (if at all) to pass -Werror in the CFLAGS, since
@@ -361,7 +362,6 @@ AC_ARG_ENABLE(
 	],
 	[enable_Werror="no"]
 )
-
 
 #
 # Optionally set the max number of network conenctions
@@ -468,6 +468,7 @@ AC_LANG([C])
 # -Wunused-parameter -Wunused-but-set-parameter unused parameters
 # -Wunused-macros unused macro warnings, but it also enable unused parameters
 # -Wstrict-prototypes show warning in grammar.y
+# -wdiscarded-qualifiers show different const removal
 # attributes suggestion
 #  -Wsuggest-attribute=const -Wsuggest-attribute=format -Wsuggest-attribute=pure
 
@@ -651,7 +652,7 @@ if test "$enable_lto" != "no" ; then
 	)
 fi
 
-AC_DEFUN(AC_CHECK_SANITIZER_FLAG,
+AC_DEFUN([AC_CHECK_SANITIZER_FLAG],
 	[
 		AC_MSG_CHECKING([whether $CC supports -fsanitize=$1])
 		OLD_CFLAGS="$CFLAGS"
@@ -704,6 +705,7 @@ if test "$enable_sanitize" != "no" ; then
 		AC_CHECK_SANITIZER_FLAG(return)
 		AC_CHECK_SANITIZER_FLAG(signed-integer-overflow)
 		AC_CHECK_SANITIZER_FLAG(bounds)
+		AC_CHECK_SANITIZER_FLAG(bounds-strict)
 		AC_CHECK_SANITIZER_FLAG(object-size)
 		AC_CHECK_SANITIZER_FLAG(float-divide-by-zero)
 		AC_CHECK_SANITIZER_FLAG(float-cast-overflow)
@@ -716,7 +718,7 @@ if test "$enable_sanitize" != "no" ; then
 fi
 
 
-AC_DEFUN(AC_CHECK_COMPILER_WFLAG,
+AC_DEFUN([AC_CHECK_COMPILER_WFLAG],
 	[
 		AC_MSG_CHECKING([whether $CC supports -W$1])
 		OLD_CFLAGS="$CFLAGS"
@@ -751,7 +753,7 @@ AC_DEFUN(AC_CHECK_COMPILER_WFLAG,
 	]
 )
 
-AC_DEFUN(AC_CHECK_COMPILER_WNOFLAG,
+AC_DEFUN([AC_CHECK_COMPILER_WNOFLAG],
 	[
 		AC_MSG_CHECKING([whether $CC supports -Wno-$1])
 		OLD_CFLAGS="$CFLAGS"
@@ -829,15 +831,18 @@ AC_CHECK_COMPILER_WFLAG(missing-include-dirs)
 AC_CHECK_COMPILER_WFLAG(suggest-attribute=noreturn)
 AC_CHECK_COMPILER_WFLAG(undef)
 #AC_CHECK_COMPILER_WFLAG(cast-align)
-AC_CHECK_COMPILER_WFLAG(logical-op)
+#AC_CHECK_COMPILER_WFLAG(logical-op) # some useless warnings
 AC_CHECK_COMPILER_WFLAG(nested-externs)
 AC_CHECK_COMPILER_WFLAG(old-style-definition)
 AC_CHECK_COMPILER_WFLAG(overlength-strings)
 AC_CHECK_COMPILER_WFLAG(redundant-decls)
 AC_CHECK_COMPILER_WFLAG(cast-qual)
+AC_CHECK_COMPILER_WFLAG(misleading-indentation)
+AC_CHECK_COMPILER_WFLAG(null-dereference)
 AC_CHECK_COMPILER_WNOFLAG(format-nonliteral)
 AC_CHECK_COMPILER_WNOFLAG(switch)
 AC_CHECK_COMPILER_WNOFLAG(missing-field-initializers)
+AC_CHECK_COMPILER_WNOFLAG(suggest-attribute=format)
 
 # Certain versions of gcc make -Wshadow completely useless by making it flood
 # you with unnecessary warnings <https://lkml.org/lkml/2006/11/28/239>
