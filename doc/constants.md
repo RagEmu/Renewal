@@ -7656,6 +7656,14 @@
 - `Ru_Gold_Wand`: 1678
 - `Crimson_Rod`: 1680
 - `Short_Foxtail_Staff`: 1681
+- `Enriched_Foxtail_Staff`: 1683
+- `Long_Foxtail_Staff`: 1684
+- `Dragonfly_Sitting_Foxtail_Staff`: 1685
+- `Large_Foxtail_Staff`: 1686
+- `Beginner_Foxtail_Staff`: 1687
+- `Mysterious_Foxtail_Staff`: 1690
+- `Foxtail_Model`: 1694
+- `P_Foxtail_Staff1`: 1699
 - `Bow`: 1701
 - `Bow_`: 1702
 - `Bow__`: 1703
@@ -16915,6 +16923,8 @@
 - `Restless_Energy_Debris`: 25129
 - `Sinister_Energy_Debris`: 25130
 - `Energy_Fallen_Debris`: 25131
+- `P_Foxtail_Staff2`: 26100
+- `P_Foxtail_Staff3`: 26101
 - `Thanatos_Katar`: 28000
 - `Evil_Slayer_Ripper_Katar`: 28001
 - `Half_BF_Katar2`: 28002
