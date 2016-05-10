@@ -367,3 +367,9 @@ function	script	F_ShuffleNumbers	{
 function	script	F_MesColor	{
 	return sprintf("^%06X", min(getarg(0), 0xFFFFFF));
 }
+
+//== F_CanOpenStorage ======================================
+// Indicate if attached player can open storage
+function	script	F_CanOpenStorage	{
+	return (!basicskillcheck() || !(getskilllv("NV_BASIC") < 6 && getskilllv("SU_BASIC_SKILL") < 1));
+}

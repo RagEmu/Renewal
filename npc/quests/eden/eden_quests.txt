@@ -1889,7 +1889,10 @@ moc_para01,112,96,5	script	Administrator Michael	4_M_RUSMAN1,{
 				callsub S_Select,"",
 					P_Revolver1,"Eden Revolver I","Revolver","HIT-5, attack 44","";
 			}
-
+			if (Class == Job_Summoner) {
+				callsub S_Select,"",
+					P_Foxtail_Staff1,"Eden Foxtail Staff I","Staff","DEX+3, INT+3, Ranged Attack+5%, MATK+135, Attack 120","";
+			}
 			mes "Let me see... you will receive..";
 			mes "the Eden Group Boots II and Uniform II.";
 			next;
@@ -1966,6 +1969,10 @@ moc_para01,112,96,5	script	Administrator Michael	4_M_RUSMAN1,{
 			if (Class == Job_Gunslinger) {
 				callsub S_Select,"",
 					P_Revolver2,"Eden Revolver II","Revolver","HIT-5, attack 60","";
+			}
+			if (Class == Job_Summoner) {
+				callsub S_Select,"",
+					P_Foxtail_Staff2,"Eden Foxtail Staff II","Staff","DEX+4, INT+4, Ranged Attack+6%, MATK+165, Attack 135","";
 			}
 			mes "Let me see... you will receive..";
 			mes "the Eden Group Boots III and Uniform III.";
@@ -3969,6 +3976,8 @@ moc_para01,111,83,3	script	Blacksmith Thorn#2nd10	2_M_OLDBLSMITH,{
 			}
 			else if (Class == Job_Gunslinger)
 				getitem P_Revolver3,1;
+			else if (Class == Job_Summoner)
+				getitem P_Foxtail_Staff3,1;
 			else {
 				mes "Hmm, you are eligible to receive equipment.";
 				mes "Yeah I understand that.";
@@ -4081,7 +4090,8 @@ moc_para01,112,79,3	script	Weapons Expert BK#2nd11	4_M_REPAIR,{
 		P_Tail1,
 		P_Revolver3,
 		P_Knuckle1,
-		P_Huuma_Shuriken1;
+		P_Huuma_Shuriken1,
+		P_Foxtail_Staff3;
 	.@menu$ = "Eden Group Slayer III:" +
 		"Eden Group Saber III:" +
 		"Eden Group Dagger III:" +
@@ -4096,7 +4106,8 @@ moc_para01,112,79,3	script	Weapons Expert BK#2nd11	4_M_REPAIR,{
 		"Eden Group Whip I:" +
 		"Eden Group Revolver III:" +
 		"Eden Group Knuckles I:" +
-		"Eden Group Huuma Shuriken I";
+		"Eden Group Huuma Shuriken I:" +
+		"Eden Group Foxtail Staff III";
 	mes "[BK]";
 	mes "What's happening?";
 	mes "No way?!";

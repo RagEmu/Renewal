@@ -1943,6 +1943,13 @@ iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 		}
 		break;
 	case 2:
+		if(Class == Job_Summoner) { //Custom text
+			mes "[Therapist]";
+			mes "I'm sorry...";
+			mes "It seems you'll never able to learn this skill.";
+			mes "I can't do anything about it.";
+			close;
+		}
 		if (getskilllv("NV_FIRSTAID")) {
 			mes "[Therapist]";
 			mes "You already know about First Aid.";
@@ -5201,9 +5208,12 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 					mes "[Kafra Guide Trainer]";
 					mes "Storage is necessary for you to survive so use it regularly.";
 				} else {
-					if (getskilllv("NV_BASIC") < 6) {
+					if(!callfunc("F_CanOpenStorage")) {
 						mes "[Kafra Guide Trainer]";
-						mes "To use the storage, you need to be raised the beginner level 6 and higher.";
+						if(Class == Job_Summoner)
+							mes "To use the storage, you need to raise the New Basic Skill.";
+						else
+							mes "To use the storage, you need to be raised the beginner level 6 and higher.";
 					} else if (countitem(Cargo_Free_Ticket) || Zeny >= 500) {
 						if (countitem(Cargo_Free_Ticket)) {
 							delitem Cargo_Free_Ticket, 1;
