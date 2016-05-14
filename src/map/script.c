@@ -18885,6 +18885,7 @@ BUILDIN(useatcmd) {
 	return true;
 }
 
+<<<<<<< HEAD
 BUILDIN(checkre)
 {
 	int num;
@@ -18912,6 +18913,8 @@ BUILDIN(checkre)
 	return true;
 }
 
+=======
+>>>>>>> 3be7c7f... Removed leftover definition of BUILDIN(checkre)
 /* getrandgroupitem <container_item_id>,<quantity> */
 BUILDIN(getrandgroupitem) {
 	struct item_data *data = NULL;
