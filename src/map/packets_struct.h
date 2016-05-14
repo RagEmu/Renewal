@@ -319,7 +319,7 @@ struct EQUIPSLOTINFO {
 struct NORMALITEM_INFO {
 	short index;
 	unsigned short ITID;
-	unsigned char type;
+	uint8 type;
 #if PACKETVER < 20120925
 	uint8 IsIdentified;
 #endif
@@ -337,9 +337,9 @@ struct NORMALITEM_INFO {
 #endif
 #if PACKETVER >= 20120925
 	struct {
-		unsigned char IsIdentified : 1;
-		unsigned char PlaceETCTab : 1;
-		unsigned char SpareBits : 6;
+		uint8 IsIdentified : 1;
+		uint8 PlaceETCTab : 1;
+		uint8 SpareBits : 6;
 	} Flag;
 #endif
 } __attribute__((packed));
@@ -347,13 +347,13 @@ struct NORMALITEM_INFO {
 struct RndOptions {
 	short index;
 	short value;
-	unsigned char param;
+	uint8 param;
 } __attribute__((packed));
 
 struct EQUIPITEM_INFO {
 	short index;
 	unsigned short ITID;
-	unsigned char type;
+	uint8 type;
 #if PACKETVER < 20120925
 	uint8 IsIdentified;
 #endif
@@ -367,7 +367,7 @@ struct EQUIPITEM_INFO {
 #if PACKETVER < 20120925
 	uint8 IsDamaged;
 #endif
-	unsigned char RefiningLevel;
+	uint8 RefiningLevel;
 	struct EQUIPSLOTINFO slot;
 #if PACKETVER >= 20071002
 	int HireExpireDate;
@@ -379,15 +379,15 @@ struct EQUIPITEM_INFO {
 	unsigned short wItemSpriteNumber;
 #endif
 #if PACKETVER >= 20150226
-	unsigned char option_count;
+	uint8 option_count;
 	struct RndOptions option_data[5];
 #endif
 #if PACKETVER >= 20120925
 	struct {
-		unsigned char IsIdentified : 1;
-		unsigned char IsDamaged : 1;
-		unsigned char PlaceETCTab : 1;
-		unsigned char SpareBits : 5;
+		uint8 IsIdentified : 1;
+		uint8 IsDamaged : 1;
+		uint8 PlaceETCTab : 1;
+		uint8 SpareBits : 5;
 	} Flag;
 #endif
 } __attribute__((packed));
@@ -395,14 +395,14 @@ struct EQUIPITEM_INFO {
 struct packet_authok {
 	short PacketType;
 	unsigned int startTime;
-	unsigned char PosDir[3];
-	unsigned char xSize;
-	unsigned char ySize;
+	uint8 PosDir[3];
+	uint8 xSize;
+	uint8 ySize;
 #if PACKETVER >= 20080102
 	short font;
 #endif
 #if PACKETVER >= 20141022
-	unsigned char sex;
+	uint8 sex;
 #endif
 } __attribute__((packed));
 
@@ -417,7 +417,7 @@ struct packet_sc_notick {
 	short PacketType;
 	short index;
 	unsigned int AID;
-	unsigned char state;
+	uint8 state;
 } __attribute__((packed));
 
 struct packet_additem {
@@ -427,15 +427,15 @@ struct packet_additem {
 	unsigned short nameid;
 	uint8 IsIdentified;
 	uint8 IsDamaged;
-	unsigned char refiningLevel;
+	uint8 refiningLevel;
 	struct EQUIPSLOTINFO slot;
 #if PACKETVER >= 20120925
 	unsigned int location;
 #else
 	unsigned short location;
 #endif
-	unsigned char type;
-	unsigned char result;
+	uint8 type;
+	uint8 result;
 #if PACKETVER >= 20061218
 	int HireExpireDate;
 #endif
@@ -457,15 +457,15 @@ struct packet_dropflooritem {
 	uint8 IsIdentified;
 	short xPos;
 	short yPos;
-	unsigned char subX;
-	unsigned char subY;
+	uint8 subX;
+	uint8 subY;
 	short count;
 } __attribute__((packed));
 struct packet_idle_unit2 {
 #if PACKETVER < 20091103
 	short PacketType;
 #if PACKETVER >= 20071106
-	unsigned char objecttype;
+	uint8 objecttype;
 #endif
 	unsigned int GID;
 	short speed;
@@ -487,11 +487,11 @@ struct packet_idle_unit2 {
 	short honor;
 	short virtue;
 	uint8 isPKModeON;
-	unsigned char sex;
-	unsigned char PosDir[3];
-	unsigned char xSize;
-	unsigned char ySize;
-	unsigned char state;
+	uint8 sex;
+	uint8 PosDir[3];
+	uint8 xSize;
+	uint8 ySize;
+	uint8 state;
 	short clevel;
 #else // ! PACKETVER < 20091103
 	UNAVAILABLE_STRUCT;
@@ -502,7 +502,7 @@ struct packet_spawn_unit2 {
 #if PACKETVER < 20091103
 	short PacketType;
 #if PACKETVER >= 20071106
-	unsigned char objecttype;
+	uint8 objecttype;
 #endif
 	unsigned int GID;
 	short speed;
@@ -520,10 +520,10 @@ struct packet_spawn_unit2 {
 	short bodypalette;
 	short headDir;
 	uint8 isPKModeON;
-	unsigned char sex;
-	unsigned char PosDir[3];
-	unsigned char xSize;
-	unsigned char ySize;
+	uint8 sex;
+	uint8 PosDir[3];
+	uint8 xSize;
+	uint8 ySize;
 #else // ! PACKETVER < 20091103
 	UNAVAILABLE_STRUCT;
 #endif // PACKETVER < 20091103
@@ -533,7 +533,7 @@ struct packet_spawn_unit {
 	short PacketType;
 #if PACKETVER >= 20091103
 	short PacketLength;
-	unsigned char objecttype;
+	uint8 objecttype;
 #endif
 #if PACKETVER >= 20131223
 	unsigned int AID;
@@ -575,10 +575,10 @@ struct packet_spawn_unit {
 	short virtue;
 #endif
 	uint8 isPKModeON;
-	unsigned char sex;
-	unsigned char PosDir[3];
-	unsigned char xSize;
-	unsigned char ySize;
+	uint8 sex;
+	uint8 PosDir[3];
+	uint8 xSize;
+	uint8 ySize;
 	short clevel;
 #if PACKETVER >= 20080102
 	short font;
@@ -586,7 +586,7 @@ struct packet_spawn_unit {
 #if PACKETVER >= 20120221
 	int maxHP;
 	int HP;
-	unsigned char isBoss;
+	uint8 isBoss;
 #endif
 #if PACKETVER >= 20150513
 	short body;
@@ -600,7 +600,7 @@ struct packet_unit_walking {
 	short PacketLength;
 #endif
 #if PACKETVER > 20071106
-	unsigned char objecttype;
+	uint8 objecttype;
 #endif
 #if PACKETVER >= 20131223
 	unsigned int AID;
@@ -643,10 +643,10 @@ struct packet_unit_walking {
 	short virtue;
 #endif
 	uint8 isPKModeON;
-	unsigned char sex;
-	unsigned char MoveData[6];
-	unsigned char xSize;
-	unsigned char ySize;
+	uint8 sex;
+	uint8 MoveData[6];
+	uint8 xSize;
+	uint8 ySize;
 	short clevel;
 #if PACKETVER >= 20080102
 	short font;
@@ -654,7 +654,7 @@ struct packet_unit_walking {
 #if PACKETVER >= 20120221
 	int maxHP;
 	int HP;
-	unsigned char isBoss;
+	uint8 isBoss;
 #endif
 #if PACKETVER >= 20150513
 	short body;
@@ -666,7 +666,7 @@ struct packet_idle_unit {
 	short PacketType;
 #if PACKETVER >= 20091103
 	short PacketLength;
-	unsigned char objecttype;
+	uint8 objecttype;
 #endif
 #if PACKETVER >= 20131223
 	unsigned int AID;
@@ -708,11 +708,11 @@ struct packet_idle_unit {
 	short virtue;
 #endif
 	uint8 isPKModeON;
-	unsigned char sex;
-	unsigned char PosDir[3];
-	unsigned char xSize;
-	unsigned char ySize;
-	unsigned char state;
+	uint8 sex;
+	uint8 PosDir[3];
+	uint8 xSize;
+	uint8 ySize;
+	uint8 state;
 	short clevel;
 #if PACKETVER >= 20080102
 	short font;
@@ -720,7 +720,7 @@ struct packet_idle_unit {
 #if PACKETVER >= 20120221
 	int maxHP;
 	int HP;
-	unsigned char isBoss;
+	uint8 isBoss;
 #endif
 #if PACKETVER >= 20150513
 	short body;
@@ -732,7 +732,7 @@ struct packet_status_change {
 	short PacketType;
 	short index;
 	unsigned int AID;
-	unsigned char state;
+	uint8 state;
 #if PACKETVER >= 20120618
 	unsigned int Total;
 #endif
@@ -748,14 +748,14 @@ struct packet_status_change_end {
 	short PacketType;
 	short index;
 	unsigned int AID;
-	unsigned char state;
+	uint8 state;
 } __attribute__((packed));
 
 struct packet_status_change2 {
 	short PacketType;
 	short index;
 	unsigned int AID;
-	unsigned char state;
+	uint8 state;
 	unsigned int Left;
 	int val1;
 	int val2;
@@ -783,13 +783,13 @@ struct packet_maptypeproperty2 {
 
 struct packet_bgqueue_ack {
 	short PacketType;
-	unsigned char type;
+	uint8 type;
 	char bg_name[NAME_LENGTH];
 } __attribute__((packed));
 
 struct packet_bgqueue_notice_delete {
 	short PacketType;
-	unsigned char type;
+	uint8 type;
 	char bg_name[NAME_LENGTH];
 } __attribute__((packed));
 
@@ -817,7 +817,7 @@ struct packet_bgqueue_revoke_req {
 
 struct packet_bgqueue_battlebegin_ack {
 	short PacketType;
-	unsigned char result;
+	uint8 result;
 	char bg_name[NAME_LENGTH];
 	char game_name[NAME_LENGTH];
 } __attribute__((packed));
@@ -843,7 +843,7 @@ struct packet_script_clear {
 struct packet_package_item_announce {
 	short PacketType;
 	short PacketLength;
-	unsigned char type;
+	uint8 type;
 	unsigned short ItemID;
 	char len;
 	char Name[NAME_LENGTH];
@@ -855,7 +855,7 @@ struct packet_package_item_announce {
 struct packet_item_drop_announce {
 	short PacketType;
 	short PacketLength;
-	unsigned char type;
+	uint8 type;
 	unsigned short ItemID;
 	char len;
 	char Name[NAME_LENGTH];
@@ -927,12 +927,12 @@ struct packet_roulette_info_ack {
 
 struct packet_roulette_close_ack {
 	short PacketType;
-	unsigned char Result;
+	uint8 Result;
 } __attribute__((packed));
 
 struct packet_roulette_generate_ack {
 	short PacketType;
-	unsigned char Result;
+	uint8 Result;
 	unsigned short Step;
 	unsigned short Idx;
 	unsigned short AdditionItemID;
@@ -943,12 +943,12 @@ struct packet_roulette_generate_ack {
 
 struct packet_roulette_itemrecv_req {
 	short PacketType;
-	unsigned char Condition;
+	uint8 Condition;
 } __attribute__((packed));
 
 struct packet_roulette_itemrecv_ack {
 	short PacketType;
-	unsigned char Result;
+	uint8 Result;
 	unsigned short AdditionItemID;
 } __attribute__((packed));
 
@@ -1003,7 +1003,7 @@ struct packet_equipitem_ack {
 #if PACKETVER >= 20100629
 	unsigned short wItemSpriteNumber;
 #endif
-	unsigned char result;
+	uint8 result;
 } __attribute__((packed));
 
 struct packet_unequipitem_ack {
@@ -1014,7 +1014,7 @@ struct packet_unequipitem_ack {
 #else
 	unsigned short wearLocation;
 #endif
-	unsigned char result;
+	uint8 result;
 } __attribute__((packed));
 
 struct packet_viewequip_ack {
@@ -1031,7 +1031,7 @@ struct packet_viewequip_ack {
 #endif
 	short headpalette;
 	short bodypalette;
-	unsigned char sex;
+	uint8 sex;
 	struct EQUIPITEM_INFO list[MAX_INVENTORY];
 } __attribute__((packed));
 
@@ -1052,14 +1052,14 @@ struct packet_skill_entry {
 #if PACKETVER >= 20121212
 	int job;
 #else
-	unsigned char job;
+	uint8 job;
 #endif
 #if PACKETVER >= 20110718
 	char RadiusRange;
 #endif
-	unsigned char isVisible;
+	uint8 isVisible;
 #if PACKETVER >= 20130731
-	unsigned char level;
+	uint8 level;
 #endif
 } __attribute__((packed));
 
@@ -1069,9 +1069,9 @@ struct packet_graffiti_entry {
 	unsigned int creatorAID;
 	short xPos;
 	short yPos;
-	unsigned char job;
-	unsigned char isVisible;
-	unsigned char isContens;
+	uint8 job;
+	uint8 isVisible;
+	uint8 isContens;
 	char msg[80];
 } __attribute__((packed));
 
@@ -1088,10 +1088,10 @@ struct packet_damage {
 	int damage;
 #endif
 #if PACKETVER >= 20131223
-	unsigned char is_sp_damaged;
+	uint8 is_sp_damaged;
 #endif
 	short count;
-	unsigned char action;
+	uint8 action;
 #if PACKETVER < 20071113
 	short leftDamage;
 #else
@@ -1120,7 +1120,7 @@ struct packet_npc_market_purchase {
 struct packet_npc_market_result_ack {
 	short PacketType;
 	short PacketLength;
-	unsigned char result;
+	uint8 result;
 	struct {
 		unsigned short ITID;
 		unsigned short qty;
@@ -1134,7 +1134,7 @@ struct packet_npc_market_open {
 	/* inner struct figured by Ind after some annoying hour of debugging (data Thanks to Yommy) */
 	struct {
 		unsigned short nameid;
-		unsigned char type;
+		uint8 type;
 		unsigned int price;
 		unsigned int qty;
 		unsigned short view;
