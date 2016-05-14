@@ -325,7 +325,7 @@ struct NORMALITEM_INFO {
 #endif
 	short count;
 #if PACKETVER >= 20120925
-	unsigned int WearState;
+	uint32 WearState;
 #else
 	uint16 WearState;
 #endif
@@ -358,8 +358,8 @@ struct EQUIPITEM_INFO {
 	uint8 IsIdentified;
 #endif
 #if PACKETVER >= 20120925
-	unsigned int location;
-	unsigned int WearState;
+	uint32 location;
+	uint32 WearState;
 #else
 	uint16 location;
 	uint16 WearState;
@@ -394,7 +394,7 @@ struct EQUIPITEM_INFO {
 
 struct packet_authok {
 	short PacketType;
-	unsigned int startTime;
+	uint32 startTime;
 	uint8 PosDir[3];
 	uint8 xSize;
 	uint8 ySize;
@@ -408,7 +408,7 @@ struct packet_authok {
 
 struct packet_monster_hp {
 	short PacketType;
-	unsigned int GID;
+	uint32 GID;
 	int HP;
 	int MaxHP;
 } __attribute__((packed));
@@ -416,7 +416,7 @@ struct packet_monster_hp {
 struct packet_sc_notick {
 	short PacketType;
 	short index;
-	unsigned int AID;
+	uint32 AID;
 	uint8 state;
 } __attribute__((packed));
 
@@ -430,7 +430,7 @@ struct packet_additem {
 	uint8 refiningLevel;
 	struct EQUIPSLOTINFO slot;
 #if PACKETVER >= 20120925
-	unsigned int location;
+	uint32 location;
 #else
 	uint16 location;
 #endif
@@ -449,7 +449,7 @@ struct packet_additem {
 
 struct packet_dropflooritem {
 	short PacketType;
-	unsigned int ITAID;
+	uint32 ITAID;
 	uint16 ITID;
 #if PACKETVER >= 20130000 /* not sure date */
 	uint16 type;
@@ -467,7 +467,7 @@ struct packet_idle_unit2 {
 #if PACKETVER >= 20071106
 	uint8 objecttype;
 #endif
-	unsigned int GID;
+	uint32 GID;
 	short speed;
 	short bodyState;
 	short healthState;
@@ -482,7 +482,7 @@ struct packet_idle_unit2 {
 	short headpalette;
 	short bodypalette;
 	short headDir;
-	unsigned int GUID;
+	uint32 GUID;
 	short GEmblemVer;
 	short honor;
 	short virtue;
@@ -504,7 +504,7 @@ struct packet_spawn_unit2 {
 #if PACKETVER >= 20071106
 	uint8 objecttype;
 #endif
-	unsigned int GID;
+	uint32 GID;
 	short speed;
 	short bodyState;
 	short healthState;
@@ -536,9 +536,9 @@ struct packet_spawn_unit {
 	uint8 objecttype;
 #endif
 #if PACKETVER >= 20131223
-	unsigned int AID;
+	uint32 AID;
 #endif
-	unsigned int GID;
+	uint32 GID;
 	short speed;
 	short bodyState;
 	short healthState;
@@ -566,7 +566,7 @@ struct packet_spawn_unit {
 #if PACKETVER >= 20101124
 	short robe;
 #endif
-	unsigned int GUID;
+	uint32 GUID;
 	short GEmblemVer;
 	short honor;
 #if PACKETVER > 7
@@ -603,9 +603,9 @@ struct packet_unit_walking {
 	uint8 objecttype;
 #endif
 #if PACKETVER >= 20131223
-	unsigned int AID;
+	uint32 AID;
 #endif
-	unsigned int GID;
+	uint32 GID;
 	short speed;
 	short bodyState;
 	short healthState;
@@ -622,7 +622,7 @@ struct packet_unit_walking {
 	int weapon;
 #endif
 	short accessory;
-	unsigned int moveStartTime;
+	uint32 moveStartTime;
 #if PACKETVER < 7
 	short shield;
 #endif
@@ -634,7 +634,7 @@ struct packet_unit_walking {
 #if PACKETVER >= 20101124
 	short robe;
 #endif
-	unsigned int GUID;
+	uint32 GUID;
 	short GEmblemVer;
 	short honor;
 #if PACKETVER > 7
@@ -669,9 +669,9 @@ struct packet_idle_unit {
 	uint8 objecttype;
 #endif
 #if PACKETVER >= 20131223
-	unsigned int AID;
+	uint32 AID;
 #endif
-	unsigned int GID;
+	uint32 GID;
 	short speed;
 	short bodyState;
 	short healthState;
@@ -699,7 +699,7 @@ struct packet_idle_unit {
 #if PACKETVER >= 20101124
 	short robe;
 #endif
-	unsigned int GUID;
+	uint32 GUID;
 	short GEmblemVer;
 	short honor;
 #if PACKETVER > 7
@@ -731,13 +731,13 @@ struct packet_idle_unit {
 struct packet_status_change {
 	short PacketType;
 	short index;
-	unsigned int AID;
+	uint32 AID;
 	uint8 state;
 #if PACKETVER >= 20120618
-	unsigned int Total;
+	uint32 Total;
 #endif
 #if PACKETVER >= 20090121
-	unsigned int Left;
+	uint32 Left;
 	int val1;
 	int val2;
 	int val3;
@@ -747,16 +747,16 @@ struct packet_status_change {
 struct packet_status_change_end {
 	short PacketType;
 	short index;
-	unsigned int AID;
+	uint32 AID;
 	uint8 state;
 } __attribute__((packed));
 
 struct packet_status_change2 {
 	short PacketType;
 	short index;
-	unsigned int AID;
+	uint32 AID;
 	uint8 state;
-	unsigned int Left;
+	uint32 Left;
 	int val1;
 	int val2;
 	int val3;
@@ -766,18 +766,18 @@ struct packet_maptypeproperty2 {
 	short PacketType;
 	short type;
 	struct {
-		unsigned int party             : 1;  // Show attack cursor on non-party members (PvP)
-		unsigned int guild             : 1;  // Show attack cursor on non-guild members (GvG)
-		unsigned int siege             : 1;  // Show emblem over characters' heads when in GvG (WoE castle)
-		unsigned int mineffect         : 1;  // Automatically enable /mineffect
-		unsigned int nolockon          : 1;  // TODO: What does this do? (shows attack cursor on non-party members)
-		unsigned int countpk           : 1;  /// Show the PvP counter
-		unsigned int nopartyformation  : 1;  /// Prevent party creation/modification
-		unsigned int bg                : 1;  // TODO: What does this do? Probably related to Battlegrounds, but I'm not sure on the effect
-		unsigned int nocostume         : 1;  /// Does not show costume sprite.
-		unsigned int usecart           : 1;  /// Allow opening cart inventory
-		unsigned int summonstarmiracle : 1;  // TODO: What does this do? Related to Taekwon Masters, but I have no idea.
-		unsigned int SpareBits         : 15; /// Currently ignored, reserved for future updates
+		uint32 party             : 1;  // Show attack cursor on non-party members (PvP)
+		uint32 guild             : 1;  // Show attack cursor on non-guild members (GvG)
+		uint32 siege             : 1;  // Show emblem over characters' heads when in GvG (WoE castle)
+		uint32 mineffect         : 1;  // Automatically enable /mineffect
+		uint32 nolockon          : 1;  // TODO: What does this do? (shows attack cursor on non-party members)
+		uint32 countpk           : 1;  /// Show the PvP counter
+		uint32 nopartyformation  : 1;  /// Prevent party creation/modification
+		uint32 bg                : 1;  // TODO: What does this do? Probably related to Battlegrounds, but I'm not sure on the effect
+		uint32 nocostume         : 1;  /// Does not show costume sprite.
+		uint32 usecart           : 1;  /// Allow opening cart inventory
+		uint32 summonstarmiracle : 1;  // TODO: What does this do? Related to Taekwon Masters, but I have no idea.
+		uint32 SpareBits         : 15; /// Currently ignored, reserved for future updates
 	} flag;
 } __attribute__((packed));
 
@@ -836,7 +836,7 @@ struct packet_bgqueue_battlebegins {
 
 struct packet_script_clear {
 	short PacketType;
-	unsigned int NpcID;
+	uint32 NpcID;
 } __attribute__((packed));
 
 /* made possible thanks to Yommy!! */
@@ -876,13 +876,13 @@ struct packet_banking_check {
 
 struct packet_banking_deposit_req {
 	short PacketType;
-	unsigned int AID;
+	uint32 AID;
 	int Money;
 } __attribute__((packed));
 
 struct packet_banking_withdraw_req {
 	short PacketType;
-	unsigned int AID;
+	uint32 AID;
 	int Money;
 } __attribute__((packed));
 
@@ -916,7 +916,7 @@ struct packet_roulette_open_ack {
 struct packet_roulette_info_ack {
 	short PacketType;
 	short PacketLength;
-	unsigned int RouletteSerial;
+	uint32 RouletteSerial;
 	struct {
 		uint16 Row;
 		uint16 Position;
@@ -986,7 +986,7 @@ struct packet_equip_item {
 	short PacketType;
 	uint16 index;
 #if PACKETVER >= 20120925
-	unsigned int wearLocation;
+	uint32 wearLocation;
 #else
 	uint16 wearLocation;
 #endif
@@ -996,7 +996,7 @@ struct packet_equipitem_ack {
 	short PacketType;
 	uint16 index;
 #if PACKETVER >= 20120925
-	unsigned int wearLocation;
+	uint32 wearLocation;
 #else
 	uint16 wearLocation;
 #endif
@@ -1010,7 +1010,7 @@ struct packet_unequipitem_ack {
 	short PacketType;
 	uint16 index;
 #if PACKETVER >= 20120925
-	unsigned int wearLocation;
+	uint32 wearLocation;
 #else
 	uint16 wearLocation;
 #endif
@@ -1045,8 +1045,8 @@ struct packet_skill_entry {
 #if PACKETVER >= 20110718
 	short PacketLength;
 #endif
-	unsigned int AID;
-	unsigned int creatorAID;
+	uint32 AID;
+	uint32 creatorAID;
 	short xPos;
 	short yPos;
 #if PACKETVER >= 20121212
@@ -1065,8 +1065,8 @@ struct packet_skill_entry {
 
 struct packet_graffiti_entry {
 	short PacketType;
-	unsigned int AID;
-	unsigned int creatorAID;
+	uint32 AID;
+	uint32 creatorAID;
 	short xPos;
 	short yPos;
 	uint8 job;
@@ -1077,9 +1077,9 @@ struct packet_graffiti_entry {
 
 struct packet_damage {
 	short PacketType;
-	unsigned int GID;
-	unsigned int targetGID;
-	unsigned int startTime;
+	uint32 GID;
+	uint32 targetGID;
+	uint32 startTime;
 	int attackMT;
 	int attackedMT;
 #if PACKETVER < 20071113
@@ -1124,7 +1124,7 @@ struct packet_npc_market_result_ack {
 	struct {
 		uint16 ITID;
 		uint16 qty;
-		unsigned int price;
+		uint32 price;
 	} list[MAX_INVENTORY];/* assuming MAX_INVENTORY is max since you can't hold more than MAX_INVENTORY items thus cant buy that many at once. */
 } __attribute__((packed));
 
@@ -1135,8 +1135,8 @@ struct packet_npc_market_open {
 	struct {
 		uint16 nameid;
 		uint8 type;
-		unsigned int price;
-		unsigned int qty;
+		uint32 price;
+		uint32 qty;
 		uint16 view;
 	// It seems that the client doesn't have any hard-coded limit for this list
 	// it's possible to send up to 1890 items without dropping a packet that's
@@ -1148,15 +1148,15 @@ struct packet_wis_end {
 	short PacketType;
 	char result;
 #if PACKETVER >= 20131223
-	unsigned int unknown;/* maybe AID, not sure what for (works sending as 0) */
+	uint32 unknown;/* maybe AID, not sure what for (works sending as 0) */
 #endif
 } __attribute__((packed));
 
 
 struct packet_party_leader_changed {
 	short PacketType;
-	unsigned int prev_leader_aid;
-	unsigned int new_leader_aid;
+	uint32 prev_leader_aid;
+	uint32 new_leader_aid;
 } __attribute__((packed));
 
 struct packet_hotkey {
@@ -1166,9 +1166,9 @@ struct packet_hotkey {
 	char Rotate;
 #endif
 	struct {
-		char isSkill;    // 0: Item, 1:Skill
-		unsigned int ID; // Item/Skill ID
-		short count;     // Item Quantity/Skill Level
+		char isSkill; // 0: Item, 1:Skill
+		uint32 ID;    // Item/Skill ID
+		short count;  // Item Quantity/Skill Level
 	} hotkey[MAX_HOTKEYS];
 #else // not HOTKEY_SAVING
 	UNAVAILABLE_STRUCT;
