@@ -11581,7 +11581,11 @@ void clif_parse_NpcStringInput(int fd, struct map_session_data* sd) __attribute_
 /// 01d5 <packet len>.W <npc id>.L <string>.?B
 void clif_parse_NpcStringInput(int fd, struct map_session_data* sd)
 {
+#if PACKETVER >= 20151029	
+	int message_len = RFIFOW(fd,2)-7;
+#else
 	int message_len = RFIFOW(fd,2)-8;
+#endif
 	int npcid = RFIFOL(fd,4);
 	const char *message = RFIFOP(fd,8);
 
