@@ -3154,7 +3154,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 	// Spirit Marble status activates automatically for a infinite
 	// amount of time when the skill is learned. Felt this was the
 	// best place to put this. [Rytech]
-	if ( (skill_lv = pc->checkskill(sd, SU_SPRITEMABLE)))
+	if ( (skill_lv = pc->checkskill(sd, SU_SPRITEMABLE)) > 0)
 		sc_start(&sd->bl, &sd->bl, SC_SPRITEMABLE, 100, 1, -1);
 
 	calculating = 0;

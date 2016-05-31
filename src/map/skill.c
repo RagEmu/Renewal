@@ -862,6 +862,10 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			sc_start(src,bl,SC_BLIND,min(4*skill_lv,40),skill_lv,skill->get_time2(skill_id,skill_lv));
 			break;
 
+		case WZ_HEAVENDRIVE:
+			status_change_end(bl, SC_SV_ROOTTWIST, INVALID_TIMER);
+			break;
+
 		case HT_FREEZINGTRAP:
 		case MA_FREEZINGTRAP:
 			sc_start(src,bl,SC_FREEZE,(3*skill_lv+35),skill_lv,skill->get_time2(skill_id,skill_lv));
@@ -1430,21 +1434,21 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			sc_start(src,bl,SC_STUN,100,skill_lv,skill->get_time2(skill_id,skill_lv));
 			break;
 		case SU_SCRATCH:
-			sc_start2(src, bl, SC_BLOODING, (skill_lv * 3), skill_lv, src->id, skill->get_time(skill_id, skill_lv)); // TODO: What's the chance/time?
+			sc_start2(src, bl, SC_BLOODING, (skill_lv * 3), skill_lv, src->id, skill->get_time2(skill_id, skill_lv)); // TODO: What's the chance/time?
 			break;
 		case SU_SV_STEMSPEAR:
-			sc_start2(src, bl, SC_BLOODING, 10, skill_lv, src->id, skill->get_time(skill_id, skill_lv));
+			sc_start2(src, bl, SC_BLOODING, 10, skill_lv, src->id, skill->get_time2(skill_id, skill_lv));
 			break;
 		case SU_CN_METEOR:
 			if (skill->area_temp[3] == 1)
-					sc_start(src, bl, SC_CURSE, 10, skill_lv, skill->get_time2(skill_id, skill_lv)); // TODO: What's the chance/time?
+					sc_start(src, bl, SC_CURSE, 20, skill_lv, skill->get_time2(skill_id, skill_lv)); // TODO: What's the chance/time?
 			break;
 		//case SU_SCAROFTAROU:
 		//	sc_start(src, bl, SC_STUN, 10, skill_lv, skill->get_time2(skill_id, skill_lv)); // TODO: What's the chance/time?
 		//	break;
 		case SU_LUNATICCARROTBEAT:
 			if (skill->area_temp[3] == 1)
-				sc_start(src, bl, SC_STUN, 10, skill_lv, skill->get_time(skill_id, skill_lv)); // TODO: What's the chance/time?
+				sc_start(src, bl, SC_STUN, 20, skill_lv, skill->get_time2(skill_id, skill_lv)); // TODO: What's the chance/time?
 			break;
 		default:
 			skill->additional_effect_unknown(src, bl, &skill_id, &skill_lv, &attack_type, &dmg_lv, &tick);
@@ -12667,9 +12671,6 @@ int skill_unit_onplace_timer(struct skill_unit *src, struct block_list *bl, int6
 					map->freeblock_unlock();
 				}
 				break;
-				case WZ_HEAVENDRIVE:
-					status_change_end(bl, SC_SV_ROOTTWIST, INVALID_TIMER);
-					break;
 				case GS_DESPERADO:
 					if (rnd()%100 < src->val1)
 						skill->attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
