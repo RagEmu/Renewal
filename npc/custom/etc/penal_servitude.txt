@@ -132,43 +132,47 @@ OnRelease:
 sec_in02,137,57,1	script	Overseer	4_M_PAY_SOLDIER,{
 	mes "[Oliver]";
 
-	delitem Fabre_Card,countitem(Fabre_Card);//Items: Fabre_Card,
-	delitem Chonchon_Card,countitem(Chonchon_Card);//Items: Chonchon_Card,
-	delitem Spore_Card,countitem(Spore_Card);//Items: Spore_Card,
-	delitem Poison_Spore_Card,countitem(Poison_Spore_Card);//Items: Poison_Spore_Card,
+	delitem Fabre_Card, countitem(Fabre_Card);
+	delitem Chonchon_Card, countitem(Chonchon_Card);
+	delitem Spore_Card, countitem(Spore_Card);
+	delitem Poison_Spore_Card, countitem(Poison_Spore_Card);
 
-	if (PRISON_Q <= 0 ) goto L_GET_Q;
+	if (PRISON_Q <= 0) {
+		PRISON += 1;
+		if (PRISON > 1)
+			mes "Hmm... You've been here already... Well-well...";
 
-	mes "I want you to gather ^FF0000"+PRISON_Q+" Orange Net Mushroom^000000.";
-	if ( countitem(Mushroom_Of_Thief_1)<PRISON_Q ) close;//Items: Orange_Net_Mushroom,
+		if (countitem(Mushroom_Of_Thief_1) || countitem(Mushroom_Of_Thief_2))
+			mes "Drop these mushrooms!! They are poisonous!";
+		delitem Mushroom_Of_Thief_1, countitem(Mushroom_Of_Thief_1);
+		delitem Mushroom_Of_Thief_2, countitem(Mushroom_Of_Thief_2);
+
+		PRISON_Q = PRISON*3 + BaseLevel/3;
+		PRISON_Q *= readparam(bAspd)/55 + 1;
+		PRISON_Q += rand(50, 60);
+		mes "OK, you must bring me ^FF0000"+ PRISON_Q +"^000000 edible ^FF0000Orange Net Mushroom^000000 toadstoo.. shrooms.";
+		if (readparam(bAspd) >= 100)
+			mes "You're a fast fella! You'll have to get more shrooms, then.";
+		if (rand(10) < 4)
+			mes "And you may eat the deadly ones for breakfast.";
+		close;
+	}
+
+	mes "I want you to gather ^FF0000"+ PRISON_Q +" Orange Net Mushroom^000000.";
+	if (countitem(Mushroom_Of_Thief_1) < PRISON_Q)
+		close;
 	mes "OK... hand me all the shrooms...";
-	mes "Let me see... "+countitem(Mushroom_Of_Thief_1)+" of almost eadible ones...";//Items: Orange_Net_Mushroom,
-	mes "And "+countitem(Mushroom_Of_Thief_2)+" useless deadly ones.";//Items: Orange_Gooey_Mushroom_,
+	mes "Let me see... "+ countitem(Mushroom_Of_Thief_1) +" of almost eadible ones...";
+	mes "And "+ countitem(Mushroom_Of_Thief_2) +" useless deadly ones.";
 	next;
 	mes "[Oliver]";
 	mes "Thank you. You are free!";
 	set PRISON_Q,0;
-	delitem Mushroom_Of_Thief_1,countitem(Mushroom_Of_Thief_1);//Items: Orange_Net_Mushroom,
-	delitem Mushroom_Of_Thief_2,countitem(Mushroom_Of_Thief_2);//Items: Orange_Gooey_Mushroom_,
+	delitem Mushroom_Of_Thief_1, countitem(Mushroom_Of_Thief_1);
+	delitem Mushroom_Of_Thief_2, countitem(Mushroom_Of_Thief_2);
 	next;
-	savepoint "izlude",105,112;
-	warp "izlude",105,112;
-	close;
-
-L_GET_Q:
-	set PRISON,PRISON+1;
-	if (PRISON > 1) mes "Hmm... You've been here already... Well-well...";
-
-	if ( countitem(Mushroom_Of_Thief_1) || countitem(Mushroom_Of_Thief_2) ) mes "Drop these mushrooms!! They are poisonous!";//Items: Orange_Net_Mushroom, Orange_Gooey_Mushroom_,
-	delitem Mushroom_Of_Thief_1,countitem(Mushroom_Of_Thief_1);//Items: Orange_Net_Mushroom,
-	delitem Mushroom_Of_Thief_2,countitem(Mushroom_Of_Thief_2);//Items: Orange_Gooey_Mushroom_,
-
-	set PRISON_Q, PRISON*3 + BaseLevel/3;
-	set PRISON_Q, PRISON_Q * (readparam(bAspd)/55 + 1);
-	set PRISON_Q, PRISON_Q+rand(50,60);
-	mes "OK, you must bring me ^FF0000"+PRISON_Q+"^000000 edible ^FF0000Orange Net Mushroom^000000 toadstoo.. shrooms.";
-	if(readparam(bAspd)>=100) mes "You're a fast fella! You'll have to get more shrooms, then.";
-	if (rand(10)<4) mes "And you may eat the deadly ones for breakfast.";
+	savepoint "izlude", 105, 112;
+	warp "izlude", 105, 112;
 	close;
 }
 
