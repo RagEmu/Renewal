@@ -1,10 +1,11 @@
 /**
- * This file is part of Hercules.
- * http://herc.ws - http://github.com/HerculesWS/Hercules
+ * This file is part of RagEmu.
+ * http://herc.ws - http://github.com/RagEmu/Renewal
  *
+ * Copyright (C) 2016  RagEmu Dev Team
  * Copyright (C) 2016  Hercules Dev Team
  *
- * Hercules is free software: you can redistribute it and/or modify
+ * RagEmu is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -20,7 +21,7 @@
 #ifndef PLUGINS_HPMHOOKING_H
 #define PLUGINS_HPMHOOKING_H
 
-#include "common/hercules.h"
+#include "common/ragemu.h"
 
 enum HPluginHookType {
 	HOOK_TYPE_PRE,
@@ -33,14 +34,14 @@ struct HPMHooking_interface {
 	bool (*HookStopped) (void);
 };
 
-#ifdef HERCULES_CORE
+#ifdef RAGEMU_CORE
 struct HPMHooking_core_interface {
 	bool enabled;
 	bool force_return;
 	bool (*addhook_sub) (enum HPluginHookType type, const char *target, void *hook, unsigned int pID);
 	const char *(*Hooked)(bool *fr);
 };
-#else // ! HERCULES_CORE
+#else // ! RAGEMU_CORE
 HPExport struct HPMHooking_interface HPMHooking_s;
 
 #include "HPMHooking/HPMHooking.Defs.inc"
@@ -60,6 +61,6 @@ HPExport struct HPMHooking_interface HPMHooking_s;
 #define hookStop() (HPMi->hooking->HookStop(__func__,HPMi->pid))
 #define hookStopped() (HPMi->hooking->HookStopped())
 
-#endif // ! HERCULES_CORE
+#endif // ! RAGEMU_CORE
 
 #endif // PLUGINS_HPMHOOKING_H

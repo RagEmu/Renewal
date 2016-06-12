@@ -18,14 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-<<<<<<< HEAD
-#include "common/ragemu.h"
-=======
 
 #include "HPMHooking.h"
+#include "common/ragemu.h"
 
-#include "common/hercules.h"
->>>>>>> 95b4e32... Merge pull request #1253 from HerculesWS/hpmhooking
 #include "common/db.h"
 #include "common/memmgr.h"
 #include "common/mmo.h"

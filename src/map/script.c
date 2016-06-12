@@ -18885,36 +18885,6 @@ BUILDIN(useatcmd) {
 	return true;
 }
 
-<<<<<<< HEAD
-BUILDIN(checkre)
-{
-	int num;
-
-	num=script_getnum(st,2);
-	switch(num) {
-		case 0:
-#ifdef RENEWAL_DROP
-			script_pushint(st, 1);
-#else
-			script_pushint(st, 0);
-#endif
-			break;
-		case 1:
-#ifdef RENEWAL_EXP
-			script_pushint(st, 1);
-#else
-			script_pushint(st, 0);
-#endif
-			break;
-		default:
-			ShowWarning("buildin_checkre: unknown parameter.\n");
-			break;
-	}
-	return true;
-}
-
-=======
->>>>>>> 3be7c7f... Removed leftover definition of BUILDIN(checkre)
 /* getrandgroupitem <container_item_id>,<quantity> */
 BUILDIN(getrandgroupitem) {
 	struct item_data *data = NULL;
