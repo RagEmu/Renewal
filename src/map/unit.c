@@ -242,11 +242,11 @@ int unit_walktoxy_timer(int tid, int64 tick, int id, intptr_t data) {
 	int x,y,dx,dy;
 	unsigned char icewall_walk_block;
 	uint8 dir;
-	struct block_list       *bl;
+	struct block_list *bl;
 	struct map_session_data *sd;
-	struct mob_data         *md;
-	struct unit_data        *ud;
-	struct mercenary_data   *mrd;
+	struct mob_data *md;
+	struct unit_data *ud;
+	struct mercenary_data *mrd;
 
 	bl = map->id2bl(id);
 	if(bl == NULL)
@@ -355,6 +355,7 @@ int unit_walktoxy_timer(int tid, int64 tick, int id, intptr_t data) {
 			} else
 				sd->hd->masterteleport_timer = 0;
 		}
+		pc->cell_basilica(sd);
 	} else if (md) {
 		//Movement was successful, reset walktoxy_fail_count
 		md->walktoxy_fail_count = 0;

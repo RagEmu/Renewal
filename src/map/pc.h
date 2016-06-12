@@ -1077,6 +1077,8 @@ END_ZEROED_BLOCK; /* End */
 
 	bool (*process_chat_message) (struct map_session_data *sd, const char *message);
 	void (*check_supernovice_call) (struct map_session_data *sd, const char *message);
+	
+	void (*cell_basilica) (struct map_session_data *sd);
 };
 
 #ifdef RAGEMU_CORE
