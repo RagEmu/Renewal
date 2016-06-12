@@ -2696,6 +2696,24 @@ If the character is sitting, it will return 1, otherwise (standing) it will retu
 In case no player is specified, the function will return the state of the attached player.
 
 ---------------------------------------
+
+*addspiritball <amount>,<duration>{,<char_id>}
+
+Adds a spirit ball to player for 'duration' in second
+
+---------------------------------------
+
+*delspiritball <amount>{,<char_id>}
+
+Deletes the spirit ball(s) from player.
+
+---------------------------------------
+
+*delspiritball {<char_id>}
+
+Counts the spirit ball of player.
+
+---------------------------------------
 //=====================================
 2.1 - Item-Related Commands
 //=====================================

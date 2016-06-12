@@ -217,6 +217,13 @@ int pc_getmaxspiritball(struct map_session_data *sd, int min) {
 	return result;
 }
 
+/**
+* Adds a spiritball to player for 'interval' ms
+* @param sd
+* @param interval Duration of SpiritBall
+* @param max
+* @return 0
+*/
 int pc_addspiritball(struct map_session_data *sd,int interval,int max)
 {
 	int tid, i;
@@ -251,6 +258,13 @@ int pc_addspiritball(struct map_session_data *sd,int interval,int max)
 	return 0;
 }
 
+/**
+* Removes number of spiritball from player
+* @param sd
+* @param count
+* @param type 1 = gives client effect
+* @return 0
+*/
 int pc_delspiritball(struct map_session_data *sd,int count,int type)
 {
 	int i;
