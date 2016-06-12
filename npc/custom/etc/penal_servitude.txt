@@ -17,113 +17,116 @@
 sec_pri,36,58,1	script	Chief Warder	8W_SOLDIER,{
 	mes "[Saddeus]";
 	emotion 1;
-	if (Sex == SEX_MALE)
-		mes "Mr. Prisoner #"+BaseLevel+JobLevel+",";
-	else
-		mes "Ms. Prisoner #"+BaseLevel+JobLevel+",";
+	mes (Sex?"Mr":"Ms")+". Prisoner #"+BaseLevel+JobLevel+",";
 	mes "what's the noise over there?";
 	next;
-	menu "Let me free, I'll pay!",-, "Let me to work off my freedom!",M_Q1, "Nothing",M_NO_THANKS;
+	switch(select("Let me free, I'll pay!", "Let me to work off my freedom!", "Nothing")) {
+	case 1:
+		mes "[Saddeus]";
+		@MUSTPAY = (PRISON+1)*1000000;
+		
+		if (@MUSTPAY < 1000000)
+			@MUSTPAY = 1000000;
+		if (@MUSTPAY > 100000000)
+			@MUSTPAY = 100000000;
+		if (PRISON == 1)
+			mes "I can't remember you. Is it your 1st time?";
+		if (PRISON > 1)
+			mes "You again? Sombody hasn't grown wiser from the very first visit...";
+		mes "OK, we could release you for ^FF0000"+ @MUSTPAY +"z^000000.";
+		next;
+		switch(select("I pay cash!","Do you accept cheques?","I've changed my mind.")) {
+		case 1:
+			if (@MUSTPAY > Zeny) {
+				mes "[Saddeus]";
+				mes "What's this? It's not enough!";
+				close;
+			}
+			Zeny -= @MUSTPAY;
+			mes "[Saddeus]";
+			mes "OK, sing here and there.";
+			callsub OnRelease;
+			close;
+		case 2:
+			if (@MUSTPAY > #kafrabank) {
+				mes "[Saddeus]";
+				if (#kafrabank == 0)
+					mes "Your case says nothing about your bank accounts.";
+				else
+					mes "Alas, there's your bank account info... ^FF0000"+ #kafrabank +"z^000000... in the case. It's not enough.";
+				mes "Stop your silly games now!";
+				close;
+			}
+			#kafrabank -= @MUSTPAY;
+			mes "[Saddeus]";
+			mes "OK, sign your cheque. And put down your name in my book.";
+			callsub OnRelease;
+			close;
+		case 3:
+			mes "[Saddeus]";
+			mes "You've got some time to think about...";
+			close;
+		}
+		break;
+	case 2:
+		mes "[Saddeus]";
+		mes "Our stocks are short of toadstools.  Remember your morning's skilly?  What about some work at our sponsored mushroom farm?";
+		next;
+		if (select("OK, I'll work off!", "I love this prison!") == 2)
+			callsub OnNoThanks;
 
-M_PAY:
-	mes "[Saddeus]";
-	set @MUSTPAY,(PRISON+1)*1000000;
-	if (@MUSTPAY<1000000) set @MUSTPAY,1000000;
-	if (@MUSTPAY>100000000) set @MUSTPAY,100000000;
-	if (PRISON==1) mes "I can't remember you. Is it your 1st time?";
-	if (PRISON>1) mes "You again? Sombody hasn't grown wiser from the very first visit...";
-	mes "OK, we could release you for ^FF0000"+@MUSTPAY+"z^000000.";
-	next;
-	menu "I pay cash!",M_PAYCASH,"Do you accept cheques?",M_PAYBANK,"I've changed my mind.",-;
-
-	mes "[Saddeus]";
-	mes "You've got some time to think about...";
+		mes "[Saddeus]";
+		if(checkcart() || checkfalcon() || checkmount()){
+			emotion e_hmm;
+			mes "I'm sorry, you should release your Cart, Mount or Falcon!";
+			close;
+		}
+		mes "Talk to our overseer, Oliver.";
+		next;
+		nude;
+		@rw = rand(1,4);
+		switch(@rw) {
+		case 1:
+			savepoint "sec_in02",179,76;
+			warp "sec_in02",179,76;
+			break;
+		case 2:
+			savepoint "sec_in02",139,32;
+			warp "sec_in02",139,32;
+			break;
+		case 3:
+			savepoint "sec_in02",100,28;
+			warp "sec_in02",100,28;
+			break;
+		case 4:
+			savepoint "sec_in02",107,75;
+			warp "sec_in02",107,75;
+			break;
+		}
+		close;
+	case 3:
+		callsub OnNoThanks;
+	}
+	end;
+	
+OnNoThanks:
+	mes "[Saddeus]";  
+	if (rand(2))
+		mes "Is today X-Mas time, huh?";
+	mes "Now shut up and back off!";
+	if (rand(2))
+		emotion e_omg;
 	close;
 
-M_PAYCASH:
-	if (@MUSTPAY>Zeny) goto L_NOCASH;
-	Zeny -= @MUSTPAY;
-	mes "[Saddeus]";
-	mes "OK, sing here and there.";
-	goto L_RELEASE;
-
-L_NOCASH:
-	mes "[Saddeus]";
-	mes "What's this? It's not enough!";
-	close;
-
-M_PAYBANK:
-	if (@MUSTPAY>#kafrabank) goto L_NOBANK;
-	set #kafrabank,#kafrabank-@MUSTPAY;
-	mes "[Saddeus]";
-	mes "OK, sign your cheque. And put down your name in my book.";
-	goto L_RELEASE;
-
-L_NOBANK:
-	mes "[Saddeus]";
-	if (#kafrabank==0) mes "Your case says nothing about your bank accounts.";
-	if (#kafrabank!=0) mes "Alas, there's your bank account info... ^FF0000"+#kafrabank+"z^000000... in the case. It's not enough.";
-	mes "Stop your silly games now!";
-	close;
-
-L_RELEASE:
-	set PRISON,PRISON+1;
+OnRelease:
+	PRISON += 1;
 	next;
 	mes "[Saddeus]";
 	mes "You are free now!";
 	next;
-	savepoint "izlude",105,112;
-	warp "izlude",105,112;
-	close;
-
-M_Q1:
-	mes "[Saddeus]";
-	mes "Our stocks are short of toadstools.  Remember your morning's skilly?  What about some work at our sponsored mushroom farm?";
-	next;
-	menu "OK, I'll work off!",-, "I love this prison!",M_NO_THANKS;
-
-	mes "[Saddeus]";
-	if(checkcart() || checkfalcon() || checkmount()){
-		emotion e_hmm;
-		mes "I'm sorry, you should release your Cart, Mount or Falcon!";
-		close;
-	}
-	mes "Talk to our overseer, Oliver.";
-	next;
-
-	nude;
-
-	set @rw,rand(1,4);
-	if (@rw==2) goto L_W2;
-	if (@rw==3) goto L_W3;
-	if (@rw==4) goto L_W4;
-
-L_W1:
-	savepoint "sec_in02",179,76;
-	warp "sec_in02",179,76;
-	close;
-
-L_W2:
-	savepoint "sec_in02",139,32;
-	warp "sec_in02",139,32;
-	close;
-
-L_W3:
-	savepoint "sec_in02",100,28;
-	warp "sec_in02",100,28;
-	close;
-
-L_W4:
-	savepoint "sec_in02",107,75;
-	warp "sec_in02",107,75;
-	close;
-
-M_NO_THANKS:
-	mes "[Saddeus]";
-	if (rand(2)) mes "Is today X-Mas time, huh?";
-	mes "Now shut up and back off!";
-	if (rand(2)) emotion 23;
-	close;
+	savepoint "izlude", 105, 112;
+	warp "izlude", 105, 112;
+	return;
 }
 
 sec_in02,137,57,1	script	Overseer	4_M_PAY_SOLDIER,{
