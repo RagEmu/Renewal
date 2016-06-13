@@ -11902,15 +11902,19 @@ struct skill_unit_group* skill_unitsetting(struct block_list *src, uint16 skill_
 			break;
 		case BA_APPLEIDUN:
 			val1 = 5+2*skill_lv+st->vit/10; // MaxHP percent increase
-			if(sd)
+			if (sd != NULL)
 				val1 += pc->checkskill(sd,BA_MUSICALLESSON);
 			break;
 		case DC_SERVICEFORYOU:
-			val1 = 15+skill_lv+(st->int_/10); // MaxSP percent increase
-			val2 = 20+3*skill_lv+(st->int_/10); // SP cost reduction
-			if(sd){
-				val1 += pc->checkskill(sd,DC_DANCINGLESSON) / 2;
-				val2 += pc->checkskill(sd,DC_DANCINGLESSON) / 2;
+			if (sd != NULL) {
+				// val1: MaxSP percent increase
+				val1 = 15 + skill_lv;
+				val1 += st->int_ / 10; // Bonus rate by Dancer's INT
+
+				// val2: SP cost reduction
+				val2 = 20 + 3 * skill_lv;
+				val2 += (pc->checkskill(sd, DC_DANCINGLESSON) + 1) / 2; // Bonus rate by DC_DANCINGLESSON
+				val2 += st->int_ / 10; // Bonus rate by Dancer's INT
 			}
 			break;
 		case BA_ASSASSINCROSS:
@@ -15019,6 +15023,13 @@ int skill_consume_requirement( struct map_session_data *sd, uint16 skill_id, uin
 	return 1;
 }
 
+/**
++* Get skill requirements and return the value after some additional/reduction condition (such item bonus and status change)
+* @param sd Player's that will be checked
+* @param skill_id Skill that's being used
+* @param skill_lv Skill level of used skill
+* @return skill_condition Struct 'skill_condition' that store the modified skill requirements
+*/
 struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16 skill_id, uint16 skill_lv) {
 	struct skill_condition req;
 	struct status_data *st;
