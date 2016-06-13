@@ -58492,6 +58492,32 @@ void HP_pc_check_supernovice_call(struct map_session_data *sd, const char *messa
 	}
 	return;
 }
+void HP_pc_cell_basilica(struct map_session_data *sd) {
+	int hIndex = 0;
+	if( HPMHooks.count.HP_pc_cell_basilica_pre ) {
+		void (*preHookFunc) (struct map_session_data **sd);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_pc_cell_basilica_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_pc_cell_basilica_pre[hIndex].func;
+			preHookFunc(&sd);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return;
+		}
+	}
+	{
+		HPMHooks.source.pc.cell_basilica(sd);
+	}
+	if( HPMHooks.count.HP_pc_cell_basilica_post ) {
+		void (*postHookFunc) (struct map_session_data *sd);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_pc_cell_basilica_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_pc_cell_basilica_post[hIndex].func;
+			postHookFunc(sd);
+		}
+	}
+	return;
+}
 /* pcre_interface */
 pcre* HP_libpcre_compile(const char *pattern, int options, const char **errptr, int *erroffset, const unsigned char *tableptr) {
 	int hIndex = 0;
