@@ -11559,7 +11559,7 @@ void pc_cell_basilica(struct map_session_data *sd) {
 	if (sd == NULL)
 		return;
 	
-	if (!map->getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKBASILICA)) {
+	if (map->getcell(sd->bl.m, &sd->bl, sd->bl.x, sd->bl.y, CELL_CHKBASILICA) == 0) {
 		if (sd->sc.data[SC_BASILICA] != NULL)
 			status_change_end(&sd->bl, SC_BASILICA, INVALID_TIMER);
 	}
