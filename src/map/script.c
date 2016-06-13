@@ -20147,6 +20147,70 @@ BUILDIN(mergeitem)
 
 	return true;
 }
+
+/**
+ * dds a spirit ball to player for 'duration' in second
+ * addspiritball <amount>,<duration>{,<char_id>};
+ */
+BUILDIN(addspiritball) {
+	int amount = script_getnum(st, 2), tick = script_getnum(st,3), i;
+	struct map_session_data *sd;
+	
+	if (amount == 0)
+		return true;
+
+	if (script_getnum(st,4))
+		sd = map->charid2sd(script_getnum(st,4));
+	else
+		sd = script->rid2sd(st);
+	if (sd == NULL)
+		return false;
+
+	for (i = 0; i < amount; i++)
+		pc->addspiritball(sd, tick * 1000 ,10);
+	return true;
+}
+
+/**
+ * Deletes the spirit ball(s) from player.
+ * delspiritball <amount>{,<char_id>};
+ */
+BUILDIN(delspiritball) {
+	uint8 amount = script_getnum(st,2);
+	struct map_session_data *sd;
+	
+	if (amount == 0)
+		return true;
+
+	if (script_getnum(st,3))
+		sd = map->charid2sd(script_getnum(st,3));
+	else
+		sd = script->rid2sd(st);
+	if (sd == NULL)
+		return false;
+
+	pc->delspiritball(sd, max(amount,1), 1);
+	return true;
+}
+
+/**
+ * Counts the spirit ball of player.
+ * countspiritball {<char_id>};
+ */
+BUILDIN(countspiritball) {
+	struct map_session_data *sd;
+
+	if (script_getnum(st,2))
+		sd = map->charid2sd(script_getnum(st,2));
+	else
+		sd = script->rid2sd(st);
+	if (sd == NULL)
+		return false;
+	
+	script_pushint(st, sd->spiritball);
+	return true;
+}
+
 /** place holder for the translation macro **/
 BUILDIN(_) {
 	return true;
@@ -20831,7 +20895,11 @@ void script_parse_builtin(void) {
 
 		BUILDIN_DEF(channelmes, "ss"),
 		BUILDIN_DEF(showscript, "s?"),
-		BUILDIN_DEF(mergeitem,""),
+		BUILDIN_DEF(mergeitem, ""),
+		
+		BUILDIN_DEF(addspiritball, "ii?"),
+		BUILDIN_DEF(delspiritball, "i?"),
+		BUILDIN_DEF(countspiritball, "?"),
 		BUILDIN_DEF(_,"s"),
 	};
 	int i, len = ARRAYLENGTH(BUILDIN);

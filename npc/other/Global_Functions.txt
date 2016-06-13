@@ -117,7 +117,7 @@ function	script	F_ClearGarbage	{
 	//Clear previously saved Quest Skills (now it isn't used)
 		ADV_QSK = 0;
 		ADV_QSK2 = 0;
-	//Old Seset Skill Event used to use RES_SKILL var
+	//Old Reset Skill Event used to use RES_SKILL var
 		RES_SKILL = 0;
 	//Here you put outdated variables from your outdated EVENTS
 	//e.g. Is XMAS done? Add the EVENT var clearing code here.
@@ -144,24 +144,30 @@ function	script	F_ClearGarbage	{
 }
 
 //== Function Job_Change ===================================
-// Used in REBIRTH scripts
+// Job change based on Upper value (normal, advanced, baby).
+// -- callfunc "Job_Change",<Class value>;
+// See Job_* constants in 'db/constants.conf' for Class values.
 function	script	Job_Change	{
-	jobchange getarg(0),Upper; //Jobchange based on Upper
+	jobchange getarg(0),Upper;
 	logmes "CLASS CHANGE: " +strcharinfo(0)+ " become a "+jobname(Class);
 	return;
 }
 
 //== Function F_Rand =======================================
-// Returns a random argument
-// Example: (see also F_Bye or F_Hi functions)
-// .@itemIDfromList = callfunc("F_Rand",1129,1222,1163,1357,1360,1522,1811,1410);
+// Returns a random argument.
+// -- callfunc "F_Rand",arg0,arg1,...
+// Example:
+//    // You can use it to pick a random number from a list:
+//    set @itemIDfromList, callfunc("F_Rand",1129,1222,1163,1357,1360,1522,1811,1410);
 function	script	F_Rand	{
 	return getarg(rand(getargcount()));
 }
 
 //== Function F_Sex ========================================
-// Returns 1st argument if female, 2nd argument otherwise
-// Example: mes callfunc("F_Sex","What a beautiful lady!","What a handsome man!");
+// Returns 1st argument if female, 2nd argument if male.
+// -- callfunc "F_Sex",argFemale,argMale
+// Example:
+//     mes callfunc("F_Sex","What a beautiful lady!","What a handsome man!");
 function	script	F_SexMes	{
 	if (Sex == SEX_MALE)
 		return getarg(0);
@@ -170,48 +176,55 @@ function	script	F_SexMes	{
 }
 
 //== Function F_Hi =========================================
-// Returns random HELLO message
+// Returns random "hello" and "goodbye" messages.
+// -- callfunc "F_Hi"
+// -- callfunc "F_Bye"
 function	script	F_Hi	{
 	return callfunc("F_Rand","Hi!","Hello!","Good day!","How are you?","Hello there.");
 }
 
-//== Function F_Bye ========================================
-// Returns random BYE message
 function	script	F_Bye	{
 	return callfunc("F_Rand","Bye. See you again.","Later.","Goodbye.","Good luck!","Have a nice day!","Byebye!!!");
 }
 
 //== Function F_ItemName ===================================
-// Returns expanded item name string
-// Arguments:
-// - 0 - Item ID
-// - 1 - Element N (0=none,1=Ice,2=Earth,3=Fire,4=Wind)
-// - 2 - VVS meter 0...3
-// - 3 - Refine
-// Example: mes "Show me your "+callfunc("F_ItemName",1201,1,2,5)+"...";
-//  is equal to: mes "Show me your ^000090 +5 VVS Fire Knife ^000000..."
+// Returns expanded item name string.
+// -- callfunc "F_ItemName",<item ID>,{<element>{,<VVS meter 0..3>{,<refine rate>}}}
+//    Elements: 0=none, 1=Ice, 2=Earth, 3=Fire, 4=Wind
+// Example:
+//    // Displays "Show me your ^000090+5 VVS Fire Knife^000000..."
+//    mes "Show me your "+callfunc("F_ItemName",1201,1,2,5)+"...";
+
 function	script	F_ItemName	{
-	if(getarg(3))
-		.@t$ += "+"+getarg(3)+" ";
-	switch(getarg(2)) {
+	if (getarg(3, 0))
+		.@t$ += "+"+ getarg(3) +" ";
+	switch(getarg(2, 0)) {
 		case 0: break;
 		case 1: .@t$ += "VS "; break;
 		case 2: .@t$ += "VVS "; break;
 		case 3: .@t$ += "VVVS "; break;
 		default: .@t$ += getarg(2)+"xVS "; break;
 	}
-	switch(getarg(1)) {
+	switch(getarg(1), 0) {
+		case 0: break;
 		case 1: .@t$ += "Ice "; break;
 		case 2: .@t$ += "Earth "; break;
 		case 3: .@t$ += "Fire "; break;
 		case 4: .@t$ += "Wind "; break;
 		default: .@t$ += "Strange "; break;
 	}
-	return "^000090"+.@t$+getitemname(getarg(0))+"^000000";
+	return "^000090"+ .@t$ + getitemname(getarg(0)) +"^000000";
 }
 
 //== Function F_SaveQuestSkills ============================
-// Stores learned quest skills
+// Stores learnt quest skills as variables ADV_QSK and ADV_QSK2.
+// -- callfunc "F_SaveQuestSkills"
+//
+// Restores learnt 1st class quest skills.
+// -- callfunc "F_Load1Skills"
+//
+// Restores learnt 2nd class quest skills.
+// -- callfunc "F_Load2Skills"
 function	script	F_SaveQuestSkills	{
 	ADV_QSK = 0; ADV_QSK2 = 0;
 	//1st classes quest skills
@@ -228,7 +241,7 @@ function	script	F_SaveQuestSkills	{
 //== Function F_Load1Skills ================================
 // Restores learned 1st class quest skills
 function	script	F_Load1Skills	{
-	//1st classes quest skills
+	// 1st classes quest skills
 	for(.@i = 0; .@i < 14; ++.@i) {
 		if(ADV_QSK|pow(2,.@i) == ADV_QSK) skill 144+.@i,1,0;
 	}
@@ -239,7 +252,7 @@ function	script	F_Load1Skills	{
 //== Function F_Load2Skills ================================
 // Restores learned 2nd class quest skills
 function	script	F_Load2Skills	{
-	//2nd classes quest skills
+	// 2nd classes quest skills
 	for (.@i = 0; .@i < 19; ++.@i) {
 		if(ADV_QSK2|pow(2,.@i) == ADV_QSK2) skill 1001+.@i,1,0;
 	}
@@ -248,7 +261,8 @@ function	script	F_Load2Skills	{
 }
 
 //== Function F_GetWeaponType ==============================
-// Determines weapon type by view
+// Returns weapon type, based on view.
+// -- callfunc "F_GetWeaponType",<weapon ID>
 function	script	F_GetWeaponType	{
 	switch(getiteminfo(getarg(0),11)) {
 		case 1: return "Dagger"; break;
@@ -273,32 +287,52 @@ function	script	F_GetWeaponType	{
 		case 20: return "Shotgun"; break;
 		case 21: return "Grenade Launcher"; break;
 		case 22: return "Shuriken"; break;
-		default: return "Unable to Determine Equip Type"; break;
+		default: return "Unknown"; break;
 	}
 	end;
 }
 
 //== Function F_GetArmorType ===============================
-// Determines equipment type by equip location
+// Returns equipment type, based on equip location.
+// -- callfunc "F_GetArmorType",<item ID>
 function	script	F_GetArmorType	{
-	switch(getiteminfo(getarg(0),5)) {
-		case 001: return "Lower Headgear"; break;
-		case 2: return "Weapon"; break;
+	switch(getiteminfo(getarg(0), 5)) {
+		case 1: return "Lower Headgear"; break;
+		case 2: return callfunc("F_GetWeaponType", getarg(0)); break;
 		case 4: return "Garment"; break;
 		case 8: return "Accessory"; break;
 		case 16: return "Armor"; break;
 		case 32: return "Shield"; break;
 		case 64: return "Shoes"; break;
 		case 128: return "Accessory"; break;
+		case 136: return "Accessory"; break; // 8+128
 		case 256: return "Upper Headgear"; break;
 		case 512: return "Middle Headgear"; break;
-		default: return "Unable to Determine Equip Location"; break;
+		case 1024: return "Costume Upper Headgear"; break;
+		case 2048: return "Costume Midle Headgear"; break;
+		case 4096: return "Costume Lower Headgear"; break;
+		case 8192: return "Costume Garment"; break;
+		case 32768: return "Ammo"; break;
+		case 65536: return "Shadow Armor"; break;
+		case 131072: return "Shadow Weapon"; break;
+		case 262144: return "Shadow Shield"; break;
+		case 524288: return "Shadow Shoes"; break;
+		case 1048576: return "Shadow Accessory"; break;
+		case 2097152: return "Shadow Accessory"; break;
+		case 3145728: return "Shadow Accessory"; break; // 1048576 + 2097152
+		default: return "Unknown Equip"; break;
 	}
 	end;
 }
 
 //== Function Time2Str =====================================
-// Time calculation Function
+// Returns time remaining in a readable format.
+// The argument is subtracted from UNIX epoch time, or 'gettimetick(2)'.
+// -- callfunc "Time2Str", <tick in UNIX epoch time>
+// Example:
+//    // Displays "Time left: 1 day, 1 hour, 8 minutes, 20 seconds"
+//    set .@Timer, gettimetick(2) + 90500;
+//    mes "Time left: " + callfunc("Time2Str",.@Timer);
 function	script	Time2Str	{
 	.@time_left = getarg(0) - gettimetick(2);
 
@@ -372,4 +406,36 @@ function	script	F_MesColor	{
 // Indicate if attached player can open storage
 function	script	F_CanOpenStorage	{
 	return (!basicskillcheck() || !(getskilllv("NV_BASIC") < 6 && getskilllv("SU_BASIC_SKILL") < 1));
+}
+
+//== F_GetNumSuffix ======================================
+// Returns a number with a '-st', '-nd', '-rd', or '-th' suffix.
+// -- callfunc "F_GetNumSuffix",<number>
+// Examples:
+//    callfunc("F_GetNumSuffix",1)   // returns "1st"
+//    callfunc("F_GetNumSuffix",11)  // returns "11th"
+//    callfunc("F_GetNumSuffix",32)  // returns "32nd"
+function	script	F_GetNumSuffix	{
+	.@n = getarg(0);
+	.@mod = .@n % 10;
+	if (.@mod == 1 && .@n != 11)
+		return .@n+"st";
+	else if (.@mod == 2 && .@n != 12)
+		return .@n+"nd";
+	else if (.@mod == 3 && .@n != 13)
+		return .@n+"rd";
+	else
+		return getarg(0)+ "th";
+}
+
+//== F_InsertComma ======================================
+// Returns a number with commas between every three digits.
+// -- callfunc "F_InsertComma",<number>
+// Examples:
+//    callfunc("F_InsertComma",7777777)  // returns "7,777,777"
+function	script	F_InsertComma	{
+	.@str$ = getarg(0);
+	for (.@i = getstrlen(.@str$) - 3; .@i > 0; .@i -= 3)
+		.@str$ = insertchar(.@str$, ",", .@i);
+	return .@str$;
 }
