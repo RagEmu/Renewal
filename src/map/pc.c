@@ -217,6 +217,13 @@ int pc_getmaxspiritball(struct map_session_data *sd, int min) {
 	return result;
 }
 
+/**
+* Adds a spiritball to player for 'interval' ms
+* @param sd
+* @param interval Duration of SpiritBall
+* @param max
+* @return 0
+*/
 int pc_addspiritball(struct map_session_data *sd,int interval,int max)
 {
 	int tid, i;
@@ -251,6 +258,13 @@ int pc_addspiritball(struct map_session_data *sd,int interval,int max)
 	return 0;
 }
 
+/**
+* Removes number of spiritball from player
+* @param sd
+* @param count
+* @param type 1 = gives client effect
+* @return 0
+*/
 int pc_delspiritball(struct map_session_data *sd,int count,int type)
 {
 	int i;
@@ -5577,6 +5591,8 @@ int pc_setpos(struct map_session_data* sd, unsigned short map_index, int x, int 
 	/* given autotrades have no clients you have to trigger this manually otherwise they get stuck in memory limbo bugreport:7495 */
 	if( sd->state.autotrade )
 		clif->pLoadEndAck(0,sd);
+	
+	pc->cell_basilica(sd);
 
 	return 0;
 }
@@ -11535,6 +11551,23 @@ int pc_have_magnifier(struct map_session_data *sd)
 }
 
 /**
+ * Gives/removes SC_BASILICA when player steps in/out the cell with 'cell_basilica'
+ * @param sd player
+ * @author cydh
+ */
+void pc_cell_basilica(struct map_session_data *sd) {
+	if (sd == NULL)
+		return;
+	
+	if (map->getcell(sd->bl.m, &sd->bl, sd->bl.x, sd->bl.y, CELL_CHKBASILICA) == 0) {
+		if (sd->sc.data[SC_BASILICA] != NULL)
+			status_change_end(&sd->bl, SC_BASILICA, INVALID_TIMER);
+	}
+	else if (sd->sc.data[SC_BASILICA] != NULL)
+		sc_start(&sd->bl, &sd->bl, SC_BASILICA, 100, 0, -1);
+}
+
+/**
  * Verifies a chat message, searching for atcommands, checking if the sender
  * character can chat, and updating the idle timer.
  *
@@ -11992,4 +12025,6 @@ void pc_defaults(void) {
 	pc->update_idle_time = pc_update_idle_time;
 	
 	pc->have_magnifier = pc_have_magnifier;
+	
+	pc->cell_basilica = pc_cell_basilica;
 }
