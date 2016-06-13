@@ -7073,12 +7073,14 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 		case MC_IDENTIFY:
 			if(sd) {
 				clif->item_identify_list(sd);
-				if( sd->menuskill_id != MC_IDENTIFY ) {/* failed, don't consume anything, return */
+				if (sd->menuskill_id != MC_IDENTIFY) { // Failed, don't consume anything
 					map->freeblock_unlock();
 					return 1;
 				}
-				if( sd->skillitem != skill_id )
-					status_zap(src,0,skill->dbs->db[skill->get_index(skill_id)].sp[skill_lv]); // consume sp only if succeeded
+				if (sd->skillitem != skill_id) {
+					struct skill_condition req = skill->get_requirement(sd, skill_id, skill_lv);
+					status_zap(src, 0, req.sp); // consume sp only if succeeded
+				}
 			}
 			break;
 
