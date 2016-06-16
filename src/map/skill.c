@@ -11095,17 +11095,15 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			}
 			status_change_end(src, SC_HIDING, INVALID_TIMER);
 			break;
-		case SU_LOPE:
- 		{
- 			if( map->list[src->m].flag.noteleport && !(map->list[src->m].flag.battleground || map_flag_gvg2(src->m) ))
- 			{
+		case SU_LOPE: {
+ 			if (map->list[src->m].flag.noteleport && !(map->list[src->m].flag.battleground || map_flag_gvg2(src->m))) {
  				x = src->x;
  				y = src->y;
  			}
  			clif->skill_nodamage(src,src,SU_LOPE,skill_lv,1);
  			if(!map->count_oncell(src->m, x, y, BL_PC | BL_NPC | BL_MOB, 0) && map->getcell(src->m, src, x, y, CELL_CHKREACH))
  			{
- 				clif->slide(src,x,y);
+ 				clif->slide(src, x, y);
  				unit->movepos(src, x, y, 1, 0);
  			}
  		}
