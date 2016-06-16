@@ -36,8 +36,6 @@ matrix:
     env: CONFIGURE_FLAGS="--enable-debug"
   - compiler: gcc
     env: CONFIGURE_FLAGS="--enable-debug"
-  - compiler: gcc
-    env: CONFIGURE_FLAGS="--enable-debug --enable-sanitize=full CC=gcc-5 --disable-manager"
   
 notifications:
   email: false
