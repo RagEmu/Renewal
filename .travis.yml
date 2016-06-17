@@ -35,7 +35,11 @@ matrix:
   - compiler: clang
     env: CONFIGURE_FLAGS="--enable-debug"
   - compiler: gcc
-    env: CONFIGURE_FLAGS="--enable-debug"
+    env: CONFIGURE_FLAGS="--enable-debug --disable-renewal"
+  - compiler: gcc
+    env: LDFLAGS="-fuse-ld=gold" CONFIGURE_FLAGS="--enable-debug --enable-sanitize=full CC=gcc-5 --disable-manager"
+  - compiler: gcc
+    env: LDFLAGS="-fuse-ld=gold" CONFIGURE_FLAGS="--enable-debug --enable-sanitize=full CC=gcc-5 --disable-manager --disable-renewal"
   
 notifications:
   email: false
