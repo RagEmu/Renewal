@@ -12058,3 +12058,9 @@ airplane_01,10,10,3	script	#LyozienSwitch	HIDDEN_NPC,{
 		close;
 	}
 }
+
+izlude,172,73,5	duplicate(Scamp)	Scamp#iz	4_M_YURI
+izlude_a,172,73,5	duplicate(Scamp)	Scamp#iz_a	4_M_YURI
+izlude_b,172,73,5	duplicate(Scamp)	Scamp#iz_b	4_M_YURI
+izlude_c,172,73,5	duplicate(Scamp)	Scamp#iz_c	4_M_YURI
+izlude_d,172,73,5	duplicate(Scamp)	Scamp#iz_d	4_M_YURI
