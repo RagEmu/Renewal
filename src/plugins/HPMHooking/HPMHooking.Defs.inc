@@ -215,6 +215,8 @@ typedef void (*HPMHOOK_pre_battle_calc_skillratio_weapon_unknown) (int **attack_
 typedef void (*HPMHOOK_post_battle_calc_skillratio_weapon_unknown) (int *attack_type, struct block_list *src, struct block_list *target, uint16 *skill_id, uint16 *skill_lv, int *skillratio, int *flag);
 typedef void (*HPMHOOK_pre_battle_calc_misc_attack_unknown) (struct block_list **src, struct block_list **target, uint16 **skill_id, uint16 **skill_lv, int **mflag, struct Damage **md);
 typedef void (*HPMHOOK_post_battle_calc_misc_attack_unknown) (struct block_list *src, struct block_list *target, uint16 *skill_id, uint16 *skill_lv, int *mflag, struct Damage *md);
+typedef void (*HPMHOOK_pre_battle_vanish) (struct map_session_data **sd, struct block_list **target, struct Damage **d);
+typedef void (*HPMHOOK_post_battle_vanish) (struct map_session_data *sd, struct block_list *target, struct Damage *d);
 #endif // MAP_BATTLE_H
 #ifdef MAP_BATTLEGROUND_H /* bg */
 typedef void (*HPMHOOK_pre_bg_init) (bool *minimal);
