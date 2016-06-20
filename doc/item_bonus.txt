@@ -347,11 +347,11 @@ bonus3 bSPDrainRateRace, r, n, x;				Adds a n / 10% chance to receive x% of dama
 
 HP / SP Vanish
 ------------
-bonus2 bHPVanishRate, n, x;						Add the (n / 10)% chance of decreasing enemy HP amount by x% when attacking
-bonus2 bSPVanishRate, n, x;						Add the (n / 10)% chance of decreasing enemy SP amount by x% when attacking
+bonus2 bHPVanishRate, n, x;						Add the (n / 100)% chance of decreasing enemy HP amount by x% when attacking
+bonus2 bSPVanishRate, n, x;						Add the (n / 100)% chance of decreasing enemy SP amount by x% when attacking
 
-bonus3 bHPVanishRate, n, x, bf;					Add the (n / 10)% chance of decreasing enemy HP amount by x% when attacking for criteria bf
-bonus3 bSPVanishRate, n, x, bf;					Add the (n / 10)% chance of decreasing enemy SP amount by x% when attacking for criteria bf
+bonus3 bHPVanishRate, n, x, bf;					Add the (n / 100)% chance of decreasing enemy HP amount by x% when attacking for criteria bf
+bonus3 bSPVanishRate, n, x, bf;					Add the (n / 100)% chance of decreasing enemy SP amount by x% when attacking for criteria bf
 
 HP / SP Gain
 ----------

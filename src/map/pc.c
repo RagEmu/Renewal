@@ -2233,6 +2233,78 @@ int pc_bonus_subele(struct map_session_data* sd, unsigned char ele, short rate, 
 }
 
 /**
+ * @param sd Character for which bonus will be added
+ * @param rate bonus chance
+ * @param per Percentage of HP to vanish
+ * @param flag Battle Flag
+ * @author Dastgir/RagEmu
+ */
+void pc_bonus_hp_vanish(struct map_session_data *sd, short rate, short per, short flag)
+{
+	int i;
+	
+	if (!(flag&BF_RANGEMASK))
+		flag |= BF_SHORT|BF_LONG;
+	if (!(flag&BF_WEAPONMASK))
+		flag |= BF_WEAPON;
+	if (!(flag&BF_SKILLMASK)) {
+		if (flag&(BF_MAGIC|BF_MISC))
+			flag |= BF_SKILL;
+		if (flag&BF_WEAPON)
+			flag |= BF_NORMAL|BF_SKILL;
+	}
+
+	ARR_FIND(0, MAX_PC_BONUS, i, sd->hp_vanish[i].rate == 0 || sd->hp_vanish[i].flag == flag);
+
+	if (i == MAX_PC_BONUS) {
+		ShowWarning("pc_bonus_hp_vanish: Reached max (%d) possible bonuses for this player.\n", MAX_PC_BONUS);
+		return;
+	}	
+
+	sd->hp_vanish[i].rate = rate;
+	sd->hp_vanish[i].per =  max(sd->hp_vanish[i].per, per);
+	sd->hp_vanish[i].flag = flag;
+
+	return;
+}
+
+/**
+ * @param sd Character for which bonus will be added
+ * @param rate bonus chance
+ * @param per Percentage of SP to vanish
+ * @param flag Battle Flag
+ * @author Dastgir/RagEmu
+ */
+void pc_bonus_sp_vanish(struct map_session_data *sd, short rate, short per, short flag)
+{
+	int i;
+	
+	if (!(flag&BF_RANGEMASK))
+		flag |= BF_SHORT|BF_LONG;
+	if (!(flag&BF_WEAPONMASK))
+		flag |= BF_WEAPON;
+	if (!(flag&BF_SKILLMASK)) {
+		if (flag&(BF_MAGIC|BF_MISC))
+			flag |= BF_SKILL;
+		if (flag&BF_WEAPON)
+			flag |= BF_NORMAL|BF_SKILL;
+	}
+
+	ARR_FIND(0, MAX_PC_BONUS, i, sd->sp_vanish[i].rate == 0 || sd->sp_vanish[i].flag == flag);
+
+	if (i == MAX_PC_BONUS) {
+		ShowWarning("pc_bonus_sp_vanish: Reached max (%d) possible bonuses for this player.\n", MAX_PC_BONUS);
+		return;
+	}	
+
+	sd->sp_vanish[i].rate = rate;
+	sd->sp_vanish[i].per =  max(sd->sp_vanish[i].per, per);
+	sd->sp_vanish[i].flag = flag;
+
+	return;
+}
+
+/**
  * Loops through the fields in a race bitmask (enum RaceMask => enum Race)
  *
  * To be used in pc_bonus functions with races represented in array form.
@@ -3182,14 +3254,12 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			if (sd->state.lr_flag != 2) {
 				sd->bonus.hp_vanish_rate += type2;
 				sd->bonus.hp_vanish_per = max(sd->bonus.hp_vanish_per, val);
-				sd->bonus.hp_vanish_trigger = 0;
 			}
 			break;
 		case SP_SP_VANISH_RATE:
 			if (sd->state.lr_flag != 2) {
 				sd->bonus.sp_vanish_rate += type2;
 				sd->bonus.sp_vanish_per = max(sd->bonus.sp_vanish_per, val);
-				sd->bonus.sp_vanish_trigger = 0;
 			}
 			break;
 		case SP_GET_ZENY_NUM:
@@ -3824,18 +3894,12 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			}
 			break;
 		case SP_HP_VANISH_RATE:
-			if (sd->state.lr_flag != 2) {
-				sd->bonus.hp_vanish_rate += type2;
-				sd->bonus.hp_vanish_per = max(sd->bonus.hp_vanish_per, type3);
-				sd->bonus.hp_vanish_trigger = val;
-			}
+			if (sd->state.lr_flag != 2)
+				pc_bonus_hp_vanish(sd, type2, type3, val);
 			break;
 		case SP_SP_VANISH_RATE:
-			if (sd->state.lr_flag != 2) {
-				sd->bonus.sp_vanish_rate += type2;
-				sd->bonus.sp_vanish_per = max(sd->bonus.sp_vanish_per, type3);
-				sd->bonus.sp_vanish_trigger = val;
-			}
+			if (sd->state.lr_flag != 2)
+				pc_bonus_sp_vanish(sd, type2, type3, val);
 			break;
 
 		default:
