@@ -73953,11 +73953,11 @@ int HP_status_change_clear(struct block_list *bl, int type) {
 	}
 	return retVal___;
 }
-int HP_status_change_clear_buffs(struct block_list *bl, int type) {
+int HP_status_change_clear_buffs(struct block_list *bl, enum scclear_flag type) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_status_change_clear_buffs_pre ) {
-		int (*preHookFunc) (struct block_list **bl, int *type);
+		int (*preHookFunc) (struct block_list **bl, enum scclear_flag *type);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_status_change_clear_buffs_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_status_change_clear_buffs_pre[hIndex].func;
@@ -73972,7 +73972,7 @@ int HP_status_change_clear_buffs(struct block_list *bl, int type) {
 		retVal___ = HPMHooks.source.status.change_clear_buffs(bl, type);
 	}
 	if( HPMHooks.count.HP_status_change_clear_buffs_post ) {
-		int (*postHookFunc) (int retVal___, struct block_list *bl, int type);
+		int (*postHookFunc) (int retVal___, struct block_list *bl, enum scclear_flag type);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_status_change_clear_buffs_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_status_change_clear_buffs_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, bl, type);

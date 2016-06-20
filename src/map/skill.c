@@ -1408,7 +1408,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				break;
 			}
 
-			for(i = 0; i < SC_MAX; i++) {
+			for (i = 0; i < SC_MAX; i++) {
 					if ( !tsc->data[i] )
 						continue;
 						if ( status->get_sc_type(i)&SC_NO_BANISHING_BUSTER )
@@ -1419,12 +1419,12 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 							continue;
 						break;
 					}
-				if( i == SC_BERSERK || i == SC_SATURDAY_NIGHT_FEVER )
+				if (i == SC_BERSERK || i == SC_SATURDAY_NIGHT_FEVER)
 					tsc->data[i]->val2 = 0;
 				status_change_end(bl,(sc_type)i,INVALID_TIMER);
 				n--;
-				}
 			}
+		}
 			break;
 		case RL_AM_BLAST:
 			if( bl->type == BL_PC )
@@ -8126,7 +8126,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 						sc_start(src,bl,SC_INCMATKRATE,100,-50,skill->get_time2(skill_id,skill_lv));
 						break;
 					case 2: // all buffs removed
-						status->change_clear_buffs(bl,1);
+						status->change_clear_buffs(bl, SC_CLEAR_BUFF | SC_CLEAR_CHEMICAL_PROTECT);
 						break;
 					case 3: // 1000 damage, random armor destroyed
 						{
@@ -8576,7 +8576,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 			clif->skill_nodamage(src,bl,skill_id,skill_lv,
 			                     sc_start(src,bl,type,100,skill_lv,skill->get_time(skill_id,skill_lv)));
 			status->heal(bl,heal,0,1);
-			status->change_clear_buffs(bl,4);
+			status->change_clear_buffs(bl, SC_CLEAR_DEBUFF_SPECIAL);
 		}
 			break;
 
@@ -8634,7 +8634,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 					i = status_get_max_hp(bl) * 25 / 100;
 					sc_start(src,bl,SC_REFRESH,100,skill_lv,skill->get_time(skill_id,skill_lv));
 					status->heal(bl,i,0,1);
-					status->change_clear_buffs(bl,4);
+					status->change_clear_buffs(bl, SC_CLEAR_DEBUFF_SPECIAL);
 				}
 				if( skill->area_temp[5]&0x40 )
 					sc_start(src,bl,SC_GIANTGROWTH,100,skill_lv,skill->get_time(skill_id,skill_lv));
@@ -8649,7 +8649,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 					sc_start(src,bl,SC_VITALITYACTIVATION,100,skill_lv,skill->get_time(skill_id,skill_lv));
 				if( skill->area_temp[5]&0x200 )
 					sc_start(src,bl,SC_ABUNDANCE,100,skill_lv,skill->get_time(skill_id,skill_lv));
-				status->change_clear_buffs(bl,8); //For bonus_script
+				status->change_clear_buffs(bl, SC_NO_CLEARANCE); //For bonus_script
 			} else if( sd ) {
 				skill->area_temp[5] = 0;
 				if( tsc && tsc->count ) {
@@ -11259,7 +11259,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 				if (!sg) break;
 				if (sce)
 					status_change_end(src, type, INVALID_TIMER); //Was under someone else's Gospel. [Skotlex]
-				status->change_clear_buffs(src,3);
+				status->change_clear_buffs(src, SC_CLEAR_BUFF | SC_CLEAR_DEBUFF);
 				sc_start4(src,src,type,100,skill_lv,0,sg->group_id,BCT_SELF,skill->get_time(skill_id,skill_lv));
 				clif->skill_poseffect(src, skill_id, skill_lv, 0, 0, tick); // PA_GOSPEL music packet
 			}
@@ -12349,7 +12349,7 @@ int skill_unit_onplace(struct skill_unit *src, struct block_list *bl, int64 tick
 
 		case UNT_HERMODE:
 			if (sg->src_id!=bl->id && battle->check_target(&src->bl,bl,BCT_PARTY|BCT_GUILD) > 0)
-				status->change_clear_buffs(bl,1); //Should dispell only allies.
+				status->change_clear_buffs(bl, SC_CLEAR_BUFF); //Should dispell only allies.
 		case UNT_RICHMANKIM:
 		case UNT_ETERNALCHAOS:
 		case UNT_DRUMBATTLEFIELD:
@@ -12910,7 +12910,7 @@ int skill_unit_onplace_timer(struct skill_unit *src, struct block_list *bl, int6
 						status->heal(bl,heal,0,0);
 						break;
 					case 1: // End all negative status
-						status->change_clear_buffs(bl,2);
+						status->change_clear_buffs(bl, SC_CLEAR_DEBUFF);
 						if (tsd) clif->gospel_info(tsd, 0x15);
 						break;
 					case 2: // Immunity to all status
