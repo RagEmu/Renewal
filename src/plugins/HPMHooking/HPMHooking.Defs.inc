@@ -6699,8 +6699,8 @@ typedef int (*HPMHOOK_pre_status_change_timer_sub) (struct block_list **bl, va_l
 typedef int (*HPMHOOK_post_status_change_timer_sub) (int retVal___, struct block_list *bl, va_list ap);
 typedef int (*HPMHOOK_pre_status_change_clear) (struct block_list **bl, int *type);
 typedef int (*HPMHOOK_post_status_change_clear) (int retVal___, struct block_list *bl, int type);
-typedef int (*HPMHOOK_pre_status_change_clear_buffs) (struct block_list **bl, int *type);
-typedef int (*HPMHOOK_post_status_change_clear_buffs) (int retVal___, struct block_list *bl, int type);
+typedef int (*HPMHOOK_pre_status_change_clear_buffs) (struct block_list **bl, enum scclear_flag *type);
+typedef int (*HPMHOOK_post_status_change_clear_buffs) (int retVal___, struct block_list *bl, enum scclear_flag type);
 typedef void (*HPMHOOK_pre_status_calc_bl_) (struct block_list **bl, enum scb_flag *flag, enum e_status_calc_opt *opt);
 typedef void (*HPMHOOK_post_status_calc_bl_) (struct block_list *bl, enum scb_flag flag, enum e_status_calc_opt opt);
 typedef int (*HPMHOOK_pre_status_calc_mob_) (struct mob_data **md, enum e_status_calc_opt *opt);
