@@ -2577,6 +2577,32 @@ void HP_battle_calc_misc_attack_unknown(struct block_list *src, struct block_lis
 	}
 	return;
 }
+void HP_battle_vanish(struct map_session_data *sd, struct block_list *target, struct Damage *d) {
+	int hIndex = 0;
+	if( HPMHooks.count.HP_battle_vanish_pre ) {
+		void (*preHookFunc) (struct map_session_data **sd, struct block_list **target, struct Damage **d);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_battle_vanish_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_battle_vanish_pre[hIndex].func;
+			preHookFunc(&sd, &target, &d);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return;
+		}
+	}
+	{
+		HPMHooks.source.battle.vanish(sd, target, d);
+	}
+	if( HPMHooks.count.HP_battle_vanish_post ) {
+		void (*postHookFunc) (struct map_session_data *sd, struct block_list *target, struct Damage *d);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_battle_vanish_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_battle_vanish_post[hIndex].func;
+			postHookFunc(sd, target, d);
+		}
+	}
+	return;
+}
 /* battleground_interface */
 void HP_bg_init(bool minimal) {
 	int hIndex = 0;
@@ -66917,15 +66943,15 @@ struct skill_unit_group* HP_skill_id2group(int group_id) {
 	}
 	return retVal___;
 }
-struct skill_unit_group* HP_skill_unitsetting(struct block_list *src, uint16 skill_id, uint16 skill_lv, short x, short y, int flag) {
+struct skill_unit_group* HP_skill_unitsetting(struct block_list *src, uint16 skill_id, uint16 skill_lv, short x, short y, int flag, int duration) {
 	int hIndex = 0;
 	struct skill_unit_group* retVal___ = NULL;
 	if( HPMHooks.count.HP_skill_unitsetting_pre ) {
-		struct skill_unit_group* (*preHookFunc) (struct block_list **src, uint16 *skill_id, uint16 *skill_lv, short *x, short *y, int *flag);
+		struct skill_unit_group* (*preHookFunc) (struct block_list **src, uint16 *skill_id, uint16 *skill_lv, short *x, short *y, int *flag, int *duration);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_skill_unitsetting_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_skill_unitsetting_pre[hIndex].func;
-			retVal___ = preHookFunc(&src, &skill_id, &skill_lv, &x, &y, &flag);
+			retVal___ = preHookFunc(&src, &skill_id, &skill_lv, &x, &y, &flag, &duration);
 		}
 		if( *HPMforce_return ) {
 			*HPMforce_return = false;
@@ -66933,13 +66959,13 @@ struct skill_unit_group* HP_skill_unitsetting(struct block_list *src, uint16 ski
 		}
 	}
 	{
-		retVal___ = HPMHooks.source.skill.unitsetting(src, skill_id, skill_lv, x, y, flag);
+		retVal___ = HPMHooks.source.skill.unitsetting(src, skill_id, skill_lv, x, y, flag, duration);
 	}
 	if( HPMHooks.count.HP_skill_unitsetting_post ) {
-		struct skill_unit_group* (*postHookFunc) (struct skill_unit_group* retVal___, struct block_list *src, uint16 skill_id, uint16 skill_lv, short x, short y, int flag);
+		struct skill_unit_group* (*postHookFunc) (struct skill_unit_group* retVal___, struct block_list *src, uint16 skill_id, uint16 skill_lv, short x, short y, int flag, int duration);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_skill_unitsetting_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_skill_unitsetting_post[hIndex].func;
-			retVal___ = postHookFunc(retVal___, src, skill_id, skill_lv, x, y, flag);
+			retVal___ = postHookFunc(retVal___, src, skill_id, skill_lv, x, y, flag, duration);
 		}
 	}
 	return retVal___;
@@ -73953,11 +73979,11 @@ int HP_status_change_clear(struct block_list *bl, int type) {
 	}
 	return retVal___;
 }
-int HP_status_change_clear_buffs(struct block_list *bl, int type) {
+int HP_status_change_clear_buffs(struct block_list *bl, enum scclear_flag type) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_status_change_clear_buffs_pre ) {
-		int (*preHookFunc) (struct block_list **bl, int *type);
+		int (*preHookFunc) (struct block_list **bl, enum scclear_flag *type);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_status_change_clear_buffs_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_status_change_clear_buffs_pre[hIndex].func;
@@ -73972,7 +73998,7 @@ int HP_status_change_clear_buffs(struct block_list *bl, int type) {
 		retVal___ = HPMHooks.source.status.change_clear_buffs(bl, type);
 	}
 	if( HPMHooks.count.HP_status_change_clear_buffs_post ) {
-		int (*postHookFunc) (int retVal___, struct block_list *bl, int type);
+		int (*postHookFunc) (int retVal___, struct block_list *bl, enum scclear_flag type);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_status_change_clear_buffs_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_status_change_clear_buffs_post[hIndex].func;
 			retVal___ = postHookFunc(retVal___, bl, type);

@@ -215,6 +215,8 @@ typedef void (*HPMHOOK_pre_battle_calc_skillratio_weapon_unknown) (int **attack_
 typedef void (*HPMHOOK_post_battle_calc_skillratio_weapon_unknown) (int *attack_type, struct block_list *src, struct block_list *target, uint16 *skill_id, uint16 *skill_lv, int *skillratio, int *flag);
 typedef void (*HPMHOOK_pre_battle_calc_misc_attack_unknown) (struct block_list **src, struct block_list **target, uint16 **skill_id, uint16 **skill_lv, int **mflag, struct Damage **md);
 typedef void (*HPMHOOK_post_battle_calc_misc_attack_unknown) (struct block_list *src, struct block_list *target, uint16 *skill_id, uint16 *skill_lv, int *mflag, struct Damage *md);
+typedef void (*HPMHOOK_pre_battle_vanish) (struct map_session_data **sd, struct block_list **target, struct Damage **d);
+typedef void (*HPMHOOK_post_battle_vanish) (struct map_session_data *sd, struct block_list *target, struct Damage *d);
 #endif // MAP_BATTLE_H
 #ifdef MAP_BATTLEGROUND_H /* bg */
 typedef void (*HPMHOOK_pre_bg_init) (bool *minimal);
@@ -6181,8 +6183,8 @@ typedef int (*HPMHOOK_pre_skill_strip_equip) (struct block_list **bl, unsigned s
 typedef int (*HPMHOOK_post_skill_strip_equip) (int retVal___, struct block_list *bl, unsigned short where, int rate, int lv, int time);
 typedef struct skill_unit_group* (*HPMHOOK_pre_skill_id2group) (int *group_id);
 typedef struct skill_unit_group* (*HPMHOOK_post_skill_id2group) (struct skill_unit_group* retVal___, int group_id);
-typedef struct skill_unit_group* (*HPMHOOK_pre_skill_unitsetting) (struct block_list **src, uint16 *skill_id, uint16 *skill_lv, short *x, short *y, int *flag);
-typedef struct skill_unit_group* (*HPMHOOK_post_skill_unitsetting) (struct skill_unit_group* retVal___, struct block_list *src, uint16 skill_id, uint16 skill_lv, short x, short y, int flag);
+typedef struct skill_unit_group* (*HPMHOOK_pre_skill_unitsetting) (struct block_list **src, uint16 *skill_id, uint16 *skill_lv, short *x, short *y, int *flag, int *duration);
+typedef struct skill_unit_group* (*HPMHOOK_post_skill_unitsetting) (struct skill_unit_group* retVal___, struct block_list *src, uint16 skill_id, uint16 skill_lv, short x, short y, int flag, int duration);
 typedef struct skill_unit* (*HPMHOOK_pre_skill_initunit) (struct skill_unit_group **group, int *idx, int *x, int *y, int *val1, int *val2);
 typedef struct skill_unit* (*HPMHOOK_post_skill_initunit) (struct skill_unit* retVal___, struct skill_unit_group *group, int idx, int x, int y, int val1, int val2);
 typedef int (*HPMHOOK_pre_skill_delunit) (struct skill_unit **su);
@@ -6699,8 +6701,8 @@ typedef int (*HPMHOOK_pre_status_change_timer_sub) (struct block_list **bl, va_l
 typedef int (*HPMHOOK_post_status_change_timer_sub) (int retVal___, struct block_list *bl, va_list ap);
 typedef int (*HPMHOOK_pre_status_change_clear) (struct block_list **bl, int *type);
 typedef int (*HPMHOOK_post_status_change_clear) (int retVal___, struct block_list *bl, int type);
-typedef int (*HPMHOOK_pre_status_change_clear_buffs) (struct block_list **bl, int *type);
-typedef int (*HPMHOOK_post_status_change_clear_buffs) (int retVal___, struct block_list *bl, int type);
+typedef int (*HPMHOOK_pre_status_change_clear_buffs) (struct block_list **bl, enum scclear_flag *type);
+typedef int (*HPMHOOK_post_status_change_clear_buffs) (int retVal___, struct block_list *bl, enum scclear_flag type);
 typedef void (*HPMHOOK_pre_status_calc_bl_) (struct block_list **bl, enum scb_flag *flag, enum e_status_calc_opt *opt);
 typedef void (*HPMHOOK_post_status_calc_bl_) (struct block_list *bl, enum scb_flag flag, enum e_status_calc_opt opt);
 typedef int (*HPMHOOK_pre_status_calc_mob_) (struct mob_data **md, enum e_status_calc_opt *opt);

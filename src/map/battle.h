@@ -676,6 +676,7 @@ struct battle_interface {
 	void (*calc_skillratio_magic_unknown) (int *attack_type, struct block_list *src, struct block_list *target, uint16 *skill_id, uint16 *skill_lv, int *skillratio, int *flag);
 	void (*calc_skillratio_weapon_unknown) (int *attack_type, struct block_list *src, struct block_list *target, uint16 *skill_id, uint16 *skill_lv, int *skillratio, int *flag);
 	void (*calc_misc_attack_unknown) (struct block_list *src, struct block_list *target, uint16 *skill_id, uint16 *skill_lv, int *mflag, struct Damage *md);
+	void (*vanish) (struct map_session_data *sd, struct block_list *target, struct Damage *d);
 };
 
 #ifdef RAGEMU_CORE

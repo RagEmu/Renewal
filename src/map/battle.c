@@ -388,7 +388,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 				int x,y;
 				x = sg->val3 >> 16;
 				y = sg->val3 & 0xffff;
-				skill->unitsetting(sgsrc,su->group->skill_id,su->group->skill_lv,x,y,1);
+				skill->unitsetting(sgsrc, su->group->skill_id, su->group->skill_lv, x, y, 1, 0);
 				sg->val3 = -1;
 				sg->limit = DIFF_TICK32(timer->gettick(),sg->tick)+300;
 			}
@@ -411,7 +411,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 			if( tsc->data[SC_EARTH_INSIGNIA]) damage += damage/2;
 			if( tsc->data[SC_FIRE_CLOAK_OPTION])
 				damage -= damage * tsc->data[SC_FIRE_CLOAK_OPTION]->val2 / 100;
-			if( tsc->data[SC_VOLCANIC_ASH]) damage += damage/2; //150%
 			break;
 		case ELE_HOLY:
 			if( tsc->data[SC_ORATIO]) ratio += tsc->data[SC_ORATIO]->val1 * 2;
@@ -1247,7 +1246,7 @@ int64 battle_calc_defense(int attack_type, struct block_list *src, struct block_
 
 			if( battle_config.vit_penalty_type && battle_config.vit_penalty_target&target->type ) {
 				unsigned char target_count; //256 max targets should be a sane max
-				target_count = unit->counttargeted(target);
+				target_count = min(unit->counttargeted(target), (100 / battle_config.vit_penalty_num) + (battle_config.vit_penalty_count - 1));
 				if(target_count >= battle_config.vit_penalty_count) {
 					if(battle_config.vit_penalty_type == 1) {
 						if( !tsc || !tsc->data[SC_STEELBODY] )
@@ -5241,6 +5240,51 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 	return wd;
 }
 
+/**
+ * Calculate vanish from target
+ * @param sd Player with vanish item
+ * @param target Target to vanish HP/SP
+ * @param d Damage struct
+ * @author Dastgir/RagEmu
+ */
+void battle_vanish(struct map_session_data *sd, struct block_list *target, struct Damage *d) {
+	int i;
+	int hp_per = 0, sp_per = 0;
+	if (d != NULL) {
+		// bHPVanishRate
+		for (i = 0; i < ARRAYLENGTH(sd->hp_vanish) && sd->hp_vanish[i].rate > 0 && sd->hp_vanish[i].flag > 0; i++) {
+			if (rnd() % 10000 < sd->hp_vanish[i].rate) {
+				if ((d->flag&sd->hp_vanish[i].flag&BF_WEAPONMASK) ||
+					(d->flag&sd->hp_vanish[i].flag&BF_RANGEMASK) ||
+					(d->flag&sd->hp_vanish[i].flag&BF_SKILLMASK)) {
+						hp_per += sd->hp_vanish[i].per;
+					}
+			}
+		}
+		// bSPVanishRate
+		for (i = 0; i < ARRAYLENGTH(sd->sp_vanish) && sd->sp_vanish[i].rate > 0 && sd->sp_vanish[i].flag > 0; i++) {
+			if (rnd() % 10000 < sd->sp_vanish[i].rate) {
+				if ((d->flag&sd->sp_vanish[i].flag&BF_WEAPONMASK) ||
+					(d->flag&sd->sp_vanish[i].flag&BF_RANGEMASK) ||
+					(d->flag&sd->sp_vanish[i].flag&BF_SKILLMASK)) {
+						sp_per += sd->sp_vanish[i].per;
+					}
+			}
+		}
+	} else {
+		// HPVanishRate
+		if (sd->bonus.hp_vanish_rate && rnd() % 10000 < sd->bonus.hp_vanish_rate)
+			hp_per += sd->bonus.hp_vanish_per;
+
+		// SPVanishRate
+		if (sd->bonus.sp_vanish_rate && rnd() % 10000 < sd->bonus.sp_vanish_rate)
+			sp_per += sd->bonus.sp_vanish_per;
+	}
+	
+	status_percent_damage(&sd->bl, target, -cap_value(hp_per, 0, 100), -cap_value(sp_per, 0, 100), false);
+	return;
+}
+
 /*==========================================
  * Battle main entry, from skill->attack
  *------------------------------------------*/
@@ -5290,17 +5334,7 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 		d.dmg_lv = ATK_DEF;
 
 	if (sd && d.damage + d.damage2 > 1) {
-		// HPVanishRate
-		if (sd->bonus.hp_vanish_rate && sd->bonus.hp_vanish_trigger && rnd() % 1000 < sd->bonus.hp_vanish_rate &&
-			((d.flag&sd->bonus.hp_vanish_trigger&BF_WEAPONMASK) || (d.flag&sd->bonus.hp_vanish_trigger&BF_RANGEMASK)
-			|| (d.flag&sd->bonus.hp_vanish_trigger&BF_SKILLMASK)))
-			status_percent_damage(&sd->bl, target, -sd->bonus.hp_vanish_per, 0, false);
-
-		// SPVanishRate
-		if (sd->bonus.sp_vanish_rate && sd->bonus.sp_vanish_trigger && rnd() % 1000 < sd->bonus.sp_vanish_rate &&
-			((d.flag&sd->bonus.sp_vanish_trigger&BF_WEAPONMASK) || (d.flag&sd->bonus.sp_vanish_trigger&BF_RANGEMASK)
-			|| (d.flag&sd->bonus.sp_vanish_trigger&BF_SKILLMASK)))
-			status_percent_damage(&sd->bl, target, 0, -sd->bonus.sp_vanish_per, false);
+		battle->vanish(sd, target, &d);
 	}
 	return d;
 }
@@ -5530,13 +5564,7 @@ void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rda
 		if (wd->sp_drain[type].rate)
 			sp += battle->calc_drain(*damage, wd->sp_drain[type].rate, wd->sp_drain[type].per);
 
-		// HPVanishRate
-		if (sd->bonus.hp_vanish_rate && rnd() % 1000 < sd->bonus.hp_vanish_rate && !sd->bonus.hp_vanish_trigger)
-			status_percent_damage(&sd->bl, tbl, (unsigned char)sd->bonus.hp_vanish_per, 0, false);
-
-		// SPVanishRate
-		if (sd->bonus.sp_vanish_rate && rnd() % 1000 < sd->bonus.sp_vanish_rate && !sd->bonus.sp_vanish_trigger)
-			status_percent_damage(&sd->bl, tbl, 0, (unsigned char)sd->bonus.sp_vanish_per, false);
+		battle->vanish(sd, tbl, NULL);
 
 		if (hp) {
 			if (wd->hp_drain[type].type)
@@ -7239,4 +7267,6 @@ void battle_defaults(void) {
 	battle->calc_skillratio_magic_unknown = battle_calc_skillratio_magic_unknown;
 	battle->calc_skillratio_weapon_unknown = battle_calc_skillratio_weapon_unknown;
 	battle->calc_misc_attack_unknown = battle_calc_misc_attack_unknown;
+	
+	battle->vanish = battle_vanish;
 }

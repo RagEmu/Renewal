@@ -211,6 +211,8 @@ struct {
 	struct HPMHookPoint *HP_battle_calc_skillratio_weapon_unknown_post;
 	struct HPMHookPoint *HP_battle_calc_misc_attack_unknown_pre;
 	struct HPMHookPoint *HP_battle_calc_misc_attack_unknown_post;
+	struct HPMHookPoint *HP_battle_vanish_pre;
+	struct HPMHookPoint *HP_battle_vanish_post;
 	struct HPMHookPoint *HP_bg_init_pre;
 	struct HPMHookPoint *HP_bg_init_post;
 	struct HPMHookPoint *HP_bg_final_pre;
@@ -6130,6 +6132,8 @@ struct {
 	int HP_battle_calc_skillratio_weapon_unknown_post;
 	int HP_battle_calc_misc_attack_unknown_pre;
 	int HP_battle_calc_misc_attack_unknown_post;
+	int HP_battle_vanish_pre;
+	int HP_battle_vanish_post;
 	int HP_bg_init_pre;
 	int HP_bg_init_post;
 	int HP_bg_final_pre;
