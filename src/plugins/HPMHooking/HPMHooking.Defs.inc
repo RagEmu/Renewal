@@ -6181,8 +6181,8 @@ typedef int (*HPMHOOK_pre_skill_strip_equip) (struct block_list **bl, unsigned s
 typedef int (*HPMHOOK_post_skill_strip_equip) (int retVal___, struct block_list *bl, unsigned short where, int rate, int lv, int time);
 typedef struct skill_unit_group* (*HPMHOOK_pre_skill_id2group) (int *group_id);
 typedef struct skill_unit_group* (*HPMHOOK_post_skill_id2group) (struct skill_unit_group* retVal___, int group_id);
-typedef struct skill_unit_group* (*HPMHOOK_pre_skill_unitsetting) (struct block_list **src, uint16 *skill_id, uint16 *skill_lv, short *x, short *y, int *flag);
-typedef struct skill_unit_group* (*HPMHOOK_post_skill_unitsetting) (struct skill_unit_group* retVal___, struct block_list *src, uint16 skill_id, uint16 skill_lv, short x, short y, int flag);
+typedef struct skill_unit_group* (*HPMHOOK_pre_skill_unitsetting) (struct block_list **src, uint16 *skill_id, uint16 *skill_lv, short *x, short *y, int *flag, int *duration);
+typedef struct skill_unit_group* (*HPMHOOK_post_skill_unitsetting) (struct skill_unit_group* retVal___, struct block_list *src, uint16 skill_id, uint16 skill_lv, short x, short y, int flag, int duration);
 typedef struct skill_unit* (*HPMHOOK_pre_skill_initunit) (struct skill_unit_group **group, int *idx, int *x, int *y, int *val1, int *val2);
 typedef struct skill_unit* (*HPMHOOK_post_skill_initunit) (struct skill_unit* retVal___, struct skill_unit_group *group, int idx, int x, int y, int val1, int val2);
 typedef int (*HPMHOOK_pre_skill_delunit) (struct skill_unit **su);
