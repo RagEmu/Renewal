@@ -8946,7 +8946,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				sc_start(src, bl, SC_NOEQUIPSHIELD, 100, val1, tick);
 				break;
 			case SC_GN_CARTBOOST:
-				if  val1 < 3)
+				if (val1 < 3)
 					val2 = 50;
 				else if (val1 < 5)
 					val2 = 75;
