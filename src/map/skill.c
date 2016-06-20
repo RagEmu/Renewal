@@ -3646,13 +3646,13 @@ int skill_timerskill(int tid, int64 tick, int id, intptr_t data) {
 						skill->get_type(skl->skill_id),src,src,skl->skill_id,skl->skill_lv,tick,skl->flag,BCT_ENEMY);
 					break;
 				case NC_MAGMA_ERUPTION:
-					skill->unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,0);
+					skill->unitsetting(src, skl->skill_id, skl->skill_lv, skl->x, skl->y, 0, 0);
 					break;
 				case RL_FIRE_RAIN: {
 						int dummy = 1, i = skill->get_splash(skl->skill_id,skl->skill_lv);
 
 						map->foreachinarea(skill->cell_overlap,src->m,skl->x-i,skl->y-i,skl->x+i,skl->y+i,BL_SKILL,skl->skill_id,&dummy,src);
-						skill->unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,0);
+						skill->unitsetting(src, skl->skill_id, skl->skill_lv, skl->x, skl->y, 0, 0);
 					}
 					break;
 				default:
@@ -5654,8 +5654,8 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 				y1 = sd->bl.y + range;
 				clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
 				elemental->delete(sd->ed,0);
-				skill->unitsetting(src,MG_SAFETYWALL,skill_lv + 5,src->x,src->y,0);
-				skill->unitsetting(src,AL_PNEUMA,1,src->x,src->y,0);
+				skill->unitsetting(src, MG_SAFETYWALL, skill_lv + 5, src->x, src->y, 0, 0);
+				skill->unitsetting(src, AL_PNEUMA, 1, src->x, src->y, 0, 0);
 				if((p = party->search(sd->status.party_id))) {
 					for(i = 0; i < MAX_PARTY; i++) {
 						struct map_session_data *psd = p->data[i].sd;
@@ -5664,8 +5664,8 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 							continue;
 						if(range && (psd->bl.x < x0 || psd->bl.y < y0 || psd->bl.x > x1 || psd->bl.y > y1))
 							continue;
-						skill->unitsetting(&psd->bl,MG_SAFETYWALL,skill_lv + 5,psd->bl.x,psd->bl.y,0);
-						skill->unitsetting(&psd->bl,AL_PNEUMA,1,psd->bl.x,psd->bl.y,0);
+						skill->unitsetting(&psd->bl, MG_SAFETYWALL, skill_lv + 5, psd->bl.x, psd->bl.y, 0, 0);
+						skill->unitsetting(&psd->bl, AL_PNEUMA, 1, psd->bl.x, psd->bl.y, 0, 0);
 					}
 				}
 				return 0;
@@ -11440,12 +11440,12 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 							break;
 						case 3:
 							skill->delunit(&ud->skillunit[i]->unit.data[0]);
-							skill->unitsetting(src,GN_FIRE_EXPANSION_SMOKE_POWDER,1,x,y,0);
+							skill->unitsetting(src, GN_FIRE_EXPANSION_SMOKE_POWDER, 1, x, y, 0, 0);
 							flag |= 1;
 							break;
 						case 4:
 							skill->delunit(&ud->skillunit[i]->unit.data[0]);
-							skill->unitsetting(src,GN_FIRE_EXPANSION_TEAR_GAS,1,x,y,0);
+							skill->unitsetting(src, GN_FIRE_EXPANSION_TEAR_GAS, 1, x, y, 0, 0);
 							flag |= 1;
 							break;
 						case 5:// If player knows a level of Acid Demonstration greater then 5, that level will be casted.
