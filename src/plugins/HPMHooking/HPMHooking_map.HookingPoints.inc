@@ -121,6 +121,7 @@ struct HookingPointData HookingPoints[] = {
 	{ HP_POP(battle->calc_skillratio_magic_unknown, HP_battle_calc_skillratio_magic_unknown) },
 	{ HP_POP(battle->calc_skillratio_weapon_unknown, HP_battle_calc_skillratio_weapon_unknown) },
 	{ HP_POP(battle->calc_misc_attack_unknown, HP_battle_calc_misc_attack_unknown) },
+	{ HP_POP(battle->vanish, HP_battle_vanish) },
 /* battleground_interface */
 	{ HP_POP(bg->init, HP_bg_init) },
 	{ HP_POP(bg->final, HP_bg_final) },

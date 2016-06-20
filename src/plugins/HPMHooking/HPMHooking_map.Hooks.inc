@@ -2577,6 +2577,32 @@ void HP_battle_calc_misc_attack_unknown(struct block_list *src, struct block_lis
 	}
 	return;
 }
+void HP_battle_vanish(struct map_session_data *sd, struct block_list *target, struct Damage *d) {
+	int hIndex = 0;
+	if( HPMHooks.count.HP_battle_vanish_pre ) {
+		void (*preHookFunc) (struct map_session_data **sd, struct block_list **target, struct Damage **d);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_battle_vanish_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_battle_vanish_pre[hIndex].func;
+			preHookFunc(&sd, &target, &d);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return;
+		}
+	}
+	{
+		HPMHooks.source.battle.vanish(sd, target, d);
+	}
+	if( HPMHooks.count.HP_battle_vanish_post ) {
+		void (*postHookFunc) (struct map_session_data *sd, struct block_list *target, struct Damage *d);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_battle_vanish_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_battle_vanish_post[hIndex].func;
+			postHookFunc(sd, target, d);
+		}
+	}
+	return;
+}
 /* battleground_interface */
 void HP_bg_init(bool minimal) {
 	int hIndex = 0;
