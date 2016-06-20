@@ -889,6 +889,9 @@ void initChangeTables(void) {
 	status->dbs->IconChangeTable[SC_MVPCARD_ORCHERO] = SI_MVPCARD_ORCHERO;
 	status->dbs->IconChangeTable[SC_MVPCARD_ORCLORD] = SI_MVPCARD_ORCLORD;
 
+	status->dbs->IconChangeTable[SC_SET_PER_DEF] = SI_SET_PER_DEF;
+	status->dbs->IconChangeTable[SC_SET_PER_MDEF] = SI_SET_PER_MDEF;
+
 	// Mercenary Bonus Effects
 	status->dbs->IconChangeTable[SC_MER_FLEE] = SI_MER_FLEE;
 	status->dbs->IconChangeTable[SC_MER_ATK] = SI_MER_ATK;
@@ -2815,6 +2818,11 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 		bstatus->matk_max = bstatus->matk_max * sd->matk_rate/100;
 		bstatus->matk_min = bstatus->matk_min * sd->matk_rate/100;
 	}
+
+	if (sd->hit_rate < 0)
+		sd->hit_rate = 0;
+	if (sd->hit_rate != 100)
+		bstatus->hit = bstatus->hit * sd->hit_rate / 100;
 
 	if(sd->flee_rate < 0)
 		sd->flee_rate = 0;

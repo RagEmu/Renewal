@@ -4471,10 +4471,6 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 			hitrate += sd->bonus.arrow_hit;
 		if (sd) //in Renewal hit bonus from Vultures Eye is not anymore shown in status window
 			hitrate += pc->checkskill(sd,AC_VULTURE);
-		if (sd->hit_rate < 0)
-			sd->hit_rate = 0;
-		if (sd->hit_rate != 100)
-			hitrate = hitrate * sd->hit_rate / 100;
 		switch(skill_id) {
 			//Hit skill modifiers
 			//It is proven that bonus is applied on final hitrate, not hit.
