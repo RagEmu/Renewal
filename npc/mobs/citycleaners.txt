@@ -36,40 +36,40 @@
 //================= Description ===========================================
 //= Spawns monsters to clean up cities.
 //================= Current Version =======================================
-//= 1.2
+//= 1.3
 //=========================================================================
 
 //== Wild Rose City Spawns =================================
-prontera,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-morocc,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-alberta,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-aldebaran,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-geffen,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-payon,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-comodo,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-izlude,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-yuno,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-einbroch,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-lighthalzen,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-hugel,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-umbala,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-amatsu,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-gonryun,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-louyang,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-ayothaya,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-moscovia,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-einbech,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+prontera,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+morocc,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+alberta,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+aldebaran,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+geffen,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+payon,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+comodo,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+izlude,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+yuno,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+einbroch,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+lighthalzen,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+hugel,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+umbala,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+amatsu,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+gonryun,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+louyang,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+ayothaya,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+moscovia,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+einbech,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,3600000,3000000,0
 
 //== Wild Rose City Spawns =================================
-brasilis,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-dewata,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-malaya,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-izlude_a,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-izlude_b,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-izlude_c,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-izlude_d,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+brasilis,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+dewata,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+malaya,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+izlude_a,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+izlude_b,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+izlude_c,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
+izlude_d,0,0,0,0	monster	Wild Rose	WILD_ROSE,1,7200000,3600000,0
 
 //== Thief Bug Egg City Spawns =============================
-payon_in02,23,68,5,5	monster	Thief Bug Egg	1048,7,1200000,600000,0
-jawaii_in,73,117,4,4	monster	Thief Bug Egg	1048,1,5400000,3000000,0
-jawaii_in,83,117,5,5	monster	Thief Bug Egg	1048,1,4800000,2400000,0
+payon_in02,23,68,5,5	monster	Thief Bug Egg	THIEF_BUG_EGG,7,1200000,600000,0
+jawaii_in,73,117,4,4	monster	Thief Bug Egg	THIEF_BUG_EGG,1,5400000,3000000,0
+jawaii_in,83,117,5,5	monster	Thief Bug Egg	THIEF_BUG_EGG,1,4800000,2400000,0

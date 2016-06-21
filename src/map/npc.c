@@ -3809,11 +3809,12 @@ const char *npc_parse_mob(const char *w1, const char *w2, const char *w3, const 
 	char mapname[32], mobname[NAME_LENGTH];
 	struct spawn_data mobspawn, *data;
 	struct mob_db* db;
+	char mob_constname[NAME_LENGTH]; // [Cretino]
 
-	nullpo_retr(strchr(start,'\n'), w1);
-	nullpo_retr(strchr(start,'\n'), w2);
-	nullpo_retr(strchr(start,'\n'), w3);
-	nullpo_retr(strchr(start,'\n'), w4);
+	nullpo_retr(strchr(start, '\n'), w1);
+	nullpo_retr(strchr(start, '\n'), w2);
+	nullpo_retr(strchr(start, '\n'), w3);
+	nullpo_retr(strchr(start, '\n'), w4);
 
 	memset(&mobspawn, 0, sizeof(struct spawn_data));
 
@@ -3822,58 +3823,79 @@ const char *npc_parse_mob(const char *w1, const char *w2, const char *w3, const 
 	// w1=<map name>,<x>,<y>,<xs>,<ys>
 	// w3=<mob name>{,<mob level>}
 	// w4=<mob id>,<amount>,<delay1>,<delay2>{,<event>,<mob size>,<mob ai>}
-	if( sscanf(w1, "%31[^,],%d,%d,%d,%d", mapname, &x, &y, &xs, &ys) < 5
+	if (sscanf(w1, "%31[^,],%d,%d,%d,%d", mapname, &x, &y, &xs, &ys) < 5
 	 || sscanf(w3, "%23[^,],%d", mobname, &mob_lv) < 1
-	 || sscanf(w4, "%d,%d,%u,%u,%50[^,],%d,%d[^\t\r\n]", &class_, &num, &mobspawn.delay1, &mobspawn.delay2, mobspawn.eventname, &size, &ai) < 4
+	 || sscanf(w4, "%23[^,],%d,%u,%u,%50[^,],%d,%d[^\t\r\n]", mob_constname, &num, &mobspawn.delay1, &mobspawn.delay2, mobspawn.eventname, &size, &ai) < 4
 	 ) {
 		ShowError("npc_parse_mob: Invalid mob definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
-		if (retval) *retval = EXIT_FAILURE;
-		return strchr(start,'\n');// skip and continue
+		if (retval)
+			*retval = EXIT_FAILURE;
+		return strchr(start, '\n'); // Skip and continue
 	}
-	if( mapindex->name2id(mapname) == 0 ) {
-		ShowError("npc_parse_mob: Unknown map '%s' in file '%s', line '%d'.\n", mapname, filepath, strline(buffer,start-buffer));
-		if (retval) *retval = EXIT_FAILURE;
-		return strchr(start,'\n');// skip and continue
+	if (mapindex->name2id(mapname) == 0) {
+		ShowError("npc_parse_mob: Unknown map '%s' in file '%s', line '%d'.\n", mapname, filepath, strline(buffer, start - buffer));
+		if (retval)
+			*retval = EXIT_FAILURE;
+		return strchr(start, '\n'); // Skip and continue
 	}
 	m =  map->mapname2mapid(mapname);
-	if( m < 0 )//Not loaded on this map-server instance.
-		return strchr(start,'\n');// skip and continue
+	if (m < 0) // Not loaded on this map-server instance.
+		return strchr(start, '\n'); // Skip and continue
 	mobspawn.m = (unsigned short)m;
 
-	if( x < 0 || x >= map->list[mobspawn.m].xs || y < 0 || y >= map->list[mobspawn.m].ys ) {
-		ShowError("npc_parse_mob: Spawn coordinates out of range: %s (%d,%d), map size is (%d,%d) - %s %s in file '%s', line '%d'.\n", map->list[mobspawn.m].name, x, y, (map->list[mobspawn.m].xs-1), (map->list[mobspawn.m].ys-1), w1, w3, filepath, strline(buffer,start-buffer));
-		if (retval) *retval = EXIT_FAILURE;
-		return strchr(start,'\n');// skip and continue
+	if (x < 0 || x >= map->list[mobspawn.m].xs || y < 0 || y >= map->list[mobspawn.m].ys) {
+		ShowError("npc_parse_mob: Spawn coordinates out of range: %s (%d,%d), map size is (%d,%d) - %s %s in file '%s', line '%d'.\n", map->list[mobspawn.m].name, x, y, (map->list[mobspawn.m].xs - 1), (map->list[mobspawn.m].ys - 1), w1, w3, filepath, strline(buffer, start - buffer));
+		if (retval)
+			*retval = EXIT_FAILURE;
+		return strchr(start, '\n'); // Skip and continue
 	}
 
-	// check monster ID if exists!
-	if( mob->db_checkid(class_) == 0 ) {
-		ShowError("npc_parse_mob: Unknown mob ID %d in file '%s', line '%d'.\n", class_, filepath, strline(buffer,start-buffer));
-		if (retval) *retval = EXIT_FAILURE;
-		return strchr(start,'\n');// skip and continue
+	// Using 'npc->viewisid' to checks if given 'mob_constname' is an interger or constant. [Cretino]
+	if (!npc->viewisid(mob_constname)) {
+		if (!script->get_constant(mob_constname, &class_)) {
+			ShowError("npc_parse_mob: Invalid mob constant '%s' in file '%s', line '%d'.\n", mob_constname, filepath, strline(buffer, start - buffer));
+			if (retval)
+				*retval = EXIT_FAILURE;
+			return strchr(start, '\n'); // Skip and continue
+		}
+	}
+	else {
+		class_ = atoi(mob_constname);
 	}
 
-	if( num < 1 || num > 1000 ) {
-		ShowError("npc_parse_mob: Invalid number of monsters %d, must be inside the range [1,1000] in file '%s', line '%d'.\n", num, filepath, strline(buffer,start-buffer));
-		if (retval) *retval = EXIT_FAILURE;
-		return strchr(start,'\n');// skip and continue
+	// Check monster ID if exists!
+	if (mob->db_checkid(class_) == 0) {
+		ShowError("npc_parse_mob: Unknown mob ID %d in file '%s', line '%d'.\n", class_, filepath, strline(buffer, start - buffer));
+		if (retval)
+			*retval = EXIT_FAILURE;
+		return strchr(start, '\n'); // Skip and continue
+	}
+
+	if (num < 1 || num > 1000) {
+		ShowError("npc_parse_mob: Invalid number of monsters %d, must be inside the range [1,1000] in file '%s', line '%d'.\n", num, filepath, strline(buffer, start - buffer));
+		if (retval)
+			*retval = EXIT_FAILURE;
+		return strchr(start, '\n'); // Skip and continue
 	}
 
 	if (mobspawn.state.size > 2 && size != -1) {
 		ShowError("npc_parse_mob: Invalid size number %d for mob ID %d in file '%s', line '%d'.\n", mobspawn.state.size, class_, filepath, strline(buffer, start - buffer));
-		if (retval) *retval = EXIT_FAILURE;
+		if (retval)
+			*retval = EXIT_FAILURE;
 		return strchr(start, '\n');
 	}
 
 	if (mobspawn.state.ai >= AI_MAX && ai != -1) {
 		ShowError("npc_parse_mob: Invalid ai %d for mob ID %d in file '%s', line '%d'.\n", mobspawn.state.ai, class_, filepath, strline(buffer, start - buffer));
-		if (retval) *retval = EXIT_FAILURE;
+		if (retval)
+			*retval = EXIT_FAILURE;
 		return strchr(start, '\n');
 	}
 
-	if( (mob_lv == 0 || mob_lv > MAX_LEVEL) && mob_lv != -1 ) {
+	if ((mob_lv == 0 || mob_lv > MAX_LEVEL) && mob_lv != -1) {
 		ShowError("npc_parse_mob: Invalid level %d for mob ID %d in file '%s', line '%d'.\n", mob_lv, class_, filepath, strline(buffer, start - buffer));
-		if (retval) *retval = EXIT_FAILURE;
+		if (retval)
+			*retval = EXIT_FAILURE;
 		return strchr(start, '\n');
 	}
 
@@ -3884,6 +3906,7 @@ const char *npc_parse_mob(const char *w1, const char *w2, const char *w3, const 
 	mobspawn.y = (unsigned short)y;
 	mobspawn.xs = (signed short)xs;
 	mobspawn.ys = (signed short)ys;
+
 	if (mob_lv > 0 && mob_lv <= MAX_LEVEL)
 		mobspawn.level = mob_lv;
 	if (size > 0 && size <= 2)
@@ -3897,72 +3920,74 @@ const char *npc_parse_mob(const char *w1, const char *w2, const char *w3, const 
 	}
 
 	if (battle_config.force_random_spawn || (mobspawn.x == 0 && mobspawn.y == 0)) {
-		//Force a random spawn anywhere on the map.
+		// Force a random spawn anywhere on the map.
 		mobspawn.x = mobspawn.y = 0;
 		mobspawn.xs = mobspawn.ys = -1;
 	}
 
-	if(mobspawn.delay1>0xfffffff || mobspawn.delay2>0xfffffff) {
-		ShowError("npc_parse_mob: Invalid spawn delays %u %u in file '%s', line '%d'.\n", mobspawn.delay1, mobspawn.delay2, filepath, strline(buffer,start-buffer));
-		if (retval) *retval = EXIT_FAILURE;
-		return strchr(start,'\n');// skip and continue
+	if (mobspawn.delay1 > 0xfffffff || mobspawn.delay2 > 0xfffffff) {
+		ShowError("npc_parse_mob: Invalid spawn delays %u %u in file '%s', line '%d'.\n", mobspawn.delay1, mobspawn.delay2, filepath, strline(buffer, start - buffer));
+		if (retval)
+			*retval = EXIT_FAILURE;
+		return strchr(start, '\n'); // Skip and continue
 	}
 
-	//Use db names instead of the spawn file ones.
-	if(battle_config.override_mob_names==1)
-		strcpy(mobspawn.name,"--en--");
-	else if (battle_config.override_mob_names==2)
-		strcpy(mobspawn.name,"--ja--");
+	// Use db names instead of the spawn file ones.
+	if (battle_config.override_mob_names == 1)
+		strcpy(mobspawn.name, "--en--");
+	else if (battle_config.override_mob_names == 2)
+		strcpy(mobspawn.name, "--ja--");
 	else
 		safestrncpy(mobspawn.name, mobname, sizeof(mobspawn.name));
 
-	//Verify dataset.
-	if( !mob->parse_dataset(&mobspawn) ) {
-		ShowError("npc_parse_mob: Invalid dataset for monster ID %d in file '%s', line '%d'.\n", class_, filepath, strline(buffer,start-buffer));
-		if (retval) *retval = EXIT_FAILURE;
-		return strchr(start,'\n');// skip and continue
+	// Verify dataset.
+	if (!mob->parse_dataset(&mobspawn)) {
+		ShowError("npc_parse_mob: Invalid dataset for monster ID %d in file '%s', line '%d'.\n", class_, filepath, strline(buffer, start - buffer));
+		if (retval)
+			*retval = EXIT_FAILURE;
+		return strchr(start, '\n'); // Skip and continue
 	}
 
-	//Update mob spawn lookup database
+	// Update mob spawn lookup database
 	db = mob->db(class_);
-	for( i = 0; i < ARRAYLENGTH(db->spawn); ++i ) {
+	for (i = 0; i < ARRAYLENGTH(db->spawn); ++i) {
 		if (map_id2index(mobspawn.m) == db->spawn[i].mapindex) {
-			//Update total
+			// Update total
 			db->spawn[i].qty += mobspawn.num;
-			//Re-sort list
-			for( j = i; j > 0 && db->spawn[j-1].qty < db->spawn[i].qty; --j );
-			if( j != i ) {
+			// Re-sort list
+			for (j = i; j > 0 && db->spawn[j - 1].qty < db->spawn[i].qty; --j);
+			if (j != i) {
 				xs = db->spawn[i].mapindex;
 				ys = db->spawn[i].qty;
-				memmove(&db->spawn[j+1], &db->spawn[j], (i-j)*sizeof(db->spawn[0]));
+				memmove(&db->spawn[j + 1], &db->spawn[j], (i - j) * sizeof(db->spawn[0]));
 				db->spawn[j].mapindex = xs;
 				db->spawn[j].qty = ys;
 			}
 			break;
 		}
 		if (mobspawn.num > db->spawn[i].qty) {
-			//Insert into list
-			if( i != ARRAYLENGTH(db->spawn) - 1 )
-				memmove(&db->spawn[i+1], &db->spawn[i], sizeof(db->spawn) -(i+1)*sizeof(db->spawn[0]));
+			// Insert into list
+			if (i != ARRAYLENGTH(db->spawn) - 1)
+				memmove(&db->spawn[i + 1], &db->spawn[i], sizeof(db->spawn) - (i + 1) * sizeof(db->spawn[0]));
 			db->spawn[i].mapindex = map_id2index(mobspawn.m);
 			db->spawn[i].qty = mobspawn.num;
 			break;
 		}
 	}
 
-	//Now that all has been validated. We allocate the actual memory that the re-spawn data will use.
+	// Now that all has been validated. We allocate the actual memory that the re-spawn data will use.
 	data = (struct spawn_data*)aMalloc(sizeof(struct spawn_data));
 	memcpy(data, &mobspawn, sizeof(struct spawn_data));
 
 	// spawn / cache the new mobs
-	if( battle_config.dynamic_mobs && map->addmobtolist(data->m, data) >= 0 ) {
+	if (battle_config.dynamic_mobs && map->addmobtolist(data->m, data) >= 0) {
 		data->state.dynamic = true;
 		npc->npc_cache_mob += data->num;
 
-		// check if target map has players
+		// Check if target map has players
 		// (usually shouldn't occur when map server is just starting,
 		// but not the case when we do @reloadscript
-		if( map->list[data->m].users > 0 ) {
+		if (map->list[data->m].users > 0) {
 			npc->parse_mob2(data);
 		}
 	} else {
@@ -3973,7 +3998,7 @@ const char *npc_parse_mob(const char *w1, const char *w2, const char *w3, const 
 
 	npc->npc_mob++;
 
-	return strchr(start,'\n');// continue
+	return strchr(start, '\n'); // Continue
 }
 
 /**
