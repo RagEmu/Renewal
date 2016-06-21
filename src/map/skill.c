@@ -525,7 +525,17 @@ int skillnotok (uint16 skill_id, struct map_session_data *sd)
 			break;
 		case MC_VENDING:
 		case ALL_BUYING_STORE:
-			if( npc->isnear(&sd->bl) ) {
+			if (map->list[sd->bl.m].flag.novending) {
+				clif->message(sd->fd, msg_txt(sd, 276)); // "You can't open a shop in this map"
+				clif->skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL,0);
+				return 1;
+			}
+			if (map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING)) {
+				clif->message(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
+				clif->skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL,0);
+				return 1;
+			}
+			if (npc->isnear(&sd->bl)) {
 				// uncomment for more verbose message.
 				//char output[150];
 				//sprintf(output, msg_txt(862), battle_config.min_npc_vendchat_distance); // "You're too close to a NPC, you must be at least %d cells away from any NPC."
