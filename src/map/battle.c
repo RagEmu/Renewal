@@ -6884,6 +6884,7 @@ static const struct battle_data {
 	{ "monster_eye_range_bonus",            &battle_config.mob_eye_range_bonus,             0,      0,      10,             },
 	// RagEmu
 	{ "feature.buying_store_autotrade",     &battle_config.feature_buying_store_autotrade,  1,      0,      1,              },
+	{ "display_fake_hp_when_dead",          &battle_config.display_fake_hp_when_dead,       1,      0,      1,              },
 };
 #ifndef STATS_OPT_OUT
 /**

@@ -546,6 +546,7 @@ struct Battle_Config {
 
 	// RagEmu
 	int feature_buying_store_autotrade; // BuyingStore Autotrader [Dastgir/RagEmu]
+	int display_fake_hp_when_dead;
 };
 
 /* criteria for battle_config.idletime_critera */
