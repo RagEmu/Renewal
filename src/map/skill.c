@@ -530,7 +530,7 @@ int skillnotok (uint16 skill_id, struct map_session_data *sd)
 				clif->skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL,0);
 				return 1;
 			}
-			if (map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING)) {
+			if (map->getcell(sd->bl.m, &sd->bl sd->bl.x, sd->bl.y, CELL_CHKNOVENDING)) {
 				clif->message(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
 				clif->skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL,0);
 				return 1;
