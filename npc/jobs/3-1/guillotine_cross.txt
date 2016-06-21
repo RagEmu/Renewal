@@ -34,7 +34,7 @@
 //================= Description ===========================================
 //= Job change Quest from Assassin / Assassin Cross -> Guillotine Cross.
 //================= Current Version =======================================
-//= 1.5
+//= 1.5.1
 //=========================================================================
 
 que_job01,75,96,3	script	Guild Member#3rdgc01	4_M_MOCASS1,{
@@ -2114,7 +2114,7 @@ veins,337,284,0	script	#ghostestilla_3rdgc	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch:
 	if (job_3rd_gc == 9) {
-		if ((questprogress(7104,PLAYTIME) == 1) || (questprogress(7105,PLAYTIME) == 1)) {
+		if ((questprogress(7104,PLAYTIME) == 0) || (questprogress(7105,PLAYTIME) == 0)) {
 			mes ".....?";
 			mes "There's a sign of somebody present.";
 			mes "You still have time.";
@@ -2378,7 +2378,7 @@ OnTouch:
 				mes "I back up to watch the situation unfold.";
 				close;
 			}
-		} else if (questprogress(7107,PLAYTIME) == 1) {
+		} else if (questprogress(7107,PLAYTIME) == 0) {
 			mes "This must be the place Estillda told me about.";
 			mes "I have enough time for meeting.";
 			close;
@@ -3584,7 +3584,7 @@ job3_guil03,146,70,3	script	Renzak#3rdgc16	4_F_GUILLOTINE,{
 		mes "Go to Mayshell for the report.";
 		next;
 		mes "[Renzak]";
-		if (questprogress(7110,PLAYTIME) == 1) {
+		if (questprogress(7110,PLAYTIME) == 0) {
 			mes "You finished quickly.";
 			mes "Good job.";
 			job_3rd_gc = 18;
