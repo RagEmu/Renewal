@@ -9028,6 +9028,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 				clif->skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			}
 			break;
+
 		/**
 		 * Ranger
 		 **/
@@ -9037,46 +9038,48 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 			break;
 
 		case RA_WUGMASTERY:
-			if( sd ) {
-				if( !pc_iswug(sd) )
-					pc->setoption(sd,sd->sc.option|OPTION_WUG);
+			if (sd) {
+				if (!pc_iswug(sd))
+					pc->setoption(sd, sd->sc.option | OPTION_WUG);
 				else
-					pc->setoption(sd,sd->sc.option&~OPTION_WUG);
-				clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
+					pc->setoption(sd, sd->sc.option&~OPTION_WUG);
+				clif->skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			}
 			break;
 
 		case RA_WUGRIDER:
-			if( sd ) {
-				if( !pc_isridingwug(sd) && pc_iswug(sd) ) {
-					pc->setoption(sd,sd->sc.option&~OPTION_WUG);
-					pc->setoption(sd,sd->sc.option|OPTION_WUGRIDER);
+			if (sd) {
+				if (!pc_isridingwug(sd) && pc_iswug(sd)) {
+					pc->setoption(sd, sd->sc.option&~OPTION_WUG);
+					pc->setoption(sd, sd->sc.option | OPTION_WUGRIDER);
 					status_change_end(bl, SC_CAMOUFLAGE, INVALID_TIMER);
-				} else if( pc_isridingwug(sd) ) {
-					pc->setoption(sd,sd->sc.option&~OPTION_WUGRIDER);
-					pc->setoption(sd,sd->sc.option|OPTION_WUG);
 				}
-				clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
+				else if (pc_isridingwug(sd)) {
+					pc->setoption(sd, sd->sc.option&~OPTION_WUGRIDER);
+					pc->setoption(sd, sd->sc.option | OPTION_WUG);
+				}
+				clif->skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			}
 			break;
 
 		case RA_WUGDASH:
-			if( tsce ) {
-				clif->skill_nodamage(src,bl,skill_id,skill_lv,status_change_end(bl, type, INVALID_TIMER));
+			if (tsce) {
+				clif->skill_nodamage(src, bl, skill_id, skill_lv, status_change_end(bl, type, INVALID_TIMER));
 				map->freeblock_unlock();
 				return 0;
 			}
-			if( sd && pc_isridingwug(sd) ) {
-				clif->skill_nodamage(src,bl,skill_id,skill_lv,sc_start4(src,bl,type,100,skill_lv,unit->getdir(bl),0,0,1));
+			if (sd && pc_isridingwug(sd)) {
+				clif->skill_nodamage(src, bl, skill_id, skill_lv, sc_start4(src, bl, type, 100, skill_lv, unit->getdir(bl), 0, 0, 1));
 				clif->walkok(sd);
 			}
 			break;
 
 		case RA_SENSITIVEKEEN:
-			clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
-			clif->skill_damage(src,src,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, BDT_SKILL);
-			map->foreachinrange(skill->area_sub,src,skill->get_splash(skill_id,skill_lv),BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY,skill->castend_damage_id);
+			clif->skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			clif->skill_damage(src, src,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, BDT_SKILL);
+			map->foreachinrange(skill->area_sub, src, skill->get_splash(skill_id, skill_lv), BL_CHAR | BL_SKILL, src, skill_id, skill_lv, tick, flag | BCT_ENEMY, skill->castend_damage_id);
 			break;
+
 		/**
 		 * Mechanic
 		 **/
@@ -14350,30 +14353,31 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 				return 0;
 			}
 			break;
+
 		/**
 		 * Ranger
 		 **/
 		case RA_WUGMASTERY:
-			if( pc_isfalcon(sd) || pc_isridingwug(sd) || sd->sc.data[SC__GROOMY] ) {
-				clif->skill_fail(sd,skill_id,sd->sc.data[SC__GROOMY]?USESKILL_FAIL_MANUAL_NOTIFY:USESKILL_FAIL_CONDITION,0);
+			if ((pc_isfalcon(sd) && !battle_config.warg_can_falcon) || pc_isridingwug(sd) || sd->sc.data[SC__GROOMY]) {
+				clif->skill_fail(sd, skill_id, sd->sc.data[SC__GROOMY] ? USESKILL_FAIL_MANUAL_NOTIFY : USESKILL_FAIL_CONDITION, 0);
 				return 0;
 			}
 			break;
 		case RA_WUGSTRIKE:
-			if( !pc_iswug(sd) && !pc_isridingwug(sd) ) {
-				clif->skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION,0);
+			if (!pc_iswug(sd) && !pc_isridingwug(sd)) {
+				clif->skill_fail(sd, skill_id, USESKILL_FAIL_CONDITION, 0);
 				return 0;
 			}
 			break;
 		case RA_WUGRIDER:
-			if( pc_isfalcon(sd) || ( !pc_isridingwug(sd) && !pc_iswug(sd) ) ) {
-				clif->skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION,0);
+			if ((pc_isfalcon(sd) && !battle_config.warg_can_falcon) || (!pc_isridingwug(sd) && !pc_iswug(sd))) {
+				clif->skill_fail(sd, skill_id, USESKILL_FAIL_CONDITION, 0);
 				return 0;
 			}
 			break;
 		case RA_WUGDASH:
 			if (!pc_isridingwug(sd)) {
-				clif->skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION,0);
+				clif->skill_fail(sd, skill_id, USESKILL_FAIL_CONDITION, 0);
 				return 0;
 			} else {
 				int16 sx = sd->bl.x, sy = sd->bl.y;
@@ -14411,6 +14415,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 				}
 			}
 			break;
+
 		/**
 		 * Royal Guard
 		 **/

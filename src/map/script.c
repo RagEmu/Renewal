@@ -9387,11 +9387,12 @@ BUILDIN(setfalcon)
 {
 	bool flag = true;
 	struct map_session_data *sd = script->rid2sd(st);
-	if (sd == NULL)
-		return true;// no player attached, report source
 
-	if (script_hasdata(st,2))
-		flag = script_getnum(st,2) ? true : false;
+	if (sd == NULL)
+		return true; // No player attached, report source
+
+	if (script_hasdata(st, 2))
+		flag = script_getnum(st, 2) ? true : false;
 
 	pc->setfalcon(sd, flag);
 
