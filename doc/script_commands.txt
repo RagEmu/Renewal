@@ -5710,6 +5710,12 @@ Amount can be negative. See 'statusup'.
 
 ---------------------------------------
 
+*skillall;
+
+This command will give all the skills to the player. (excluding quest skills.)
+
+---------------------------------------
+
 *bonus <bonus type>,<val1>;
 *bonus2 <bonus type>,<val1>,<val2>;
 *bonus3 <bonus type>,<val1>,<val2>,<val3>;

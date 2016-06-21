@@ -20211,6 +20211,26 @@ BUILDIN(countspiritball) {
 	return true;
 }
 
+/*
+ * Gives all the skill to the player. [Jedzkie]
+ * (Except for quest skills.)
+ */
+BUILDIN(skillall)
+{
+	struct map_session_data *sd;
+
+	sd = script->rid2sd(st);
+
+	if (sd == NULL)
+		return true;
+
+	pc->allskillup(sd);
+	sd->status.skill_point = 0;
+	clif->updatestatus(sd, SP_SKILLPOINT);
+
+	return true;
+}
+
 /** place holder for the translation macro **/
 BUILDIN(_) {
 	return true;
@@ -20900,6 +20920,9 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(addspiritball, "ii?"),
 		BUILDIN_DEF(delspiritball, "i?"),
 		BUILDIN_DEF(countspiritball, "?"),
+
+		BUILDIN_DEF(skillall, ""),
+
 		BUILDIN_DEF(_,"s"),
 	};
 	int i, len = ARRAYLENGTH(BUILDIN);
