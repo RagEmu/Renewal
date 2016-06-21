@@ -2338,7 +2338,7 @@ unsigned int status_get_restart_hp(const struct map_session_data *sd, const stru
 
 	if((sd->class_&MAPID_BASEMASK) == MAPID_NOVICE && !(sd->class_&JOBL_2)
 			&& battle_config.restart_hp_rate < 50)
-		hp = bstatus->max_hp >> 1;
+		hp = st->max_hp >> 1;
 	else
 		hp = APPLY_RATE(st->max_hp, battle_config.restart_hp_rate);
 
