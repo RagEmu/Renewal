@@ -2959,17 +2959,15 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if( (sce = sc->data[SC_DARKCROW]) && (flag&(BF_SHORT|BF_WEAPON)) == (BF_SHORT|BF_WEAPON) )
 			damage += damage * sce->val2 / 100;
 
-		if( (sce = sc->data[SC_STONEHARDSKIN]) && flag&(BF_SHORT|BF_WEAPON) && damage > 0 ) {
-			sce->val2 -= (int)cap_value(damage,INT_MIN,INT_MAX);
-			if( src->type == BL_PC ) {
-				if (s_sd && s_sd->status.weapon != W_BOW)
-					skill->break_equip(src, EQP_WEAPON, 3000, BCT_SELF);
-			} else
-				skill->break_equip(src, EQP_WEAPON, 3000, BCT_SELF);
+		
+		if (damage > 0 && ((flag&(BF_WEAPON|BF_SHORT)) == (BF_WEAPON|BF_SHORT)) && (sce = sc->data[SC_STONEHARDSKIN])) {
+			sce->val2 -= (int)cap_value(damage, INT_MIN, INT_MAX);
 			// 30% chance to reduce monster's ATK by 25% for 10 seconds.
-			if( src->type == BL_MOB )
-				sc_start(bl,src, SC_NOEQUIPWEAPON, 30, 0, skill->get_time2(RK_STONEHARDSKIN, sce->val1));
-			if( sce->val2 <= 0 )
+			if (src->type == BL_MOB)
+				sc_start(src, src, SC_NOEQUIPWEAPON, 30, 0, skill->get_time2(RK_STONEHARDSKIN, sce->val1));
+			else
+				skill->break_equip(src, EQP_WEAPON, 3000, BCT_SELF);
+			if (sce->val2 <= 0)
 				status_change_end(bl, SC_STONEHARDSKIN, INVALID_TIMER);
 		}
 
