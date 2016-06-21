@@ -2321,7 +2321,7 @@ unsigned int status_get_base_maxhp(const struct map_session_data *sd, const stru
 	val += val * st->vit / 100; // +1% per each point of VIT
 
 	return (unsigned int)cap_value(val,0,UINT_MAX);
-
+}
 	
 /**
  * Calculates the HP that a character will have on respawn, when dead.
