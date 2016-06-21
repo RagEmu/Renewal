@@ -12210,9 +12210,9 @@ int buildin_maprespawnguildid_sub_pc(struct map_session_data* sd, va_list ap)
 	if(!sd || sd->bl.m != m)
 		return 0;
 	if(
-	    (sd->status.guild_id == g_id && flag&1) //Warp out owners
-	 || (sd->status.guild_id != g_id && flag&2) //Warp out outsiders
-	 || (sd->status.guild_id == 0)              // Warp out players not in guild [Valaris]
+	    (sd->status.guild_id == g_id && flag&1) // Warp out owners
+	 || (sd->status.guild_id != g_id && flag&2) // Warp out outsiders
+	 || (sd->status.guild_id == 0 && flag&2)    // Warp out players not in guild
 	  )
 		pc->setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 	return 1;
@@ -12232,12 +12232,20 @@ int buildin_maprespawnguildid_sub_mob(struct block_list *bl, va_list ap)
 	return 0;
 }
 
+/**
+ * Function to kick guild members out of a map and to their save points.
+ * @param m mapid
+ * @param g_id owner guild id
+ * @param flag &1 : Warp Guild members
+ *             &2 : Warp Non-Guild members
+ *             &4 : reserved for mob (except Guardian/Emperium)
+ **/
 BUILDIN(maprespawnguildid) {
-	const char *mapname=script_getstr(st,2);
-	int g_id=script_getnum(st,3);
-	int flag=script_getnum(st,4);
+	const char *mapname = script_getstr(st,2);
+	int g_id = script_getnum(st,3);
+	int flag = script_getnum(st,4);
 
-	int16 m=map->mapname2mapid(mapname);
+	int16 m = map->mapname2mapid(mapname);
 
 	if(m == -1)
 		return true;
