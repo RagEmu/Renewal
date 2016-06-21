@@ -11831,6 +11831,12 @@ OnStop:
 	close;
 }
 
+izlude,172,73,5	duplicate(Scamp)	Scamp#iz	4_M_YURI
+izlude_a,172,73,5	duplicate(Scamp)	Scamp#iz_a	4_M_YURI
+izlude_b,172,73,5	duplicate(Scamp)	Scamp#iz_b	4_M_YURI
+izlude_c,172,73,5	duplicate(Scamp)	Scamp#iz_c	4_M_YURI
+izlude_d,172,73,5	duplicate(Scamp)	Scamp#iz_d	4_M_YURI
+
 airplane_01,1,1,1	script	#bully1	FAKE_NPC,{
 
 OnInit:
