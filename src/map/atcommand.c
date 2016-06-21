@@ -3998,74 +3998,74 @@ ACMD(mapinfo)
 /*==========================================
  *
  *------------------------------------------*/
-ACMD(mount_peco)
+ACMD(mount)
 {
 	if (sd->disguise != -1) {
-		clif->message(fd, msg_fd(fd,212)); // Cannot mount while in disguise.
+		clif->message(fd, msg_fd(fd, 212)); // Cannot mount while in disguise.
 		return false;
 	}
 
 	if (sd->sc.data[SC_ALL_RIDING]) {
-		clif->message(fd, msg_fd(fd,1476)); // You are already mounting something else
+		clif->message(fd, msg_fd(fd, 1476)); // You are already mounting something else
 		return false;
 	}
 
 	if ((sd->class_&MAPID_THIRDMASK) == MAPID_RUNE_KNIGHT) {
-		if (!pc->checkskill(sd,RK_DRAGONTRAINING)) {
-			safesnprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd,213), skill->get_desc(RK_DRAGONTRAINING)); // You need %s to mount!
+		if (!pc->checkskill(sd, RK_DRAGONTRAINING)) {
+			safesnprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd, 213), skill->get_desc(RK_DRAGONTRAINING)); // You need %s to mount!
 			clif->message(fd, atcmd_output);
 			return false;
 		}
 		if (!pc_isridingdragon(sd)) {
-			clif->message(sd->fd,msg_fd(fd,1119)); // You have mounted your Dragon.
+			clif->message(sd->fd, msg_fd(fd, 1119)); // You have mounted your Dragon.
 			pc->setridingdragon(sd, OPTION_DRAGON1);
 		} else {
-			clif->message(sd->fd,msg_fd(fd,1120)); // You have released your Dragon.
+			clif->message(sd->fd, msg_fd(fd, 1120)); // You have released your Dragon.
 			pc->setridingdragon(sd, 0);
 		}
 		return true;
 	}
-	if ((sd->class_&MAPID_THIRDMASK) == MAPID_RANGER) {
-		if (!pc->checkskill(sd,RA_WUGRIDER)) {
-			safesnprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd,213), skill->get_desc(RA_WUGRIDER)); // You need %s to mount!
+	if ((sd->class_&MAPID_THIRDMASK) == MAPID_RANGER && (!pc_isfalcon(sd) || battle_config.warg_can_falcon)) {
+		if (!pc->checkskill(sd, RA_WUGRIDER)) {
+			safesnprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd, 213), skill->get_desc(RA_WUGRIDER)); // You need %s to mount!
 			clif->message(fd, atcmd_output);
 			return false;
 		}
 		if (!pc_isridingwug(sd)) {
-			clif->message(sd->fd,msg_fd(fd,1121)); // You have mounted your Warg.
+			clif->message(sd->fd, msg_fd(fd, 1121)); // You have mounted your Warg.
 			pc->setridingwug(sd, true);
 		} else {
-			clif->message(sd->fd,msg_fd(fd,1122)); // You have released your Warg.
+			clif->message(sd->fd, msg_fd(fd, 1122)); // You have released your Warg.
 			pc->setridingwug(sd, false);
 		}
 		return true;
 	}
 	if ((sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC) {
 		if (!pc_ismadogear(sd)) {
-			clif->message(sd->fd,msg_fd(fd,1123)); // You have mounted your Mado Gear.
+			clif->message(sd->fd, msg_fd(fd, 1123)); // You have mounted your Mado Gear.
 			pc->setmadogear(sd, true);
 		} else {
-			clif->message(sd->fd,msg_fd(fd,1124)); // You have released your Mado Gear.
+			clif->message(sd->fd, msg_fd(fd, 1124)); // You have released your Mado Gear.
 			pc->setmadogear(sd, false);
 		}
 		return true;
 	}
 	if (sd->class_&MAPID_SWORDMAN && sd->class_&JOBL_2) {
-		if (!pc_isridingpeco(sd)) { // if actually no peco
+		if (!pc_isridingpeco(sd)) { // If actually no peco
 			if (!pc->checkskill(sd, KN_RIDING)) {
-				safesnprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd,213), skill->get_desc(KN_RIDING)); // You need %s to mount!
+				safesnprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd, 213), skill->get_desc(KN_RIDING)); // You need %s to mount!
 				clif->message(fd, atcmd_output);
 				return false;
 			}
 			pc->setridingpeco(sd, true);
-			clif->message(fd, msg_fd(fd,102)); // You have mounted a Peco Peco.
-		} else {//Dismount
+			clif->message(fd, msg_fd(fd, 102)); // You have mounted a Peco Peco.
+		} else { // Dismount
 			pc->setridingpeco(sd, false);
-			clif->message(fd, msg_fd(fd,214)); // You have released your Peco Peco.
+			clif->message(fd, msg_fd(fd, 214)); // You have released your Peco Peco.
 		}
 		return true;
 	}
-	clif->message(fd, msg_fd(fd,215)); // Your class can't mount!
+	clif->message(fd, msg_fd(fd, 215)); // Your class can't mount!
 	return false;
 }
 
@@ -9520,7 +9520,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("unblock", char_unblock),
 		ACMD_DEF2("charunban", char_unban),/* char-specific ban time */
 		ACMD_DEF2("unban", char_unban),
-		ACMD_DEF2("mount", mount_peco),
+		ACMD_DEF(mount),
 		ACMD_DEF(guildspy),
 		ACMD_DEF(partyspy),
 		ACMD_DEF(repairall),

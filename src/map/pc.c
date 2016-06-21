@@ -8839,9 +8839,8 @@ int pc_setcart(struct map_session_data *sd,int type) {
 }
 
 /* FIXME: These setter methods are inconsistent in their class/skill checks.
- *        They should be changed so that they all either do or skip the checks.*/
-
-/**
+ *        They should be changed so that they all either do or skip the checks.
+ *
  * Gives/removes a falcon.
  *
  * The target player needs the required skills in order to obtain a falcon.
@@ -8852,10 +8851,14 @@ int pc_setcart(struct map_session_data *sd,int type) {
 void pc_setfalcon(struct map_session_data *sd, bool flag)
 {
 	if (flag) {
-		if (pc->checkskill(sd,HT_FALCON) > 0) // add falcon if he have the skill
-			pc->setoption(sd,sd->sc.option|OPTION_FALCON);
-	} else if (pc_isfalcon(sd)) {
-		pc->setoption(sd,sd->sc.option&~OPTION_FALCON); // remove falcon
+		if ((!battle_config.warg_can_falcon) && (pc_isridingwug(sd) || pc_iswug(sd))) {
+			return;
+		}
+		else if (pc->checkskill(sd, HT_FALCON) > 0) // Add falcon if he have the skill
+			pc->setoption(sd, sd->sc.option | OPTION_FALCON);
+	}
+	else if (pc_isfalcon(sd)) {
+		pc->setoption(sd, sd->sc.option&~OPTION_FALCON); // remove falcon
 	}
 }
 

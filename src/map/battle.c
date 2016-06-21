@@ -6883,6 +6883,7 @@ static const struct battle_data {
 	// RagEmu
 	{ "feature.buying_store_autotrade",     &battle_config.feature_buying_store_autotrade,  1,      0,      1,              },
 	{ "display_fake_hp_when_dead",          &battle_config.display_fake_hp_when_dead,       1,      0,      1,              },
+	{ "warg_can_falcon",                    &battle_config.warg_can_falcon,                 0,      0,      1,              },
 };
 #ifndef STATS_OPT_OUT
 /**
