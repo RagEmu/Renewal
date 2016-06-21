@@ -6767,6 +6767,10 @@ typedef unsigned int (*HPMHOOK_pre_status_get_base_maxhp) (const struct map_sess
 typedef unsigned int (*HPMHOOK_post_status_get_base_maxhp) (unsigned int retVal___, const struct map_session_data *sd, const struct status_data *st);
 typedef unsigned int (*HPMHOOK_pre_status_get_base_maxsp) (const struct map_session_data **sd, const struct status_data **st);
 typedef unsigned int (*HPMHOOK_post_status_get_base_maxsp) (unsigned int retVal___, const struct map_session_data *sd, const struct status_data *st);
+typedef unsigned int (*HPMHOOK_pre_status_get_restart_hp) (const struct map_session_data **sd, const struct status_data **st);
+typedef unsigned int (*HPMHOOK_post_status_get_restart_hp) (unsigned int retVal___, const struct map_session_data *sd, const struct status_data *st);
+typedef unsigned int (*HPMHOOK_pre_status_get_restart_sp) (const struct map_session_data **sd, const struct status_data **st);
+typedef unsigned int (*HPMHOOK_post_status_get_restart_sp) (unsigned int retVal___, const struct map_session_data *sd, const struct status_data *st);
 typedef int (*HPMHOOK_pre_status_calc_npc_) (struct npc_data **nd, enum e_status_calc_opt *opt);
 typedef int (*HPMHOOK_post_status_calc_npc_) (int retVal___, struct npc_data *nd, enum e_status_calc_opt opt);
 typedef unsigned short (*HPMHOOK_pre_status_calc_str) (struct block_list **bl, struct status_change **sc, int *str);

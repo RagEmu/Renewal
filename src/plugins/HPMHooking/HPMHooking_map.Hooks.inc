@@ -74862,6 +74862,60 @@ unsigned int HP_status_get_base_maxsp(const struct map_session_data *sd, const s
 	}
 	return retVal___;
 }
+unsigned int HP_status_get_restart_hp(const struct map_session_data *sd, const struct status_data *st) {
+	int hIndex = 0;
+	unsigned int retVal___ = 0;
+	if( HPMHooks.count.HP_status_get_restart_hp_pre ) {
+		unsigned int (*preHookFunc) (const struct map_session_data **sd, const struct status_data **st);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_status_get_restart_hp_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_status_get_restart_hp_pre[hIndex].func;
+			retVal___ = preHookFunc(&sd, &st);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return retVal___;
+		}
+	}
+	{
+		retVal___ = HPMHooks.source.status.get_restart_hp(sd, st);
+	}
+	if( HPMHooks.count.HP_status_get_restart_hp_post ) {
+		unsigned int (*postHookFunc) (unsigned int retVal___, const struct map_session_data *sd, const struct status_data *st);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_status_get_restart_hp_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_status_get_restart_hp_post[hIndex].func;
+			retVal___ = postHookFunc(retVal___, sd, st);
+		}
+	}
+	return retVal___;
+}
+unsigned int HP_status_get_restart_sp(const struct map_session_data *sd, const struct status_data *st) {
+	int hIndex = 0;
+	unsigned int retVal___ = 0;
+	if( HPMHooks.count.HP_status_get_restart_sp_pre ) {
+		unsigned int (*preHookFunc) (const struct map_session_data **sd, const struct status_data **st);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_status_get_restart_sp_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_status_get_restart_sp_pre[hIndex].func;
+			retVal___ = preHookFunc(&sd, &st);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return retVal___;
+		}
+	}
+	{
+		retVal___ = HPMHooks.source.status.get_restart_sp(sd, st);
+	}
+	if( HPMHooks.count.HP_status_get_restart_sp_post ) {
+		unsigned int (*postHookFunc) (unsigned int retVal___, const struct map_session_data *sd, const struct status_data *st);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_status_get_restart_sp_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_status_get_restart_sp_post[hIndex].func;
+			retVal___ = postHookFunc(retVal___, sd, st);
+		}
+	}
+	return retVal___;
+}
 int HP_status_calc_npc_(struct npc_data *nd, enum e_status_calc_opt opt) {
 	int hIndex = 0;
 	int retVal___ = 0;
