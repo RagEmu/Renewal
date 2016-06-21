@@ -1834,11 +1834,17 @@ enum si_type {
 	//SI_                                    = 934,
 	//SI_DORAM_BUF_01                        = 935,
 	//SI_DORAM_BUF_02                        = 936,
-
 	SI_SPRITEMABLE                           = 937,
+	//SI_AID_PERIOD_RECEIVEITEM              = 938,
+	//SI_AID_PERIOD_PLUSEXP                  = 939,
+	//SI_AID_PERIOD_PLUSJOBEXP               = 940,
+
 	//SI_EP16_2_BUFF_SS                      = 963,
 	//SI_EP16_2_BUFF_SC                      = 964,
 	//SI_EP16_2_BUFF_AC                      = 965,
+	//SI_GS_MAGICAL_BULLET                   = 966,
+
+	//SI_FALLEN_ANGEL                        = 976,
 
 	SI_MAX,
 };
