@@ -4622,48 +4622,6 @@ void mob_name_constants(void) {
 }
 
 /*==========================================
- * MOB display graphic change data reading
- *------------------------------------------*/
-bool mob_readdb_mobavail(char* str[], int columns, int current)
-{
-	int class_, k;
-
-	nullpo_retr(false, str);
-	class_=atoi(str[0]);
-
-	if(mob->db(class_) == mob->dummy) {
-		// invalid class (probably undefined in db)
-		ShowWarning("mob_readdb_mobavail: Unknown mob id %d.\n", class_);
-		return false;
-	}
-
-	k=atoi(str[1]);
-
-	memset(&mob->db_data[class_]->vd, 0, sizeof(struct view_data));
-	mob->db_data[class_]->vd.class_=k;
-
-	//Player sprites
-	if(pc->db_checkid(k) && columns==12) {
-		mob->db_data[class_]->vd.sex=atoi(str[2]);
-		mob->db_data[class_]->vd.hair_style=atoi(str[3]);
-		mob->db_data[class_]->vd.hair_color=atoi(str[4]);
-		mob->db_data[class_]->vd.weapon=atoi(str[5]);
-		mob->db_data[class_]->vd.shield=atoi(str[6]);
-		mob->db_data[class_]->vd.head_top=atoi(str[7]);
-		mob->db_data[class_]->vd.head_mid=atoi(str[8]);
-		mob->db_data[class_]->vd.head_bottom=atoi(str[9]);
-		mob->db_data[class_]->option=atoi(str[10])&~(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE);
-		mob->db_data[class_]->vd.cloth_color=atoi(str[11]); // Monster player dye option - Valaris
-	}
-	else if(columns==3)
-		mob->db_data[class_]->vd.head_bottom=atoi(str[2]); // mob equipment [Valaris]
-	else if( columns != 2 )
-		return false;
-
-	return true;
-}
-
-/*==========================================
  * Reading of random monster data
  *------------------------------------------*/
 int mob_read_randommonster(void)
@@ -5202,7 +5160,6 @@ void mob_load(bool minimal) {
 	mob->readchatdb();
 	mob->readdb();
 	mob->readskilldb();
-	//sv->readdb(map->db_path, "mob_avail.txt", ',', 2, 12, -1, mob->readdb_mobavail);
 	mob->read_randommonster();
 	sv->readdb(map->db_path, "mob_race2_db.txt", ',', 2, 20, -1, mob->readdb_race2);
 }
@@ -5449,7 +5406,6 @@ void mob_defaults(void) {
 	mob->read_db_mode_sub = mob_read_db_mode_sub;
 	mob->read_db_stats_sub = mob_read_db_stats_sub;
 	mob->name_constants = mob_name_constants;
-	mob->readdb_mobavail = mob_readdb_mobavail;
 	mob->read_randommonster = mob_read_randommonster;
 	mob->parse_row_chatdb = mob_parse_row_chatdb;
 	mob->readchatdb = mob_readchatdb;

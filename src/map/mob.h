@@ -522,7 +522,6 @@ struct mob_interface {
 	uint32 (*read_db_mode_sub) (struct mob_db *entry, struct config_setting_t *t);
 	void (*read_db_stats_sub) (struct mob_db *entry, struct config_setting_t *t);
 	void (*name_constants) (void);
-	bool (*readdb_mobavail) (char *str[], int columns, int current);
 	int (*read_randommonster) (void);
 	bool (*parse_row_chatdb) (char **str, const char *source, int line, int *last_msg_id);
 	void (*readchatdb) (void);
