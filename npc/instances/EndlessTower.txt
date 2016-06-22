@@ -270,7 +270,7 @@ e_tower,81,105,0	script	Tower Protection Stone	2_MONEMUS,{
 		case 3:
 			end;
 		}
-	} else if (.@etower_timer == 1 && (.@etower_timer2 == 2 || etower_partyid != getcharid(0))) {
+	} else if (.@etower_timer == 1 && (.@etower_timer2 == 2 || etower_partyid != getcharid(1))) {
 
 		.@dun_lim_time = etower_timer+604800; // 1 week
 		.@dun_lim_time2 = etower_timer+14400; // 4 hours
