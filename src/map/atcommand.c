@@ -4031,6 +4031,10 @@ ACMD(mount)
 			clif->message(fd, atcmd_output);
 			return false;
 		}
+		if (pc_iswug(sd)) {
+			clif->message(sd->fd, msg_fd(fd, 1202)); // You have already your Warg.
+			return false;
+		}
 		if (!pc_isridingwug(sd)) {
 			clif->message(sd->fd, msg_fd(fd, 1121)); // You have mounted your Warg.
 			pc->setridingwug(sd, true);
