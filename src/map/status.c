@@ -1024,13 +1024,10 @@ void initChangeTables(void) {
 	status->dbs->ChangeFlagTable[SC_ATTHASTE_POTION1] |= SCB_ASPD;
 	status->dbs->ChangeFlagTable[SC_ATTHASTE_POTION2] |= SCB_ASPD;
 	status->dbs->ChangeFlagTable[SC_ATTHASTE_POTION3] |= SCB_ASPD;
-	status->dbs->ChangeFlagTable[SC_MOVHASTE_POTION] |= SCB_SPEED;
 	status->dbs->ChangeFlagTable[SC_ATTHASTE_INFINITY] |= SCB_ASPD;
 	status->dbs->ChangeFlagTable[SC_MOVHASTE_HORSE] |= SCB_SPEED;
 	status->dbs->ChangeFlagTable[SC_MOVHASTE_INFINITY] |= SCB_SPEED;
-	status->dbs->ChangeFlagTable[SC_MOVESLOW_POTION] |= SCB_SPEED;
 	status->dbs->ChangeFlagTable[SC_SLOWDOWN] |= SCB_SPEED;
-	status->dbs->ChangeFlagTable[SC_PLUSATTACKPOWER] |= SCB_BATK;
 	status->dbs->ChangeFlagTable[SC_INCASPDRATE] |= SCB_ASPD;
 	status->dbs->ChangeFlagTable[SC_ALL_RIDING] |= SCB_SPEED;
 	status->dbs->ChangeFlagTable[SC_WEDDING] |= SCB_SPEED;
@@ -1040,15 +1037,12 @@ void initChangeTables(void) {
 	status->dbs->ChangeFlagTable[SC_WALKSPEED] |= SCB_SPEED;
 	status->dbs->ChangeFlagTable[SC_TARGET_BLOOD] |= SCB_ALL;
 	status->dbs->ChangeFlagTable[SC_INCFLEERATE] |= SCB_FLEE;
-	status->dbs->ChangeFlagTable[SC_INCHITRATE] |= SCB_HIT;
-	status->dbs->ChangeFlagTable[SC_INCATKRATE] |= SCB_BATK|SCB_WATK;
 	status->dbs->ChangeFlagTable[SC_INCMATKRATE] |= SCB_MATK;
 	status->dbs->ChangeFlagTable[SC_INCDEFRATE] |= SCB_DEF;
 	status->dbs->ChangeFlagTable[SC_TARGET_ASPD] |= SCB_MAXSP;
 	status->dbs->ChangeFlagTable[SC_ATKER_ASPD] |= SCB_MAXHP | SCB_ALL;
 	status->dbs->ChangeFlagTable[SC_ATKER_MOVESPEED] |= SCB_MAXSP | SCB_ALL;
 	status->dbs->ChangeFlagTable[SC_ACARAJE] |= SCB_HIT | SCB_ASPD;
-	status->dbs->ChangeFlagTable[SC_FOOD_CRITICALSUCCESSVALUE] |= SCB_CRI;
 	status->dbs->ChangeFlagTable[SC_CUP_OF_BOZA] |= SCB_VIT | SCB_ALL;
 	status->dbs->ChangeFlagTable[SC_GM_BATTLE] |= SCB_BATK | SCB_MATK | SCB_MAXHP | SCB_MAXSP;
 	status->dbs->ChangeFlagTable[SC_GM_BATTLE2] |= SCB_BATK | SCB_MATK | SCB_MAXHP | SCB_MAXSP;
@@ -4544,8 +4538,6 @@ unsigned short status_calc_batk(struct block_list *bl, struct status_change *sc,
 
 	if (!viewable) {
 		/* some statuses that are hidden in the status window */
-		if (sc->data[SC_PLUSATTACKPOWER])
-			batk += sc->data[SC_PLUSATTACKPOWER]->val1;
 		return (unsigned short)cap_value(batk, 0, USHRT_MAX);
 	}
 	if (sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 2)
@@ -4590,8 +4582,6 @@ unsigned short status_calc_batk(struct block_list *bl, struct status_change *sc,
 		batk -= batk * sc->data[SC_EQC]->val3 / 100;
 	if (sc->data[SC_ANGRIFFS_MODUS])
 		batk += 50 + 20 * sc->data[SC_ANGRIFFS_MODUS]->val1;
-	if (sc->data[SC_INCATKRATE])
-		batk += batk * sc->data[SC_INCATKRATE]->val1 / 100;
 
 	// Eden Crystal Synthesis
 	if (sc->data[SC_QUEST_BUFF1])
@@ -4646,8 +4636,6 @@ unsigned short status_calc_watk(struct block_list *bl, struct status_change *sc,
 		watk += sc->data[SC_HEATER_OPTION]->val2;
 	if (sc->data[SC_PYROTECHNIC_OPTION])
 		watk += sc->data[SC_PYROTECHNIC_OPTION]->val2;
-	if (sc->data[SC_INCATKRATE])
-		watk += watk * sc->data[SC_INCATKRATE]->val1 / 100;
 	if (sc->data[SC_PROVOKE])
 		watk += watk * sc->data[SC_PROVOKE]->val3 / 100;
 	if (sc->data[SC_SKE])
@@ -4768,8 +4756,6 @@ signed short status_calc_critical(struct block_list *bl, struct status_change *s
 		return (short)cap_value(critical, 10, SHRT_MAX);
 	}
 
-	if (sc->data[SC_FOOD_CRITICALSUCCESSVALUE])
-		critical += sc->data[SC_FOOD_CRITICALSUCCESSVALUE]->val1;
 	if (sc->data[SC_EXPLOSIONSPIRITS])
 		critical += sc->data[SC_EXPLOSIONSPIRITS]->val2;
 	if (sc->data[SC_FORTUNE])
@@ -4819,9 +4805,6 @@ signed short status_calc_hit(struct block_list *bl, struct status_change *sc, in
 		hit += 20; // RockmanEXE; changed based on updated [Reddozen]
 	if (sc->data[SC_MER_HIT])
 		hit += sc->data[SC_MER_HIT]->val2;
-
-	if (sc->data[SC_INCHITRATE])
-		hit += hit * sc->data[SC_INCHITRATE]->val1 / 100;
 	if (sc->data[SC_BLIND])
 		hit -= hit * 25/100;
 	if (sc->data[SC_FIRE_EXPANSION_TEAR_GAS])
@@ -5253,8 +5236,6 @@ unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc
 						val = max(val, 75);
 					if (sc->data[SC_SLOWDOWN])
 						val = max(val, 100);
-					if (sc->data[SC_MOVESLOW_POTION]) // Used by Slow_Down_Potion [Frost]
-						val = max(val, sc->data[SC_MOVESLOW_POTION]->val1);
 					if (sc->data[SC_GS_GATLINGFEVER])
 						val = max(val, 100);
 					if (sc->data[SC_NJ_SUITON])
@@ -5289,7 +5270,7 @@ unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc
 						val = max(50, val + 10 * sc->data[SC_MARSHOFABYSS]->val1);
 					if (sc->data[SC_NEEDLE_OF_PARALYZE])
 						val = max(val, is_boss(bl) ? 50 : 100000);
-					if (sc->data[SC_MOVHASTE_POTION]) { // Doesn't affect the movement speed by Quagmire, Decrease Agi, Slow Grace [Frost]
+					if (sc->data[SC_MOVHASTE_POTION]) { // Doesn't affect the movement speed by Quagmire, Decrease Agi and Slow Grace [Frost]
 						if (sc->data[SC_DEC_AGI] || sc->data[SC_QUAGMIRE] || sc->data[SC_DONTFORGETME])
 							return 0;
 					}
@@ -5309,8 +5290,6 @@ unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc
 
 			if (sc->data[SC_MOVHASTE_INFINITY]) // Used by NPC_AGIUP [Frost]
 				val = max(val, sc->data[SC_MOVHASTE_INFINITY]->val1);
-			if (sc->data[SC_MOVHASTE_POTION]) // Used by Speed_Up_Potion and Guyak_Pudding [Frost]
-				val = max(val, sc->data[SC_MOVHASTE_POTION]->val1);
 			if (sc->data[SC_INC_AGI])
 				val = max(val, 25);
 			if (sc->data[SC_WINDWALK])
@@ -9635,7 +9614,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 			break;
 		case SC_OVERTHRUSTMAX:
 		case SC_OVERTHRUST:
-		case SC_SWOO: //Why does it shares the same opt as Overthrust? Perhaps we'll never know...
+		case SC_SWOO: // Why does it shares the same opt as Overthrust? Perhaps we'll never know...
 			sc->opt3 |= OPT3_OVERTHRUST;
 			opt_flag = 0;
 			break;
@@ -9644,8 +9623,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 			sc->opt3 |= OPT3_ENERGYCOAT;
 			opt_flag = 0;
 			break;
-		case SC_INCATKRATE:
-			//Simulate Explosion Spirits effect for NPC_POWERUP [Skotlex]
+		case SC_INCATKRATE: // Simulate Explosion Spirits effect for NPC_POWERUP [Skotlex]
 			if (bl->type != BL_MOB) {
 				opt_flag = 0;
 				break;
@@ -10629,9 +10607,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			sc->opt3 &= ~OPT3_ENERGYCOAT;
 			opt_flag = 0;
 			break;
-		case SC_INCATKRATE: //Simulated Explosion spirits effect.
-			if (bl->type != BL_MOB)
-			{
+		case SC_INCATKRATE: // Simulated Explosion spirits effect.
+			if (bl->type != BL_MOB) {
 				opt_flag = 0;
 				break;
 			}
@@ -10844,14 +10821,13 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 
 		case SC_CHASEWALK:
 			if(!status->charge(bl, 0, sce->val4))
-				break; //Not enough SP to continue.
-
+				break; // Not enough SP to continue.
 			if (!sc->data[SC_CHASEWALK2]) {
-				sc_start(bl,bl, SC_CHASEWALK2,100,1<<(sce->val1-1),
-						 (sc->data[SC_SOULLINK] && sc->data[SC_SOULLINK]->val2 == SL_ROGUE?10:1) //SL bonus -> x10 duration
-						 * skill->get_time2(status->sc2skill(type),sce->val1));
+				sc_start(bl, bl, SC_CHASEWALK2, 100, 1<<(sce->val1 - 1),
+						 (sc->data[SC_SOULLINK] && sc->data[SC_SOULLINK]->val2 == SL_ROGUE ? 10 : 1) // SL bonus -> x10 duration
+						 * skill->get_time2(status->sc2skill(type), sce->val1));
 			}
-			sc_timer_next(sce->val2+tick, status->change_timer, bl->id, data);
+			sc_timer_next(sce->val2 + tick, status->change_timer, bl->id, data);
 			return 0;
 
 		case SC_SKA:
