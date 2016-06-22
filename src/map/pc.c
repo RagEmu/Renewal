@@ -6493,6 +6493,31 @@ int pc_check_job_name(const char *name) {
 		{ "Oboro", JOB_OBORO },
 		{ "Rebellion", JOB_REBELLION },
 		{ "Summoner", JOB_SUMMONER },
+		
+		// Additional Mount Jobs
+		{ "Knight2", JOB_KNIGHT2 },
+		{ "Crusader2", JOB_CRUSADER2 },
+		{ "Wedding", JOB_WEDDING },
+		
+		{ "Lord_Knight2", JOB_LORD_KNIGHT2 },
+		{ "Paladin2", JOB_PALADIN2 },
+		{ "Baby_Knight2", JOB_BABY_KNIGHT2 },
+		{ "Baby_Crusader2", JOB_BABY_CRUSADER2 },
+		{ "Star_Gladiator2", JOB_STAR_GLADIATOR2 },
+		
+		{ "Rune_Knight2", JOB_RUNE_KNIGHT2 },
+		{ "Rune_Knight_T2", JOB_RUNE_KNIGHT_T2 },
+		{ "Royal_Guard2", JOB_ROYAL_GUARD2 },
+		{ "Royal_Guard_T2", JOB_ROYAL_GUARD_T2 },
+		{ "Ranger2", JOB_RANGER2 },
+		{ "Ranger_T2", JOB_RANGER_T2 },
+		{ "Mechanic2", JOB_MECHANIC2 },
+		{ "Mechanic_T2", JOB_MECHANIC_T2 },
+		
+		{ "Baby_Rune_Knight2", JOB_BABY_RUNE2 },
+		{ "Baby_Royal_Guard2", JOB_BABY_GUARD2 },
+		{ "Baby_Ranger2", JOB_BABY_RANGER2 },
+		{ "Baby_Mechanic2", JOB_BABY_MECHANIC2 },
 	};
 
 	len = ARRAYLENGTH(names);
@@ -10955,6 +10980,116 @@ bool pc_readdb_levelpenalty(char* fields[], int columns, int current) {
 	return true;
 }
 
+
+/**
+ * Reads from a libconfig-formatted expdb file
+ *
+ * @return the number of found entries.
+ */
+int pc_read_exp_db(void)
+{
+	char filepath[256];
+	struct config_t exp_db_conf;
+	struct config_setting_t *edb, *t;
+	int i = 0;
+	unsigned int count = 0;
+	const char *str = NULL;
+
+	memset(pc->exp_table, 0, sizeof(pc->exp_table));
+	memset(pc->max_level, 0, sizeof(pc->max_level));
+
+	sprintf(filepath, "%s/experience.conf", map->db_path);
+
+	if (!exists(filepath))
+		return 0;
+
+	if (!libconfig->load_file(&exp_db_conf, filepath))
+		return 0;
+
+	if ((edb = libconfig->setting_get_member(exp_db_conf.root, "Player")) != NULL) {
+		while ((t = libconfig->setting_get_elem(edb, i++))) {
+			struct config_setting_t *temp;
+			int level, type;
+			if (!libconfig->setting_lookup_int(t, "MaxLevel", &level)) {
+				ShowError("pc_read_exp_db: Missing MaxLevel in \"%s\", entry #%d, skipping.\n", filepath, i);
+				continue;
+			}
+			if (!libconfig->setting_lookup_string(t, "Type", &str) || !*str ) {
+				ShowError("pc_read_exp_db: Missing Type in \"%s\", entry #%d, skipping.\n", filepath, i);
+				continue;
+			} else {
+				if (strcmpi(str, "BaseExp") == 0)
+					type = 0;
+				else if (strcmpi(str, "JobExp") == 0)
+					type = 1;
+				else {
+					ShowError("pc_read_exp_db: Invalid Type '%s' in \"%s\", entry #%d, skipping.\n", str, filepath, i);
+					continue;
+				}
+			}
+			
+			if (level > MAX_LEVEL) {
+				ShowWarning("pc_read_exp_db: Specified max level %d for entry #%d is beyond server's limit (%d).\n ", level, i, MAX_LEVEL);
+				level = MAX_LEVEL;
+			}
+			if (type < 0 || type > 1) {
+				ShowError("pc_read_exp_db: Invalid type %d (must be 0 for BaseLevel, 1 for JobLevel) for Entry #%d.\n", type, i);
+				continue;
+			}
+			
+			if ((temp = libconfig->setting_get_member(t, "Job")) != NULL) {
+				int idx = 0;
+				int job = 0; // Stores the First found JobID
+				struct config_setting_t *temp_job, *temp_exp;
+				if (!config_setting_is_group(temp))
+					continue;
+				while ((temp_job = libconfig->setting_get_elem(temp, idx++)) != NULL) {
+					const char *job_name = config_setting_name(temp_job);
+					int job_idx = pc->check_job_name(job_name);
+					if (job_idx == -1) {
+						ShowError("pc_read_exp_db: Unknown Job %s in \"%s\", entry #%d, skipping.\n", job_name, filepath, i);
+						continue;
+					}
+					job_idx = pc->class2idx(job_idx);
+					pc->max_level[job_idx][type] = level;
+					if (job == 0) {
+						job = job_idx;
+						if ((temp_exp = libconfig->setting_get_member(t, "Exp"))) {
+							int exp = 0, base = 100, avg_increment;
+							unsigned int ui32;
+							struct config_setting_t *expt = NULL;
+
+							while (exp <= level && (expt = libconfig->setting_get_elem(temp_exp, exp)) != NULL) {
+								ui32 = (unsigned int)libconfig->setting_get_int(expt);
+								pc->exp_table[job][type][exp++] = ui32;
+							}
+							base = (exp > 0 ? pc->exp_table[job][type][0] : base); // Safe value if none are specified
+							if (exp > 1)
+								avg_increment = (pc->exp_table[job][type][exp-1] - base) / level;
+							else
+								avg_increment = base;
+
+							for (; exp < level; ++exp) {
+								pc->exp_table[job][type][exp] = pc->exp_table[job][type][exp-1]+avg_increment;								
+							}
+						}
+					} else {
+						memcpy(pc->exp_table[job_idx][type], pc->exp_table[job][type], sizeof(pc->exp_table[0][0]));
+						pc->max_level[job_idx][type] = level;
+					}
+				}
+			}
+			count++;
+		}
+		ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filepath);
+	} else {
+		ShowError("pc_read_exp_db: Cannot read %s\n", filepath);
+	}
+	libconfig->destroy(&exp_db_conf);
+
+	return count;
+}
+
 /*==========================================
  * pc DB reading.
  * exp.txt        - required experience values
@@ -10966,82 +11101,9 @@ int pc_readdb(void) {
 	unsigned int count = 0;
 	FILE *fp;
 	char line[24000],*p;
-
-	//reset
-	memset(pc->exp_table,0,sizeof(pc->exp_table));
-	memset(pc->max_level,0,sizeof(pc->max_level));
-
-	sprintf(line, "%s/""exp.txt", map->db_path);
-
-	fp=fopen(line, "r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", line);
-		return 1;
-	}
-	while(fgets(line, sizeof(line), fp)) {
-		int jobs[CLASS_COUNT], job_count, job, job_id;
-		int type;
-		unsigned int ui,maxlv;
-		char *split[4];
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		if (pc_split_str(line,split,4) < 4)
-			continue;
-
-		job_count = pc_split_atoi(split[1],jobs,':',CLASS_COUNT);
-		if (job_count < 1)
-			continue;
-		job_id = jobs[0];
-		if (!pc->db_checkid(job_id)) {
-			ShowError("pc_readdb: Invalid job ID %d.\n", job_id);
-			continue;
-		}
-		type = atoi(split[2]);
-		if (type < 0 || type > 1) {
-			ShowError("pc_readdb: Invalid type %d (must be 0 for base levels, 1 for job levels).\n", type);
-			continue;
-		}
-		maxlv = atoi(split[0]);
-		if (maxlv > MAX_LEVEL) {
-			ShowWarning("pc_readdb: Specified max level %u for job %d is beyond server's limit (%d).\n ", maxlv, job_id, MAX_LEVEL);
-			maxlv = MAX_LEVEL;
-		}
-		count++;
-		job = jobs[0] = pc->class2idx(job_id);
-		//We send one less and then one more because the last entry in the exp array should hold 0.
-		pc->max_level[job][type] = pc_split_atoui(split[3], pc->exp_table[job][type],',',maxlv-1)+1;
-		//Reverse check in case the array has a bunch of trailing zeros... [Skotlex]
-		//The reasoning behind the -2 is this... if the max level is 5, then the array
-		//should look like this:
-		//0: x, 1: x, 2: x: 3: x 4: 0 <- last valid value is at 3.
-		while ((ui = pc->max_level[job][type]) >= 2 && pc->exp_table[job][type][ui-2] <= 0)
-			pc->max_level[job][type]--;
-		if (pc->max_level[job][type] < maxlv) {
-			ShowWarning("pc_readdb: Specified max %u for job %d, but that job's exp table only goes up to level %u.\n", maxlv, job_id, pc->max_level[job][type]);
-			ShowInfo("Filling the missing values with the last exp entry.\n");
-			//Fill the requested values with the last entry.
-			ui = (pc->max_level[job][type] <= 2? 0: pc->max_level[job][type]-2);
-			for (; ui+2 < maxlv; ui++)
-				pc->exp_table[job][type][ui] = pc->exp_table[job][type][ui-1];
-			pc->max_level[job][type] = maxlv;
-		}
-		//ShowDebug("%s - Class %d: %d\n", type?"Job":"Base", job_id, pc->max_level[job][type]);
-		for (i = 1; i < job_count; i++) {
-			job_id = jobs[i];
-			if (!pc->db_checkid(job_id)) {
-				ShowError("pc_readdb: Invalid job ID %d.\n", job_id);
-				continue;
-			}
-			job = pc->class2idx(job_id);
-			memcpy(pc->exp_table[job][type], pc->exp_table[jobs[0]][type], sizeof(pc->exp_table[0][0]));
-			pc->max_level[job][type] = maxlv;
-			//ShowDebug("%s - Class %d: %u\n", type?"Job":"Base", job_id, pc->max_level[job][type]);
-		}
-	}
-	fclose(fp);
+	
+	pc->read_exp_db();
 	pc->validate_levels();
-	ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s/""%s"CL_RESET"'.\n",count,map->db_path,"exp.txt");
-	count = 0;
 	// Reset and read skilltree
 	pc->clear_skill_tree();
 	pc->read_skill_tree();
@@ -12094,4 +12156,6 @@ void pc_defaults(void) {
 	pc->have_magnifier = pc_have_magnifier;
 	
 	pc->cell_basilica = pc_cell_basilica;
+	
+	pc->read_exp_db = pc_read_exp_db;
 }

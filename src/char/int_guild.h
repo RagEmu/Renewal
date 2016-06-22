@@ -55,7 +55,7 @@ struct inter_guild_interface {
 	struct guild* (*fromsql) (int guild_id);
 	int (*castle_tosql) (struct guild_castle *gc);
 	struct guild_castle* (*castle_fromsql) (int castle_id);
-	bool (*exp_parse_row) (char* split[], int column, int current);
+	void (*read_exp_guild) (void);
 	int (*CharOnline) (int char_id, int guild_id);
 	int (*CharOffline) (int char_id, int guild_id);
 	int (*sql_init) (void);
