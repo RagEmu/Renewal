@@ -4083,7 +4083,7 @@ ACMD(falcon)
 		return false;
 	}
 
-	if ((sd->class_&MAPID_ARCHER && sd->class_&JOBL_2 | JOBL_BABY | JOBL_THIRD)) {
+	if ((sd->class_&MAPID_ARCHER && sd->class_&(JOBL_2 | JOBL_BABY | JOBL_THIRD))) {
 		if (!pc_isfalcon(sd)) { // If no falcon
 			if (!pc->checkskill(sd, HT_FALCON)) {
 				safesnprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd, 190), skill->get_desc(HT_FALCON)); // You need %s to get a falcon!
@@ -4094,7 +4094,7 @@ ACMD(falcon)
 			clif->message(fd, msg_fd(fd, 191)); // You get a falcon.
 		}
 		else { // Remove falcon
-			pc->setoption(sd, sd->sc.option&~OPTION_FALCON);
+			pc->setoption(sd, sd->sc.option & ~OPTION_FALCON);
 			clif->message(fd, msg_fd(fd, 192)); // You release your falcon.
 		}
 		return true;
