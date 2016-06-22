@@ -1725,7 +1725,7 @@ ACMD(bodystyle)
 	
 	if (!((sd->class_&MAPID_THIRDMASK) == MAPID_GUILLOTINE_CROSS || (sd->class_&MAPID_THIRDMASK) == MAPID_GENETIC
 		|| (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC || (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_ARCH_BISHOP)) {
+		|| (sd->class_&MAPID_THIRDMASK) == MAPID_ARCH_BISHOP || (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER)) {
 		clif->message(fd, msg_txt(35));	// This job has no alternate body styles.
 		return false;
 	}
@@ -4031,6 +4031,10 @@ ACMD(mount)
 			clif->message(fd, atcmd_output);
 			return false;
 		}
+		if (pc_iswug(sd)) {
+			clif->message(sd->fd, msg_fd(fd, 1202)); // You have already your Warg.
+			return false;
+		}
 		if (!pc_isridingwug(sd)) {
 			clif->message(sd->fd, msg_fd(fd, 1121)); // You have mounted your Warg.
 			pc->setridingwug(sd, true);
@@ -4066,6 +4070,36 @@ ACMD(mount)
 		return true;
 	}
 	clif->message(fd, msg_fd(fd, 215)); // Your class can't mount!
+	return false;
+}
+
+/*==========================================
+* Falcon command by Jedzkie
+*------------------------------------------*/
+ACMD(falcon)
+{
+	if ((!battle_config.warg_can_falcon) && (pc_isridingwug(sd) || pc_iswug(sd))) {
+		clif->message(fd, msg_fd(fd, 189)); // You cannot get a falcon when you have a Warg.
+		return false;
+	}
+
+	if ((sd->class_&MAPID_ARCHER && sd->class_&JOBL_2 | JOBL_BABY | JOBL_THIRD)) {
+		if (!pc_isfalcon(sd)) { // If no falcon
+			if (!pc->checkskill(sd, HT_FALCON)) {
+				safesnprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd, 190), skill->get_desc(HT_FALCON)); // You need %s to get a falcon!
+				clif->message(fd, atcmd_output);
+				return false;
+			}
+			pc->setoption(sd, sd->sc.option | OPTION_FALCON);
+			clif->message(fd, msg_fd(fd, 191)); // You get a falcon.
+		}
+		else { // Remove falcon
+			pc->setoption(sd, sd->sc.option&~OPTION_FALCON);
+			clif->message(fd, msg_fd(fd, 192)); // You release your falcon.
+		}
+		return true;
+	}
+	clif->message(fd, msg_fd(fd, 193)); // Your class can't handle a falcon!
 	return false;
 }
 
@@ -9521,6 +9555,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("charunban", char_unban),/* char-specific ban time */
 		ACMD_DEF2("unban", char_unban),
 		ACMD_DEF(mount),
+		ACMD_DEF(falcon),
 		ACMD_DEF(guildspy),
 		ACMD_DEF(partyspy),
 		ACMD_DEF(repairall),
