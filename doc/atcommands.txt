@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= RagEmu Dev Team
 //===== Current Version: =====================================
-//= 20160621
+//= 20160622
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -877,9 +877,20 @@ Summons the specified amount of spirit spheres around you.
 ---------------------------------------
 
 @mount
-@mount2
 
-Toggles mounting/unmounting a peco (@mount) or cash mount (@mount2).
+Toggles mounting/unmounting a peco/dragon/wug/mado.
+
+---------------------------------------
+
+@cashmount
+
+Toggles mounting/unmounting a cash mount.
+
+---------------------------------------
+
+@falcon
+
+Gives/removes a falcon.
 
 ---------------------------------------
 
