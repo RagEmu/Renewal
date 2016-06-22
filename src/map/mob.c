@@ -4010,6 +4010,59 @@ void mob_read_db_drops_sub(struct mob_db *entry, struct config_setting_t *t)
 	}
 }
 
+
+/**
+ * Processes the disguise for a mob_db entry.
+ *
+ * @param[in,out] entry The destination mob_db entry, already initialized
+ *                      (mob_id, status.mode are expected to be already set).
+ * @param[in]     t     The libconfig entry.
+ */
+void mob_read_db_disguise_sub(struct mob_db *entry, struct config_setting_t *t)
+{
+	int i32;
+
+	nullpo_retv(entry);
+	
+	if (mob->lookup_const(t, "Id", &i32) && i32 > 0) {
+		entry->vd.class_ = i32;
+		if (pc->db_checkid(i32) == -1) {
+			if (mob->lookup_const(t, "Equip", &i32) && i32 > 0)
+				entry->vd.head_bottom = i32;
+		} else {
+			struct config_setting_t *temp = NULL;
+			if (mob->lookup_const(t, "Sex", &i32) && i32 > 0)
+				entry->vd.sex = i32;
+			if ((temp = libconfig->setting_get_member(t, "Hair"))) {
+				if (config_setting_is_group(temp)) {
+					if (mob->lookup_const(temp, "Style", &i32) && i32 > 0)
+						entry->vd.hair_style = i32;
+					if (mob->lookup_const(temp, "Color", &i32) && i32 > 0)
+						entry->vd.hair_color = i32;
+				}
+			}
+			if (mob->lookup_const(t, "Dye", &i32) && i32 > 0)
+				entry->vd.cloth_color = i32;
+			if (mob->lookup_const(t, "Weapon", &i32) && i32 > 0)
+				entry->vd.weapon = i32;
+			if (mob->lookup_const(t, "Shield", &i32) && i32 > 0)
+				entry->vd.shield = i32;
+			if ((temp = libconfig->setting_get_member(t, "Head"))) {
+				if (config_setting_is_group(temp)) {
+					if (mob->lookup_const(temp, "Upper", &i32) && i32 > 0)
+						entry->vd.head_top = i32;
+					if (mob->lookup_const(temp, "Middle", &i32) && i32 > 0)
+						entry->vd.head_mid = i32;
+					if (mob->lookup_const(temp, "Lower", &i32) && i32 > 0)
+						entry->vd.head_bottom = i32;
+				}
+			}
+			if (mob->lookup_const(t, "Option", &i32) && i32 > 0)
+				entry->option = i32&~(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE);
+		}
+	}
+}
+
 /**
  * Validates a mob DB entry and inserts it into the database.
  * This function is called after preparing the mob entry data, and it takes
@@ -4038,11 +4091,11 @@ int mob_db_validate_entry(struct mob_db *entry, int n, const char *source)
 		return 0;
 	}
 	if (pc->db_checkid(entry->mob_id)) {
-		ShowError("mob_read_db_sub: Invalid monster ID %d, reserved for player classes.\n", entry->mob_id);
+		ShowError("mob_db_validate_entry: Invalid monster ID %d, reserved for player classes.\n", entry->mob_id);
 		return 0;
 	}
 	if (entry->mob_id >= MOB_CLONE_START && entry->mob_id < MOB_CLONE_END) {
-		ShowError("mob_read_db_sub: Invalid monster ID %d. Range %d-%d is reserved for player clones. Please increase MAX_MOB_DB (%d).\n",
+		ShowError("mob_db_validate_entry: Invalid monster ID %d. Range %d-%d is reserved for player clones. Please increase MAX_MOB_DB (%d).\n",
 				entry->mob_id, MOB_CLONE_START, MOB_CLONE_END-1, MAX_MOB_DB);
 		return 0;
 	}
@@ -4072,12 +4125,12 @@ int mob_db_validate_entry(struct mob_db *entry, int n, const char *source)
 	entry->status.race = cap_value(entry->status.race, 0, RC_MAX - 1);
 
 	if (entry->status.def_ele >= ELE_MAX) {
-		ShowWarning("mob_read_db_sub: Invalid element type %d for monster ID %d (max=%d).\n", entry->status.def_ele, entry->mob_id, ELE_MAX-1);
+		ShowWarning("mob_db_validate_entry: Invalid element type %d for monster ID %d (max=%d).\n", entry->status.def_ele, entry->mob_id, ELE_MAX-1);
 		entry->status.def_ele = ELE_NEUTRAL;
 		entry->status.ele_lv = 1;
 	}
 	if (entry->status.ele_lv < 1 || entry->status.ele_lv > 4) {
-		ShowWarning("mob_read_db_sub: Invalid element level %d for monster ID %d, must be in range 1-4.\n", entry->status.ele_lv, entry->mob_id);
+		ShowWarning("mob_db_validate_entry: Invalid element level %d for monster ID %d, must be in range 1-4.\n", entry->status.ele_lv, entry->mob_id);
 		entry->status.ele_lv = 1;
 	}
 
@@ -4186,6 +4239,25 @@ int mob_read_db_sub(struct config_setting_t *mobt, int n, const char *source)
 	 * Drops: {
 	 *     AegisName: chance
 	 *     ...
+	 * }
+	 * Disguise: {
+	 *     Id: DisguiseID
+	 *     Equip: Equipment ID (Only applicable if Id belongs to monster)
+	 *     (Below fields only applicable if Id belongs to player)
+	 *     Sex: Sex
+	 *     Hair: {
+	 * 	       Style: Hair Style Number
+	 *         Color: Hair Color Number
+	 *     }
+	 *     Dye: Cloth Color Number
+	 *     Weapon: Weapon ItemID
+	 *     Shield: Shield ItemID
+	 *     Head: {
+	 *         Upper: ViewID
+	 *         Middle: ViewID
+	 *         Lower: ViewID
+	 *     }
+	 *     Option: Options (see value of OPTION_ constants)
 	 * }
 	 */
 
@@ -4407,6 +4479,12 @@ int mob_read_db_sub(struct config_setting_t *mobt, int n, const char *source)
 	if ((t = libconfig->setting_get_member(mobt, "Drops"))) {
 		if (config_setting_is_group(t)) {
 			mob->read_db_drops_sub(&md, t);
+		}
+	}
+	
+	if ((t = libconfig->setting_get_member(mobt, "Disguise"))) {
+		if (config_setting_is_group(t)) {
+			mob->read_db_disguise_sub(&md, t);
 		}
 	}
 
@@ -5124,7 +5202,7 @@ void mob_load(bool minimal) {
 	mob->readchatdb();
 	mob->readdb();
 	mob->readskilldb();
-	sv->readdb(map->db_path, "mob_avail.txt", ',', 2, 12, -1, mob->readdb_mobavail);
+	//sv->readdb(map->db_path, "mob_avail.txt", ',', 2, 12, -1, mob->readdb_mobavail);
 	mob->read_randommonster();
 	sv->readdb(map->db_path, "mob_race2_db.txt", ',', 2, 20, -1, mob->readdb_race2);
 }
@@ -5365,6 +5443,7 @@ void mob_defaults(void) {
 	mob->read_libconfig = mob_read_libconfig;
 	mob->read_db_additional_fields = mob_read_db_additional_fields;
 	mob->read_db_sub = mob_read_db_sub;
+	mob->read_db_disguise_sub = mob_read_db_disguise_sub;
 	mob->read_db_drops_sub = mob_read_db_drops_sub;
 	mob->read_db_mvpdrops_sub = mob_read_db_mvpdrops_sub;
 	mob->read_db_mode_sub = mob_read_db_mode_sub;
