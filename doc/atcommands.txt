@@ -31,7 +31,7 @@ The format of this file is as follows:
 
 @version
 
-Displays SVN version of the server.
+Displays GIT version of the server.
 
 ---------------------------------------
 
@@ -105,9 +105,21 @@ Toggles Kill Steal Protection.
 
 ---------------------------------------
 
-@font <0-9>
+@font <type>
 
-Sets client font (0 is the default).
+Sets the client font.
+
+Available types:
+-- 0: Default
+-- 1: RixLoveangel
+-- 2: RixSquirrel
+-- 3: NHCgogo
+-- 4: RixDiary
+-- 5: RixMiniHeart
+-- 6: RixFreshman
+-- 7: RixKid
+-- 8: RixMagic
+-- 9: RixJJangu
 
 ---------------------------------------
 
@@ -246,9 +258,15 @@ Value: <type=B(default),W,L><number> or S<length>"<string>"
 
 ---------------------------------------
 
-@mapinfo
+@mapinfo {<type> {<map>}}
 
-Displays information about the current map.
+Displays information about the current map or the one specified.
+
+Available types:
+-- 0: General information and mapflags (always shown).
+-- 1: Players.
+-- 2: NPCs.
+-- 3: Chatrooms.
 
 Output Example:
 ------ Map Info ------
@@ -345,7 +363,6 @@ Type List: healing, usable, etc, weapon, armor, card, petegg, petarmor, ammo.
 Typing "reset" will clear the autoloot item list.
 
 ---------------------------------------
-
 
 @mobsearch <monster name>
 
