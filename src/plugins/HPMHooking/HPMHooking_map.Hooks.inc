@@ -47075,6 +47075,32 @@ int HP_mob_read_db_sub(struct config_setting_t *mobt, int id, const char *source
 	}
 	return retVal___;
 }
+void HP_mob_read_db_disguise_sub(struct mob_db *entry, struct config_setting_t *t) {
+	int hIndex = 0;
+	if( HPMHooks.count.HP_mob_read_db_disguise_sub_pre ) {
+		void (*preHookFunc) (struct mob_db **entry, struct config_setting_t **t);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_mob_read_db_disguise_sub_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_mob_read_db_disguise_sub_pre[hIndex].func;
+			preHookFunc(&entry, &t);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return;
+		}
+	}
+	{
+		HPMHooks.source.mob.read_db_disguise_sub(entry, t);
+	}
+	if( HPMHooks.count.HP_mob_read_db_disguise_sub_post ) {
+		void (*postHookFunc) (struct mob_db *entry, struct config_setting_t *t);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_mob_read_db_disguise_sub_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_mob_read_db_disguise_sub_post[hIndex].func;
+			postHookFunc(entry, t);
+		}
+	}
+	return;
+}
 void HP_mob_read_db_drops_sub(struct mob_db *entry, struct config_setting_t *t) {
 	int hIndex = 0;
 	if( HPMHooks.count.HP_mob_read_db_drops_sub_pre ) {
@@ -47205,33 +47231,6 @@ void HP_mob_name_constants(void) {
 		}
 	}
 	return;
-}
-bool HP_mob_readdb_mobavail(char *str[], int columns, int current) {
-	int hIndex = 0;
-	bool retVal___ = false;
-	if( HPMHooks.count.HP_mob_readdb_mobavail_pre ) {
-		bool (*preHookFunc) (char **str[], int *columns, int *current);
-		*HPMforce_return = false;
-		for(hIndex = 0; hIndex < HPMHooks.count.HP_mob_readdb_mobavail_pre; hIndex++ ) {
-			preHookFunc = HPMHooks.list.HP_mob_readdb_mobavail_pre[hIndex].func;
-			retVal___ = preHookFunc(&str, &columns, &current);
-		}
-		if( *HPMforce_return ) {
-			*HPMforce_return = false;
-			return retVal___;
-		}
-	}
-	{
-		retVal___ = HPMHooks.source.mob.readdb_mobavail(str, columns, current);
-	}
-	if( HPMHooks.count.HP_mob_readdb_mobavail_post ) {
-		bool (*postHookFunc) (bool retVal___, char *str[], int columns, int current);
-		for(hIndex = 0; hIndex < HPMHooks.count.HP_mob_readdb_mobavail_post; hIndex++ ) {
-			postHookFunc = HPMHooks.list.HP_mob_readdb_mobavail_post[hIndex].func;
-			retVal___ = postHookFunc(retVal___, str, columns, current);
-		}
-	}
-	return retVal___;
 }
 int HP_mob_read_randommonster(void) {
 	int hIndex = 0;

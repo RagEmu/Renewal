@@ -4669,6 +4669,8 @@ typedef void (*HPMHOOK_pre_mob_read_db_additional_fields) (struct mob_db **entry
 typedef void (*HPMHOOK_post_mob_read_db_additional_fields) (struct mob_db *entry, struct config_setting_t *it, int n, const char *source);
 typedef int (*HPMHOOK_pre_mob_read_db_sub) (struct config_setting_t **mobt, int *id, const char **source);
 typedef int (*HPMHOOK_post_mob_read_db_sub) (int retVal___, struct config_setting_t *mobt, int id, const char *source);
+typedef void (*HPMHOOK_pre_mob_read_db_disguise_sub) (struct mob_db **entry, struct config_setting_t **t);
+typedef void (*HPMHOOK_post_mob_read_db_disguise_sub) (struct mob_db *entry, struct config_setting_t *t);
 typedef void (*HPMHOOK_pre_mob_read_db_drops_sub) (struct mob_db **entry, struct config_setting_t **t);
 typedef void (*HPMHOOK_post_mob_read_db_drops_sub) (struct mob_db *entry, struct config_setting_t *t);
 typedef void (*HPMHOOK_pre_mob_read_db_mvpdrops_sub) (struct mob_db **entry, struct config_setting_t **t);
@@ -4679,8 +4681,6 @@ typedef void (*HPMHOOK_pre_mob_read_db_stats_sub) (struct mob_db **entry, struct
 typedef void (*HPMHOOK_post_mob_read_db_stats_sub) (struct mob_db *entry, struct config_setting_t *t);
 typedef void (*HPMHOOK_pre_mob_name_constants) (void);
 typedef void (*HPMHOOK_post_mob_name_constants) (void);
-typedef bool (*HPMHOOK_pre_mob_readdb_mobavail) (char **str[], int *columns, int *current);
-typedef bool (*HPMHOOK_post_mob_readdb_mobavail) (bool retVal___, char *str[], int columns, int current);
 typedef int (*HPMHOOK_pre_mob_read_randommonster) (void);
 typedef int (*HPMHOOK_post_mob_read_randommonster) (int retVal___);
 typedef bool (*HPMHOOK_pre_mob_parse_row_chatdb) (char ***str, const char **source, int *line, int **last_msg_id);
