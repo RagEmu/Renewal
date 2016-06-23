@@ -136,7 +136,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, unsigned int uid,
 		if (idx < 0 || idx >= MAX_CART)
 			return;
 
-		ARR_FIND (0, vsd->vend_num, j, vsd->vending[j].index == idx);
+		ARR_FIND(0, vsd->vend_num, j, vsd->vending[j].index == idx);
 		if (j == vsd->vend_num)
 			return; // Picked non-existing item
 		else
@@ -231,7 +231,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, unsigned int uid,
 
 	// Check for @AUTOTRADE users [durf]
 	if (vsd->state.autotrade) { // See if there is anything left in the shop
-		ARR_FIND (0, vsd->vend_num, i, vsd->vending[i].amount > 0);
+		ARR_FIND(0, vsd->vend_num, i, vsd->vending[i].amount > 0);
 		if (i == vsd->vend_num) { // Close Vending (this was automatically done by the client, we have to do it manually for autovenders) [Skotlex]
 			vending->close(vsd);
 			map->quit(vsd); // They have no reason to stay around anymore, do they?
@@ -251,7 +251,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, const
 	nullpo_retv(sd);
 
 	if (pc_isdead(sd) || !sd->state.prevend || pc_istrading(sd))
-		return; //Ccan't open vendings lying dead || Didn't use via the skill (wpe/hack) || Can't have 2 shops at once
+		return; // Can't open vendings lying dead || Didn't use via the skill (wpe/hack) || Can't have 2 shops at once
 
 	vending_skill_lvl = pc->checkskill(sd, MC_VENDING);
 
@@ -325,7 +325,7 @@ bool vending_search(struct map_session_data* sd, unsigned short nameid)
 		return false;
 	}
 
-	ARR_FIND (0, sd->vend_num, i, sd->status.cart[sd->vending[i].index].nameid == (short)nameid);
+	ARR_FIND(0, sd->vend_num, i, sd->status.cart[sd->vending[i].index].nameid == (short)nameid);
 	if (i == sd->vend_num) { // Not found
 		return false;
 	}
@@ -345,7 +345,7 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 		return true;
 
 	for (idx = 0; idx < s->item_count; idx++) {
-		ARR_FIND (0, sd->vend_num, i, sd->status.cart[sd->vending[i].index].nameid == (short)s->itemlist[idx]);
+		ARR_FIND(0, sd->vend_num, i, sd->status.cart[sd->vending[i].index].nameid == (short)s->itemlist[idx]);
 		if (i == sd->vend_num) { // Not found
 			continue;
 		}
@@ -366,7 +366,7 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 			slot = itemdb_slot(it->nameid);
 
 			for (c = 0; c < slot && it->card[c]; c ++) {
-				ARR_FIND (0, s->card_count, cidx, s->cardlist[cidx] == it->card[c]);
+				ARR_FIND(0, s->card_count, cidx, s->cardlist[cidx] == it->card[c]);
 				if( cidx != s->card_count ) { // Found
 					break;
 				}
