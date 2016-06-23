@@ -18912,6 +18912,48 @@ const char *clif_get_bl_name(const struct block_list *bl)
 	return name;
 }
 
+/**
+ * Starts navigation to the given target on client side
+ *
+ * @param bl The requested player.
+ * @param map Map Name
+ * @param x X Co-ordinate on map
+ * @param y Y Co-ordinate on map
+ * @param flag Services used for transportation
+ * @param hideWindow Hides navigation window
+ * @param mob_id Finds monsters on the map specified
+ */
+void clif_navigateTo(struct map_session_data *sd, const char* map, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id)
+{
+#if PACKETVER >= 20111010
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,27);
+	WFIFOW(fd,0) = 0x08e2;
+
+	// Details of Navigation
+	if (mob_id > 0) {
+		x = 0;
+		y = 0;
+		WFIFOB(fd,2) = 3; // monster with destination field
+	} else if (x > 0 && y > 0) {
+		WFIFOB(fd,2) = 0; // with coordinates
+	} else {
+		x = 0;
+		y = 0;
+		WFIFOB(fd,2) = 1; // without coordinates(will fail if you are already on the map)
+	}
+
+	WFIFOB(fd,3) = flag; // Services to be used for transporation
+	WFIFOB(fd,4) = hideWindow; // If true, navigation window will not be opened
+	safestrncpy((char*)WFIFOP(fd,5), map, MAP_NAME_LENGTH_EXT); // Target map
+	WFIFOW(fd,21) = x; // Target x
+	WFIFOW(fd,23) = y; // Target y
+	WFIFOW(fd,25) = mob_id; // Target mob_id
+	WFIFOSET(fd,27);
+#endif
+}
+
 /* */
 unsigned short clif_decrypt_cmd( int cmd, struct map_session_data *sd ) {
 	if( sd ) {
@@ -19987,4 +20029,6 @@ void clif_defaults(void) {
 	clif->dressroom_open = clif_dressroom_open;
 	clif->pOneClick_ItemIdentify = clif_parse_OneClick_ItemIdentify;
 	clif->get_bl_name = clif_get_bl_name;
+	
+	clif->navigateTo = clif_navigateTo;
 }

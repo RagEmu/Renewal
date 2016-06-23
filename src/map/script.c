@@ -20240,6 +20240,48 @@ BUILDIN(skillall)
 	return true;
 }
 
+/**
+ * navigateto("<map>"{,<x>,{<y>,{<flag>,{<hide_window>,{<monster_id>,{<char_id>}}}}}});
+ */
+BUILDIN(navigateto){
+#if PACKETVER >= 20111010
+	map_session_data *sd;
+	const char *map;
+	uint16 x = 0, y = 0, monster_id = 0;
+	uint8 flag = NAV_KAFRA_AND_AIRSHIP;
+	int char_id;
+	bool hideWindow = true;
+
+	map = script_getstr(st, 2);
+
+	if (script_hasdata(st, 3))
+		x = script_getnum(st, 3);
+	if (script_hasdata(st, 4))
+		y = script_getnum(st, 4);
+	if (script_hasdata(st, 5))
+		flag = (uint8)script_getnum(st, 5);
+	if (script_hasdata(st, 6))
+		hideWindow = script_getnum(st, 6) ? true : false;
+	if (script_hasdata(st, 7))
+		monster_id = script_getnum(st, 7);
+
+	if (script_hasdata(st, 8)) {
+		char_id = script_getnum(st, 8);
+		sd = map->charid2sd(char_id);
+	} else {
+		sd = script->rid2sd(st);
+	}
+	if (sd == NULL)
+		return false;
+
+	clif->navigateTo(sd, map, x, y, flag, hideWindow, monster_id);
+
+	return true;
+#else
+	return false;
+#endif
+}
+
 /** place holder for the translation macro **/
 BUILDIN(_) {
 	return true;
@@ -20931,6 +20973,8 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(countspiritball, "?"),
 
 		BUILDIN_DEF(skillall, ""),
+		
+		BUILDIN_DEF(navigateto, "s???????"),
 
 		BUILDIN_DEF(_,"s"),
 	};
@@ -21080,6 +21124,16 @@ void script_hardcoded_constants(void)
 	script->set_constant("EQP_SHADOW_SHOES", EQP_SHADOW_SHOES, false, false);
 	script->set_constant("EQP_SHADOW_ACC_R", EQP_SHADOW_ACC_R, false, false);
 	script->set_constant("EQP_SHADOW_ACC_L", EQP_SHADOW_ACC_L, false, false);
+	
+	script->constdb_comment("Constants for navigateto ScriptCommand");
+	script->set_constant("NAV_NONE", NAV_NONE, false, false);
+	script->set_constant("NAV_AIRSHIP_ONLY", NAV_AIRSHIP_ONLY, false, false);
+	script->set_constant("NAV_SCROLL_ONLY", NAV_SCROLL_ONLY, false, false);
+	script->set_constant("NAV_AIRSHIP_AND_SCROLL", NAV_AIRSHIP_AND_SCROLL, false, false);
+	script->set_constant("NAV_KAFRA_ONLY", NAV_KAFRA_ONLY, false, false);
+	script->set_constant("NAV_KAFRA_AND_AIRSHIP", NAV_KAFRA_AND_AIRSHIP, false, false);
+	script->set_constant("NAV_KAFRA_AND_SCROLL", NAV_KAFRA_AND_SCROLL, false, false);
+	script->set_constant("NAV_ALL", NAV_ALL, false, false);
 
 	script->constdb_comment("Renewal");
 #ifdef RENEWAL_DROP
