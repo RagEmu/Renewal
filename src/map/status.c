@@ -4227,12 +4227,6 @@ unsigned short status_calc_str(struct block_list *bl, struct status_change *sc, 
 		str -= sc->data[SC_HARMONIZE]->val2;
 		return (unsigned short)cap_value(str, 0, USHRT_MAX);
 	}
-	if (sc->data[SC_BLESSING]) {
-		if (sc->data[SC_BLESSING]->val2)
-			str += sc->data[SC_BLESSING]->val2;
-		else
-			str >>= 1;
-	}
 	if (sc->data[SC_MARIONETTE])
 		str += ((sc->data[SC_MARIONETTE]->val3) >> 16)&0xFF;
 	if (sc->data[SC_MARIONETTE_MASTER])
