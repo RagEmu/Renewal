@@ -4223,44 +4223,16 @@ unsigned short status_calc_str(struct block_list *bl, struct status_change *sc, 
 	if (!sc || !sc->count)
 		return cap_value(str, 0, USHRT_MAX);
 
-	if (sc->data[SC_FULL_THROTTLE])
-		str += str * 20 / 100;
 	if (sc->data[SC_HARMONIZE]) {
 		str -= sc->data[SC_HARMONIZE]->val2;
 		return (unsigned short)cap_value(str, 0, USHRT_MAX);
 	}
-	if (sc->data[SC_GDSKILL_BATTLEORDER])
-		str += 5;
-	if (sc->data[SC_LEADERSHIP])
-		str += sc->data[SC_LEADERSHIP]->val1;
-	if (sc->data[SC_SHOUT])
-		str += 4;
-	if (sc->data[SC_TRUESIGHT])
-		str += 5;
-	if (sc->data[SC_STRUP])
-		str += 10;
-	if (sc->data[SC_NJ_NEN])
-		str += sc->data[SC_NJ_NEN]->val1;
 	if (sc->data[SC_BLESSING]) {
 		if (sc->data[SC_BLESSING]->val2)
 			str += sc->data[SC_BLESSING]->val2;
 		else
 			str >>= 1;
 	}
-	if (sc->data[SC_GIANTGROWTH])
-		str += 30;
-	if (sc->data[SC_BEYOND_OF_WARCRY])
-		str += sc->data[SC_BEYOND_OF_WARCRY]->val3;
-	if (sc->data[SC_INSPIRATION])
-		str += sc->data[SC_INSPIRATION]->val3;
-	if (sc->data[SC_STOMACHACHE])
-		str -= sc->data[SC_STOMACHACHE]->val1;
-	if (sc->data[SC_KYOUGAKU])
-		str -= sc->data[SC_KYOUGAKU]->val3;
-	if (sc->data[SC_2011RWC])
-		str += sc->data[SC_2011RWC]->val1;
-	if (sc->data[SC_STR_SCROLL])
-		str += sc->data[SC_STR_SCROLL]->val1;
 	if (sc->data[SC_MARIONETTE])
 		str += ((sc->data[SC_MARIONETTE]->val3) >> 16)&0xFF;
 	if (sc->data[SC_MARIONETTE_MASTER])
