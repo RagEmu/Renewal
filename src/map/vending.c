@@ -223,7 +223,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, unsigned int uid,
 	}
 	vsd->vend_num = cursor;
 
-	// Always save BOTH: custom (buyer) and vendor
+	// Always save BOTH: customer (buyer) and vendor
 	if (map->save_settings & 2) {
 		chrif->save(sd, 0);
 		chrif->save(vsd, 0);
