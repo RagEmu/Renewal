@@ -4346,12 +4346,6 @@ unsigned short status_calc_int(struct block_list *bl, struct status_change *sc, 
 		int_ += 5;
 	if (sc->data[SC_TRUESIGHT])
 		int_ += 5;
-	if (sc->data[SC_BLESSING]) {
-		if (sc->data[SC_BLESSING]->val2)
-			int_ += sc->data[SC_BLESSING]->val2;
-		else
-			int_ >>= 1;
-	}
 	if (sc->data[SC_NJ_NEN])
 		int_ += sc->data[SC_NJ_NEN]->val1;
 	if (sc->data[SC_INSPIRATION])
@@ -4404,12 +4398,6 @@ unsigned short status_calc_dex(struct block_list *bl, struct status_change *sc, 
 		dex += sc->data[SC_HAWKEYES]->val1;
 	if (sc->data[SC_TRUESIGHT])
 		dex += 5;
-	if (sc->data[SC_BLESSING]) {
-		if (sc->data[SC_BLESSING]->val2)
-			dex += sc->data[SC_BLESSING]->val2;
-		else
-			dex >>= 1;
-	}
 	if (sc->data[SC_GS_ACCURACY])
 		dex += 4; // added based on skill updates [Reddozen]
 	if (sc->data[SC_INSPIRATION])
