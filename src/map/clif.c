@@ -18946,7 +18946,7 @@ void clif_navigateTo(struct map_session_data *sd, const char *map_name, uint16 x
 
 	WFIFOB(fd,3) = flag; // Services to be used for transporation
 	WFIFOB(fd,4) = hideWindow; // If true, navigation window will not be opened
-	safestrncpy((char*)WFIFOP(fd,5), map, MAP_NAME_LENGTH_EXT); // Target map
+	safestrncpy((char*)WFIFOP(fd,5), map_name, MAP_NAME_LENGTH_EXT); // Target map
 	WFIFOW(fd,21) = x; // Target x
 	WFIFOW(fd,23) = y; // Target y
 	WFIFOW(fd,25) = mob_id; // Target mob_id

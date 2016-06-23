@@ -4026,7 +4026,7 @@ void mob_read_db_disguise_sub(struct mob_db *entry, struct config_setting_t *t)
 	
 	if (mob->lookup_const(t, "Id", &i32) && i32 > 0) {
 		entry->vd.class_ = i32;
-		if (pc->db_checkid(i32) == -1) {
+		if (pc->db_checkid(i32) == false) {
 			if (mob->lookup_const(t, "Equip", &i32) && i32 > 0)
 				entry->vd.head_bottom = i32;
 		} else {

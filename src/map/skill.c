@@ -8645,7 +8645,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 					sc_start(src,bl,SC_VITALITYACTIVATION,100,skill_lv,skill->get_time(skill_id,skill_lv));
 				if( skill->area_temp[5]&0x200 )
 					sc_start(src,bl,SC_ABUNDANCE,100,skill_lv,skill->get_time(skill_id,skill_lv));
-				status->change_clear_buffs(bl, SC_NO_CLEARANCE); //For bonus_script
+				status->change_clear_buffs(bl, SC_CLEAR_CHEMICAL_PROTECT); //For bonus_script
 			} else if( sd ) {
 				skill->area_temp[5] = 0;
 				if( tsc && tsc->count ) {
