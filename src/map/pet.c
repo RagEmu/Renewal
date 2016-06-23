@@ -1189,7 +1189,7 @@ int read_petdb(void)
 		"pet_db.txt",
 		"pet_db2.txt",
 	};
-	int i,j;
+	int i, j;
 
 	// Remove any previous scripts in case reloaddb was invoked.
 	for (j = 0; j < MAX_PET_DB; j++) {
@@ -1204,7 +1204,7 @@ int read_petdb(void)
 	}
 
 	// clear database
-	memset(pet->db,0,sizeof(pet->db));
+	memset(pet->db, 0, sizeof(pet->db));
 
 	j = 0; // entry counter
 	for (i = 0; i < ARRAYLENGTH(filename); i++) {
@@ -1213,10 +1213,10 @@ int read_petdb(void)
 		FILE *fp;
 
 		sprintf(line, "%s/%s", map->db_path, filename[i]);
-		fp=fopen(line,"r");
+		fp = fopen(line, "r");
 		if (fp == NULL) {
 			if (i == 0)
-				ShowError("can't read %s\n",line);
+				ShowError("can't read %s\n", line);
 			continue;
 		}
 
@@ -1228,17 +1228,20 @@ int read_petdb(void)
 
 			if (line[0] == '/' && line[1] == '/')
 				continue;
+
 			memset(str, 0, sizeof(str));
 			p = line;
 			while (ISSPACE(*p))
 				++p;
+
 			if (*p == '\0')
-				continue; // empty line
+				continue; // Empty line
+
 			for (k = 0; k < 20; ++k) {
 				str[k] = p;
 				p = strchr(p,',');
 				if (p == NULL)
-					break; // comma not found
+					break; // Comma not found
 				*p = '\0';
 				++p;
 			}
@@ -1255,7 +1258,7 @@ int read_petdb(void)
 			}
 
 			str[20] = p;
-			p = strstr(p+1,"},");
+			p = strstr(p+1, "},");
 			if (p == NULL) {
 				ShowError("read_petdb: Invalid format (Pet Script column) in line %d, skipping.\n", lines);
 				continue;
@@ -1280,27 +1283,27 @@ int read_petdb(void)
 			}
 
 			pet->db[j].class_ = nameid;
-			safestrncpy(pet->db[j].name,str[1],NAME_LENGTH);
-			safestrncpy(pet->db[j].jname,str[2],NAME_LENGTH);
-			pet->db[j].itemID=atoi(str[3]);
-			pet->db[j].EggID=atoi(str[4]);
-			pet->db[j].AcceID=atoi(str[5]);
-			pet->db[j].FoodID=atoi(str[6]);
-			pet->db[j].fullness=atoi(str[7]);
-			pet->db[j].hungry_delay=atoi(str[8])*1000;
-			pet->db[j].r_hungry=atoi(str[9]);
+			safestrncpy(pet->db[j].name, str[1], NAME_LENGTH);
+			safestrncpy(pet->db[j].jname, str[2], NAME_LENGTH);
+			pet->db[j].itemID = atoi(str[3]);
+			pet->db[j].EggID = atoi(str[4]);
+			pet->db[j].AcceID = atoi(str[5]);
+			pet->db[j].FoodID = atoi(str[6]);
+			pet->db[j].fullness = atoi(str[7]);
+			pet->db[j].hungry_delay = atoi(str[8]) * 1000;
+			pet->db[j].r_hungry = atoi(str[9]);
 			if (pet->db[j].r_hungry <= 0)
-				pet->db[j].r_hungry=1;
-			pet->db[j].r_full=atoi(str[10]);
-			pet->db[j].intimate=atoi(str[11]);
-			pet->db[j].die=atoi(str[12]);
-			pet->db[j].capture=atoi(str[13]);
-			pet->db[j].speed=atoi(str[14]);
-			pet->db[j].s_perfor=(char)atoi(str[15]);
-			pet->db[j].talk_convert_class=atoi(str[16]);
-			pet->db[j].attack_rate=atoi(str[17]);
-			pet->db[j].defence_attack_rate=atoi(str[18]);
-			pet->db[j].change_target_rate=atoi(str[19]);
+				pet->db[j].r_hungry = 1;
+			pet->db[j].r_full = atoi(str[10]);
+			pet->db[j].intimate = atoi(str[11]);
+			pet->db[j].die = atoi(str[12]);
+			pet->db[j].capture = atoi(str[13]);
+			pet->db[j].speed = atoi(str[14]);
+			pet->db[j].s_perfor = (char)atoi(str[15]);
+			pet->db[j].talk_convert_class = atoi(str[16]);
+			pet->db[j].attack_rate = atoi(str[17]);
+			pet->db[j].defence_attack_rate = atoi(str[18]);
+			pet->db[j].change_target_rate = atoi(str[19]);
 			pet->db[j].pet_script = NULL;
 			pet->db[j].equip_script = NULL;
 
@@ -1316,7 +1319,7 @@ int read_petdb(void)
 		if (j >= MAX_PET_DB)
 			ShowWarning("read_petdb: Reached max number of pets [%d]. Remaining pets were not read.\n ", MAX_PET_DB);
 		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' pets in '"CL_WHITE"%s"CL_RESET"'.\n", entries, filename[i]);
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' pets in '"CL_WHITE"%s/%s"CL_RESET"'.\n", entries, map->db_path, filename[i]);
 	}
 	return 0;
 }

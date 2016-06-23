@@ -12972,7 +12972,8 @@ int status_readdb_refine_libconfig_sub(struct config_setting_t *r, const char *n
  * @param *filename File name, relative to the database path.
  * @return The number of found entries.
  */
-int status_readdb_refine_libconfig(const char *filename) {
+int status_readdb_refine_libconfig(const char *filename)
+{
 	bool duplicate[REFINE_TYPE_MAX];
 	struct config_t refine_db_conf;
 	struct config_setting_t *r;
@@ -12980,22 +12981,23 @@ int status_readdb_refine_libconfig(const char *filename) {
 	int i = 0, count = 0,type = 0;
 
 	sprintf(filepath, "%s/%s", map->db_path, filename);
+
 	if (!libconfig->load_file(&refine_db_conf, filepath))
 		return 0;
 
 	memset(&duplicate,0,sizeof(duplicate));
 
-	while((r = libconfig->setting_get_elem(refine_db_conf.root,i++))) {
+	while ((r = libconfig->setting_get_elem(refine_db_conf.root, i++))) {
 		char *name = config_setting_name(r);
-		if((type=status->readdb_refine_libconfig_sub(r, name, filename))) {
-			if( duplicate[type-1] ) {
+		if ((type=status->readdb_refine_libconfig_sub(r, name, filename))) {
+			if (duplicate[type - 1]) {
 				ShowWarning("status_readdb_refine_libconfig: duplicate entry for %s in \"%s\", overwriting previous entry...\n", name, filename);
-			} else duplicate[type-1] = true;
+			} else duplicate[type - 1] = true;
 			count++;
 		}
 	}
 	libconfig->destroy(&refine_db_conf);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filename);
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s/%s"CL_RESET"'.\n", count, map->db_path, filename);
 
 	return count;
 }

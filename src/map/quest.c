@@ -543,7 +543,7 @@ int quest_read_db(void)
 	}
 
 	while ((q = libconfig->setting_get_elem(qdb, i++))) {
-		struct quest_db *entry = quest->read_db_sub(q, i-1, filepath);
+		struct quest_db *entry = quest->read_db_sub(q, i - 1, filepath);
 		if (!entry)
 			continue;
 
@@ -560,7 +560,7 @@ int quest_read_db(void)
 		count++;
 	}
 	libconfig->destroy(&quest_db_conf);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filename);
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s/%s"CL_RESET"'.\n", count, map->db_path, filename);
 	return count;
 }
 

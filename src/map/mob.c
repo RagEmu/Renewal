@@ -4542,7 +4542,8 @@ bool mob_get_const(const struct config_setting_t *it, int *value)
 /*==========================================
  * mob_db.txt reading
  *------------------------------------------*/
-void mob_readdb(void) {
+void mob_readdb(void)
+{
 	const char* filename[] = {
 		"mob_db.conf",
 		"mob_db2.conf" };
@@ -4595,19 +4596,21 @@ int mob_read_libconfig(const char *filename, bool ignore_missing)
 		count++;
 
 		if (duplicate[mob_id]) {
-			ShowWarning("mob_read_libconfig:%s: duplicate entry of ID #%d (%s/%s)\n",
-					filename, mob_id, mob->db_data[mob_id]->sprite, mob->db_data[mob_id]->jname);
-		} else {
+			ShowWarning("mob_read_libconfig:%s: duplicate entry of ID #%d (%s/%s)\n", filename, mob_id, mob->db_data[mob_id]->sprite, mob->db_data[mob_id]->jname);
+		}
+		else {
 			duplicate[mob_id] = true;
 		}
 	}
+
 	libconfig->destroy(&mob_db_conf);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filename);
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s/%s"CL_RESET"'.\n", count, map->db_path, filename);
 
 	return count;
 }
 
-void mob_name_constants(void) {
+void mob_name_constants(void)
+{
 	int i;
 #ifdef ENABLE_CASE_CHECK
 	script->parser_current_file = "Mob Database (Likely an invalid or conflicting SpriteName)";
@@ -4628,13 +4631,13 @@ int mob_read_randommonster(void)
 {
 	char line[1024];
 	char *str[10],*p;
-	int i,j;
+	int i, j;
 	const char* mobfile[] = {
 		"mob_branch.txt",
 		"mob_poring.txt",
 		"mob_boss.txt",
 		"mob_pouch.txt",
-		"mob_classchange.txt"};
+		"mob_classchange.txt" };
 
 	memset(&summon, 0, sizeof(summon));
 
@@ -4643,33 +4646,38 @@ int mob_read_randommonster(void)
 		unsigned int count = 0;
 		mob->db_data[0]->summonper[i] = MOBID_PORING; // Default fallback value, in case the database does not provide one
 		sprintf(line, "%s/%s", map->db_path, mobfile[i]);
-		fp=fopen(line,"r");
-		if(fp==NULL){
+		fp = fopen(line, "r");
+		if (fp == NULL) {
 			ShowError("can't read %s\n",line);
 			return -1;
 		}
-		while(fgets(line, sizeof(line), fp))
-		{
+
+		while(fgets(line, sizeof(line), fp)) {
 			int class_;
-			if(line[0] == '/' && line[1] == '/')
+			if (line[0] == '/' && line[1] == '/')
 				continue;
-			memset(str,0,sizeof(str));
-			for(j=0,p=line;j<3 && p;j++){
-				str[j]=p;
-				p=strchr(p,',');
-				if(p) *p++=0;
+			memset(str, 0, sizeof(str));
+
+			for(j = 0, p = line; j < 3 && p; j++) {
+				str[j] = p;
+				p = strchr(p, ',');
+				if (p) *p++ = 0;
 			}
 
-			if(str[0]==NULL || str[2]==NULL)
+			if (str[0] == NULL || str[2] == NULL)
 				continue;
 
 			class_ = atoi(str[0]);
-			if(mob->db(class_) == mob->dummy)
+
+			if (mob->db(class_) == mob->dummy)
 				continue;
+
 			count++;
-			mob->db_data[class_]->summonper[i]=atoi(str[2]);
+
+			mob->db_data[class_]->summonper[i] = atoi(str[2]);
+
 			if (i) {
-				if( summon[i].qty < ARRAYLENGTH(summon[i].class_) ) //MvPs
+				if (summon[i].qty < ARRAYLENGTH(summon[i].class_)) // MvPs
 					summon[i].class_[summon[i].qty++] = class_;
 				else {
 					ShowDebug("Can't store more random mobs from %s, increase size of mob.c:summon variable!\n", mobfile[i]);
@@ -4677,12 +4685,12 @@ int mob_read_randommonster(void)
 				}
 			}
 		}
-		if (i && !summon[i].qty) { //At least have the default here.
+		if (i && !summon[i].qty) { // At least have the default here.
 			summon[i].class_[0] = mob->db_data[0]->summonper[i];
 			summon[i].qty = 1;
 		}
 		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",count,mobfile[i]);
+		ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s/%s"CL_RESET"'.\n",count, map->db_path, mobfile[i]);
 	}
 	return 0;
 }
@@ -4751,54 +4759,57 @@ bool mob_parse_row_chatdb(char** str, const char* source, int line, int* last_ms
 /*==========================================
  * mob_chat_db.txt reading [SnakeDrak]
  *-------------------------------------------------------------------------*/
-void mob_readchatdb(void) {
-	char arc[]="mob_chat_db.txt";
-	uint32 lines=0, count=0;
+void mob_readchatdb(void)
+{
+	char arc[] = "mob_chat_db.txt";
+	uint32 lines = 0, count = 0;
 	char line[1024], filepath[256];
-	int i, tmp=0;
+	int i, tmp = 0;
 	FILE *fp;
 	sprintf(filepath, "%s/%s", map->db_path, arc);
-	fp=fopen(filepath, "r");
-	if(fp == NULL) {
+	fp = fopen(filepath, "r");
+
+	if (fp == NULL) {
 		ShowWarning("mob_readchatdb: File not found \"%s\", skipping.\n", filepath);
 		return;
 	}
 
-	while(fgets(line, sizeof(line), fp)) {
+	while (fgets(line, sizeof(line), fp)) {
 		char *str[3], *p, *np;
-		int j=0;
+		int j = 0;
 
 		lines++;
-		if(line[0] == '/' && line[1] == '/')
+
+		if (line[0] == '/' && line[1] == '/')
 			continue;
 		memset(str, 0, sizeof(str));
 
-		p=line;
+		p = line;
+
 		while(ISSPACE(*p))
 			++p;
-		if(*p == '\0')
-			continue;// empty line
-		for(i = 0; i <= 2; i++)
-		{
+		if (*p == '\0')
+			continue; // Empty line
+		for (i = 0; i <= 2; i++) {
 			str[i] = p;
-			if(i<2 && (np = strchr(p, ',')) != NULL) {
+			if (i < 2 && (np = strchr(p, ',')) != NULL) {
 				*np = '\0'; p = np + 1; j++;
 			}
 		}
 
-		if( j < 2 || str[2]==NULL)
-		{
+		if (j < 2 || str[2] == NULL) {
 			ShowError("mob_readchatdb: Insufficient number of fields for skill at %s, line %u\n", arc, lines);
 			continue;
 		}
 
-		if( !mob->parse_row_chatdb(str, filepath, lines, &tmp) )
+		if (!mob->parse_row_chatdb(str, filepath, lines, &tmp))
 			continue;
 
 		count++;
 	}
+
 	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%"PRIu32""CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, arc);
+	ShowStatus("Done reading '"CL_WHITE"%"PRIu32""CL_RESET"' entries in '"CL_WHITE"%s/%s"CL_RESET"'.\n", count, map->db_path, arc);
 }
 
 /*==========================================
@@ -5069,22 +5080,23 @@ bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 /*==========================================
  * mob_skill_db.txt reading
  *------------------------------------------*/
-void mob_readskilldb(void) {
+void mob_readskilldb(void)
+{
 	const char* filename[] = {
 		"mob_skill_db.txt",
 		"mob_skill_db2.txt" };
 	int fi;
 
-	if( battle_config.mob_skill_rate == 0 ) {
+	if (battle_config.mob_skill_rate == 0) {
 		ShowStatus("Mob skill use disabled. Not reading mob skills.\n");
 		return;
 	}
 
-	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi ) {
+	for (fi = 0; fi < ARRAYLENGTH(filename); ++fi) {
 		if(fi > 0) {
 			char filepath[256];
 			sprintf(filepath, "%s/%s", map->db_path, filename[fi]);
-			if(!exists(filepath)) {
+			if (!exists(filepath)) {
 				continue;
 			}
 		}
@@ -5150,13 +5162,14 @@ bool mob_readdb_itemratio(char* str[], int columns, int current)
 /**
  * read all mob-related databases
  */
-void mob_load(bool minimal) {
+void mob_load(bool minimal)
+{
 	if (minimal) {
 		// Only read the mob db in minimal mode
 		mob->readdb();
 		return;
 	}
-	sv->readdb(map->db_path, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, mob->readdb_itemratio); // must be read before mobdb
+	sv->readdb(map->db_path, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, mob->readdb_itemratio); // Must be read before mobdb
 	mob->readchatdb();
 	mob->readdb();
 	mob->readskilldb();

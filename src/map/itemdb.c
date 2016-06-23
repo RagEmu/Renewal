@@ -1466,7 +1466,7 @@ void itemdb_read_combos(void)
 		count++;
 	}
 	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%"PRIu32""CL_RESET"' entries in '"CL_WHITE"item_combo_db"CL_RESET"'.\n", count);
+	ShowStatus("Done reading '"CL_WHITE"%"PRIu32""CL_RESET"' entries in '"CL_WHITE"%s/%s"CL_RESET"'.\n", count, map->db_path, "item_combo_db.txt");
 
 	return;
 }
@@ -2068,7 +2068,7 @@ int itemdb_readdb_libconfig(const char *filename) {
 			duplicate[nameid] = true;
 	}
 	libconfig->destroy(&item_db_conf);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filename);
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s/%s"CL_RESET"'.\n", count, map->db_path, filename);
 
 	return count;
 }
@@ -2086,7 +2086,8 @@ uint64 itemdb_unique_id(struct map_session_data *sd) {
 /**
  * Reads all item-related databases.
  */
-void itemdb_read(bool minimal) {
+void itemdb_read(bool minimal)
+{
 	int i;
 	struct DBData prev;
 
@@ -2097,11 +2098,11 @@ void itemdb_read(bool minimal) {
 	for (i = 0; i < ARRAYLENGTH(filename); i++)
 		itemdb->readdb_libconfig(filename[i]);
 
-	for( i = 0; i < ARRAYLENGTH(itemdb->array); ++i ) {
-		if( itemdb->array[i] ) {
-			if( itemdb->names->put(itemdb->names,DB->str2key(itemdb->array[i]->name),DB->ptr2data(itemdb->array[i]),&prev) ) {
+	for (i = 0; i < ARRAYLENGTH(itemdb->array); ++i) {
+		if (itemdb->array[i]) {
+			if (itemdb->names->put(itemdb->names, DB->str2key(itemdb->array[i]->name), DB->ptr2data(itemdb->array[i]), &prev)) {
 				struct item_data *data = DB->data2ptr(&prev);
-				ShowError("itemdb_read: duplicate AegisName '%s' in item ID %d and %d\n",itemdb->array[i]->name,itemdb->array[i]->nameid,data->nameid);
+				ShowError("itemdb_read: duplicate AegisName '%s' in item ID %d and %d\n", itemdb->array[i]->name, itemdb->array[i]->nameid, data->nameid);
 			}
 		}
 	}
@@ -2113,14 +2114,14 @@ void itemdb_read(bool minimal) {
 	itemdb->read_groups();
 	itemdb->read_chains();
 	itemdb->read_packages();
-
 }
 
 /**
  * retrieves item_combo data by combo id
  **/
-struct item_combo * itemdb_id2combo( unsigned short id ) {
-	if( id > itemdb->combo_count )
+struct item_combo * itemdb_id2combo(unsigned short id)
+{
+	if (id > itemdb->combo_count)
 		return NULL;
 	return itemdb->combos[id];
 }
