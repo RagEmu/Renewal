@@ -1055,9 +1055,9 @@ ACMD(jobchange)
 ACMD(kill)
 {
 	status_kill(&sd->bl);
-	clif->message(sd->fd, msg_fd(fd,13)); // A pity! You've died.
+	clif->message(sd->fd, msg_fd(fd, 13)); // A pity! You've died.
 	if (fd != sd->fd)
-		clif->message(fd, msg_fd(fd,14)); // Character killed.
+		clif->message(fd, msg_fd(fd, 14)); // Character killed.
 	return true;
 }
 

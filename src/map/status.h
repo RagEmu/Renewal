@@ -2137,9 +2137,9 @@ struct status_change {
 #define status_zap(bl, hp, sp) (status->damage(NULL, (bl), (hp), (sp), 0, 1))
 //Easier handling of status->percent_change
 #define status_percent_heal(bl, hp_rate, sp_rate) (status->percent_change(NULL, (bl), -(hp_rate), -(sp_rate), 0))
-#define status_percent_damage(src, target, hp_rate, sp_rate, kill) (status->percent_change((src), (target), (hp_rate), (sp_rate), (kill)?1:2))
+#define status_percent_damage(src, target, hp_rate, sp_rate, kill) (status->percent_change((src), (target), (hp_rate), (sp_rate), (kill) ? 1 : 2))
 //Instant kill with no drops/exp/etc
-#define status_kill(bl) status_percent_damage(NULL, (bl), 100, 0, true)
+#define status_kill(bl) status_percent_damage(NULL, (bl), 100, 100, true)
 
 #define status_get_range(bl)                 (status->get_status_data(bl)->rhw.range)
 #define status_get_hp(bl)                    (status->get_status_data(bl)->hp)
