@@ -44,6 +44,7 @@
 #include "map/trade.h"
 #include "map/unit.h"
 #include "common/cbasetypes.h"
+#include "common/conf.h"
 #include "common/memmgr.h"
 #include "common/mmo.h"
 #include "common/nullpo.h"
@@ -1315,37 +1316,53 @@ void homunculus_skill_db_read(void) {
 }
 
 void homunculus_exp_db_read(void) {
-	char line[1024];
-	int i, j=0;
-	char *filename[]={
-		"exp_homun.txt",
-		"exp_homun2.txt"};
+	char filepath[256];
+	struct config_t exp_db_conf;
+	struct config_setting_t *edb, *t, *temp;
+		
+	sprintf(filepath, "%s/experience.conf", map->db_path);
 
 	memset(homun->dbs->exptable, 0, sizeof(homun->dbs->exptable));
-	for(i = 0; i < 2; i++) {
-		FILE *fp;
-		sprintf(line, "%s/%s", map->db_path, filename[i]);
-		if( (fp=fopen(line,"r")) == NULL) {
-			if(i != 0)
-				continue;
-			ShowError("can't read %s\n",line);
+	
+	if (!exists(filepath))
+		return;
+
+	if (!libconfig->load_file(&exp_db_conf, filepath))
+		return;
+	
+	if ((edb = libconfig->setting_get_member(exp_db_conf.root, "Homunculus")) != NULL && (t = libconfig->setting_get_elem(edb, 0)) != NULL) {
+		int level;
+		if (!libconfig->setting_lookup_int(t, "MaxLevel", &level)) {
+			ShowError("homunculus_exp_db_read: Missing MaxLevel in \"%s\", skipping.\n", filepath);
 			return;
 		}
-		while(fgets(line, sizeof(line), fp) && j < MAX_LEVEL) {
-			if(line[0] == '/' && line[1] == '/')
-				continue;
+		if (level > MAX_LEVEL) {
+			ShowWarning("homunculus_exp_db_read: Specified max level %d is beyond server's limit (%d).\n ", level, MAX_LEVEL);
+			level = MAX_LEVEL;
+		}
+		if ((temp = libconfig->setting_get_member(t, "Exp"))) {
+			int exp = 0, base = 350, avg_increment;
+			unsigned int ui32;
+			struct config_setting_t *expt = NULL;
+			while (exp <= level && (expt = libconfig->setting_get_elem(temp, exp)) != NULL) {
+				ui32 = (unsigned int)libconfig->setting_get_int(expt);
+				homun->dbs->exptable[exp++] = ui32;
+			}
+			base = (exp > 0 ? homun->dbs->exptable[0] : base); // Safe value if none are specified
+			if (exp > 1)
+				avg_increment = (homun->dbs->exptable[exp - 1] - base) / level;
+			else
+				avg_increment = base;
 
-			if (!(homun->dbs->exptable[j++] = (unsigned int)strtoul(line, NULL, 10)))
-				break;
+			for (; exp < level; ++exp) {
+				homun->dbs->exptable[exp] = homun->dbs->exptable[exp - 1] + avg_increment;								
+			}
 		}
-		// Last permitted level have to be 0!
-		if (homun->dbs->exptable[MAX_LEVEL - 1]) {
-			ShowWarning("homunculus_exp_db_read: Reached max level in exp_homun [%d]. Remaining lines were not read.\n ", MAX_LEVEL);
-			homun->dbs->exptable[MAX_LEVEL - 1] = 0;
-		}
-		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' levels in '"CL_WHITE"%s"CL_RESET"'.\n", j, filename[i]);
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' homunculus levels in '"CL_WHITE"%s"CL_RESET"'.\n", level, filepath);
+	} else {
+		ShowError("homunculus_exp_db_read: Cannot read %s\n", filepath);
 	}
+	libconfig->destroy(&exp_db_conf);
 }
 
 void homunculus_reload(void) {

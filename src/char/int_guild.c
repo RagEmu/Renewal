@@ -28,6 +28,7 @@
 #include "char/inter.h"
 #include "char/mapif.h"
 #include "common/cbasetypes.h"
+#include "common/conf.h"
 #include "common/db.h"
 #include "common/memmgr.h"
 #include "common/mmo.h"
@@ -612,19 +613,52 @@ struct guild_castle* inter_guild_castle_fromsql(int castle_id)
 	return gc;
 }
 
-
 // Read exp_guild.txt
-bool inter_guild_exp_parse_row(char* split[], int column, int current) {
-	int64 exp = strtoll(split[0], NULL, 10);
-	nullpo_retr(true, split);
+void inter_guild_read_exp_guild(void)
+{
+	char filepath[256];
+	struct config_t exp_db_conf;
+	struct config_setting_t *edb, *t, *temp;
+		
+	sprintf(filepath, "db/experience.conf");
 
-	if (exp < 0 || exp >= UINT_MAX) {
-		ShowError("exp_guild: Invalid exp %"PRId64" (valid range: 0 - %u) at line %d\n", exp, UINT_MAX, current);
-		return false;
+	if (!libconfig->load_file(&exp_db_conf, filepath))
+		return;
+	
+	if ((edb = libconfig->setting_get_member(exp_db_conf.root, "Guild")) != NULL && (t = libconfig->setting_get_elem(edb, 0)) != NULL) {
+		int level;
+		if (!libconfig->setting_lookup_int(t, "MaxLevel", &level)) {
+			ShowError("inter_guild_read_exp_guild: Missing MaxLevel in \"%s\", skipping.\n", filepath);
+			return;
+		}
+		if (level > MAX_GUILDLEVEL) {
+			ShowWarning("inter_guild_read_exp_guild: Specified max level %d is beyond server's limit (%d).\n ", level, MAX_GUILDLEVEL);
+			level = MAX_GUILDLEVEL;
+		}
+		if ((temp = libconfig->setting_get_member(t, "Exp"))) {
+			int exp = 0, base = 100000, avg_increment;
+			unsigned int ui32;
+			struct config_setting_t *expt = NULL;
+			while (exp <= level && (expt = libconfig->setting_get_elem(temp, exp)) != NULL) {
+				ui32 = (unsigned int )libconfig->setting_get_int(expt);
+				inter_guild->exp[exp++] = ui32;
+			}
+			base = (exp > 0 ? inter_guild->exp[0] : base); // Safe value if none are specified
+			if (exp > 1)
+				avg_increment = (inter_guild->exp[exp - 1] - base) / level;
+			else
+				avg_increment = base;
+
+			for (; exp < level; ++exp) {
+				inter_guild->exp[exp] = inter_guild->exp[exp - 1] + avg_increment;								
+			}
+		}
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' Guild levels in '"CL_WHITE"%s"CL_RESET"'.\n", level, filepath);
+	} else {
+		ShowError("inter_guild_read_exp_guild: Cannot read %s\n", filepath);
 	}
-
-	inter_guild->exp[current] = (unsigned int)exp;
-	return true;
+	libconfig->destroy(&exp_db_conf);
+	return;
 }
 
 
@@ -740,7 +774,7 @@ int inter_guild_sql_init(void)
 	inter_guild->castle_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
 	//Read exp file
-	sv->readdb("db", "exp_guild.txt", ',', 1, 1, MAX_GUILDLEVEL, inter_guild->exp_parse_row);
+	inter_guild->read_exp_guild();
 
 	timer->add_func_list(inter_guild->save_timer, "inter_guild->save_timer");
 	timer->add(timer->gettick() + 10000, inter_guild->save_timer, 0, 0);
@@ -1954,7 +1988,7 @@ void inter_guild_defaults(void)
 	inter_guild->fromsql = inter_guild_fromsql;
 	inter_guild->castle_tosql = inter_guild_castle_tosql;
 	inter_guild->castle_fromsql = inter_guild_castle_fromsql;
-	inter_guild->exp_parse_row = inter_guild_exp_parse_row;
+	inter_guild->read_exp_guild = inter_guild_read_exp_guild;
 	inter_guild->CharOnline = inter_guild_CharOnline;
 	inter_guild->CharOffline = inter_guild_CharOffline;
 	inter_guild->sql_init = inter_guild_sql_init;

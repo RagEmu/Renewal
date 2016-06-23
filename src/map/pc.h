@@ -1082,6 +1082,8 @@ END_ZEROED_BLOCK; /* End */
 	void (*check_supernovice_call) (struct map_session_data *sd, const char *message);
 	
 	void (*cell_basilica) (struct map_session_data *sd);
+	
+	int (*read_exp_db) (void);
 };
 
 #ifdef RAGEMU_CORE
