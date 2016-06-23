@@ -30,13 +30,13 @@ struct map_session_data;
 struct s_search_store_search;
 
 struct s_vending {
-	short index; //cart index (return item data)
-	short amount; //amount of the item for vending
-	unsigned int value; //at which price
+	short index; // Cart index (return item data)
+	short amount; // Amount of the item for vending
+	unsigned int value; // At which price
 };
 
 struct vending_interface {
-	unsigned int next_id;/* next vender id */
+	unsigned int next_id; /* Next vender id */
 	struct DBMap *db;
 	/* */
 	void (*init) (bool minimal);
@@ -51,7 +51,7 @@ struct vending_interface {
 };
 
 #ifdef RAGEMU_CORE
-void vending_defaults(void);
+	void vending_defaults(void);
 #endif // RAGEMU_CORE
 
 HPShared struct vending_interface *vending;
