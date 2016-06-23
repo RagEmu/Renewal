@@ -961,6 +961,7 @@ struct HookingPointData HookingPoints[] = {
 	{ HP_POP(clif->selectcart, HP_clif_selectcart) },
 	{ HP_POP(clif->pSelectCart, HP_clif_pSelectCart) },
 	{ HP_POP(clif->get_bl_name, HP_clif_get_bl_name) },
+	{ HP_POP(clif->navigateTo, HP_clif_navigateTo) },
 /* cmdline_interface */
 	{ HP_POP(cmdline->init, HP_cmdline_init) },
 	{ HP_POP(cmdline->final, HP_cmdline_final) },
