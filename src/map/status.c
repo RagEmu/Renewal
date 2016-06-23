@@ -4847,8 +4847,6 @@ signed short status_calc_flee(struct block_list *bl, struct status_change *sc, i
 		flee -= sc->data[SC_GS_GATLINGFEVER]->val4;
 	if (sc->data[SC_MER_FLEE])
 		flee += sc->data[SC_MER_FLEE]->val2;
-	if (sc->data[SC_HALLUCINATIONWALK])
-		flee += sc->data[SC_HALLUCINATIONWALK]->val2;
 	if (sc->data[SC_WATER_BARRIER])
 		flee -= sc->data[SC_WATER_BARRIER]->val3;
 	if (sc->data[SC_SPEARQUICKEN])
@@ -5176,7 +5174,7 @@ unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc
 			speed_rate -= val;
 		}
 
-		//GetMoveSlowValue()
+		// GetMoveSlowValue()
 		{
 			int val = 0;
 
@@ -5195,7 +5193,7 @@ unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc
 
 					if (sc->data[SC_DEC_AGI])
 						val = max(val, 25);
-					if (sc->data[SC_QUAGMIRE] || sc->data[SC_HALLUCINATIONWALK_POSTDELAY])
+					if (sc->data[SC_QUAGMIRE])
 						val = max(val, 50);
 					if (sc->data[SC_DONTFORGETME])
 						val = max(val, sc->data[SC_DONTFORGETME]->val3);
@@ -10331,7 +10329,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			clif->millenniumshield(bl,0);
 			break;
 		case SC_HALLUCINATIONWALK:
-			sc_start(bl,bl,SC_HALLUCINATIONWALK_POSTDELAY,100,sce->val1,skill->get_time2(GC_HALLUCINATIONWALK,sce->val1));
+			sc_start(bl, bl, SC_HALLUCINATIONWALK_POSTDELAY, 100, sce->val1, skill->get_time2(GC_HALLUCINATIONWALK, sce->val1));
 			break;
 		case SC_WHITEIMPRISON:
 			{
