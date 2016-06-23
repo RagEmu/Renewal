@@ -18916,14 +18916,14 @@ const char *clif_get_bl_name(const struct block_list *bl)
  * Starts navigation to the given target on client side
  *
  * @param bl The requested player.
- * @param map Map Name
+ * @param map_name Map Name
  * @param x X Co-ordinate on map
  * @param y Y Co-ordinate on map
  * @param flag Services used for transportation
  * @param hideWindow Hides navigation window
  * @param mob_id Finds monsters on the map specified
  */
-void clif_navigateTo(struct map_session_data *sd, const char* map, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id)
+void clif_navigateTo(struct map_session_data *sd, const char *map_name, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id)
 {
 #if PACKETVER >= 20111010
 	int fd = sd->fd;

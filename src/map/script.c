@@ -20245,14 +20245,14 @@ BUILDIN(skillall)
  */
 BUILDIN(navigateto){
 #if PACKETVER >= 20111010
-	map_session_data *sd;
-	const char *map;
+	struct map_session_data *sd;
+	const char *map_name;
 	uint16 x = 0, y = 0, monster_id = 0;
 	uint8 flag = NAV_KAFRA_AND_AIRSHIP;
 	int char_id;
 	bool hideWindow = true;
 
-	map = script_getstr(st, 2);
+	map_name = script_getstr(st, 2);
 
 	if (script_hasdata(st, 3))
 		x = script_getnum(st, 3);
@@ -20274,7 +20274,7 @@ BUILDIN(navigateto){
 	if (sd == NULL)
 		return false;
 
-	clif->navigateTo(sd, map, x, y, flag, hideWindow, monster_id);
+	clif->navigateTo(sd, map_name, x, y, flag, hideWindow, monster_id);
 
 	return true;
 #else

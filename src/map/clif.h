@@ -1345,7 +1345,7 @@ struct clif_interface {
 
 	const char *(*get_bl_name) (const struct block_list *bl);
 	
-	void (*navigateTo) (struct map_session_data *sd, const char* map, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id);
+	void (*navigateTo) (struct map_session_data *sd, const char *map_name, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id);
 };
 
 #ifdef RAGEMU_CORE
