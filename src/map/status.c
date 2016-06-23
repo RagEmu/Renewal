@@ -1082,12 +1082,6 @@ void initChangeTables(void) {
 	status->dbs->ChangeFlagTable[SC_MDEFSET] |= SCB_MDEF | SCB_MDEF2;
 
 	// Geneticist Foods / Throwable items
-	status->dbs->ChangeFlagTable[SC_SAVAGE_STEAK] |= SCB_STR;
-	status->dbs->ChangeFlagTable[SC_COCKTAIL_WARG_BLOOD] |= SCB_INT;
-	status->dbs->ChangeFlagTable[SC_MINOR_BBQ] |= SCB_VIT;
-	status->dbs->ChangeFlagTable[SC_SIROMA_ICE_TEA] |= SCB_DEX;
-	status->dbs->ChangeFlagTable[SC_DROCERA_HERB_STEAMED] |= SCB_AGI;
-	status->dbs->ChangeFlagTable[SC_PUTTI_TAILS_NOODLES] |= SCB_LUK;
 	status->dbs->ChangeFlagTable[SC_BOOST500] |= SCB_ASPD;
 	status->dbs->ChangeFlagTable[SC_FULL_SWING_K] |= SCB_BATK;
 	status->dbs->ChangeFlagTable[SC_MANA_PLUS] |= SCB_MATK;
@@ -4257,8 +4251,6 @@ unsigned short status_calc_str(struct block_list *bl, struct status_change *sc, 
 		str += 30;
 	if (sc->data[SC_BEYOND_OF_WARCRY])
 		str += sc->data[SC_BEYOND_OF_WARCRY]->val3;
-	if (sc->data[SC_SAVAGE_STEAK])
-		str += sc->data[SC_SAVAGE_STEAK]->val1;
 	if (sc->data[SC_INSPIRATION])
 		str += sc->data[SC_INSPIRATION]->val3;
 	if (sc->data[SC_STOMACHACHE])
@@ -4300,8 +4292,6 @@ unsigned short status_calc_agi(struct block_list *bl, struct status_change *sc, 
 		agi += sc->data[SC_INC_AGI]->val2;
 	if (sc->data[SC_GS_ACCURACY])
 		agi += 4; // added based on skill updates [Reddozen]
-	if (sc->data[SC_DROCERA_HERB_STEAMED])
-		agi += sc->data[SC_DROCERA_HERB_STEAMED]->val1;
 	if (sc->data[SC_INSPIRATION])
 		agi += sc->data[SC_INSPIRATION]->val3;
 	if (sc->data[SC_MARSHOFABYSS])
@@ -4351,8 +4341,6 @@ unsigned short status_calc_vit(struct block_list *bl, struct status_change *sc, 
 		vit += 5;
 	if (sc->data[SC_LAUDAAGNUS])
 		vit += 4 + sc->data[SC_LAUDAAGNUS]->val1;
-	if (sc->data[SC_MINOR_BBQ])
-		vit += sc->data[SC_MINOR_BBQ]->val1;
 	if (sc->data[SC_INSPIRATION])
 		vit += sc->data[SC_INSPIRATION]->val3;
 	if (sc->data[SC_NOEQUIPARMOR])
@@ -4402,8 +4390,6 @@ unsigned short status_calc_int(struct block_list *bl, struct status_change *sc, 
 		int_ += sc->data[SC_NJ_NEN]->val1;
 	if (sc->data[SC_INSPIRATION])
 		int_ += sc->data[SC_INSPIRATION]->val3;
-	if (sc->data[SC_COCKTAIL_WARG_BLOOD])
-		int_ += sc->data[SC_COCKTAIL_WARG_BLOOD]->val1;
 	if (sc->data[SC_2011RWC])
 		int_ += sc->data[SC_2011RWC]->val1;
 	if (sc->data[SC_INT_SCROLL])
@@ -4460,8 +4446,6 @@ unsigned short status_calc_dex(struct block_list *bl, struct status_change *sc, 
 	}
 	if (sc->data[SC_GS_ACCURACY])
 		dex += 4; // added based on skill updates [Reddozen]
-	if (sc->data[SC_SIROMA_ICE_TEA])
-		dex += sc->data[SC_SIROMA_ICE_TEA]->val1;
 	if (sc->data[SC_INSPIRATION])
 		dex += sc->data[SC_INSPIRATION]->val3;
 	if (sc->data[SC_MARSHOFABYSS])
@@ -4503,8 +4487,6 @@ unsigned short status_calc_luk(struct block_list *bl, struct status_change *sc, 
 		luk += 5;
 	if (sc->data[SC_GLORIA])
 		luk += 30;
-	if (sc->data[SC_PUTTI_TAILS_NOODLES])
-		luk += sc->data[SC_PUTTI_TAILS_NOODLES]->val1;
 	if (sc->data[SC_INSPIRATION])
 		luk += sc->data[SC_INSPIRATION]->val3;
 	if (sc->data[SC_STOMACHACHE])
