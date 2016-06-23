@@ -1365,11 +1365,11 @@ int status_damage(struct block_list *src,struct block_list *target,int64 in_hp, 
 					status_change_end(target, SC_GRAVITATION, INVALID_TIMER);
 				}
 			}
-			if(sc->data[SC_DANCING] && (unsigned int)hp > st->max_hp>>2)
+			if (sc->data[SC_DANCING] && (unsigned int)hp > st->max_hp>>2)
 				status_change_end(target, SC_DANCING, INVALID_TIMER);
-			if(sc->data[SC_CLOAKINGEXCEED] && --(sc->data[SC_CLOAKINGEXCEED]->val2) <= 0)
+			if (sc->data[SC_CLOAKINGEXCEED] && --(sc->data[SC_CLOAKINGEXCEED]->val2) <= 0)
 				status_change_end(target, SC_CLOAKINGEXCEED, INVALID_TIMER);
-			if(sc->data[SC_KAGEMUSYA] && --(sc->data[SC_KAGEMUSYA]->val3) <= 0)
+			if (sc->data[SC_KAGEMUSYA] && --(sc->data[SC_KAGEMUSYA]->val3) <= 0)
 				status_change_end(target, SC_KAGEMUSYA, INVALID_TIMER);
 		}
 		unit->skillcastcancel(target, 2);
@@ -4023,9 +4023,9 @@ int status_check_visibility(struct block_list *src, struct block_list *target) {
 	if ( (tsc = status->get_sc(target)) ) {
 		struct status_data *st = status->get_status_data(src);
 
-		switch ( target->type ) { //Check for chase-walk/hiding/cloaking opponents.
+		switch (target->type) { // Check for chase-walk/hiding/cloaking opponents.
 		case BL_PC:
-			if ( tsc->data[SC_CLOAKINGEXCEED] && !(st->mode&MD_BOSS) )
+			if (tsc->data[SC_CLOAKINGEXCEED] && !(st->mode&MD_BOSS))
 				return 0;
 			if ((tsc->option&(OPTION_HIDE | OPTION_CLOAK | OPTION_CHASEWALK)
 			  || tsc->data[SC_STEALTHFIELD] != NULL
@@ -5287,8 +5287,6 @@ unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc
 				val = max(val, 75);
 			if (sc->data[SC_ACCELERATION])
 				val = max(val, 25);
-			if (sc->data[SC_CLOAKINGEXCEED])
-				val = max(val, sc->data[SC_CLOAKINGEXCEED]->val3);
 			if (sc->data[SC_HOVERING])
 				val = max(val, 10);
 			if (sc->data[SC_GN_CARTBOOST])
@@ -11198,13 +11196,11 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 				return 0;
 			}
 			break;
-
 		case SC_CLOAKINGEXCEED:
-			if(!status->charge(bl,0,10-sce->val1))
+			if (!status->charge(bl, 0, 10 - sce->val1))
 				break;
 			sc_timer_next(1000 + tick, status->change_timer, bl->id, data);
 			return 0;
-
 		case SC_RENOVATIO:
 			if (--(sce->val4) > 0 ){
 				int heal = st->max_hp * 3 / 100;
