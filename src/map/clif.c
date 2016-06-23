@@ -267,7 +267,7 @@ uint32 clif_refresh_ip(void)
 }
 
 #if PACKETVER >= 20071106
-static inline unsigned char clif_bl_type(struct block_list *bl) {
+unsigned char clif_bl_type(struct block_list *bl) {
 	struct view_data *vd;
 	nullpo_retr(CLUT_NPC, bl);
 
@@ -947,7 +947,7 @@ void clif_set_unit_idle2(struct block_list* bl, struct map_session_data *tsd, en
 
 	p.PacketType = idle_unit2Type;
 #if PACKETVER >= 20071106
-	p.objecttype = clif_bl_type(bl);
+	p.objecttype = clif->bl_type(bl);
 #endif
 	p.GID = bl->id;
 	p.speed = status->get_speed(bl);
@@ -1009,7 +1009,7 @@ void clif_set_unit_idle(struct block_list* bl, struct map_session_data *tsd, enu
 	p.PacketType = idle_unitType;
 #if PACKETVER >= 20091103
 	p.PacketLength = sizeof(p);
-	p.objecttype = clif_bl_type(bl);
+	p.objecttype = clif->bl_type(bl);
 #endif
 #if PACKETVER >= 20131223
 	p.AID = bl->id;
@@ -1098,7 +1098,7 @@ void clif_spawn_unit2(struct block_list* bl, enum send_target target) {
 
 	p.PacketType = spawn_unit2Type;
 #if PACKETVER >= 20071106
-	p.objecttype = clif_bl_type(bl);
+	p.objecttype = clif->bl_type(bl);
 #endif
 	p.GID = bl->id;
 	p.speed = status->get_speed(bl);
@@ -1151,7 +1151,7 @@ void clif_spawn_unit(struct block_list* bl, enum send_target target) {
 	p.PacketType = spawn_unitType;
 #if PACKETVER >= 20091103
 	p.PacketLength = sizeof(p);
-	p.objecttype = clif_bl_type(bl);
+	p.objecttype = clif->bl_type(bl);
 #endif
 #if PACKETVER >= 20131223
 	p.AID = bl->id;
@@ -1247,7 +1247,7 @@ void clif_set_unit_walking(struct block_list* bl, struct map_session_data *tsd, 
 	p.PacketLength = sizeof(p);
 #endif
 #if PACKETVER >= 20071106
-	p.objecttype = clif_bl_type(bl);
+	p.objecttype = clif->bl_type(bl);
 #endif
 #if PACKETVER >= 20131223
 	p.AID = bl->id;
@@ -19807,6 +19807,7 @@ void clif_defaults(void) {
 	clif->selectcart = clif_selectcart;
 	/* */
 	clif->isdisguised = clif_isdisguised;
+	clif->bl_type = clif_bl_type;
 
 	/*------------------------
 	 *- Parse Incoming Packet
