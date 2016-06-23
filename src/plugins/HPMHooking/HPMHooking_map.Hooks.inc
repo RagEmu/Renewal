@@ -24467,6 +24467,32 @@ const char* HP_clif_get_bl_name(const struct block_list *bl) {
 	}
 	return retVal___;
 }
+void HP_clif_navigateTo(struct map_session_data *sd, const char *map, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id) {
+	int hIndex = 0;
+	if( HPMHooks.count.HP_clif_navigateTo_pre ) {
+		void (*preHookFunc) (struct map_session_data **sd, const char **map, uint16 *x, uint16 *y, uint8 *flag, bool *hideWindow, uint16 *mob_id);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_clif_navigateTo_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_clif_navigateTo_pre[hIndex].func;
+			preHookFunc(&sd, &map, &x, &y, &flag, &hideWindow, &mob_id);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return;
+		}
+	}
+	{
+		HPMHooks.source.clif.navigateTo(sd, map, x, y, flag, hideWindow, mob_id);
+	}
+	if( HPMHooks.count.HP_clif_navigateTo_post ) {
+		void (*postHookFunc) (struct map_session_data *sd, const char *map, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_clif_navigateTo_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_clif_navigateTo_post[hIndex].func;
+			postHookFunc(sd, map, x, y, flag, hideWindow, mob_id);
+		}
+	}
+	return;
+}
 /* cmdline_interface */
 void HP_cmdline_init(void) {
 	int hIndex = 0;

@@ -1879,6 +1879,8 @@ struct {
 	struct HPMHookPoint *HP_clif_pSelectCart_post;
 	struct HPMHookPoint *HP_clif_get_bl_name_pre;
 	struct HPMHookPoint *HP_clif_get_bl_name_post;
+	struct HPMHookPoint *HP_clif_navigateTo_pre;
+	struct HPMHookPoint *HP_clif_navigateTo_post;
 	struct HPMHookPoint *HP_cmdline_init_pre;
 	struct HPMHookPoint *HP_cmdline_init_post;
 	struct HPMHookPoint *HP_cmdline_final_pre;
@@ -7804,6 +7806,8 @@ struct {
 	int HP_clif_pSelectCart_post;
 	int HP_clif_get_bl_name_pre;
 	int HP_clif_get_bl_name_post;
+	int HP_clif_navigateTo_pre;
+	int HP_clif_navigateTo_post;
 	int HP_cmdline_init_pre;
 	int HP_cmdline_init_post;
 	int HP_cmdline_final_pre;

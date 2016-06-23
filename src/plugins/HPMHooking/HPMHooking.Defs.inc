@@ -2213,6 +2213,8 @@ typedef void (*HPMHOOK_pre_clif_pSelectCart) (int *fd, struct map_session_data *
 typedef void (*HPMHOOK_post_clif_pSelectCart) (int fd, struct map_session_data *sd);
 typedef const char* (*HPMHOOK_pre_clif_get_bl_name) (const struct block_list **bl);
 typedef const char* (*HPMHOOK_post_clif_get_bl_name) (const char* retVal___, const struct block_list *bl);
+typedef void (*HPMHOOK_pre_clif_navigateTo) (struct map_session_data **sd, const char **map, uint16 *x, uint16 *y, uint8 *flag, bool *hideWindow, uint16 *mob_id);
+typedef void (*HPMHOOK_post_clif_navigateTo) (struct map_session_data *sd, const char *map, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id);
 #endif // MAP_CLIF_H
 #ifdef COMMON_CORE_H /* cmdline */
 typedef void (*HPMHOOK_pre_cmdline_init) (void);
