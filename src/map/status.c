@@ -4845,8 +4845,6 @@ signed short status_calc_flee(struct block_list *bl, struct status_change *sc, i
 		flee += 10 + sc->data[SC_HLIF_SPEED]->val1 * 10;
 	if (sc->data[SC_GS_GATLINGFEVER])
 		flee -= sc->data[SC_GS_GATLINGFEVER]->val4;
-	if (sc->data[SC_PARTYFLEE])
-		flee += sc->data[SC_PARTYFLEE]->val1 * 10;
 	if (sc->data[SC_MER_FLEE])
 		flee += sc->data[SC_MER_FLEE]->val2;
 	if (sc->data[SC_HALLUCINATIONWALK])
