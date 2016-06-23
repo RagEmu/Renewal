@@ -58569,6 +58569,33 @@ void HP_pc_cell_basilica(struct map_session_data *sd) {
 	}
 	return;
 }
+int HP_pc_read_exp_db(void) {
+	int hIndex = 0;
+	int retVal___ = 0;
+	if( HPMHooks.count.HP_pc_read_exp_db_pre ) {
+		int (*preHookFunc) (void);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_pc_read_exp_db_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_pc_read_exp_db_pre[hIndex].func;
+			retVal___ = preHookFunc();
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return retVal___;
+		}
+	}
+	{
+		retVal___ = HPMHooks.source.pc.read_exp_db();
+	}
+	if( HPMHooks.count.HP_pc_read_exp_db_post ) {
+		int (*postHookFunc) (int retVal___);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_pc_read_exp_db_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_pc_read_exp_db_post[hIndex].func;
+			retVal___ = postHookFunc(retVal___);
+		}
+	}
+	return retVal___;
+}
 /* pcre_interface */
 pcre* HP_libpcre_compile(const char *pattern, int options, const char **errptr, int *erroffset, const unsigned char *tableptr) {
 	int hIndex = 0;

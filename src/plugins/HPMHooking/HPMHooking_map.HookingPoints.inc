@@ -2249,6 +2249,7 @@ struct HookingPointData HookingPoints[] = {
 	{ HP_POP(pc->process_chat_message, HP_pc_process_chat_message) },
 	{ HP_POP(pc->check_supernovice_call, HP_pc_check_supernovice_call) },
 	{ HP_POP(pc->cell_basilica, HP_pc_cell_basilica) },
+	{ HP_POP(pc->read_exp_db, HP_pc_read_exp_db) },
 /* pcre_interface */
 	{ HP_POP(libpcre->compile, HP_libpcre_compile) },
 	{ HP_POP(libpcre->study, HP_libpcre_study) },

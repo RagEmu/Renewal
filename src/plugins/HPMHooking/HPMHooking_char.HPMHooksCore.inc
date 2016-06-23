@@ -449,8 +449,8 @@ struct {
 	struct HPMHookPoint *HP_inter_guild_castle_tosql_post;
 	struct HPMHookPoint *HP_inter_guild_castle_fromsql_pre;
 	struct HPMHookPoint *HP_inter_guild_castle_fromsql_post;
-	struct HPMHookPoint *HP_inter_guild_exp_parse_row_pre;
-	struct HPMHookPoint *HP_inter_guild_exp_parse_row_post;
+	struct HPMHookPoint *HP_inter_guild_read_exp_guild_pre;
+	struct HPMHookPoint *HP_inter_guild_read_exp_guild_post;
 	struct HPMHookPoint *HP_inter_guild_CharOnline_pre;
 	struct HPMHookPoint *HP_inter_guild_CharOnline_post;
 	struct HPMHookPoint *HP_inter_guild_CharOffline_pre;
@@ -1858,8 +1858,8 @@ struct {
 	int HP_inter_guild_castle_tosql_post;
 	int HP_inter_guild_castle_fromsql_pre;
 	int HP_inter_guild_castle_fromsql_post;
-	int HP_inter_guild_exp_parse_row_pre;
-	int HP_inter_guild_exp_parse_row_post;
+	int HP_inter_guild_read_exp_guild_pre;
+	int HP_inter_guild_read_exp_guild_post;
 	int HP_inter_guild_CharOnline_pre;
 	int HP_inter_guild_CharOnline_post;
 	int HP_inter_guild_CharOffline_pre;

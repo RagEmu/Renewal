@@ -5662,32 +5662,31 @@ struct guild_castle* HP_inter_guild_castle_fromsql(int castle_id) {
 	}
 	return retVal___;
 }
-bool HP_inter_guild_exp_parse_row(char *split[], int column, int current) {
+void HP_inter_guild_read_exp_guild(void) {
 	int hIndex = 0;
-	bool retVal___ = false;
-	if( HPMHooks.count.HP_inter_guild_exp_parse_row_pre ) {
-		bool (*preHookFunc) (char **split[], int *column, int *current);
+	if( HPMHooks.count.HP_inter_guild_read_exp_guild_pre ) {
+		void (*preHookFunc) (void);
 		*HPMforce_return = false;
-		for(hIndex = 0; hIndex < HPMHooks.count.HP_inter_guild_exp_parse_row_pre; hIndex++ ) {
-			preHookFunc = HPMHooks.list.HP_inter_guild_exp_parse_row_pre[hIndex].func;
-			retVal___ = preHookFunc(&split, &column, &current);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_inter_guild_read_exp_guild_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_inter_guild_read_exp_guild_pre[hIndex].func;
+			preHookFunc();
 		}
 		if( *HPMforce_return ) {
 			*HPMforce_return = false;
-			return retVal___;
+			return;
 		}
 	}
 	{
-		retVal___ = HPMHooks.source.inter_guild.exp_parse_row(split, column, current);
+		HPMHooks.source.inter_guild.read_exp_guild();
 	}
-	if( HPMHooks.count.HP_inter_guild_exp_parse_row_post ) {
-		bool (*postHookFunc) (bool retVal___, char *split[], int column, int current);
-		for(hIndex = 0; hIndex < HPMHooks.count.HP_inter_guild_exp_parse_row_post; hIndex++ ) {
-			postHookFunc = HPMHooks.list.HP_inter_guild_exp_parse_row_post[hIndex].func;
-			retVal___ = postHookFunc(retVal___, split, column, current);
+	if( HPMHooks.count.HP_inter_guild_read_exp_guild_post ) {
+		void (*postHookFunc) (void);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_inter_guild_read_exp_guild_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_inter_guild_read_exp_guild_post[hIndex].func;
+			postHookFunc();
 		}
 	}
-	return retVal___;
+	return;
 }
 int HP_inter_guild_CharOnline(int char_id, int guild_id) {
 	int hIndex = 0;

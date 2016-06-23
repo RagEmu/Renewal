@@ -247,7 +247,7 @@ struct HookingPointData HookingPoints[] = {
 	{ HP_POP(inter_guild->fromsql, HP_inter_guild_fromsql) },
 	{ HP_POP(inter_guild->castle_tosql, HP_inter_guild_castle_tosql) },
 	{ HP_POP(inter_guild->castle_fromsql, HP_inter_guild_castle_fromsql) },
-	{ HP_POP(inter_guild->exp_parse_row, HP_inter_guild_exp_parse_row) },
+	{ HP_POP(inter_guild->read_exp_guild, HP_inter_guild_read_exp_guild) },
 	{ HP_POP(inter_guild->CharOnline, HP_inter_guild_CharOnline) },
 	{ HP_POP(inter_guild->CharOffline, HP_inter_guild_CharOffline) },
 	{ HP_POP(inter_guild->sql_init, HP_inter_guild_sql_init) },

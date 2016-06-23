@@ -4395,6 +4395,8 @@ struct {
 	struct HPMHookPoint *HP_pc_check_supernovice_call_post;
 	struct HPMHookPoint *HP_pc_cell_basilica_pre;
 	struct HPMHookPoint *HP_pc_cell_basilica_post;
+	struct HPMHookPoint *HP_pc_read_exp_db_pre;
+	struct HPMHookPoint *HP_pc_read_exp_db_post;
 	struct HPMHookPoint *HP_libpcre_compile_pre;
 	struct HPMHookPoint *HP_libpcre_compile_post;
 	struct HPMHookPoint *HP_libpcre_study_pre;
@@ -10322,6 +10324,8 @@ struct {
 	int HP_pc_check_supernovice_call_post;
 	int HP_pc_cell_basilica_pre;
 	int HP_pc_cell_basilica_post;
+	int HP_pc_read_exp_db_pre;
+	int HP_pc_read_exp_db_post;
 	int HP_libpcre_compile_pre;
 	int HP_libpcre_compile_post;
 	int HP_libpcre_study_pre;

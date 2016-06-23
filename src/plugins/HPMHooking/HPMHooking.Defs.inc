@@ -2755,8 +2755,8 @@ typedef int (*HPMHOOK_pre_inter_guild_castle_tosql) (struct guild_castle **gc);
 typedef int (*HPMHOOK_post_inter_guild_castle_tosql) (int retVal___, struct guild_castle *gc);
 typedef struct guild_castle* (*HPMHOOK_pre_inter_guild_castle_fromsql) (int *castle_id);
 typedef struct guild_castle* (*HPMHOOK_post_inter_guild_castle_fromsql) (struct guild_castle* retVal___, int castle_id);
-typedef bool (*HPMHOOK_pre_inter_guild_exp_parse_row) (char **split[], int *column, int *current);
-typedef bool (*HPMHOOK_post_inter_guild_exp_parse_row) (bool retVal___, char *split[], int column, int current);
+typedef void (*HPMHOOK_pre_inter_guild_read_exp_guild) (void);
+typedef void (*HPMHOOK_post_inter_guild_read_exp_guild) (void);
 typedef int (*HPMHOOK_pre_inter_guild_CharOnline) (int *char_id, int *guild_id);
 typedef int (*HPMHOOK_post_inter_guild_CharOnline) (int retVal___, int char_id, int guild_id);
 typedef int (*HPMHOOK_pre_inter_guild_CharOffline) (int *char_id, int *guild_id);
@@ -5533,6 +5533,8 @@ typedef void (*HPMHOOK_pre_pc_check_supernovice_call) (struct map_session_data *
 typedef void (*HPMHOOK_post_pc_check_supernovice_call) (struct map_session_data *sd, const char *message);
 typedef void (*HPMHOOK_pre_pc_cell_basilica) (struct map_session_data **sd);
 typedef void (*HPMHOOK_post_pc_cell_basilica) (struct map_session_data *sd);
+typedef int (*HPMHOOK_pre_pc_read_exp_db) (void);
+typedef int (*HPMHOOK_post_pc_read_exp_db) (int retVal___);
 #endif // MAP_PC_H
 #ifdef MAP_NPC_H /* libpcre */
 typedef pcre* (*HPMHOOK_pre_libpcre_compile) (const char **pattern, int *options, const char ***errptr, int **erroffset, const unsigned char **tableptr);
