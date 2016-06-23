@@ -1029,7 +1029,6 @@ void initChangeTables(void) {
 	status->dbs->ChangeFlagTable[SC_MOVHASTE_INFINITY] |= SCB_SPEED;
 	status->dbs->ChangeFlagTable[SC_SLOWDOWN] |= SCB_SPEED;
 	status->dbs->ChangeFlagTable[SC_INCASPDRATE] |= SCB_ASPD;
-	status->dbs->ChangeFlagTable[SC_ALL_RIDING] |= SCB_SPEED;
 	status->dbs->ChangeFlagTable[SC_WEDDING] |= SCB_SPEED;
 	status->dbs->ChangeFlagTable[SC_ARMORPROPERTY] |= SCB_ALL;
 	status->dbs->ChangeFlagTable[SC_ARMOR_RESIST] |= SCB_ALL;
@@ -1916,8 +1915,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 			} else if ( skill_id != ST_CHASEWALK )
 				return 0;
 		}
-		if( sc->data[SC_ALL_RIDING] )
-			return 0;//New mounts can't attack nor use skills in the client; this check makes it cheat-safe [Ind]
+		if (sc->data[SC_ALL_RIDING])
+			return 0; // New mounts can't attack nor use skills in the client; this check makes it cheat-safe [Ind]
 		
 		if (sc->data[SC_VOLCANIC_ASH] && rnd()%2 && src->type == BL_PC) { //Gain 50% of failing rate when casting skills
 			clif->skill_fail((TBL_PC*)src, skill_id, USESKILL_FAIL, 0);
@@ -5176,7 +5175,7 @@ unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc
 	{
 		speed_rate = 100;
 
-		//GetMoveHasteValue2()
+		// GetMoveHasteValue2()
 		{
 			int val = 0;
 
@@ -5184,9 +5183,7 @@ unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc
 				val = 25;
 			} else if (sd) {
 				if (pc_isridingpeco(sd) || pc_isridingdragon(sd))
-					val = 25;//Same bonus
-				else if (sd->sc.data[SC_ALL_RIDING])
-					val = sd->sc.data[SC_ALL_RIDING]->val1;
+					val = 25; //Same bonus
 				else if (pc_isridingwug(sd))
 					val = 15 + 5 * pc->checkskill(sd, RA_WUGRIDER);
 				else if (pc_ismadogear(sd)) {
@@ -9499,7 +9496,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 	}
 
 	/* [Ind/Hercules] */
-	if( sd && status->dbs->DisplayType[type] ) {
+	if (sd && status->dbs->DisplayType[type]) {
 		int dval1 = 0, dval2 = 0, dval3 = 0;
 		switch( type ) {
 			case SC_ALL_RIDING:
@@ -9509,7 +9506,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				dval1 = val1;
 				break;
 		}
-		status->display_add(sd,type,dval1,dval2,dval3);
+		status->display_add(sd, type, dval1, dval2, dval3);
 	}
 
 	//Those that make you stop attacking/walking....

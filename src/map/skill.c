@@ -460,22 +460,21 @@ int skillnotok (uint16 skill_id, struct map_session_data *sd)
 	if (idx == 0)
 		return 1; // invalid skill id
 
-	if( pc_has_permission(sd, PC_PERM_DISABLE_SKILL_USAGE) )
+	if (pc_has_permission(sd, PC_PERM_DISABLE_SKILL_USAGE))
 		return 1;
 
 	if (pc_has_permission(sd, PC_PERM_SKILL_UNCONDITIONAL))
 		return 0; // can do any damn thing they want
 
-	if( skill_id == AL_TELEPORT && sd->skillitem == skill_id && sd->skillitemlv > 2 )
+	if (skill_id == AL_TELEPORT && sd->skillitem == skill_id && sd->skillitemlv > 2)
 		return 0; // Teleport lv 3 bypasses this check.[Inkfish]
 
 	// Epoque:
 	// This code will compare the player's attack motion value which is influenced by ASPD before
 	// allowing a skill to be cast. This is to prevent no-delay ACT files from spamming skills such as
 	// AC_DOUBLE which do not have a skill delay and are not regarded in terms of attack motion.
-	if( !sd->state.autocast && sd->skillitem != skill_id && sd->canskill_tick &&
-		DIFF_TICK(timer->gettick(), sd->canskill_tick) < (sd->battle_status.amotion * (battle_config.skill_amotion_leniency) / 100) )
-	{// attempted to cast a skill before the attack motion has finished
+	if (!sd->state.autocast && sd->skillitem != skill_id && sd->canskill_tick &&
+		DIFF_TICK(timer->gettick(), sd->canskill_tick) < (sd->battle_status.amotion * (battle_config.skill_amotion_leniency) / 100)) { // Attempted to cast a skill before the attack motion has finished
 		return 1;
 	}
 
@@ -488,19 +487,19 @@ int skillnotok (uint16 skill_id, struct map_session_data *sd)
 	 * It has been confirmed on a official server (thanks to Yommy) that item-cast skills bypass all the restrictions below
 	 * Also, without this check, an exploit where an item casting + healing (or any other kind buff) isn't deleted after used on a restricted map
 	 **/
-	if( sd->skillitem == skill_id )
+	if (sd->skillitem == skill_id)
 		return 0;
 
-	if( sd->sc.data[SC_ALL_RIDING] )
-		return 1;//You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
+	if (sd->sc.data[SC_ALL_RIDING])
+		return 1; // You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 
 	switch (skill_id) {
 		case AL_WARP:
 		case RETURN_TO_ELDICASTES:
 		case ALL_GUARDIAN_RECALL:
 		case ECLAGE_RECALL:
-			if(map->list[m].flag.nowarp) {
-				clif->skill_mapinfomessage(sd,0);
+			if (map->list[m].flag.nowarp) {
+				clif->skill_mapinfomessage(sd, 0);
 				return 1;
 			}
 			return 0;
@@ -508,50 +507,50 @@ int skillnotok (uint16 skill_id, struct map_session_data *sd)
 		case SC_FATALMENACE:
 		case SC_DIMENSIONDOOR:
 		case ALL_ODINS_RECALL:
-			if(map->list[m].flag.noteleport) {
-				clif->skill_mapinfomessage(sd,0);
+			if (map->list[m].flag.noteleport) {
+				clif->skill_mapinfomessage(sd, 0);
 				return 1;
 			}
-			return 0; // gonna be checked in 'skill->castend_nodamage_id'
+			return 0; // Gonna be checked in 'skill->castend_nodamage_id'
 		case WE_CALLPARTNER:
 		case WE_CALLPARENT:
 		case WE_CALLBABY:
 			if (map->list[m].flag.nomemo) {
-				clif->skill_mapinfomessage(sd,1);
+				clif->skill_mapinfomessage(sd, 1);
 				return 1;
 			}
 			break;
 		case MC_VENDING:
 		case ALL_BUYING_STORE:
-			if( npc->isnear(&sd->bl) ) {
-				// uncomment for more verbose message.
+			if (npc->isnear(&sd->bl)) {
+				// Uncomment for more verbose message.
 				//char output[150];
 				//sprintf(output, msg_txt(862), battle_config.min_npc_vendchat_distance); // "You're too close to a NPC, you must be at least %d cells away from any NPC."
 				//clif->message(sd->fd, output);
-				clif->skill_fail(sd,skill_id,USESKILL_FAIL_THERE_ARE_NPC_AROUND,0);
+				clif->skill_fail(sd, skill_id, USESKILL_FAIL_THERE_ARE_NPC_AROUND, 0);
 				return 1;
 			}
 		case MC_IDENTIFY:
-			return 0; // always allowed
+			return 0; // Always allowed
 		case WZ_ICEWALL:
 			// noicewall flag [Valaris]
 			if (map->list[m].flag.noicewall) {
-				clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				clif->skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 				return 1;
 			}
 			break;
 		case GC_DARKILLUSION:
-			if( map_flag_gvg2(m) ) {
-				clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+			if (map_flag_gvg2(m)) {
+				clif->skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 				return 1;
 			}
 			break;
 		case GD_EMERGENCYCALL:
-			if( !(battle_config.emergency_call&((map->agit_flag || map->agit2_flag)?2:1))
-			 || !(battle_config.emergency_call&(map->list[m].flag.gvg || map->list[m].flag.gvg_castle?8:4))
+			if (!(battle_config.emergency_call&((map->agit_flag || map->agit2_flag) ? 2 : 1))
+			 || !(battle_config.emergency_call&(map->list[m].flag.gvg || map->list[m].flag.gvg_castle ? 8 : 4))
 			 || (battle_config.emergency_call&16 && map->list[m].flag.nowarpto && !map->list[m].flag.gvg_castle)
 			) {
-				clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				clif->skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 				return 1;
 			}
 			break;
@@ -561,8 +560,8 @@ int skillnotok (uint16 skill_id, struct map_session_data *sd)
 		case WM_SOUND_OF_DESTRUCTION:
 		case WM_SATURDAY_NIGHT_FEVER:
 		case WM_LULLABY_DEEPSLEEP:
-			if( !map_flag_vs(m) ) {
-				clif->skill_mapinfomessage(sd,2); // This skill uses this msg instead of skill fails.
+			if (!map_flag_vs(m)) {
+				clif->skill_mapinfomessage(sd, 2); // This skill uses this msg instead of skill fails.
 				return 1;
 			}
 			break;
