@@ -1417,12 +1417,14 @@ int pc_reg_received(struct map_session_data *sd)
 
 	if (pc_isinvisible(sd)) {
 		sd->vd.class_ = INVISIBLE_CLASS;
-		clif->message(sd->fd, msg_sd(sd,11)); // Invisible: On
-		// decrement the number of pvp players on the map
+		if (!battle_config.disable_messages) {
+			clif->message(sd->fd, msg_sd(sd, 11)); // Invisible: On
+		}
+		// Decrement the number of pvp players on the map
 		map->list[sd->bl.m].users_pvp--;
 
-		if( map->list[sd->bl.m].flag.pvp && !map->list[sd->bl.m].flag.pvp_nocalcrank && sd->pvp_timer != INVALID_TIMER ) {// unregister the player for ranking
-			timer->delete( sd->pvp_timer, pc->calc_pvprank_timer );
+		if (map->list[sd->bl.m].flag.pvp && !map->list[sd->bl.m].flag.pvp_nocalcrank && sd->pvp_timer != INVALID_TIMER) { // Unregister the player for ranking
+			timer->delete(sd->pvp_timer, pc->calc_pvprank_timer);
 			sd->pvp_timer = INVALID_TIMER;
 		}
 		clif->changeoption(&sd->bl);
@@ -4661,14 +4663,17 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 		)
 		return 0;
 
-	if( map->list[sd->bl.m].flag.nodrop ) {
-		clif->message (sd->fd, msg_sd(sd,271));
-		return 0; //Can't drop items in nodrop mapflag maps.
+	if (map->list[sd->bl.m].flag.nodrop) {
+		if (!battle_config.disable_messages) {
+			clif->message(sd->fd, msg_sd(sd, 271)); // Can't drop items in nodrop mapflag maps.
+		}
+		return 0;
 	}
 
-	if( !pc->candrop(sd,&sd->status.inventory[n]) )
-	{
-		clif->message (sd->fd, msg_sd(sd,263));
+	if (!pc->candrop(sd, &sd->status.inventory[n])) {
+		if (!battle_config.disable_messages) {
+			clif->message(sd->fd, msg_sd(sd, 263)); // This item cannot be dropped.
+		}
 		return 0;
 	}
 
@@ -4777,8 +4782,10 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	}
 
 	if (sd->state.storage_flag != STORAGE_FLAG_CLOSED && item->type != IT_CASH) {
-		clif->messagecolor_self(sd->fd, COLOR_RED, msg_sd(sd,1475));
-		return 0; // You cannot use this item while storage is open.
+		if (!battle_config.disable_messages) {
+			clif->messagecolor_self(sd->fd, COLOR_RED, msg_sd(sd, 1475)); // You cannot use this item while storage is open.
+		}
+		return 0;
 	}
 
 	switch( nameid ) { // TODO: Is there no better way to handle this, other than hardcoding item IDs?
@@ -4882,7 +4889,9 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 			return 0;
 		}
 		if (!pc->inventoryblank(sd)) {
-			clif->messagecolor_self(sd->fd, COLOR_RED, msg_sd(sd,1477));
+			if (!battle_config.disable_messages) {
+				clif->messagecolor_self(sd->fd, COLOR_RED, msg_sd(sd, 1477)); // Item cannot be opened when inventory is full
+			}
 			return 0;
 		}
 	}
@@ -5089,65 +5098,65 @@ int pc_useitem(struct map_session_data *sd,int n) {
  *   0 = success
  *   1 = fail
  *------------------------------------------*/
-int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type)
+int pc_cart_additem(struct map_session_data *sd, struct item *item_data, int amount, e_log_pick_type log_type)
 {
 	struct item_data *data;
-	int i,w;
+	int i, w;
 
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item_data);
 
-	if(item_data->nameid <= 0 || amount <= 0)
+	if (item_data->nameid <= 0 || amount <= 0)
 		return 1;
+
 	data = itemdb->search(item_data->nameid);
 
-	if( data->stack.cart && amount > data->stack.amount )
-	{// item stack limitation
+	if (data->stack.cart && amount > data->stack.amount) {// item stack limitation
 		return 1;
 	}
 
 	if (!itemdb_cancartstore(item_data, pc_get_group_level(sd)) || (item_data->bound > IBT_ACCOUNT && !pc_can_give_bound_items(sd))) {
 		// Check item trade restrictions
-		clif->message (sd->fd, msg_sd(sd,264));
-		return 1;/* TODO: there is no official response to this? */
+		if (!battle_config.disable_messages) {
+			clif->message(sd->fd, msg_sd(sd, 264));
+		}
+		return 1; /* TODO: there is no official response to this? */
 	}
 
-	if( (w = data->weight*amount) + sd->cart_weight > sd->cart_weight_max )
+	if ((w = data->weight*amount) + sd->cart_weight > sd->cart_weight_max)
 		return 1;
 
 	i = MAX_CART;
-	if( itemdb->isstackable2(data) && !item_data->expire_time )
-	{
-		ARR_FIND( 0, MAX_CART, i,
+
+	if (itemdb->isstackable2(data) && !item_data->expire_time) {
+		ARR_FIND(0, MAX_CART, i,
 			sd->status.cart[i].nameid == item_data->nameid && sd->status.cart[i].bound == item_data->bound &&
 			sd->status.cart[i].card[0] == item_data->card[0] && sd->status.cart[i].card[1] == item_data->card[1] &&
-			sd->status.cart[i].card[2] == item_data->card[2] && sd->status.cart[i].card[3] == item_data->card[3] );
+			sd->status.cart[i].card[2] == item_data->card[2] && sd->status.cart[i].card[3] == item_data->card[3]);
 	};
 
-	if( i < MAX_CART && item_data->unique_id == sd->status.cart[i].unique_id)
-	{// item already in cart, stack it
-		if( amount > MAX_AMOUNT - sd->status.cart[i].amount || ( data->stack.cart && amount > data->stack.amount - sd->status.cart[i].amount ) )
-			return 2; // no room
+	if (i < MAX_CART && item_data->unique_id == sd->status.cart[i].unique_id) { // Item already in cart, stack it
+		if (amount > MAX_AMOUNT - sd->status.cart[i].amount || (data->stack.cart && amount > data->stack.amount - sd->status.cart[i].amount))
+			return 2; // No room
 
-		sd->status.cart[i].amount+=amount;
-		clif->cart_additem(sd,i,amount,0);
+		sd->status.cart[i].amount += amount;
+		clif->cart_additem(sd, i, amount, 0);
 	}
-	else
-	{// item not stackable or not present, add it
-		ARR_FIND( 0, MAX_CART, i, sd->status.cart[i].nameid == 0 );
-		if( i == MAX_CART )
-			return 2; // no room
+	else { // Item not stackable or not present, add it
+		ARR_FIND(0, MAX_CART, i, sd->status.cart[i].nameid == 0);
+		if (i == MAX_CART )
+			return 2; // No room
 
-		memcpy(&sd->status.cart[i],item_data,sizeof(sd->status.cart[0]));
-		sd->status.cart[i].amount=amount;
+		memcpy(&sd->status.cart[i], item_data, sizeof(sd->status.cart[0]));
+		sd->status.cart[i].amount = amount;
 		sd->cart_num++;
-		clif->cart_additem(sd,i,amount,0);
+		clif->cart_additem(sd, i, amount, 0);
 	}
-	sd->status.cart[i].favorite = 0;/* clear */
+	sd->status.cart[i].favorite = 0; /* Clear */
 	logs->pick_pc(sd, log_type, amount, &sd->status.cart[i],data);
 
 	sd->cart_weight += w;
-	clif->updatestatus(sd,SP_CARTINFO);
+	clif->updatestatus(sd, SP_CARTINFO);
 
 	return 0;
 }
@@ -5560,9 +5569,12 @@ int pc_setpos(struct map_session_data* sd, unsigned short map_index, int x, int 
 		bg->send_dot_remove(sd);
 		if (sd->regen.state.gc)
 			sd->regen.state.gc = 0;
-		// make sure vending is allowed here
+
+		// Make sure vending is allowed here
 		if (sd->state.vending && map->list[m].flag.novending) {
-			clif->message (sd->fd, msg_sd(sd,276)); // "You can't open a shop on this map"
+			if (!battle_config.disable_messages) {
+				clif->message(sd->fd, msg_sd(sd, 276)); // You can't open a shop on this map
+			}
 			vending->close(sd);
 		}
 
@@ -5609,7 +5621,9 @@ int pc_setpos(struct map_session_data* sd, unsigned short map_index, int x, int 
 	}
 
 	if (sd->state.vending && map->getcell(m, &sd->bl, x, y, CELL_CHKNOVENDING)) {
-		clif->message (sd->fd, msg_sd(sd,204)); // "You can't open a shop on this cell."
+		if (!battle_config.disable_messages) {
+			clif->message(sd->fd, msg_sd(sd, 204)); // You can't open a shop on this cell.
+		}
 		vending->close(sd);
 	}
 

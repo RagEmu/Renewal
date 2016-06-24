@@ -104,11 +104,12 @@ int storage_storageopen(struct map_session_data *sd)
 	nullpo_ret(sd);
 
 	if (sd->state.storage_flag != STORAGE_FLAG_CLOSED)
-		return 1; //Already open?
+		return 1; // Already open?
 
-	if( !pc_can_give_items(sd) ) {
-		//check is this GM level is allowed to put items to storage
-		clif->message(sd->fd, msg_sd(sd,246));
+	if (!pc_can_give_items(sd)) { // Check is this GM level is allowed to put items to storage
+		if (!battle_config.disable_messages) {
+			clif->message(sd->fd, msg_sd(sd, 246));
+		}
 		return 1;
 	}
 
@@ -142,58 +143,58 @@ int compare_item(struct item *a, struct item *b)
 /*==========================================
  * Internal add-item function.
  *------------------------------------------*/
-int storage_additem(struct map_session_data* sd, struct item* item_data, int amount) {
+int storage_additem(struct map_session_data* sd, struct item* item_data, int amount)
+{
 	struct storage_data* stor = &sd->status.storage;
 	struct item_data *data;
 	int i;
 
-	if( item_data->nameid <= 0 || amount <= 0 )
+	if (item_data->nameid <= 0 || amount <= 0)
 		return 1;
 
 	data = itemdb->search(item_data->nameid);
 
-	if( data->stack.storage && amount > data->stack.amount )
-	{// item stack limitation
+	if (data->stack.storage && amount > data->stack.amount) { // Item stack limitation
 		return 1;
 	}
 
-	if (!itemdb_canstore(item_data, pc_get_group_level(sd))) {
-		//Check if item is storable. [Skotlex]
-		clif->message (sd->fd, msg_sd(sd,264));
+	if (!itemdb_canstore(item_data, pc_get_group_level(sd))) { // Check if item is storable. [Skotlex]
+		if (!battle_config.disable_messages) {
+			clif->message(sd->fd, msg_sd(sd, 264));
+		}
 		return 1;
 	}
 
-	if( item_data->bound > IBT_ACCOUNT && !pc_can_give_bound_items(sd) ) {
-		clif->message(sd->fd, msg_sd(sd,294));
+	if (item_data->bound > IBT_ACCOUNT && !pc_can_give_bound_items(sd)) {
+		if (!battle_config.disable_messages) {
+			clif->message(sd->fd, msg_sd(sd, 294));
+		}
 		return 1;
 	}
 
-	if( itemdb->isstackable2(data) )
-	{//Stackable
-		for( i = 0; i < MAX_STORAGE; i++ )
-		{
-			if( compare_item(&stor->items[i], item_data) )
-			{// existing items found, stack them
-				if( amount > MAX_AMOUNT - stor->items[i].amount || ( data->stack.storage && amount > data->stack.amount - stor->items[i].amount ) )
+	if (itemdb->isstackable2(data)) { // Stackable
+		for (i = 0; i < MAX_STORAGE; i++) {
+			if (compare_item(&stor->items[i], item_data)) { // Existing items found, stack them
+				if (amount > MAX_AMOUNT - stor->items[i].amount || (data->stack.storage && amount > data->stack.amount - stor->items[i].amount))
 					return 1;
 
 				stor->items[i].amount += amount;
-				clif->storageitemadded(sd,&stor->items[i],i,amount);
+				clif->storageitemadded(sd, &stor->items[i], i, amount);
 				return 0;
 			}
 		}
 	}
 
-	// find free slot
-	ARR_FIND( 0, MAX_STORAGE, i, stor->items[i].nameid == 0 );
-	if( i >= MAX_STORAGE )
+	// Find free slot
+	ARR_FIND(0, MAX_STORAGE, i, stor->items[i].nameid == 0);
+	if (i >= MAX_STORAGE)
 		return 1;
 
-	// add item to slot
-	memcpy(&stor->items[i],item_data,sizeof(stor->items[0]));
+	// Add item to slot
+	memcpy(&stor->items[i], item_data, sizeof(stor->items[0]));
 	stor->storage_amount++;
 	stor->items[i].amount = amount;
-	clif->storageitemadded(sd,&stor->items[i],i,amount);
+	clif->storageitemadded(sd, &stor->items[i], i, amount);
 	clif->updatestorageamount(sd, stor->storage_amount, MAX_STORAGE);
 
 	return 0;
@@ -401,25 +402,27 @@ int storage_guild_storageopen(struct map_session_data* sd)
 
 	nullpo_ret(sd);
 
-	if(sd->status.guild_id <= 0)
+	if (sd->status.guild_id <= 0)
 		return 2;
 
 	if (sd->state.storage_flag != STORAGE_FLAG_CLOSED)
-		return 1; //Can't open both storages at a time.
+		return 1; // Can't open both storages at a time.
 
-	if( !pc_can_give_items(sd) ) { //check is this GM level can open guild storage and store items [Lupus]
-		clif->message(sd->fd, msg_sd(sd,246));
+	if (!pc_can_give_items(sd)) { // Check is this GM level can open guild storage and store items [Lupus]
+		if (!battle_config.disable_messages) {
+			clif->message(sd->fd, msg_sd(sd, 246));
+		}
 		return 1;
 	}
 
-	if((gstor = idb_get(gstorage->db,sd->status.guild_id)) == NULL) {
-		intif->request_guild_storage(sd->status.account_id,sd->status.guild_id);
+	if ((gstor = idb_get(gstorage->db, sd->status.guild_id)) == NULL) {
+		intif->request_guild_storage(sd->status.account_id, sd->status.guild_id);
 		return 0;
 	}
-	if(gstor->storage_status)
+	if (gstor->storage_status)
 		return 1;
 
-	if( gstor->lock )
+	if (gstor->lock)
 		return 1;
 
 	gstor->storage_status = 1;
@@ -445,49 +448,53 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 	nullpo_retr(1, stor);
 	nullpo_retr(1, item_data);
 
-	if(item_data->nameid <= 0 || amount <= 0)
+	if (item_data->nameid <= 0 || amount <= 0)
 		return 1;
 
 	data = itemdb->search(item_data->nameid);
 
-	if( data->stack.guildstorage && amount > data->stack.amount )
-	{// item stack limitation
+	if (data->stack.guildstorage && amount > data->stack.amount) { // Item stack limitation
 		return 1;
 	}
 
-	if (!itemdb_canguildstore(item_data, pc_get_group_level(sd)) || item_data->expire_time) {
-		//Check if item is storable. [Skotlex]
-		clif->message (sd->fd, msg_sd(sd,264));
+	if (!itemdb_canguildstore(item_data, pc_get_group_level(sd)) || item_data->expire_time) { // Check if item is storable. [Skotlex]
+		if (!battle_config.disable_messages) {
+			clif->message(sd->fd, msg_sd(sd, 264));
+		}
 		return 1;
 	}
 
-	if( item_data->bound && item_data->bound != IBT_GUILD && !pc_can_give_bound_items(sd) ) {
-		clif->message(sd->fd, msg_sd(sd,294));
+	if (item_data->bound && item_data->bound != IBT_GUILD && !pc_can_give_bound_items(sd)) {
+		if (!battle_config.disable_messages) {
+			clif->message(sd->fd, msg_sd(sd, 294));
+		}
 		return 1;
 	}
 
-	if(itemdb->isstackable2(data)){ //Stackable
-		for(i=0;i<MAX_GUILD_STORAGE;i++){
-			if(compare_item(&stor->items[i], item_data)) {
-				if( amount > MAX_AMOUNT - stor->items[i].amount || ( data->stack.guildstorage && amount > data->stack.amount - stor->items[i].amount ) )
+	if (itemdb->isstackable2(data)) { // Stackable
+		for (i = 0; i < MAX_GUILD_STORAGE; i++) {
+			if (compare_item(&stor->items[i], item_data)) {
+				if (amount > MAX_AMOUNT - stor->items[i].amount || (data->stack.guildstorage && amount > data->stack.amount - stor->items[i].amount))
 					return 1;
-				stor->items[i].amount+=amount;
-				clif->storageitemadded(sd,&stor->items[i],i,amount);
+
+				stor->items[i].amount += amount;
+				clif->storageitemadded(sd, &stor->items[i], i, amount);
 				stor->dirty = 1;
 				return 0;
 			}
 		}
 	}
-	//Add item
-	for(i=0;i<MAX_GUILD_STORAGE && stor->items[i].nameid;i++);
 
-	if(i>=MAX_GUILD_STORAGE)
+	// Add item
+	for (i = 0; i < MAX_GUILD_STORAGE && stor->items[i].nameid; i++);
+
+	if (i >= MAX_GUILD_STORAGE)
 		return 1;
 
-	memcpy(&stor->items[i],item_data,sizeof(stor->items[0]));
-	stor->items[i].amount=amount;
+	memcpy(&stor->items[i], item_data, sizeof(stor->items[0]));
+	stor->items[i].amount = amount;
 	stor->storage_amount++;
-	clif->storageitemadded(sd,&stor->items[i],i,amount);
+	clif->storageitemadded(sd, &stor->items[i], i, amount);
 	clif->updatestorageamount(sd, stor->storage_amount, MAX_GUILD_STORAGE);
 	stor->dirty = 1;
 	return 0;

@@ -447,7 +447,8 @@ ACMD(send)
 /*==========================================
  * @rura, @warp, @mapmove
  *------------------------------------------*/
-ACMD(mapmove) {
+ACMD(mapmove)
+{
 	char map_name[MAP_NAME_LENGTH_EXT];
 	unsigned short map_index;
 	short x = 0, y = 0;
@@ -458,7 +459,7 @@ ACMD(mapmove) {
 	if (!*message ||
 		(sscanf(message, "%15s %5hd %5hd", map_name, &x, &y) < 3 &&
 		 sscanf(message, "%15[^,],%5hd,%5hd", map_name, &x, &y) < 1)) {
-			clif->message(fd, msg_fd(fd,909)); // Please enter a map (usage: @warp/@rura/@mapmove <mapname> <x> <y>).
+			clif->message(fd, msg_fd(fd, 909)); // Please enter a map (usage: @warp/@rura/@mapmove <mapname> <x> <y>).
 			return false;
 		}
 
@@ -467,35 +468,37 @@ ACMD(mapmove) {
 		m = map->mapindex2mapid(map_index);
 
 	if (!map_index || m < 0) { // m < 0 means on different server or that map is disabled! [Kevin]
-		clif->message(fd, msg_fd(fd,1)); // Map not found.
+		clif->message(fd, msg_fd(fd, 1)); // Map not found.
 		return false;
 	}
 
-	if( sd->bl.m == m && sd->bl.x == x && sd->bl.y == y ) {
-		clif->message(fd, msg_fd(fd,253)); // You already are at your destination!
+	if (sd->bl.m == m && sd->bl.x == x && sd->bl.y == y) {
+		clif->message(fd, msg_fd(fd, 253)); // You already are at your destination!
 		return false;
 	}
 
 	if ((x || y) && map->getcell(m, &sd->bl, x, y, CELL_CHKNOPASS) && pc_get_group_level(sd) < battle_config.gm_ignore_warpable_area) {
-		//This is to prevent the pc->setpos call from printing an error.
-		clif->message(fd, msg_fd(fd,2));
+		// This is to prevent the pc->setpos call from printing an error.
+		clif->message(fd, msg_fd(fd, 2));
 		if (!map->search_freecell(NULL, m, &x, &y, 10, 10, 1))
-			x = y = 0; //Invalid cell, use random spot.
+			x = y = 0; // Invalid cell, use random spot.
 	}
 	if (map->list[m].flag.nowarpto && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE)) {
-		clif->message(fd, msg_fd(fd,247));
+		clif->message(fd, msg_fd(fd, 247));
 		return false;
 	}
 	if (sd->bl.m >= 0 && map->list[sd->bl.m].flag.nowarp && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE)) {
-		clif->message(fd, msg_fd(fd,248));
+		clif->message(fd, msg_fd(fd, 248));
 		return false;
 	}
 	if (pc->setpos(sd, map_index, x, y, CLR_TELEPORT) != 0) {
-		clif->message(fd, msg_fd(fd,1)); // Map not found.
+		clif->message(fd, msg_fd(fd, 1)); // Map not found.
 		return false;
 	}
 
-	clif->message(fd, msg_fd(fd,0)); // Warped.
+	if (!battle_config.disable_messages) {
+		clif->message(fd, msg_fd(fd, 0)); // Warped.
+	}
 	return true;
 }
 
@@ -948,35 +951,40 @@ ACMD(option)
 /*==========================================
  *
  *------------------------------------------*/
-ACMD(hide) {
+ACMD(hide)
+{
 	if (pc_isinvisible(sd)) {
 		sd->sc.option &= ~OPTION_INVISIBLE;
 		if (sd->disguise != -1 )
 			status->set_viewdata(&sd->bl, sd->disguise);
 		else
 			status->set_viewdata(&sd->bl, sd->status.class_);
-		clif->message(fd, msg_fd(fd,10)); // Invisible: Off
+		if (!battle_config.disable_messages) {
+			clif->message(fd, msg_fd(fd, 10)); // Invisible: Off
+		}
 
-		// increment the number of pvp players on the map
+		// Increment the number of pvp players on the map
 		map->list[sd->bl.m].users_pvp++;
 
-		if( map->list[sd->bl.m].flag.pvp && !map->list[sd->bl.m].flag.pvp_nocalcrank ) {
-			// register the player for ranking calculations
-			sd->pvp_timer = timer->add( timer->gettick() + 200, pc->calc_pvprank_timer, sd->bl.id, 0 );
+		if (map->list[sd->bl.m].flag.pvp && !map->list[sd->bl.m].flag.pvp_nocalcrank) {
+			// Register the player for ranking calculations
+			sd->pvp_timer = timer->add(timer->gettick() + 200, pc->calc_pvprank_timer, sd->bl.id, 0);
 		}
-		//bugreport:2266
+		// bugreport:2266
 		map->foreachinmovearea(clif->insight, &sd->bl, AREA_SIZE, sd->bl.x, sd->bl.y, BL_ALL, &sd->bl);
 	} else {
 		sd->sc.option |= OPTION_INVISIBLE;
 		sd->vd.class_ = INVISIBLE_CLASS;
-		clif->message(fd, msg_fd(fd,11)); // Invisible: On
+		if (!battle_config.disable_messages) {
+			clif->message(fd, msg_fd(fd, 11)); // Invisible: On
+		}
 
-		// decrement the number of pvp players on the map
+		// Decrement the number of pvp players on the map
 		map->list[sd->bl.m].users_pvp--;
 
-		if( map->list[sd->bl.m].flag.pvp && !map->list[sd->bl.m].flag.pvp_nocalcrank && sd->pvp_timer != INVALID_TIMER ) {
-			// unregister the player for ranking
-			timer->delete( sd->pvp_timer, pc->calc_pvprank_timer );
+		if (map->list[sd->bl.m].flag.pvp && !map->list[sd->bl.m].flag.pvp_nocalcrank && sd->pvp_timer != INVALID_TIMER) {
+			// Unregister the player for ranking
+			timer->delete(sd->pvp_timer, pc->calc_pvprank_timer);
 			sd->pvp_timer = INVALID_TIMER;
 		}
 	}
@@ -1119,35 +1127,41 @@ ACMD(heal)
 
 	sscanf(message, "%12d %12d", &hp, &sp);
 
-	// some overflow checks
-	if( hp == INT_MIN ) hp++;
-	if( sp == INT_MIN ) sp++;
+	// Some overflow checks
+	if (hp == INT_MIN) hp++;
+	if (sp == INT_MIN) sp++;
 
-	if ( hp == 0 && sp == 0 ) {
-		if (!status_percent_heal(&sd->bl, 100, 100))
-			clif->message(fd, msg_fd(fd,157)); // HP and SP have already been recovered.
-		else
-			clif->message(fd, msg_fd(fd,17)); // HP, SP recovered.
+	if (hp == 0 && sp == 0) {
+		if (!battle_config.disable_messages) {
+			if (!status_percent_heal(&sd->bl, 100, 100))
+				clif->message(fd, msg_fd(fd, 157)); // HP and SP have already been recovered.
+			else
+				clif->message(fd, msg_fd(fd, 17)); // HP, SP recovered.
+		}
 		return true;
 	}
 
-	if ( hp > 0 && sp >= 0 ) {
-		if(!status->heal(&sd->bl, hp, sp, 0))
-			clif->message(fd, msg_fd(fd,157)); // HP and SP are already with the good value.
-		else
-			clif->message(fd, msg_fd(fd,17)); // HP, SP recovered.
+	if (hp > 0 && sp >= 0) {
+		if (!battle_config.disable_messages) {
+			if (!status->heal(&sd->bl, hp, sp, 0))
+				clif->message(fd, msg_fd(fd, 157)); // HP and SP are already with the good value.
+			else
+				clif->message(fd, msg_fd(fd, 17)); // HP, SP recovered.
+		}
 		return true;
 	}
 
-	if ( hp < 0 && sp <= 0 ) {
+	if (hp < 0 && sp <= 0) {
 		status->damage(NULL, &sd->bl, -hp, -sp, 0, 0);
 		clif->damage(&sd->bl,&sd->bl, 0, 0, -hp, 0, BDT_ENDURE, 0);
-		clif->message(fd, msg_fd(fd,156)); // HP or/and SP modified.
+		if (!battle_config.disable_messages) {
+			clif->message(fd, msg_fd(fd, 156)); // HP or/and SP modified.
+		}
 		return true;
 	}
 
-	//Opposing signs.
-	if ( hp ) {
+	// Opposing signs.
+	if (hp) {
 		if (hp > 0)
 			status->heal(&sd->bl, hp, 0, 0);
 		else {
@@ -1156,14 +1170,16 @@ ACMD(heal)
 		}
 	}
 
-	if ( sp ) {
+	if (sp) {
 		if (sp > 0)
 			status->heal(&sd->bl, 0, sp, 0);
 		else
 			status->damage(NULL, &sd->bl, 0, -sp, 0, 0);
 	}
 
-	clif->message(fd, msg_fd(fd,156)); // HP or/and SP modified.
+	if (!battle_config.disable_messages) {
+		clif->message(fd, msg_fd(fd, 156)); // HP or/and SP modified.
+	}
 	return true;
 }
 
@@ -1185,13 +1201,13 @@ ACMD(item)
 		sscanf(message, "\"%99[^\"]\" %12d %12d", item_name, &number, &bound) < 2 &&
 		sscanf(message, "%99s %12d %12d", item_name, &number, &bound) < 2
 	))) {
-		clif->message(fd, msg_fd(fd,295)); // Please enter an item name or ID (usage: @itembound <item name/ID> <quantity> <bound_type>).
+		clif->message(fd, msg_fd(fd, 295)); // Please enter an item name or ID (usage: @itembound <item name/ID> <quantity> <bound_type>).
 		return false;
 	} else if (!*message
-	       || ( sscanf(message, "\"%99[^\"]\" %12d", item_name, &number) < 1
+	       || (sscanf(message, "\"%99[^\"]\" %12d", item_name, &number) < 1
 		 && sscanf(message, "%99s %12d", item_name, &number) < 1
 	)) {
-		clif->message(fd, msg_fd(fd,983)); // Please enter an item name or ID (usage: @item <item name/ID> <quantity>).
+		clif->message(fd, msg_fd(fd, 983)); // Please enter an item name or ID (usage: @item <item name/ID> <quantity>).
 		return false;
 	}
 
@@ -1201,28 +1217,28 @@ ACMD(item)
 	if ((item_data = itemdb->search_name(item_name)) == NULL &&
 	    (item_data = itemdb->exists(atoi(item_name))) == NULL)
 	{
-		clif->message(fd, msg_fd(fd,19)); // Invalid item ID or name.
+		clif->message(fd, msg_fd(fd, 19)); // Invalid item ID or name.
 		return false;
 	}
 
-	if(!strcmpi(info->command,"itembound") ) {
-		if( !(bound >= IBT_MIN && bound <= IBT_MAX) ) {
-			clif->message(fd, msg_fd(fd,298)); // Invalid bound type
+	if (!strcmpi(info->command,"itembound") ) {
+		if (!(bound >= IBT_MIN && bound <= IBT_MAX)) {
+			clif->message(fd, msg_fd(fd, 298)); // Invalid bound type
 			return false;
 		}
-		switch( (enum e_item_bound_type)bound ) {
+		switch ((enum e_item_bound_type)bound) {
 			case IBT_CHARACTER:
 			case IBT_ACCOUNT:
-				break; /* no restrictions */
+				break; /* No restrictions */
 			case IBT_PARTY:
-				if( !sd->status.party_id ) {
-					clif->message(fd, msg_fd(fd,1498)); //You can't add a party bound item to a character without party!
+				if (!sd->status.party_id) {
+					clif->message(fd, msg_fd(fd, 1498)); // You can't add a party bound item to a character without party!
 					return false;
 				}
 				break;
 			case IBT_GUILD:
-				if( !sd->status.guild_id ) {
-					clif->message(fd, msg_fd(fd,1499)); //You can't add a guild bound item to a character without guild!
+				if (!sd->status.guild_id) {
+					clif->message(fd, msg_fd(fd, 1499)); // You can't add a guild bound item to a character without guild!
 					return false;
 				}
 				break;
@@ -1231,17 +1247,17 @@ ACMD(item)
 
 	item_id = item_data->nameid;
 	get_count = number;
-	//Check if it's stackable.
+	// Check if it's stackable.
 	if (!itemdb->isstackable2(item_data)) {
-		if( bound && (item_data->type == IT_PETEGG || item_data->type == IT_PETARMOR) ) {
-			clif->message(fd, msg_fd(fd,498)); // Cannot create bounded pet eggs or pet armors.
+		if (bound && (item_data->type == IT_PETEGG || item_data->type == IT_PETARMOR)) {
+			clif->message(fd, msg_fd(fd, 498)); // Cannot create bounded pet eggs or pet armors.
 			return false;
 		}
 		get_count = 1;
 	}
 
 	for (i = 0; i < number; i += get_count) {
-		// if not pet egg
+		// If not pet egg
 		if (!pet->create_egg(sd, item_id)) {
 			memset(&item_tmp, 0, sizeof(item_tmp));
 			item_tmp.nameid = item_id;
@@ -1254,7 +1270,9 @@ ACMD(item)
 	}
 
 	if (flag == 0)
-		clif->message(fd, msg_fd(fd,18)); // Item created.
+		if (!battle_config.disable_messages) {
+			clif->message(fd, msg_fd(fd, 18)); // Item created.
+		}
 	return true;
 }
 
@@ -1275,23 +1293,23 @@ ACMD(item2)
 	if (!strcmpi(info->command,"itembound2") && (!*message || (
 		sscanf(message, "\"%99[^\"]\" %12d %12d %12d %12d %12d %12d %12d %12d %12d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, &bound) < 10 &&
 		sscanf(message, "%99s %12d %12d %12d %12d %12d %12d %12d %12d %12d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, &bound) < 10 ))) {
-		clif->message(fd, msg_fd(fd,296)); // Please enter all parameters (usage: @itembound2 <item name/ID> <quantity>
-		clif->message(fd, msg_fd(fd,297)); //   <identify_flag> <refine> <attribute> <card1> <card2> <card3> <card4> <bound_type>).
+		clif->message(fd, msg_fd(fd, 296)); // Please enter all parameters (usage: @itembound2 <item name/ID> <quantity>
+		clif->message(fd, msg_fd(fd, 297)); //   <identify_flag> <refine> <attribute> <card1> <card2> <card3> <card4> <bound_type>).
 		return false;
 	} else if (!*message
-	         || ( sscanf(message, "\"%99[^\"]\" %12d %12d %12d %12d %12d %12d %12d %12d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9
+	         || (sscanf(message, "\"%99[^\"]\" %12d %12d %12d %12d %12d %12d %12d %12d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9
 	           && sscanf(message, "%99s %12d %12d %12d %12d %12d %12d %12d %12d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9
 	)) {
-		clif->message(fd, msg_fd(fd,984)); // Please enter all parameters (usage: @item2 <item name/ID> <quantity>
-		clif->message(fd, msg_fd(fd,985)); //   <identify_flag> <refine> <attribute> <card1> <card2> <card3> <card4>).
+		clif->message(fd, msg_fd(fd, 984)); // Please enter all parameters (usage: @item2 <item name/ID> <quantity>
+		clif->message(fd, msg_fd(fd, 985)); //   <identify_flag> <refine> <attribute> <card1> <card2> <card3> <card4>).
 		return false;
 	}
 
 	if (number <= 0)
 		number = 1;
 
-	if( !strcmpi(info->command,"itembound2") && !(bound >= IBT_MIN && bound <= IBT_MAX) ) {
-		clif->message(fd, msg_fd(fd,298)); // Invalid bound type
+	if (!strcmpi(info->command,"itembound2") && !(bound >= IBT_MIN && bound <= IBT_MAX)) {
+		clif->message(fd, msg_fd(fd, 298)); // Invalid bound type
 		return false;
 	}
 
@@ -1305,10 +1323,10 @@ ACMD(item2)
 		int loop, get_count, i;
 		loop = 1;
 		get_count = number;
-		if( !strcmpi(info->command,"itembound2") )
+		if (!strcmpi(info->command,"itembound2"))
 			bound = 1;
-		if( !itemdb->isstackable2(item_data) ) {
-			if( bound && (item_data->type == IT_PETEGG || item_data->type == IT_PETARMOR) ) {
+		if (!itemdb->isstackable2(item_data)) {
+			if (bound && (item_data->type == IT_PETEGG || item_data->type == IT_PETARMOR)) {
 				clif->message(fd, msg_fd(fd,498)); // Cannot create bounded pet eggs or pet armors.
 				return false;
 			}
@@ -1342,9 +1360,11 @@ ACMD(item2)
 		}
 
 		if (flag == 0)
-			clif->message(fd, msg_fd(fd,18)); // Item created.
+			if (!battle_config.disable_messages) {
+				clif->message(fd, msg_fd(fd, 18)); // Item created.
+			}
 	} else {
-		clif->message(fd, msg_fd(fd,19)); // Invalid item ID or name.
+		clif->message(fd, msg_fd(fd, 19)); // Invalid item ID or name.
 		return false;
 	}
 
