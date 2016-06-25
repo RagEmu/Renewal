@@ -5780,7 +5780,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 					heal_get_jobexp = heal_get_jobexp * battle_config.heal_exp / 100;
 					if (heal_get_jobexp <= 0)
 						heal_get_jobexp = 1;
-					pc->gainexp (sd, bl, 0, heal_get_jobexp, false);
+					pc->gainexp(sd, bl, 0, heal_get_jobexp, false);
 				}
 			}
 			break;
@@ -5856,7 +5856,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 							if (jexp < 1) jexp = 1;
 						}
 						if(exp > 0 || jexp > 0)
-							pc->gainexp (sd, bl, exp, jexp, false);
+							pc->gainexp(sd, bl, exp, jexp, false);
 					}
 				}
 			}
