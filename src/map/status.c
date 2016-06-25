@@ -447,7 +447,7 @@ void initChangeTables(void) {
 	set_sc( CASH_ASSUMPTIO       , SC_ASSUMPTIO       , SI_ASSUMPTIO       , SCB_NONE );
 
 	set_sc( ALL_PARTYFLEE        , SC_PARTYFLEE       , SI_PARTYFLEE       , SCB_NONE );
-	set_sc( ALL_ODINS_POWER      , SC_ODINS_POWER     , SI_ODINS_POWER     , SCB_WATK | SCB_MATK | SCB_MDEF | SCB_DEF);
+	set_sc( ALL_ODINS_POWER      , SC_ODINS_POWER     , SI_ODINS_POWER     , SCB_NONE );
 
 	set_sc( CR_SHRINK            , SC_CR_SHRINK       , SI_CR_SHRINK       , SCB_NONE );
 	set_sc( RG_CLOSECONFINE      , SC_RG_CCONFINE_S   , SI_RG_CCONFINE_S   , SCB_NONE );
@@ -4508,8 +4508,6 @@ unsigned short status_calc_watk(struct block_list *bl, struct status_change *sc,
 		watk -= watk * sc->data[SC__ENERVATION]->val2 / 100;
 	if (sc->data[SC_RUSH_WINDMILL])
 		watk += sc->data[SC_RUSH_WINDMILL]->val2;
-	if (sc->data[SC_ODINS_POWER])
-		watk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1;
 	if (sc->data[SC_STRIKING])
 		watk += sc->data[SC_STRIKING]->val2;
 	if ((sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 2)
@@ -4548,8 +4546,6 @@ unsigned short status_calc_ematk(struct block_list *bl, struct status_change *sc
 		matk += sc->data[SC_COOLER_OPTION]->val2;
 	if (sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 3)
 		matk += 50;
-	if (sc->data[SC_ODINS_POWER])
-		matk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1; //70 lvl1, 100lvl2
 	if (sc->data[SC_MOONLIT_SERENADE])
 		matk += sc->data[SC_MOONLIT_SERENADE]->val2;
 	if (sc->data[SC_IZAYOI])
@@ -4829,8 +4825,6 @@ defType status_calc_def(struct block_list *bl, struct status_change *sc, int def
 		def += sc->data[SC_HAMI_DEFENCE]->val2;
 	if (sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 2)
 		def += 50;
-	if (sc->data[SC_ODINS_POWER])
-		def -= 20;
 	if (sc->data[SC_INCDEFRATE])
 		def += def * sc->data[SC_INCDEFRATE]->val1 / 100;
 	if (sc->data[SC_ANGRIFFS_MODUS])
@@ -4970,8 +4964,6 @@ defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int md
 		mdef += sc->data[SC_SYMPHONY_LOVE]->val2;
 	if (sc->data[SC_GENTLETOUCH_CHANGE] && sc->data[SC_GENTLETOUCH_CHANGE]->val4)
 		mdef -= mdef * sc->data[SC_GENTLETOUCH_CHANGE]->val4 / 100;
-	if (sc->data[SC_ODINS_POWER])
-		mdef -= 20;
 	if (sc->data[SC_BURNING])
 		mdef -= mdef * 25 / 100;
 	if (sc->data[SC_UNLIMIT])
