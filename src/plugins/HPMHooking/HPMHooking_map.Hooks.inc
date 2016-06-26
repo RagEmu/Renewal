@@ -1266,6 +1266,33 @@ enum damage_lv HP_battle_weapon_attack(struct block_list *bl, struct block_list 
 	}
 	return retVal___;
 }
+bool HP_battle_check_arrows(struct map_session_data *sd) {
+	int hIndex = 0;
+	bool retVal___ = false;
+	if( HPMHooks.count.HP_battle_check_arrows_pre ) {
+		bool (*preHookFunc) (struct map_session_data **sd);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_battle_check_arrows_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_battle_check_arrows_pre[hIndex].func;
+			retVal___ = preHookFunc(&sd);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return retVal___;
+		}
+	}
+	{
+		retVal___ = HPMHooks.source.battle.check_arrows(sd);
+	}
+	if( HPMHooks.count.HP_battle_check_arrows_post ) {
+		bool (*postHookFunc) (bool retVal___, struct map_session_data *sd);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_battle_check_arrows_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_battle_check_arrows_post[hIndex].func;
+			retVal___ = postHookFunc(retVal___, sd);
+		}
+	}
+	return retVal___;
+}
 struct Damage HP_battle_calc_weapon_attack(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, int wflag) {
 	int hIndex = 0;
 	struct Damage retVal___ = { 0 };
@@ -18329,6 +18356,60 @@ void HP_clif_ackmergeitems(int fd, struct map_session_data *sd) {
 		}
 	}
 	return;
+}
+bool HP_clif_isdisguised(struct block_list *bl) {
+	int hIndex = 0;
+	bool retVal___ = false;
+	if( HPMHooks.count.HP_clif_isdisguised_pre ) {
+		bool (*preHookFunc) (struct block_list **bl);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_clif_isdisguised_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_clif_isdisguised_pre[hIndex].func;
+			retVal___ = preHookFunc(&bl);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return retVal___;
+		}
+	}
+	{
+		retVal___ = HPMHooks.source.clif.isdisguised(bl);
+	}
+	if( HPMHooks.count.HP_clif_isdisguised_post ) {
+		bool (*postHookFunc) (bool retVal___, struct block_list *bl);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_clif_isdisguised_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_clif_isdisguised_post[hIndex].func;
+			retVal___ = postHookFunc(retVal___, bl);
+		}
+	}
+	return retVal___;
+}
+unsigned char HP_clif_bl_type(struct block_list *bl) {
+	int hIndex = 0;
+	unsigned char retVal___ = 0;
+	if( HPMHooks.count.HP_clif_bl_type_pre ) {
+		unsigned char (*preHookFunc) (struct block_list **bl);
+		*HPMforce_return = false;
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_clif_bl_type_pre; hIndex++ ) {
+			preHookFunc = HPMHooks.list.HP_clif_bl_type_pre[hIndex].func;
+			retVal___ = preHookFunc(&bl);
+		}
+		if( *HPMforce_return ) {
+			*HPMforce_return = false;
+			return retVal___;
+		}
+	}
+	{
+		retVal___ = HPMHooks.source.clif.bl_type(bl);
+	}
+	if( HPMHooks.count.HP_clif_bl_type_post ) {
+		unsigned char (*postHookFunc) (unsigned char retVal___, struct block_list *bl);
+		for(hIndex = 0; hIndex < HPMHooks.count.HP_clif_bl_type_post; hIndex++ ) {
+			postHookFunc = HPMHooks.list.HP_clif_bl_type_post[hIndex].func;
+			retVal___ = postHookFunc(retVal___, bl);
+		}
+	}
+	return retVal___;
 }
 void HP_clif_pWantToConnection(int fd, struct map_session_data *sd) {
 	int hIndex = 0;
