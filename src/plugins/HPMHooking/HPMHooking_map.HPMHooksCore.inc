@@ -115,6 +115,8 @@ struct {
 	struct HPMHookPoint *HP_battle_calc_bg_damage_post;
 	struct HPMHookPoint *HP_battle_weapon_attack_pre;
 	struct HPMHookPoint *HP_battle_weapon_attack_post;
+	struct HPMHookPoint *HP_battle_check_arrows_pre;
+	struct HPMHookPoint *HP_battle_check_arrows_post;
 	struct HPMHookPoint *HP_battle_calc_weapon_attack_pre;
 	struct HPMHookPoint *HP_battle_calc_weapon_attack_post;
 	struct HPMHookPoint *HP_battle_delay_damage_pre;
@@ -1407,6 +1409,10 @@ struct {
 	struct HPMHookPoint *HP_clif_comparemergeitem_post;
 	struct HPMHookPoint *HP_clif_ackmergeitems_pre;
 	struct HPMHookPoint *HP_clif_ackmergeitems_post;
+	struct HPMHookPoint *HP_clif_isdisguised_pre;
+	struct HPMHookPoint *HP_clif_isdisguised_post;
+	struct HPMHookPoint *HP_clif_bl_type_pre;
+	struct HPMHookPoint *HP_clif_bl_type_post;
 	struct HPMHookPoint *HP_clif_pWantToConnection_pre;
 	struct HPMHookPoint *HP_clif_pWantToConnection_post;
 	struct HPMHookPoint *HP_clif_pLoadEndAck_pre;
@@ -6044,6 +6050,8 @@ struct {
 	int HP_battle_calc_bg_damage_post;
 	int HP_battle_weapon_attack_pre;
 	int HP_battle_weapon_attack_post;
+	int HP_battle_check_arrows_pre;
+	int HP_battle_check_arrows_post;
 	int HP_battle_calc_weapon_attack_pre;
 	int HP_battle_calc_weapon_attack_post;
 	int HP_battle_delay_damage_pre;
@@ -7336,6 +7344,10 @@ struct {
 	int HP_clif_comparemergeitem_post;
 	int HP_clif_ackmergeitems_pre;
 	int HP_clif_ackmergeitems_post;
+	int HP_clif_isdisguised_pre;
+	int HP_clif_isdisguised_post;
+	int HP_clif_bl_type_pre;
+	int HP_clif_bl_type_post;
 	int HP_clif_pWantToConnection_pre;
 	int HP_clif_pWantToConnection_post;
 	int HP_clif_pLoadEndAck_pre;
