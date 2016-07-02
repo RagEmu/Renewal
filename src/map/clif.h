@@ -581,8 +581,8 @@ struct cdelayed_damage {
 };
 
 struct merge_item {
-    int16 position;
-    int16 nameid;
+	int16 position;
+	int16 nameid;
 };
 
 /**
