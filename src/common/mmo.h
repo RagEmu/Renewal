@@ -217,7 +217,7 @@
 #define MAP_NAME_LENGTH_EXT (MAP_NAME_LENGTH + 4)
 
 #ifndef MAX_FRIENDS
-#define MAX_FRIENDS 40
+	#define MAX_FRIENDS 40
 #endif
 #define MAX_MEMOPOINTS 3
 
@@ -235,10 +235,10 @@
 
 // Base Homun skill.
 #ifndef HM_SKILLBASE
-#define HM_SKILLBASE 8001
+	#define HM_SKILLBASE 8001
 #endif
 #ifndef MAX_HOMUNSKILL
-#define MAX_HOMUNSKILL 43
+	#define MAX_HOMUNSKILL 43
 #endif
 
 // Mail System
@@ -248,27 +248,28 @@
 
 // Mercenary System
 #ifndef MC_SKILLBASE
-#define MC_SKILLBASE 8201
+	#define MC_SKILLBASE 8201
 #endif
 #ifndef MAX_MERCSKILL
-#define MAX_MERCSKILL 40
+	#define MAX_MERCSKILL 40
 #endif
 
 // Elemental System
 #ifndef MAX_ELEMENTALSKILL
-#define MAX_ELEMENTALSKILL 42
+	#define MAX_ELEMENTALSKILL 42
 #endif
 #ifndef EL_SKILLBASE
-#define EL_SKILLBASE 8401
-<<<<<<< HEAD
-#define MAX_EL_SKILL 3
-#define MAX_ELEMENTAL_CLASS 12
-=======
+	#define EL_SKILLBASE 8401
+#endif
+#ifndef MAX_EL_SKILL
+	#define MAX_EL_SKILL 3
+#endif
+#ifndef MAX_ELEMENTAL_CLASS
+	#define MAX_ELEMENTAL_CLASS 12
 #endif
 #ifndef MAX_ELESKILLTREE
-#define MAX_ELESKILLTREE 3
+	#define MAX_ELESKILLTREE 3
 #endif
->>>>>>> 3e42533... Add #ifndef for different constants in mmo.h
 
 // The following system marks a different job ID system used by the map server,
 // which makes a lot more sense than the normal one. [Skotlex]
