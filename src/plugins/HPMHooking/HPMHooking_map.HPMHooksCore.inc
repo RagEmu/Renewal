@@ -24,6 +24,8 @@
  *       as it will get overwritten.
  */
 
+/* GENERATED FILE DO NOT EDIT */
+
 struct {
 	struct HPMHookPoint *HP_HCache_init_pre;
 	struct HPMHookPoint *HP_HCache_init_post;
