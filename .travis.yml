@@ -6,7 +6,11 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - gcc-5
+<<<<<<< HEAD
     - gdb
+=======
+    - gcc-6
+>>>>>>> c96e3c4... Add gcc 6 into travis.
 
 install:
   - ./travis.sh getplugins || true
@@ -38,6 +42,8 @@ matrix:
     env: CONFIGURE_FLAGS="--enable-debug --enable-Werror"
   - compiler: gcc
     env: LDFLAGS="-fuse-ld=gold" CONFIGURE_FLAGS="--enable-debug --enable-sanitize=full CC=gcc-5 --disable-manager --enable-Werror"
+  - compiler: gcc
+    env: LDFLAGS="-fuse-ld=gold" CONFIGURE_FLAGS="--enable-debug --enable-sanitize=full CC=gcc-6 --disable-manager --enable-Werror"
   
 notifications:
   email: false
