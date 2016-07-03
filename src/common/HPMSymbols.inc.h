@@ -24,6 +24,8 @@
  *       as it will get overwritten.
  */
 
+/* GENERATED FILE DO NOT EDIT */
+
 #if !defined(RAGEMU_CORE)
 #ifdef COMMON_UTILS_H /* HCache */
 struct HCache_interface *HCache;
