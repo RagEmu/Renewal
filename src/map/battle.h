@@ -544,10 +544,11 @@ struct Battle_Config {
 
 	int mob_eye_range_bonus; //Vulture's Eye and Snake's Eye range bonus
 
-	// RagEmu
+	/** RagEmu **/
 	int feature_buying_store_autotrade; // BuyingStore Autotrader [Dastgir/RagEmu]
 	int display_fake_hp_when_dead;
 	int warg_can_falcon;
+	int drop_rateincrease;
 };
 
 /* criteria for battle_config.idletime_critera */
