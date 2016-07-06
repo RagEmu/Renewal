@@ -8414,10 +8414,11 @@ void atcommand_commands_sub(struct map_session_data* sd, const int fd, AtCommand
 	clif->message(fd,line_buff);
 	
 	if (atcommand->binding_count) {
-		int i, count_bind = 0
+		int i, count_bind = 0;
 		int gm_lvl = pc_get_group_level(sd);
+		size_t slen;
 		for (i = 0; i < atcommand->binding_count; i++) {
-			if  (gm_lvl >= ((type == COMMAND_ATCOMMAND) ? atcommand->binding[i]->group_lv : atcommand->binding[i]->group_lv_char)) {
+			if (gm_lvl >= ((type == COMMAND_ATCOMMAND) ? atcommand->binding[i]->group_lv : atcommand->binding[i]->group_lv_char)) {
 				slen = strlen(atcommand->binding[i]->command);
 				if (count_bind == 0) {
 					cur = line_buff;
