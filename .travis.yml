@@ -6,11 +6,7 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - gcc-5
-<<<<<<< HEAD
-    - gdb
-=======
     - gcc-6
->>>>>>> c96e3c4... Add gcc 6 into travis.
 
 install:
   - ./travis.sh getplugins || true
