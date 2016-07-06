@@ -2910,7 +2910,6 @@ struct HookingPointData HookingPoints[] = {
 	{ HP_POP(status->read_job_db_sub, HP_status_read_job_db_sub) },
 	{ HP_POP(status->set_sc, HP_status_set_sc) },
 	{ HP_POP(status->copy, HP_status_copy) },
-	{ HP_POP(status->base_matk_min, HP_status_base_matk_min) },
 	{ HP_POP(status->base_matk_max, HP_status_base_matk_max) },
 /* storage_interface */
 	{ HP_POP(storage->reconnect, HP_storage_reconnect) },
