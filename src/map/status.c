@@ -477,10 +477,10 @@ void initChangeTables(void) {
 	status->set_sc( MH_PAIN_KILLER			, SC_PAIN_KILLER		, SI_PAIN_KILLER			, SCB_ASPD );
 	status->set_sc( MH_SILENT_BREEZE		, SC_SILENCE			, SI_SILENT_BREEZE			, SCB_NONE );
 	status->set_sc( MH_GOLDENE_FERSE		, SC_GOLDENE_FERSE		, SI_GOLDENE_FERSE			, /*SCB_MAXHP|*/SCB_ASPD );
-	status->add_sc( MH_STEINWAND			, SC_SAFETYWALL );
+	add_sc( MH_STEINWAND			, SC_SAFETYWALL );
 	status->set_sc( MH_ANGRIFFS_MODUS		, SC_ANGRIFFS_MODUS		, SI_ANGRIFFS_MODUS			, SCB_WATK|SCB_DEF|SCB_FLEE );
 	status->set_sc( MH_MAGMA_FLOW			, SC_MAGMA_FLOW			, SI_MAGMA_FLOW				, SCB_NONE );
-	status->status->set_sc( MH_GRANITIC_ARMOR		, SC_GRANITIC_ARMOR		, SI_GRANITIC_ARMOR			, SCB_NONE );
+	status->set_sc( MH_GRANITIC_ARMOR		, SC_GRANITIC_ARMOR		, SI_GRANITIC_ARMOR			, SCB_NONE );
 	status->set_sc( MH_LAVA_SLIDE			, SC_BURNING			, SI_BURNT					, SCB_MDEF );
 	status->set_sc( MH_PYROCLASTIC			, SC_PYROCLASTIC		, SI_PYROCLASTIC			, SCB_WATK );
 	status->set_sc( MH_VOLCANIC_ASH			, SC_VOLCANIC_ASH		, SI_VOLCANIC_ASH			, SCB_WATK|SCB_DEF|SCB_FLEE|SCB_HIT );
@@ -710,7 +710,7 @@ void initChangeTables(void) {
 	//add_sc( SU_SCAROFTAROU			, SC_STUN );
 	status->set_sc( SU_SCAROFTAROU			, SC_BITESCAR		, SI_BITESCAR		, SCB_NONE );
 	status->set_sc( SU_ARCLOUSEDASH			, SC_ARCLOUSEDASH	, SI_ARCLOUSEDASH	, SCB_AGI|SCB_SPEED );
-	status->add_sc( SU_LUNATICCARROTBEAT	, SC_STUN );
+	add_sc( SU_LUNATICCARROTBEAT	, SC_STUN );
 	status->set_sc( SU_TUNAPARTY			, SC_TUNAPARTY		, SI_TUNAPARTY		, SCB_NONE );
 	status->set_sc( SU_BUNCHOFSHRIMP		, SC_SHRIMP			, SI_SHRIMP			, SCB_BATK|SCB_MATK );
 	status->set_sc( SU_FRESHSHRIMP			, SC_FRESHSHRIMP	, SI_FRESHSHRIMP	, SCB_NONE );
@@ -780,7 +780,7 @@ void initChangeTables(void) {
 	status->set_sc( RL_H_MINE           , SC_H_MINE             , SI_H_MINE               , SCB_NONE          );
 	status->set_sc( RL_P_ALTER          , SC_P_ALTER            , SI_P_ALTER              , SCB_NONE          );
 	status->set_sc( RL_SLUGSHOT         , SC_STUN               , SI_SLUGSHOT             , SCB_NONE          );
-	status->set_sc_with_vfx( RL_AM_BLAST, SC_ANTI_M_BLAST       , SI_ANTI_M_BLAST         , SCB_NONE          );
+	set_sc_with_vfx( RL_AM_BLAST, SC_ANTI_M_BLAST       , SI_ANTI_M_BLAST         , SCB_NONE          );
 	status->set_sc( RL_HEAT_BARREL      , SC_HEAT_BARREL        , SI_HEAT_BARREL          , SCB_ASPD|SCB_FLEE );
 
 	// Storing the target job rather than simply SC_SOULLINK simplifies code later on.
