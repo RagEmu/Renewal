@@ -16641,6 +16641,7 @@
 - `Tarlock's_Boots`: 22047
 - `Egir_Shoes_K`: 22059
 - `Witch_Shoes`: 22067
+- `Para_Team_Mark_`: 22508
 - `Candy_Holder`: 22514
 - `Twisted_Key_of_Time`: 22515
 - `Dark_Red_Lump`: 22516
