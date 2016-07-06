@@ -39,7 +39,7 @@
 //================= Description ===========================================
 //= General script functions.
 //================= Current Version =======================================
-//= 2.20
+//= 2.21
 //=========================================================================
 
 //== Function F_InsertComma ================================
@@ -408,7 +408,7 @@ function	script	F_CanOpenStorage	{
 	return (!basicskillcheck() || !(getskilllv("NV_BASIC") < 6 && getskilllv("SU_BASIC_SKILL") < 1));
 }
 
-//== F_GetNumSuffix ======================================
+//== F_GetNumSuffix ========================================
 // Returns a number with a '-st', '-nd', '-rd', or '-th' suffix.
 // -- callfunc "F_GetNumSuffix",<number>
 // Examples:
@@ -426,4 +426,12 @@ function	script	F_GetNumSuffix	{
 		return .@n+"rd";
 	else
 		return getarg(0)+ "th";
+}
+
+//== F_HasEdenGroupMark =====================================
+//////////////////////////////////////////////////////////////////////////////////
+// Check if the player has Para Team Mark items.
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_HasEdenGroupMark	{
+	return (countitem(Para_Team_Mark) >= 1 || countitem(Para_Team_Mark_) >= 1);
 }

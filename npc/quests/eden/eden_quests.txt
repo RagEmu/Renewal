@@ -35,12 +35,12 @@
 //================= Description ===========================================
 //= Eden Group Headquarter NPCs.
 //================= Current Version =======================================
-//= 2.1
+//= 2.2
 //=========================================================================
 
 moc_para01,25,35,4	script	Instructor Boya#para01	4_M_KNIGHT_GOLD,{
 	mes "[Boya]";
-	if (countitem(Para_Team_Mark) < 1 && countitem(Para_Team_Mark_) < 1) {
+	if (!callfunc("F_HasEdenGroupMark")) {
 		mes "You are not in my group are you?";
 		mes "I don't have anything to say to outsiders.";
 		mes "If you want something register with my group.";
@@ -842,7 +842,7 @@ moc_fild11,180,253,5	script	Talking Dog#para03	4_RUS_DWOLF,{
 	mes "Not a wolf.";
 	mes "I wasn't a dog originally...";
 	next;
-	if (countitem(Para_Team_Mark) > 0 || countitem(Para_Team_Mark_) > 0) {
+	if (callfunc("F_HasEdenGroupMark")) {
 		mes "[Talking Dog]";
 		mes "Anyway are you a Eden Group member?";
 		mes "Oh good to see you.";
@@ -1050,7 +1050,7 @@ prt_sewb1,131,262,3	script	Timid Cat#para04	4_M_BABYCAT,{
 
 pay_arche,41,136,3	script	Eden Member Karl#para05	4_M_KHMAN,{
 	if (para_suv01 < 13) {
-		if (countitem(Para_Team_Mark) > 0 || countitem(Para_Team_Mark_) > 0) {
+		if (callfunc("F_HasEdenGroupMark")) {
 			mes "[Karl]";
 			mes "Hey, how are you?";
 			mes "Good to see you~";
@@ -1652,7 +1652,7 @@ in_orcs01,38,175,3	script	Eden Member Hooksha	1_F_SIGNZISK,{
 
 iz_dun04,43,46,3	script	Eden Member Callandiva	4_F_CRU,{
 	if (para_suv01 < 33) {
-		if (countitem(Para_Team_Mark) > 0 || countitem(Para_Team_Mark_) > 0) {
+		if (callfunc("F_HasEdenGroupMark")) {
 			mes "[Callandiva]";
 			mes "How did you get so deep in this ocean city?";
 			mes "Ah, that symbol is of our group.";
@@ -2253,15 +2253,15 @@ moc_para01,179,44,3	script	Chef	4_M_CHNCOOK,{
 			mes "Ah, Kim-dduck-soon.";
 			mes "It's the representative meal for normal citizens.";
 			next;
-			if (countitem(Para_Team_Mark) > 0 || countitem(Para_Team_Mark_) > 0) {
-				if (Zeny > 2699) {
+			if (callfunc("F_HasEdenGroupMark")) {
+				if (Zeny >= 2700) {
 					mes "[Chef]";
 					mes "Hey, here you are.";
 					mes "Enjoy your meal.";
 					next;
 					mes "- After eating the meal, You feel a little bit full.";
 					mes "You've recovered some HP and SP. -";
-					Zeny =  Zeny - 2700;
+					Zeny -= 2700;
 					percentheal 50,0;
 					percentheal 0,50;
 					close;
@@ -2271,14 +2271,14 @@ moc_para01,179,44,3	script	Chef	4_M_CHNCOOK,{
 				mes "Since you are a eden member you get a 10% discount so, it's 2,700 zeny.";
 				close;
 			}
-			if (Zeny > 2999) {
+			if (Zeny >= 3000) {
 				mes "[Chef]";
 				mes "Hey, here you are.";
 				mes "Enjoy your meal.";
 				next;
 				mes "- After eating the meal, You feel a little bit full.";
 				mes "You've recovered some HP and SP. -";
-				Zeny =  Zeny - 3000;
+				Zeny -= 3000;
 				percentheal 50,0;
 				percentheal 0,50;
 				close;
@@ -2292,15 +2292,15 @@ moc_para01,179,44,3	script	Chef	4_M_CHNCOOK,{
 			mes "Course meal B?";
 			mes "This food with meat and vegetables in hot soup has it's origins from nomadic life under the cold and dry nature.";
 			next;
-			if (countitem(Para_Team_Mark) > 0 || countitem(Para_Team_Mark_) > 0) {
-				if (Zeny > 3599) {
+			if (callfunc("F_HasEdenGroupMark")) {
+				if (Zeny >= 3600) {
 					mes "[Chef]";
 					mes "Hey, here you are.";
 					mes "Enjoy your meal.";
 					next;
 					mes "- After eating the meal, You feel a little bit full.";
 					mes "You've recovered some HP and SP. -";
-					Zeny =  Zeny - 3600;
+					Zeny -= 3600;
 					percentheal 75,0;
 					percentheal 0,75;
 					close;
@@ -2310,14 +2310,14 @@ moc_para01,179,44,3	script	Chef	4_M_CHNCOOK,{
 				mes "Since you are a eden member you get a 10% discount so, it's 3,600 zeny.";
 				close;
 			}
-			if (Zeny > 3999) {
+			if (Zeny >= 4000) {
 				mes "[Chef]";
 				mes "Hey, here you are.";
 				mes "Enjoy your meal.";
 				next;
 				mes "- After eating the meal, You feel a little bit full.";
 				mes "You've recovered some HP and SP. -";
-				Zeny =  Zeny - 4000;
+				Zeny -= 4000;
 				percentheal 75,0;
 				percentheal 0,75;
 				close;
@@ -2327,8 +2327,8 @@ moc_para01,179,44,3	script	Chef	4_M_CHNCOOK,{
 			mes "How many times do I have to tell you?";
 			close;
 		case 4:
-			if (countitem(Para_Team_Mark) > 0 || countitem(Para_Team_Mark_) > 0) {
-				if (Zeny > 4499) {
+			if (callfunc("F_HasEdenGroupMark")) {
+				if (Zeny >= 4500) {
 					mes "[Chef]";
 					mes "Hey, here you are.";
 					mes "Enjoy your meal.";
@@ -2336,7 +2336,7 @@ moc_para01,179,44,3	script	Chef	4_M_CHNCOOK,{
 					mes "- The Rib Eye Roll is grilled on the oak.";
 					mes "- After eating the meal, You feel a little bit full.";
 					mes "You've recovered your HP and SP. -";
-					Zeny =  Zeny - 4500;
+					Zeny -= 4500;
 					percentheal 100,0;
 					percentheal 0,100;
 					close;
@@ -2346,7 +2346,7 @@ moc_para01,179,44,3	script	Chef	4_M_CHNCOOK,{
 				mes "Since you are a eden member you get a 10% discount so, it's 4,500 zeny.";
 				close;
 			}
-			if (Zeny > 4999) {
+			if (Zeny >= 5000) {
 				mes "[Chef]";
 				mes "Hey, here you are.";
 				mes "Enjoy your meal.";
@@ -2355,7 +2355,7 @@ moc_para01,179,44,3	script	Chef	4_M_CHNCOOK,{
 				mes "- The Rib Eye Roll is grilled on the oak.";
 				mes "- After eating the meal, You feel a little bit full.";
 				mes "You've recovered your HP and SP. -";
-				Zeny =  Zeny - 5000;
+				Zeny -= 5000;
 				percentheal 100,0;
 				percentheal 0,100;
 				close;
@@ -2370,7 +2370,7 @@ moc_para01,179,44,3	script	Chef	4_M_CHNCOOK,{
 			close;
 		}
 	case 2:
-		if (countitem(Para_Team_Mark) > 0 || countitem(Para_Team_Mark_) > 0) {
+		if (callfunc("F_HasEdenGroupMark")) {
 			mes "[Chef]";
 			mes "Most jobs should be managed by yourself. So it might be difficult, right?";
 			mes "Actually it's harmful so they have requested continuously.";

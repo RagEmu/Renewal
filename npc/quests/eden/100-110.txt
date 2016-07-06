@@ -39,7 +39,7 @@
 //================= Description ===========================================
 //= Repeatable quests for players between BaseLevel 100 - 110.
 //================= Current Version =======================================
-//= 1.1
+//= 1.2
 //=========================================================================
 
 moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
@@ -55,7 +55,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 		end;
 	}
 	mes "[Gelkah]";
-	if (!countitem(Para_Team_Mark) && !countitem(Para_Team_Mark_)) {
+	if (!callfunc("F_HasEdenGroupMark")) {
 		mes "- You need to have an -";
 		mes "- ^4d4dff'Eden Group Mark'^000000 -";
 		mes "- to receive these missions. -";

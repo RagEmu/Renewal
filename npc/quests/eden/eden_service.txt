@@ -33,7 +33,7 @@
 //================= Description ===========================================
 //= Paradise Group storage access.
 //================= Current Version =======================================
-//= 1.1
+//= 1.2
 //=========================================================================
 
 -	script	Goods Cabinet#00::pggc	FAKE_NPC,{
@@ -53,31 +53,29 @@
 	mes "3.Cabinet fee is";
 	mes "  ^4d4dff500 zeny^000000!";
 	next;
-	if (countitem(Para_Team_Mark) > 0 || countitem(Para_Team_Mark_) > 0) {
+	if (callfunc("F_HasEdenGroupMark")) {
 		mes "You need to insert zeny to use the cabinet.";
 		mes "Cost : 500 Zeny ";
 		mes "Would you like to use it?";
 		next;
-		switch(select("Use the Cabinet.", "Cancel.")) {
-			case 1:
-				if (Zeny > 499) {
-					if (!callfunc("F_CanOpenStorage")) {
-						mes "The cabinet is not working for me.";
-						mes "Maybe I am not yet qualified to use Cabinet.";
-						close;
-					}
-					Zeny -= 500;
-					close2;
-					openstorage;
-					end;
+		if (select("Use the Cabinet.", "Cancel.") == 1) {
+			if (Zeny >= 500) {
+				if (!callfunc("F_CanOpenStorage")) {
+					mes "The cabinet is not working for me.";
+					mes "Maybe I am not yet qualified to use Cabinet.";
+					close;
 				}
-				mes "I don't have enough zeny.";
-				mes "I need at least 500 zeny to use the Cabinet.";
-				close;
-			case 2:
-				mes "I will use it next time.";
-				close;
+				Zeny -= 500;
+				close2;
+				openstorage;
+				end;
+			}
+			mes "I don't have enough zeny.";
+			mes "I need at least 500 zeny to use the Cabinet.";
+			close;
 		}
+		mes "I will use it next time.";
+		close;
 	}
 	mes "I need an Eden Group Mark to use this Cabinet.";
 	close;

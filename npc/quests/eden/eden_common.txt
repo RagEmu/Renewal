@@ -35,7 +35,7 @@
 //================= Description ===========================================
 //= Eden Group Headquarter NPC's.
 //================= Current Version =======================================
-//= 1.8
+//= 1.9
 //=========================================================================
 
 moc_para01,27,35,5	script	Secretary Lime Evenor	4_F_EDEN_OFFICER,{
@@ -90,7 +90,7 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	4_F_EDEN_OFFICER,{
 			next;
 			break;
 		case 2:
-			if (countitem(Para_Team_Mark) < 1 && countitem(Para_Team_Mark_) < 1) {
+			if (!callfunc("F_HasEdenGroupMark")) {
 				mes "[Lime Evenor]";
 				mes "You can be a Eden's member by simply registering with me.";
 				mes "Would you like to join Eden Group?";
@@ -202,7 +202,7 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	4_F_EDEN_OFFICER,{
 			}
 			break;
 		case 4:
-			if (countitem(Para_Team_Mark) > 0 || countitem(Para_Team_Mark_) > 0) {
+			if (callfunc("F_HasEdenGroupMark")) {
 				mes "[Lime Evenor]";
 				mes "Would like to try some missions as an Eden member?";
 				next;
@@ -329,7 +329,7 @@ OnTouch:
 }
 
 moc_para01,47,39,3	script	#warp_2_pass	HIDDEN_NPC,{
-	if (countitem(Para_Team_Mark) > 0 || countitem(Para_Team_Mark_) > 0) {
+	if (callfunc("F_HasEdenGroupMark")) {
 		mes "[Lime Evenor]";
 		mes "Oh, it is an exclusive place only for Eden's members.";
 		mes "If you are a member, you can come whenever you want!";
