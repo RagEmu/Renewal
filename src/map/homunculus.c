@@ -339,10 +339,10 @@ void homunculus_skillup(struct homun_data *hd,uint16 skill_id) {
 void merc_hom_stats_cap_check(struct homun_data *hd)
 {
 	struct s_homunculus *hom;
-	int max_hp_limit = battle_config.homunculus_max_hp;
-	int max_sp_limit = battle_config.homunculus_max_sp;
-	short stat_limit = battle_config.homunculus_max_parameter;
-	short stat_limit_S = battle_config.homunculus_S_max_parameter;
+	short max_hp_limit = battle_config.homunculus_max_hp;
+	short max_sp_limit = battle_config.homunculus_max_sp;
+	int stat_limit = battle_config.homunculus_max_parameter;
+	int stat_limit_S = battle_config.homunculus_S_max_parameter;
 
 	// Makes sure the homunculus MaxHP/MaxSP/Stats are not above
 	// their limits. If they are, set them to the limit.
