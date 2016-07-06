@@ -4941,7 +4941,8 @@ int pc_isUseitem(struct map_session_data *sd, int n)
  *   0 = fail
  *   1 = success
  *------------------------------------------*/
-int pc_useitem(struct map_session_data *sd,int n) {
+int pc_useitem(struct map_session_data *sd, int n)
+{
 	int64 tick = timer->gettick();
 	int amount, nameid, i;
 	bool removeItem = false;
@@ -4949,16 +4950,16 @@ int pc_useitem(struct map_session_data *sd,int n) {
 	nullpo_ret(sd);
 	Assert_ret(n >= 0 && n < MAX_INVENTORY);
 
-	if( sd->npc_id || sd->state.workinprogress&1 ){
+	if (sd->npc_id || sd->state.workinprogress&1) {
 		/* TODO: add to clif->messages enum */
 		clif->msgtable(sd, MSG_NPC_WORK_IN_PROGRESS); // TODO look for the client date that has this message.
 		return 0;
 	}
 
-	if( sd->status.inventory[n].nameid <= 0 || sd->status.inventory[n].amount <= 0 )
+	if (sd->status.inventory[n].nameid <= 0 || sd->status.inventory[n].amount <= 0)
 		return 0;
 
-	if( !pc->isUseitem(sd,n) )
+	if (!pc->isUseitem(sd, n))
 		return 0;
 
 	// Store information for later use before it is lost (via pc->delitem) [Paradox924X]
@@ -4988,106 +4989,101 @@ int pc_useitem(struct map_session_data *sd,int n) {
 	    ))
 		return 0;
 
-	//Prevent mass item usage. [Skotlex]
-	if( DIFF_TICK(sd->canuseitem_tick, tick) > 0 ||
-		(itemdb_iscashfood(nameid) && DIFF_TICK(sd->canusecashfood_tick, tick) > 0)
-	)
+	// Prevent mass item usage. [Skotlex]
+	if (DIFF_TICK(sd->canuseitem_tick, tick) > 0 || (itemdb_iscashfood(nameid) && DIFF_TICK(sd->canusecashfood_tick, tick) > 0))
 		return 0;
 
 	/* Items with delayed consume are not meant to work while in mounts except reins of mount(12622) */
-	if( sd->inventory_data[n]->flag.delay_consume && nameid != ITEMID_REINS_OF_MOUNT ) {
-		if( sd->sc.data[SC_ALL_RIDING] )
+	if (sd->inventory_data[n]->flag.restricted_consume && nameid != ITEMID_REINS_OF_MOUNT) {
+		if (sd->sc.data[SC_ALL_RIDING])
 			return 0;
-		else if( pc_issit(sd) )
+		else if (pc_issit(sd))
 			return 0;
 	}
-	//Since most delay-consume items involve using a "skill-type" target cursor,
-	//perform a skill-use check before going through. [Skotlex]
-	//resurrection was picked as testing skill, as a non-offensive, generic skill, it will do.
-	//FIXME: Is this really needed here? It'll be checked in unit.c after all and this prevents skill items using when silenced [Inkfish]
-	if( sd->inventory_data[n]->flag.delay_consume && ( sd->ud.skilltimer != INVALID_TIMER /*|| !status->check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)*/ ) )
-		return 0;
 
-	if( sd->inventory_data[n]->delay > 0 ) {
-		ARR_FIND(0, MAX_ITEMDELAYS, i, sd->item_delay[i].nameid == nameid );
-			if( i == MAX_ITEMDELAYS ) /* item not found. try first empty now */
-				ARR_FIND(0, MAX_ITEMDELAYS, i, !sd->item_delay[i].nameid );
-		if( i < MAX_ITEMDELAYS ) {
-			if( sd->item_delay[i].nameid ) {// found
-				if( DIFF_TICK(sd->item_delay[i].tick, tick) > 0 ) {
-					int e_tick = (int)(DIFF_TICK(sd->item_delay[i].tick, tick)/1000);
+	if (sd->inventory_data[n]->delay > 0 ) {
+		ARR_FIND(0, MAX_ITEMDELAYS, i, sd->item_delay[i].nameid == nameid);
+			if (i == MAX_ITEMDELAYS ) /* item not found. try first empty now */
+				ARR_FIND(0, MAX_ITEMDELAYS, i, !sd->item_delay[i].nameid);
+		if (i < MAX_ITEMDELAYS) {
+			if (sd->item_delay[i].nameid) {// found
+				if (DIFF_TICK(sd->item_delay[i].tick, tick) > 0) {
+					int e_tick = (int)(DIFF_TICK(sd->item_delay[i].tick, tick) / 1000);
 					clif->msgtable_num(sd, MSG_SECONDS_UNTIL_USE, e_tick + 1); // [%d] seconds left until you can use
 					return 0; // Delay has not expired yet
 				}
-			} else {// not yet used item (all slots are initially empty)
+			}
+			else { // Not yet used item (all slots are initially empty)
 				sd->item_delay[i].nameid = nameid;
 			}
 			if (!(nameid == ITEMID_REINS_OF_MOUNT && pc_hasmount(sd)))
 				sd->item_delay[i].tick = tick + sd->inventory_data[n]->delay;
-		} else {// should not happen
+		}
+		else { // Should not happen
 			ShowError("pc_useitem: Exceeded item delay array capacity! (nameid=%d, char_id=%d)\n", nameid, sd->status.char_id);
 		}
-		//clean up used delays so we can give room for more
-		for(i = 0; i < MAX_ITEMDELAYS; i++) {
-			if( DIFF_TICK(sd->item_delay[i].tick, tick) <= 0 ) {
+
+		// Clean up used delays so we can give room for more
+		for (i = 0; i < MAX_ITEMDELAYS; i++) {
+			if (DIFF_TICK(sd->item_delay[i].tick, tick) <= 0) {
 				sd->item_delay[i].tick = 0;
 				sd->item_delay[i].nameid = 0;
 			}
 		}
 	}
 
-	/* on restricted maps the item is consumed but the effect is not used */
-	for(i = 0; i < map->list[sd->bl.m].zone->disabled_items_count; i++) {
-		if( map->list[sd->bl.m].zone->disabled_items[i] == nameid ) {
+	/* On restricted maps the item is consumed but the effect is not used */
+	for (i = 0; i < map->list[sd->bl.m].zone->disabled_items_count; i++) {
+		if (map->list[sd->bl.m].zone->disabled_items[i] == nameid) {
 			clif->msgtable(sd, MSG_ITEM_CANT_USE_AREA); // This item cannot be used within this area
-			if( battle_config.item_restricted_consumption_type && sd->status.inventory[n].expire_time == 0 ) {
-				clif->useitemack(sd,n,sd->status.inventory[n].amount-1,true);
+			if (battle_config.item_restricted_consumption_type && sd->status.inventory[n].expire_time == 0) {
+				clif->useitemack(sd, n, sd->status.inventory[n].amount-1, true);
 				pc->delitem(sd, n, 1, 1, DELITEM_NORMAL, LOG_TYPE_CONSUME);
 			}
 			return 0;
 		}
 	}
 
-	//Dead Branch & Bloody Branch & Porings Box
-	if( nameid == ITEMID_BRANCH_OF_DEAD_TREE || nameid == ITEMID_BLOODY_DEAD_BRANCH || nameid == ITEMID_PORING_BOX )
+	// Dead Branch & Bloody Branch & Porings Box
+	if (nameid == ITEMID_BRANCH_OF_DEAD_TREE || nameid == ITEMID_BLOODY_DEAD_BRANCH || nameid == ITEMID_PORING_BOX)
 		logs->branch(sd);
 
 	sd->itemid = sd->status.inventory[n].nameid;
 	sd->itemindex = n;
-	if(sd->catch_target_class != -1) //Abort pet catching.
+	if (sd->catch_target_class != -1) // Abort pet catching.
 		sd->catch_target_class = -1;
 
 	amount = sd->status.inventory[n].amount;
-	//Check if the item is to be consumed immediately [Skotlex]
-	if (sd->inventory_data[n]->flag.delay_consume || sd->inventory_data[n]->flag.keepafteruse)
-		clif->useitemack(sd,n,amount,true);
-	else {
-		if (sd->status.inventory[n].expire_time == 0) {
-			clif->useitemack(sd, n, amount - 1, true);
-			removeItem = true;
-		} else {
-			clif->useitemack(sd, n, 0, false);
-		}
-	}
+	
+	if (sd->inventory_data[n]->flag.keepafteruse)
+		removeItem = false;
+	else
+		removeItem = true;
 
-	if(sd->status.inventory[n].card[0]==CARD0_CREATE &&
-		pc->famerank(MakeDWord(sd->status.inventory[n].card[2],sd->status.inventory[n].card[3]), MAPID_ALCHEMIST))
+	if (sd->status.inventory[n].card[0] == CARD0_CREATE &&
+		pc->famerank(MakeDWord(sd->status.inventory[n].card[2], sd->status.inventory[n].card[3]), MAPID_ALCHEMIST))
 	{
 		script->potion_flag = 2; // Famous player's potions have 50% more efficiency
 		if (sd->sc.data[SC_SOULLINK] && sd->sc.data[SC_SOULLINK]->val2 == SL_ROGUE)
-			script->potion_flag = 3; //Even more effective potions.
+			script->potion_flag = 3; // Even more effective potions.
 	}
 
-	//Update item use time.
+	// Update item use time.
 	sd->canuseitem_tick = tick + battle_config.item_use_interval;
-	if( itemdb_iscashfood(nameid) )
+	if (itemdb_iscashfood(nameid))
 		sd->canusecashfood_tick = tick + battle_config.cashfood_use_interval;
 
 	script->run_use_script(sd, sd->inventory_data[n], npc->fake_nd->bl.id);
 	script->potion_flag = 0;
 
-	if (removeItem)
+	if (removeItem) {
 		pc->delitem(sd, n, 1, 1, DELITEM_NORMAL, LOG_TYPE_CONSUME);
+		clif->useitemack(sd, n, amount - 1, true);
+	}
+	else {
+		clif->useitemack(sd, n, amount, true);
+	}
+
 	return 1;
 }
 

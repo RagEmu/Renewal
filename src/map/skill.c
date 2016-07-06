@@ -13809,32 +13809,28 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 				return 0;
 			break;
 	}
+
 	st = &sd->battle_status;
 	sc = &sd->sc;
-	if( !sc->count )
+	if (!sc->count)
 		sc = NULL;
 
-	if( sd->skillitem == skill_id ) {
-		if( sd->state.abra_flag ) // Hocus-Pocus was used. [Inkfish]
+	if (sd->skillitem == skill_id) {
+		if (sd->state.abra_flag) // Hocus-Pocus was used. [Inkfish]
 			sd->state.abra_flag = 0;
 		else {
 			int i;
 			// When a target was selected, consume items that were skipped in pc_use_item [Skotlex]
-			if( (i = sd->itemindex) == -1 ||
-				sd->status.inventory[i].nameid != sd->itemid ||
-				sd->inventory_data[i] == NULL ||
-				!sd->inventory_data[i]->flag.delay_consume ||
-				sd->status.inventory[i].amount < 1
-			) {
-				//Something went wrong, item exploit?
+			if ((i = sd->itemindex) == -1 || sd->status.inventory[i].nameid != sd->itemid || sd->inventory_data[i] == NULL || sd->status.inventory[i].amount < 1) {
+				// Something went wrong, item exploit?
 				sd->itemid = sd->itemindex = -1;
 				return 0;
 			}
-			//Consume
+			// Consume
 			sd->itemid = sd->itemindex = -1;
-			if( skill_id == WZ_EARTHSPIKE && sc && sc->data[SC_EARTHSCROLL] && rnd()%100 > sc->data[SC_EARTHSCROLL]->val2 ) // [marquis007]
-				; //Do not consume item.
-			else if( sd->status.inventory[i].expire_time == 0 ) // Rental usable items are not consumed until expiration
+			if (skill_id == WZ_EARTHSPIKE && sc && sc->data[SC_EARTHSCROLL] && rnd()%100 > sc->data[SC_EARTHSCROLL]->val2) // [marquis007]
+				; // Do not consume item.
+			else if (sd->status.inventory[i].expire_time == 0 && sd->inventory_data[i]->flag.keepafteruse) // Rental usable items are not consumed until expiration
 				pc->delitem(sd, i, 1, 0, DELITEM_NORMAL, LOG_TYPE_CONSUME);
 		}
 		return 1;
