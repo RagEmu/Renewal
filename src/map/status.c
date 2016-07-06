@@ -182,7 +182,7 @@ void initChangeTables(void) {
 
 	//The main status definitions
 	add_sc( SM_BASH              , SC_STUN            );
-	set_sc( SM_PROVOKE           , SC_PROVOKE         , SI_PROVOKE         , SCB_DEF|SCB_DEF2|SCB_BATK|SCB_WATK );
+	set_sc( SM_PROVOKE           , SC_PROVOKE         , SI_PROVOKE         , SCB_DEF | SCB_DEF2 | SCB_WATK );
 	add_sc( SM_MAGNUM            , SC_SUB_WEAPONPROPERTY    );
 	set_sc( SM_ENDURE            , SC_ENDURE          , SI_ENDURE          , SCB_MDEF|SCB_DSPD );
 	add_sc( MG_SIGHT             , SC_SIGHT           );
@@ -267,7 +267,7 @@ void initChangeTables(void) {
 
 	add_sc( RG_RAID              , SC_RAID            );
 	add_sc( RG_BACKSTAP          , SC_STUN            );
-	set_sc( RG_STRIPWEAPON       , SC_NOEQUIPWEAPON   , SI_NOEQUIPWEAPON      , SCB_WATK );
+	set_sc( RG_STRIPWEAPON       , SC_NOEQUIPWEAPON   , SI_NOEQUIPWEAPON      , SCB_BATK );
 	set_sc( RG_STRIPSHIELD       , SC_NOEQUIPSHIELD   , SI_NOEQUIPSHIELD      , SCB_DEF );
 	set_sc( RG_STRIPARMOR        , SC_NOEQUIPARMOR    , SI_NOEQUIPARMOR       , SCB_NONE );
 	set_sc( RG_STRIPHELM         , SC_NOEQUIPHELM     , SI_NOEQUIPHELM        , SCB_INT );
@@ -353,7 +353,7 @@ void initChangeTables(void) {
 	set_sc( CG_MARIONETTE        , SC_MARIONETTE      , SI_MARIONETTE      , SCB_STR | SCB_AGI | SCB_VIT | SCB_INT | SCB_DEX | SCB_LUK );
 	add_sc( LK_SPIRALPIERCE      , SC_STOP            );
 	add_sc( LK_HEADCRUSH         , SC_BLOODING        );
-	set_sc( LK_JOINTBEAT         , SC_JOINTBEAT       , SI_JOINTBEAT       , SCB_BATK|SCB_DEF2|SCB_SPEED|SCB_ASPD );
+	set_sc( LK_JOINTBEAT         , SC_JOINTBEAT       , SI_JOINTBEAT       , SCB_BATK | SCB_DEF2 | SCB_SPEED | SCB_ASPD );
 	add_sc( HW_NAPALMVULCAN      , SC_CURSE           );
 	set_sc( PF_MINDBREAKER       , SC_MINDBREAKER     , SI_BLANK           , SCB_MATK|SCB_MDEF2 );
 	add_sc( PF_MEMORIZE          , SC_MEMORIZE        );
@@ -388,10 +388,10 @@ void initChangeTables(void) {
 	set_sc( SL_KAITE             , SC_KAITE           , SI_KAITE           , SCB_NONE );
 	add_sc( SL_STUN              , SC_STUN            );
 	set_sc( SL_SWOO              , SC_SWOO            , SI_BLANK           , SCB_SPEED );
-	set_sc( SL_SKE               , SC_SKE             , SI_BLANK           , SCB_BATK|SCB_WATK|SCB_DEF|SCB_DEF2 );
+	set_sc( SL_SKE               , SC_SKE             , SI_BLANK           , SCB_WATK | SCB_DEF | SCB_DEF2 );
 	set_sc( SL_SKA               , SC_SKA             , SI_BLANK           , SCB_DEF|SCB_MDEF|SCB_ASPD );
 	set_sc( SL_SMA               , SC_SMA_READY       , SI_SMA_READY       , SCB_NONE );
-	set_sc( SM_SELFPROVOKE       , SC_PROVOKE         , SI_PROVOKE         , SCB_DEF|SCB_DEF2|SCB_BATK|SCB_WATK );
+	set_sc( SM_SELFPROVOKE       , SC_PROVOKE         , SI_PROVOKE         , SCB_DEF | SCB_DEF2 | SCB_WATK );
 	set_sc( ST_PRESERVE          , SC_PRESERVE        , SI_PRESERVE        , SCB_NONE );
 	set_sc( PF_DOUBLECASTING     , SC_DOUBLECASTING   , SI_DOUBLECASTING   , SCB_NONE );
 	set_sc( HW_GRAVITATION       , SC_GRAVITATION     , SI_BLANK           , SCB_ASPD );
@@ -462,10 +462,10 @@ void initChangeTables(void) {
 
 	set_sc( HLIF_AVOID           , SC_HLIF_AVOID           , SI_BLANK           , SCB_SPEED );
 	set_sc( HLIF_CHANGE          , SC_HLIF_CHANGE          , SI_BLANK           , SCB_NONE );
-	set_sc( HFLI_FLEET           , SC_HLIF_FLEET           , SI_BLANK           , SCB_ASPD|SCB_BATK|SCB_WATK );
+	set_sc( HFLI_FLEET           , SC_HLIF_FLEET           , SI_BLANK           , SCB_ASPD | SCB_WATK );
 	set_sc( HFLI_SPEED           , SC_HLIF_SPEED           , SI_BLANK           , SCB_FLEE );
 	set_sc( HAMI_DEFENCE         , SC_HAMI_DEFENCE         , SI_BLANK           , SCB_DEF );
-	set_sc( HAMI_BLOODLUST       , SC_HAMI_BLOODLUST       , SI_BLANK           , SCB_BATK|SCB_WATK );
+	set_sc( HAMI_BLOODLUST       , SC_HAMI_BLOODLUST       , SI_BLANK           , SCB_WATK );
 
 	// Homunculus S
 	set_sc( MH_LIGHT_OF_REGENE   , SC_LIGHT_OF_REGENE      , SI_LIGHT_OF_REGENE , SCB_NONE );
@@ -489,10 +489,10 @@ void initChangeTables(void) {
 	add_sc( MH_MIDNIGHT_FRENZY   , SC_FEAR );
 	set_sc( MH_TINDER_BREAKER    , SC_TINDER_BREAKER    , SI_TINDER_BREAKER    , SCB_FLEE );
 	set_sc( MH_CBC               , SC_CBC               , SI_CBC               , SCB_NONE );
-	set_sc( MH_EQC               , SC_EQC               , SI_EQC               , SCB_MAXHP|SCB_BATK|SCB_WATK|SCB_DEF|SCB_DEF2 );
+	set_sc( MH_EQC               , SC_EQC               , SI_EQC               , SCB_MAXHP | SCB_WATK | SCB_DEF | SCB_DEF2 );
 
 	add_sc( MER_CRASH            , SC_STUN            );
-	set_sc( MER_PROVOKE          , SC_PROVOKE         , SI_PROVOKE         , SCB_DEF|SCB_DEF2|SCB_BATK|SCB_WATK );
+	set_sc( MER_PROVOKE          , SC_PROVOKE         , SI_PROVOKE         , SCB_DEF | SCB_DEF2 | SCB_WATK );
 	add_sc( MS_MAGNUM            , SC_SUB_WEAPONPROPERTY    );
 	add_sc( MER_SIGHT            , SC_SIGHT           );
 	set_sc( MER_DECAGI           , SC_DEC_AGI         , SI_DEC_AGI         , SCB_SPEED );
@@ -620,7 +620,7 @@ void initChangeTables(void) {
 	set_sc( SC_BODYPAINT         , SC__BODYPAINT      , SI_BODYPAINT       , SCB_ASPD );
 	set_sc( SC_INVISIBILITY      , SC__INVISIBILITY   , SI_INVISIBILITY    , SCB_ASPD|SCB_CRI|SCB_ATK_ELE );
 	set_sc( SC_DEADLYINFECT      , SC__DEADLYINFECT   , SI_DEADLYINFECT    , SCB_NONE );
-	set_sc( SC_ENERVATION        , SC__ENERVATION     , SI_ENERVATION      , SCB_BATK  );
+	set_sc( SC_ENERVATION        , SC__ENERVATION     , SI_ENERVATION      , SCB_NONE  );
 	set_sc( SC_GROOMY            , SC__GROOMY         , SI_GROOMY          , SCB_ASPD|SCB_HIT|SCB_SPEED );
 	set_sc( SC_IGNORANCE         , SC__IGNORANCE      , SI_IGNORANCE       , SCB_NONE );
 	set_sc( SC_LAZINESS          , SC__LAZINESS       , SI_LAZINESS        , SCB_FLEE );
@@ -663,7 +663,7 @@ void initChangeTables(void) {
 	set_sc( WM_GLOOMYDAY              , SC_GLOOMYDAY              , SI_GLOOMYDAY            , SCB_FLEE|SCB_ASPD );
 	set_sc( WM_SONG_OF_MANA           , SC_SONG_OF_MANA           , SI_SONG_OF_MANA         , SCB_NONE );
 	set_sc( WM_DANCE_WITH_WUG         , SC_DANCE_WITH_WUG         , SI_DANCEWITHWUG         , SCB_ASPD );
-	set_sc( WM_SATURDAY_NIGHT_FEVER   , SC_SATURDAY_NIGHT_FEVER   , SI_SATURDAYNIGHTFEVER   , SCB_BATK|SCB_DEF|SCB_FLEE|SCB_REGEN );
+	set_sc( WM_SATURDAY_NIGHT_FEVER   , SC_SATURDAY_NIGHT_FEVER   , SI_SATURDAYNIGHTFEVER   , SCB_DEF | SCB_FLEE | SCB_REGEN );
 	set_sc( WM_LERADS_DEW             , SC_LERADS_DEW             , SI_LERADSDEW            , SCB_MAXHP );
 	set_sc( WM_MELODYOFSINK           , SC_MELODYOFSINK           , SI_MELODYOFSINK         , SCB_NONE );
 	set_sc( WM_BEYOND_OF_WARCRY       , SC_BEYOND_OF_WARCRY       , SI_WARCRYOFBEYOND       , SCB_CRI|SCB_MAXHP );
@@ -711,7 +711,7 @@ void initChangeTables(void) {
 	set_sc( SU_ARCLOUSEDASH			, SC_ARCLOUSEDASH	, SI_ARCLOUSEDASH	, SCB_SPEED );
 	add_sc( SU_LUNATICCARROTBEAT	, SC_STUN );
 	set_sc( SU_TUNAPARTY			, SC_TUNAPARTY		, SI_TUNAPARTY		, SCB_NONE );
-	set_sc( SU_BUNCHOFSHRIMP		, SC_SHRIMP			, SI_SHRIMP			, SCB_BATK|SCB_MATK );
+	set_sc( SU_BUNCHOFSHRIMP		, SC_SHRIMP			, SI_SHRIMP			, SCB_MATK );
 	set_sc( SU_FRESHSHRIMP			, SC_FRESHSHRIMP	, SI_FRESHSHRIMP	, SCB_NONE );
 
 	// Elemental Spirit summoner's 'side' status changes.
@@ -753,7 +753,7 @@ void initChangeTables(void) {
 	set_sc( KG_KYOMU             , SC_KYOMU          , SI_KYOMU                , SCB_NONE );
 	set_sc( KG_KAGEMUSYA         , SC_KAGEMUSYA      , SI_KAGEMUSYA            , SCB_NONE );
 	set_sc( KG_KAGEHUMI          , SC_KG_KAGEHUMI    , SI_KG_KAGEHUMI          , SCB_NONE );
-	set_sc( OB_ZANGETSU          , SC_ZANGETSU       , SI_ZANGETSU             , SCB_MATK|SCB_BATK );
+	set_sc( OB_ZANGETSU          , SC_ZANGETSU       , SI_ZANGETSU             , SCB_MATK );
 	set_sc_with_vfx( OB_AKAITSUKI, SC_AKAITSUKI      , SI_AKAITSUKI            , SCB_NONE );
 	set_sc( OB_OBOROGENSOU       , SC_GENSOU         , SI_GENSOU               , SCB_NONE );
 
@@ -1043,10 +1043,10 @@ void initChangeTables(void) {
 	status->dbs->ChangeFlagTable[SC_ATKER_MOVESPEED] |= SCB_MAXSP | SCB_ALL;
 	status->dbs->ChangeFlagTable[SC_ACARAJE] |= SCB_HIT | SCB_ASPD;
 	status->dbs->ChangeFlagTable[SC_CUP_OF_BOZA] |= SCB_ALL;
-	status->dbs->ChangeFlagTable[SC_GM_BATTLE] |= SCB_BATK | SCB_MATK | SCB_MAXHP | SCB_MAXSP;
-	status->dbs->ChangeFlagTable[SC_GM_BATTLE2] |= SCB_BATK | SCB_MATK | SCB_MAXHP | SCB_MAXSP;
-	status->dbs->ChangeFlagTable[SC_2011RWC] |= SCB_BATK | SCB_MATK;
-	status->dbs->ChangeFlagTable[SC_STEAMPACK] |= SCB_BATK | SCB_ASPD | SCB_ALL;
+	status->dbs->ChangeFlagTable[SC_GM_BATTLE] |= SCB_MATK | SCB_MAXHP | SCB_MAXSP;
+	status->dbs->ChangeFlagTable[SC_GM_BATTLE2] |= SCB_MATK | SCB_MAXHP | SCB_MAXSP;
+	status->dbs->ChangeFlagTable[SC_2011RWC] |= SCB_MATK;
+	status->dbs->ChangeFlagTable[SC_STEAMPACK] |= SCB_ASPD | SCB_ALL;
 	status->dbs->ChangeFlagTable[SC_BUCHEDENOEL] |= SCB_REGEN | SCB_HIT | SCB_CRI;
 	status->dbs->ChangeFlagTable[SC_PHI_DEMON] |= SCB_ALL;
 	status->dbs->ChangeFlagTable[SC_MAGIC_CANDY] |= SCB_MATK | SCB_ALL;
@@ -1081,7 +1081,6 @@ void initChangeTables(void) {
 
 	// Geneticist Foods / Throwable items
 	status->dbs->ChangeFlagTable[SC_BOOST500] |= SCB_ASPD;
-	status->dbs->ChangeFlagTable[SC_FULL_SWING_K] |= SCB_BATK;
 	status->dbs->ChangeFlagTable[SC_MANA_PLUS] |= SCB_MATK;
 	status->dbs->ChangeFlagTable[SC_MUSTLE_M] |= SCB_MAXHP;
 	status->dbs->ChangeFlagTable[SC_LIFE_FORCE_F] |= SCB_MAXSP;
@@ -1099,7 +1098,7 @@ void initChangeTables(void) {
 	status->dbs->ChangeFlagTable[SC_ROYALSCROLL] |= SCB_ALL;
 	status->dbs->ChangeFlagTable[SC_IMMUNITYSCROLL] |= SCB_ALL;
 	status->dbs->ChangeFlagTable[SC_MYSTICSCROLL] |= SCB_MATK | SCB_ALL;
-	status->dbs->ChangeFlagTable[SC_BATTLESCROLL] |= SCB_BATK | SCB_ASPD;
+	status->dbs->ChangeFlagTable[SC_BATTLESCROLL] |= SCB_ASPD;
 	status->dbs->ChangeFlagTable[SC_ARMORSCROLL] |= SCB_DEF | SCB_FLEE;
 	status->dbs->ChangeFlagTable[SC_FREYJASCROLL] |= SCB_MDEF | SCB_FLEE2;
 	status->dbs->ChangeFlagTable[SC_SOULSCROLL] |= SCB_MAXHP | SCB_MAXSP;
@@ -1110,9 +1109,9 @@ void initChangeTables(void) {
 	status->dbs->ChangeFlagTable[SC_MTF_MSP] |= SCB_MAXSP;
 
 	// Eden Crystal Synthesis
-	status->dbs->ChangeFlagTable[SC_QUEST_BUFF1] |= SCB_BATK | SCB_MATK;
-	status->dbs->ChangeFlagTable[SC_QUEST_BUFF2] |= SCB_BATK | SCB_MATK;
-	status->dbs->ChangeFlagTable[SC_QUEST_BUFF3] |= SCB_BATK | SCB_MATK;
+	status->dbs->ChangeFlagTable[SC_QUEST_BUFF1] |= SCB_MATK;
+	status->dbs->ChangeFlagTable[SC_QUEST_BUFF2] |= SCB_MATK;
+	status->dbs->ChangeFlagTable[SC_QUEST_BUFF3] |= SCB_MATK;
 
 	// Geffen Magic Tournament
 	status->dbs->ChangeFlagTable[SC_GEFFEN_MAGIC1] |= SCB_ALL;
@@ -4365,58 +4364,14 @@ unsigned short status_calc_batk(struct block_list *bl, struct status_change *sc,
 		|| (sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 1))
 		)
 		batk += batk / 5;
-	if (sc->data[SC_FULL_SWING_K])
-		batk += sc->data[SC_FULL_SWING_K]->val1;
-
-	if (sc->data[SC_PROVOKE])
-		batk += batk * sc->data[SC_PROVOKE]->val3 / 100;
 	if (sc->data[SC_NOEQUIPWEAPON] && bl->type != BL_PC)
 		batk -= batk * sc->data[SC_NOEQUIPWEAPON]->val2 / 100;
-	if (sc->data[SC_SKE])
-		batk += batk * 3;
-	if (sc->data[SC_HAMI_BLOODLUST])
-		batk += batk * sc->data[SC_HAMI_BLOODLUST]->val2 / 100;
 	if (sc->data[SC_JOINTBEAT] && sc->data[SC_JOINTBEAT]->val2&BREAK_WAIST)
 		batk -= batk * 25 / 100;
-	if (sc->data[SC_CURSE])
-		batk -= batk * 25 / 100;
-	if (sc->data[SC_ZANGETSU])
-		batk += sc->data[SC_ZANGETSU]->val2;
-#if 0 //Curse shouldn't effect on this?  <- Curse OR Bleeding??
+#if 0 // Curse shouldn't effect on this?  <- Curse OR Bleeding??
 	if (sc->data[SC_BLOODING])
 		batk -= batk * 25 / 100;
 #endif // 0
-	if(sc->data[SC_HLIF_FLEET])
-		batk += batk * sc->data[SC_HLIF_FLEET]->val3 / 100;
-	if (sc->data[SC__ENERVATION])
-		batk -= batk * sc->data[SC__ENERVATION]->val2 / 100;
-	if (sc->data[SC_SATURDAY_NIGHT_FEVER])
-		batk += 100 * sc->data[SC_SATURDAY_NIGHT_FEVER]->val1;
-	if (sc->data[SC_BATTLESCROLL])
-		batk += batk * sc->data[SC_BATTLESCROLL]->val1 / 100;
-	if (sc->data[SC_EQC])
-		batk -= batk * sc->data[SC_EQC]->val3 / 100;
-	if (sc->data[SC_ANGRIFFS_MODUS])
-		batk += 50 + 20 * sc->data[SC_ANGRIFFS_MODUS]->val1;
-
-	// Eden Crystal Synthesis
-	if (sc->data[SC_QUEST_BUFF1])
-		batk += sc->data[SC_QUEST_BUFF1]->val1;
-	if (sc->data[SC_QUEST_BUFF2])
-		batk += sc->data[SC_QUEST_BUFF2]->val1;
-	if (sc->data[SC_QUEST_BUFF3])
-		batk += sc->data[SC_QUEST_BUFF3]->val1;
-
-	if (sc->data[SC_GM_BATTLE])
-		batk += batk * sc->data[SC_GM_BATTLE]->val1 / 100;
-	if (sc->data[SC_GM_BATTLE2])
-		batk += batk * sc->data[SC_GM_BATTLE2]->val1 / 100;
-	if (sc->data[SC_2011RWC])
-		batk += batk * sc->data[SC_2011RWC]->val2 / 100;
-	if (sc->data[SC_STEAMPACK])
-		batk += sc->data[SC_STEAMPACK]->val1;
-	if (sc->data[SC_SHRIMP])
-		batk += batk * sc->data[SC_SHRIMP]->val2 / 100;
 
 	return (unsigned short)cap_value(batk, 0, USHRT_MAX);
 }
