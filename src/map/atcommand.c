@@ -8382,13 +8382,13 @@ void atcommand_commands_sub(struct map_session_data* sd, const int fd, AtCommand
 	for (cmd = dbi_first(iter); dbi_exists(iter); cmd = dbi_next(iter)) {
 		size_t slen;
 
-		switch( type ) {
+		switch(type) {
 			case COMMAND_CHARCOMMAND:
-				if( cmd->char_groups[pcg->get_idx(sd->group)] == 0 )
+				if (cmd->char_groups[pcg->get_idx(sd->group)] == 0)
 					continue;
 				break;
 			case COMMAND_ATCOMMAND:
-				if( cmd->at_groups[pcg->get_idx(sd->group)] == 0 )
+				if (cmd->at_groups[pcg->get_idx(sd->group)] == 0)
 					continue;
 				break;
 			default:
@@ -8398,8 +8398,7 @@ void atcommand_commands_sub(struct map_session_data* sd, const int fd, AtCommand
 		slen = strlen(cmd->command);
 
 		// flush the text buffer if this command won't fit into it
-		if ( slen + cur - line_buff >= CHATBOX_SIZE )
-		{
+		if (slen + cur - line_buff >= CHATBOX_SIZE) {
 			clif->message(fd,line_buff);
 			cur = line_buff;
 			memset(line_buff,' ',CHATBOX_SIZE);
@@ -8413,6 +8412,36 @@ void atcommand_commands_sub(struct map_session_data* sd, const int fd, AtCommand
 	}
 	dbi_destroy(iter);
 	clif->message(fd,line_buff);
+	
+	if (atcommand->binding_count) {
+		int i, count_bind = 0;
+		int gm_lvl = pc_get_group_level(sd);
+		size_t slen;
+		for (i = 0; i < atcommand->binding_count; i++) {
+			if (gm_lvl >= ((type == COMMAND_ATCOMMAND) ? atcommand->binding[i]->group_lv : atcommand->binding[i]->group_lv_char)) {
+				slen = strlen(atcommand->binding[i]->command);
+				if (count_bind == 0) {
+					cur = line_buff;
+					memset(line_buff, ' ', CHATBOX_SIZE);
+					line_buff[CHATBOX_SIZE-1] = 0;
+					clif->message(fd, "------------------");
+					clif->message(fd, "Custom commands:");
+				}
+				if (slen + cur - line_buff >= CHATBOX_SIZE) {
+					clif->message(fd, line_buff);
+					cur = line_buff;
+					memset(line_buff,' ',CHATBOX_SIZE);
+					line_buff[CHATBOX_SIZE-1] = 0;
+				}
+				memcpy(cur, atcommand->binding[i]->command, slen);
+				cur += slen + (10 - slen % 10);
+				count_bind++;
+			}
+		}
+		if (count_bind)
+			clif->message(fd, line_buff);	// Last Line
+		count += count_bind;
+	}
 
 	safesnprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd,274), count); // "%d commands found."
 	clif->message(fd, atcmd_output);
