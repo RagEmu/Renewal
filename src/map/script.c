@@ -18668,6 +18668,7 @@ BUILDIN(showdigit)
 	clif->showdigit(sd, (unsigned char)type, value);
 	return true;
 }
+
 /**
  * Rune Knight
  **/
@@ -18676,8 +18677,8 @@ BUILDIN(makerune)
 	struct map_session_data *sd = script->rid2sd(st);
 	if (sd == NULL)
 		return true;
-	clif->skill_produce_mix_list(sd,RK_RUNEMASTERY,24);
-	sd->itemid = script_getnum(st,2);
+	clif->skill_produce_mix_list(sd, RK_RUNEMASTERY, 24);
+	sd->itemid = script_getnum(st, 2);
 	return true;
 }
 
@@ -18689,10 +18690,10 @@ BUILDIN(hascashmount)
 	struct map_session_data *sd = script->rid2sd(st);
 	if (sd == NULL)
 		return true;
-	if( sd->sc.data[SC_ALL_RIDING] )
-		script_pushint(st,1);
+	if (sd->sc.data[SC_ALL_RIDING])
+		script_pushint(st, 1);
 	else
-		script_pushint(st,0);
+		script_pushint(st, 0);
 	return true;
 }
 

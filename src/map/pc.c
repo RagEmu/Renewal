@@ -4791,7 +4791,7 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
  *   0 = no
  *   1 = yes
  *------------------------------------------*/
-int pc_isUseitem(struct map_session_data *sd,int n)
+int pc_isUseitem(struct map_session_data *sd, int n)
 {
 	struct item_data *item;
 	int nameid;
@@ -4802,38 +4802,33 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	item = sd->inventory_data[n];
 	nameid = sd->status.inventory[n].nameid;
 
-	if( item == NULL )
+	if (item == NULL)
 		return 0;
-	//Not consumable item
+	// Not consumable item
 	if (!itemdb->is_item_usable(item))
 		return 0;
-	if( !item->script ) //if it has no script, you can't really consume it!
+	if (!item->script) // If it has no script, you can't really consume it!
 		return 0;
 
 	if ((item->item_usage.flag&INR_SITTING) && (pc_issit(sd) == 1) && (pc_get_group_level(sd) < item->item_usage.override)) {
 		clif->msgtable(sd, MSG_ITEM_NEED_STANDING);
-		//clif->messagecolor_self(sd->fd, COLOR_WHITE, msg_txt(1474));
 		return 0; // You cannot use this item while sitting.
 	}
 
 	if (sd->state.storage_flag != STORAGE_FLAG_CLOSED && item->type != IT_CASH) {
-		clif->messagecolor_self(sd->fd, COLOR_RED, msg_sd(sd,1475));
+		clif->messagecolor_self(sd->fd, COLOR_RED, msg_sd(sd, 1475));
 		return 0; // You cannot use this item while storage is open.
 	}
 
-	switch( nameid ) { // TODO: Is there no better way to handle this, other than hardcoding item IDs?
+	switch (nameid) { // TODO: Is there no better way to handle this, other than hardcoding item IDs?
 		case ITEMID_ANODYNE:
-			if( map_flag_gvg2(sd->bl.m) )
-				return 0;
-			/* Fall through */
-		case ITEMID_ALOEBERA:
-			if( pc_issit(sd) )
+			if (map_flag_gvg2(sd->bl.m))
 				return 0;
 			break;
 		case ITEMID_WING_OF_FLY:
 		case ITEMID_GIANT_FLY_WING:
-			if( map->list[sd->bl.m].flag.noteleport || map_flag_gvg2(sd->bl.m) ) {
-				clif->skill_mapinfomessage(sd,0);
+			if (map->list[sd->bl.m].flag.noteleport || map_flag_gvg2(sd->bl.m)) {
+				clif->skill_mapinfomessage(sd, 0);
 				return 0;
 			}
 			/* Fall through */
@@ -4845,38 +4840,18 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		case ITEMID_WOB_RACHEL:   // Red Butterfly Wing
 		case ITEMID_WOB_LOCAL:    // Blue Butterfly Wing
 		case ITEMID_SIEGE_TELEPORT_SCROLL:
-			if( sd->duel_group && !battle_config.duel_allow_teleport ) {
-				clif->message(sd->fd, msg_sd(sd,863)); // "Duel: Can't use this item in duel."
+			if (sd->duel_group && !battle_config.duel_allow_teleport) {
+				clif->message(sd->fd, msg_sd(sd, 863)); // "Duel: Can't use this item in duel."
 				return 0;
 			}
-			if( nameid != ITEMID_WING_OF_FLY && nameid != ITEMID_GIANT_FLY_WING && map->list[sd->bl.m].flag.noreturn )
+			if (nameid != ITEMID_WING_OF_FLY && nameid != ITEMID_GIANT_FLY_WING && map->list[sd->bl.m].flag.noreturn)
 				return 0;
 			break;
 		case ITEMID_BRANCH_OF_DEAD_TREE:
 		case ITEMID_RED_POUCH_OF_SURPRISE:
 		case ITEMID_BLOODY_DEAD_BRANCH:
 		case ITEMID_PORING_BOX:
-			if( map->list[sd->bl.m].flag.nobranch || map_flag_gvg2(sd->bl.m) )
-				return 0;
-			break;
-		case ITEMID_BUBBLE_GUM:
-		case ITEMID_COMP_BUBBLE_GUM:
-		case ITEMID_HE_BUBBLE_GUM:
-			if( sd->sc.data[SC_CASH_RECEIVEITEM] )
-				return 0;
-			break;
-		case ITEMID_BATTLE_MANUAL:
-		case ITEMID_COMP_BATTLE_MANUAL:
-		case ITEMID_THICK_MANUAL50:
-		case ITEMID_NOBLE_NAMEPLATE:
-		case ITEMID_BATTLE_MANUAL25:
-		case ITEMID_BATTLE_MANUAL100:
-		case ITEMID_BATTLE_MANUAL_X3:
-			if( sd->sc.data[SC_CASH_PLUSEXP] )
-				return 0;
-			break;
-		case ITEMID_JOB_MANUAL50:
-			if( sd->sc.data[SC_CASH_PLUSONLYJOBEXP] )
+			if (map->list[sd->bl.m].flag.nobranch || map_flag_gvg2(sd->bl.m))
 				return 0;
 			break;
 
@@ -4886,51 +4861,40 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		case ITEMID_M_CENTER_POTION:
 		case ITEMID_M_AWAKENING_POTION:
 		case ITEMID_M_BERSERK_POTION:
-			if( sd->md == NULL || sd->md->db == NULL )
+			if (sd->md == NULL || sd->md->db == NULL)
 				return 0;
 			if (sd->md->sc.data[SC_BERSERK])
 				return 0;
-			if( nameid == ITEMID_M_AWAKENING_POTION && sd->md->db->lv < 40 )
+			if (nameid == ITEMID_M_AWAKENING_POTION && sd->md->db->lv < 40)
 				return 0;
-			if( nameid == ITEMID_M_BERSERK_POTION && sd->md->db->lv < 80 )
+			if (nameid == ITEMID_M_BERSERK_POTION && sd->md->db->lv < 80)
 				return 0;
 			break;
 
 		case ITEMID_NEURALIZER:
-			if( !map->list[sd->bl.m].flag.reset )
+			if (!map->list[sd->bl.m].flag.reset)
 				return 0;
 			break;
 	}
 
-	if( nameid >= ITEMID_BOW_MERCENARY_SCROLL1 && nameid <= ITEMID_SPEARMERCENARY_SCROLL10 && sd->md != NULL ) // Mercenary Scrolls
+	if (nameid >= ITEMID_BOW_MERCENARY_SCROLL1 && nameid <= ITEMID_SPEARMERCENARY_SCROLL10 && sd->md != NULL) // Mercenary Scrolls
 		return 0;
 
-	/**
-	 * Only Rune Knights may use runes
-	 **/
-	if( itemdb_is_rune(nameid) && (sd->class_&MAPID_THIRDMASK) != MAPID_RUNE_KNIGHT )
-		return 0;
-	/**
-	 * Only GCross may use poisons
-	 **/
-	else if( itemdb_is_poison(nameid) && (sd->class_&MAPID_THIRDMASK) != MAPID_GUILLOTINE_CROSS )
-		return 0;
-
-	if( item->package || item->group ) {
+	if (item->package || item->group) {
 		if (pc_is90overweight(sd)) {
 			clif->msgtable(sd, MSG_ITEM_CANT_OBTAIN_WEIGHT);
 			return 0;
 		}
 		if (!pc->inventoryblank(sd)) {
-			clif->messagecolor_self(sd->fd, COLOR_RED, msg_sd(sd,1477));
+			clif->messagecolor_self(sd->fd, COLOR_RED, msg_sd(sd, 1477));
 			return 0;
 		}
 	}
 
-	//Gender check
-	if(item->sex != 2 && sd->status.sex != item->sex)
+	// Gender check
+	if (item->sex != 2 && sd->status.sex != item->sex)
 		return 0;
-	//Required level check
+	// Required level check
 	if (item->elv && sd->status.base_level < (unsigned int)item->elv) {
 		clif->msgtable(sd, MSG_ITEM_CANT_USE_LVL);
 		return 0;
@@ -4941,27 +4905,30 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		return 0;
 	}
 
-	//Not equipable by class. [Skotlex]
-	if (!(
-		(1ULL<<(sd->class_&MAPID_BASEMASK)) &
-		(item->class_base[(sd->class_&JOBL_2_1) ? 1 : ((sd->class_&JOBL_2_2) ? 2 : 0)])
-	))
+	// Not equipable by class. [Skotlex]
+	if (!((1ULL<<(sd->class_&MAPID_BASEMASK)) & (item->class_base[(sd->class_&JOBL_2_1) ? 1 : ((sd->class_&JOBL_2_2) ? 2 : 0)])))
 		return 0;
 
-	//Not usable by upper class. [Haru]
-	while( 1 ) {
+	// Not usable by upper class. [Haru]
+	while (1) {
 		// Normal classes (no upper, no baby, no third classes)
-		if( item->class_upper&ITEMUPPER_NORMAL && !(sd->class_&(JOBL_UPPER|JOBL_THIRD|JOBL_BABY)) ) break;
+		if (item->class_upper&ITEMUPPER_NORMAL && !(sd->class_&(JOBL_UPPER | JOBL_THIRD | JOBL_BABY)))
+			break;
 		// Upper classes (no third classes)
-		if( item->class_upper&ITEMUPPER_UPPER && sd->class_&JOBL_UPPER && !(sd->class_&JOBL_THIRD) ) break;
+		if (item->class_upper&ITEMUPPER_UPPER && sd->class_&JOBL_UPPER && !(sd->class_&JOBL_THIRD))
+			break;
 		// Baby classes (no third classes)
-		if( item->class_upper&ITEMUPPER_BABY && sd->class_&JOBL_BABY && !(sd->class_&JOBL_THIRD) ) break;
+		if (item->class_upper&ITEMUPPER_BABY && sd->class_&JOBL_BABY && !(sd->class_&JOBL_THIRD))
+			break;
 		// Third classes (no upper, no baby classes)
-		if( item->class_upper&ITEMUPPER_THIRD && sd->class_&JOBL_THIRD && !(sd->class_&(JOBL_UPPER|JOBL_BABY)) ) break;
+		if (item->class_upper&ITEMUPPER_THIRD && sd->class_&JOBL_THIRD && !(sd->class_&(JOBL_UPPER | JOBL_BABY)))
+			break;
 		// Upper third classes
-		if( item->class_upper&ITEMUPPER_THURDUPPER && sd->class_&JOBL_THIRD && sd->class_&JOBL_UPPER ) break;
+		if (item->class_upper&ITEMUPPER_THURDUPPER && sd->class_&JOBL_THIRD && sd->class_&JOBL_UPPER)
+			break;
 		// Baby third classes
-		if( item->class_upper&ITEMUPPER_THIRDBABY && sd->class_&JOBL_THIRD && sd->class_&JOBL_BABY ) break;
+		if (item->class_upper&ITEMUPPER_THIRDBABY && sd->class_&JOBL_THIRD && sd->class_&JOBL_BABY)
+			break;
 		return 0;
 	}
 

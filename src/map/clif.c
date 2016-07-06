@@ -5428,35 +5428,33 @@ void clif_skill_estimation(struct map_session_data *sd,struct block_list *dst) {
 ///     unused by the client
 void clif_skill_produce_mix_list(struct map_session_data *sd, int skill_id , int trigger)
 {
-	int i,c,view,fd;
+	int i, c, view,fd;
 	nullpo_retv(sd);
 
-	if(sd->menuskill_id == skill_id)
-		return; //Avoid resending the menu twice or more times...
-	if( skill_id == GC_CREATENEWPOISON )
+	if (sd->menuskill_id == skill_id)
+		return; // Avoid resending the menu twice or more times...
+	if (skill_id == GC_CREATENEWPOISON)
 		skill_id = GC_RESEARCHNEWPOISON;
 
-	fd=sd->fd;
+	fd = sd->fd;
 	WFIFOHEAD(fd, MAX_SKILL_PRODUCE_DB * 8 + 8);
-	WFIFOW(fd, 0)=0x18d;
+	WFIFOW(fd, 0) = 0x18d;
 
-	for(i=0,c=0;i<MAX_SKILL_PRODUCE_DB;i++){
-		if( skill->can_produce_mix(sd,skill->dbs->produce_db[i].nameid, trigger, 1) &&
-			( ( skill_id > 0 && skill->dbs->produce_db[i].req_skill == skill_id ) || skill_id < 0 )
-			){
-			if((view = itemdb_viewid(skill->dbs->produce_db[i].nameid)) > 0)
-				WFIFOW(fd,c*8+ 4)= view;
+	for (i = c = 0; i < MAX_SKILL_PRODUCE_DB; i++) {
+		if (skill->can_produce_mix(sd, skill->dbs->produce_db[i].nameid, trigger, 1) && ((skill_id >= 1 && skill->dbs->produce_db[i].req_skill == skill_id) || skill_id < 0)) {
+			if ((view = itemdb_viewid(skill->dbs->produce_db[i].nameid)) > 0)
+				WFIFOW(fd, c * 8 + 4) = view;
 			else
-				WFIFOW(fd,c*8+ 4)= skill->dbs->produce_db[i].nameid;
-			WFIFOW(fd,c*8+ 6)= 0;
-			WFIFOW(fd,c*8+ 8)= 0;
-			WFIFOW(fd,c*8+10)= 0;
+				WFIFOW(fd, c * 8 + 4) = skill->dbs->produce_db[i].nameid;
+			WFIFOW(fd, c * 8 + 6) = 0;
+			WFIFOW(fd, c * 8 + 8) = 0;
+			WFIFOW(fd ,c * 8 + 10) = 0;
 			c++;
 		}
 	}
-	WFIFOW(fd, 2)=c*8+8;
-	WFIFOSET(fd,WFIFOW(fd,2));
-	if(c > 0) {
+	WFIFOW(fd, 2) = c * 8 + 8;
+	WFIFOSET(fd, WFIFOW(fd, 2));
+	if (c > 0) {
 		sd->menuskill_id = skill_id;
 		sd->menuskill_val = trigger;
 		return;
