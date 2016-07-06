@@ -76305,33 +76305,6 @@ void HP_status_copy(struct status_data *a, const struct status_data *b) {
 	}
 	return;
 }
-unsigned short HP_status_base_matk_min(const struct status_data *st) {
-	int hIndex = 0;
-	unsigned short retVal___ = 0;
-	if( HPMHooks.count.HP_status_base_matk_min_pre ) {
-		unsigned short (*preHookFunc) (const struct status_data **st);
-		*HPMforce_return = false;
-		for(hIndex = 0; hIndex < HPMHooks.count.HP_status_base_matk_min_pre; hIndex++ ) {
-			preHookFunc = HPMHooks.list.HP_status_base_matk_min_pre[hIndex].func;
-			retVal___ = preHookFunc(&st);
-		}
-		if( *HPMforce_return ) {
-			*HPMforce_return = false;
-			return retVal___;
-		}
-	}
-	{
-		retVal___ = HPMHooks.source.status.base_matk_min(st);
-	}
-	if( HPMHooks.count.HP_status_base_matk_min_post ) {
-		unsigned short (*postHookFunc) (unsigned short retVal___, const struct status_data *st);
-		for(hIndex = 0; hIndex < HPMHooks.count.HP_status_base_matk_min_post; hIndex++ ) {
-			postHookFunc = HPMHooks.list.HP_status_base_matk_min_post[hIndex].func;
-			retVal___ = postHookFunc(retVal___, st);
-		}
-	}
-	return retVal___;
-}
 unsigned short HP_status_base_matk_max(const struct status_data *st) {
 	int hIndex = 0;
 	unsigned short retVal___ = 0;

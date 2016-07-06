@@ -6875,8 +6875,6 @@ typedef void (*HPMHOOK_pre_status_set_sc) (uint16 *skill_id, sc_type *sc, int *i
 typedef void (*HPMHOOK_post_status_set_sc) (uint16 skill_id, sc_type sc, int icon, unsigned int flag);
 typedef void (*HPMHOOK_pre_status_copy) (struct status_data **a, const struct status_data **b);
 typedef void (*HPMHOOK_post_status_copy) (struct status_data *a, const struct status_data *b);
-typedef unsigned short (*HPMHOOK_pre_status_base_matk_min) (const struct status_data **st);
-typedef unsigned short (*HPMHOOK_post_status_base_matk_min) (unsigned short retVal___, const struct status_data *st);
 typedef unsigned short (*HPMHOOK_pre_status_base_matk_max) (const struct status_data **st);
 typedef unsigned short (*HPMHOOK_post_status_base_matk_max) (unsigned short retVal___, const struct status_data *st);
 #endif // MAP_STATUS_H
