@@ -6897,6 +6897,10 @@ static const struct battle_data {
 	{ "warg_can_falcon",                    &battle_config.warg_can_falcon,                 0,      0,      1,              },
 	{ "drop_rate_increase",                 &battle_config.drop_rate_increase,              0,      0,      1,              },
 	{ "boarding_halter_speed",              &battle_config.boarding_halter_speed,           25,     0,      INT_MAX,        },
+	{ "homunculus_max_hp",                  &battle_config.homunculus_max_hp,               32767,  0,      SHRT_MAX,       },
+	{ "homunculus_max_sp",                  &battle_config.homunculus_max_sp,               32767,  0,      SHRT_MAX,       },
+	{ "homunculus_max_parameter",           &battle_config.homunculus_max_parameter,        99,     0,      INT_MAX,        },
+	{ "homunculus_S_max_parameter",         &battle_config.homunculus_S_max_parameter,      150,    0,      INT_MAX,        },
 };
 #ifndef STATS_OPT_OUT
 /**

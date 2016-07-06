@@ -336,6 +336,27 @@ void homunculus_skillup(struct homun_data *hd,uint16 skill_id) {
 	}
 }
 
+void merc_hom_stats_cap_check(struct homun_data *hd)
+{
+	struct s_homunculus *hom;
+	int max_hp_limit = battle_config.homunculus_max_hp;
+	int max_sp_limit = battle_config.homunculus_max_sp;
+	short stat_limit = battle_config.homunculus_max_parameter;
+	short stat_limit_S = battle_config.homunculus_S_max_parameter;
+
+	// Makes sure the homunculus MaxHP/MaxSP/Stats are not above
+	// their limits. If they are, set them to the limit.
+	hom = &hd->homunculus;
+	hom->max_hp = cap_value(hom->max_hp, 0, max_hp_limit);
+	hom->max_sp = cap_value(hom->max_sp, 0, max_sp_limit);
+	hom->str = cap_value(hom->str, 0, 10 * ((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit);
+	hom->agi = cap_value(hom->agi, 0, 10 * ((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit);
+	hom->vit = cap_value(hom->vit, 0, 10 * ((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit);
+	hom->int_ = cap_value(hom->int_, 0, 10 * ((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit);
+	hom->dex = cap_value(hom->dex, 0, 10 * ((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit);
+	hom->luk = cap_value(hom->luk, 0, 10 * ((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit);
+}
+
 bool homunculus_levelup(struct homun_data *hd) {
 	struct s_homunculus *hom;
 	struct h_stats *min, *max;

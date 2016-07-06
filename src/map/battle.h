@@ -550,6 +550,10 @@ struct Battle_Config {
 	int warg_can_falcon;
 	int drop_rate_increase;
 	int boarding_halter_speed;
+	int homunculus_max_hp;
+	int homunculus_max_sp;
+	int homunculus_max_parameter;
+	int homunculus_S_max_parameter;
 };
 
 /* criteria for battle_config.idletime_critera */
