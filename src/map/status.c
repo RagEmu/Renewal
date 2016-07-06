@@ -4202,11 +4202,6 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 	return cap_value(str, 0, USHRT_MAX);
 }
 
-unsigned short status_base_matk_min(const struct status_data *st)
-{
-    return st->int_ + (st->int_ / 7) * (st->int_ / 7);
-}
-
 unsigned short status_base_matk_max(const struct status_data *st)
 {
     return st->int_ + (st->int_ / 5)*(st->int_ / 5);
@@ -13255,8 +13250,5 @@ void status_defaults(void) {
 	status->read_job_db_sub = status_read_job_db_sub;
 	status->set_sc = status_set_sc;
 	status->copy = status_copy;
-#ifndef RENEWAL
-	status->base_matk_min = status_base_matk_min;
-#endif  // RENEWAL
 	status->base_matk_max = status_base_matk_max;
 }

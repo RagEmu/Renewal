@@ -2367,7 +2367,6 @@ struct status_interface {
 	void (*read_job_db_sub) (int idx, const char *name, struct config_setting_t *jdb);
 	void (*set_sc) (uint16 skill_id, sc_type sc, int icon, unsigned int flag);
 	void (*copy) (struct status_data *a, const struct status_data *b);
-	unsigned short (*base_matk_min) (const struct status_data *st);
 	unsigned short (*base_matk_max) (const struct status_data *st);
 };
 
