@@ -235,7 +235,7 @@ struct Battle_Config {
 	int finger_offensive_type;
 	int heal_exp;
 	int max_heal_lv;
-	int max_heal; //Mitternacht
+	int max_heal; // Mitternacht
 	int resurrection_exp;
 	int shop_exp;
 	int combo_delay_rate;
@@ -253,9 +253,9 @@ struct Battle_Config {
 	int natural_heal_weight_rate;
 	int arrow_decrement;
 	int max_aspd;
-	int max_walk_speed; //Maximum walking speed after buffs [Skotlex]
-	int max_hp;
-	int max_sp;
+	int max_walk_speed; // Maximum walking speed after buffs [Skotlex]
+	int max_hp_limit;
+	int max_sp_limit;
 	int max_lv, aura_lv;
 	int max_parameter, max_baby_parameter;
 	int max_cart_weight;
@@ -265,8 +265,8 @@ struct Battle_Config {
 	int save_clothcolor;
 	int undead_detect_type;
 	int auto_counter_type;
-	int min_hitrate; //[Skotlex]
-	int max_hitrate; //[Skotlex]
+	int min_hitrate; // [Skotlex]
+	int max_hitrate; // [Skotlex]
 	int agi_penalty_target;
 	int agi_penalty_type;
 	int agi_penalty_count;
@@ -554,6 +554,9 @@ struct Battle_Config {
 	int homunculus_max_sp;
 	int homunculus_max_parameter;
 	int homunculus_S_max_parameter;
+	int max_hp_limit_99;
+	int max_hp_limit_150;
+	int max_hp_limit_175;
 };
 
 /* criteria for battle_config.idletime_critera */

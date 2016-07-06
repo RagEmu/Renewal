@@ -6610,11 +6610,10 @@ static const struct battle_data {
 	{ "arrow_decrement",                    &battle_config.arrow_decrement,                 1,      0,      2,              },
 	{ "max_aspd",                           &battle_config.max_aspd,                        190,    100,    199,            },
 	{ "max_third_aspd",                     &battle_config.max_third_aspd,                  193,    100,    199,            },
-	{ "max_walk_speed",                     &battle_config.max_walk_speed,                  300,    100,    100*DEFAULT_WALK_SPEED, },
+	{ "max_walk_speed",                     &battle_config.max_walk_speed,                  300,    100,    100 * DEFAULT_WALK_SPEED, },
 	{ "max_lv",                             &battle_config.max_lv,                          99,     0,      MAX_LEVEL,      },
 	{ "aura_lv",                            &battle_config.aura_lv,                         99,     0,      INT_MAX,        },
-	{ "max_hp",                             &battle_config.max_hp,                          1000000, 100,   21474836,       },
-	{ "max_sp",                             &battle_config.max_sp,                          1000000, 100,   21474836,       },
+	{ "max_sp_limit",                       &battle_config.max_sp_limit,                    1000000, 100,   21474836,       },
 	{ "max_cart_weight",                    &battle_config.max_cart_weight,                 8000,   100,    1000000,        },
 	{ "max_parameter",                      &battle_config.max_parameter,                   99,     10,     10000,          },
 	{ "max_baby_parameter",                 &battle_config.max_baby_parameter,              80,     10,     10000,          },
@@ -6901,6 +6900,13 @@ static const struct battle_data {
 	{ "homunculus_max_sp",                  &battle_config.homunculus_max_sp,               32767,  0,      SHRT_MAX,       },
 	{ "homunculus_max_parameter",           &battle_config.homunculus_max_parameter,        99,     0,      INT_MAX,        },
 	{ "homunculus_S_max_parameter",         &battle_config.homunculus_S_max_parameter,      150,    0,      INT_MAX,        },
+#ifndef MAX_HP_LIMITS
+	{ "max_hp_limit",                       &battle_config.max_hp_limit,                    1000000, 100,   21474836,       },
+#else
+	{ "max_hp_limit_99",                    &battle_config.max_hp_limit_99,                 330000, 100,    21474836,       },
+	{ "max_hp_limit_150",                   &battle_config.max_hp_limit_150,                660000, 100,    21474836,       },
+	{ "max_hp_limit_175",                   &battle_config.max_hp_limit_175,                1100000, 100,   21474836,       },
+#endif
 };
 #ifndef STATS_OPT_OUT
 /**

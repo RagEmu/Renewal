@@ -8267,10 +8267,13 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		sd->battle_status.hp = cap_value(val, 1, (int)sd->battle_status.max_hp);
 		break;
 	case SP_MAXHP:
-		sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp);
+#ifdef MAX_HP_LIMITS
+		sd->battle_status.max_hp = cap_value(val, 1, ((sd->status.base_level >= 151 && sd->status.base_level <= 175) ? battle_config.max_hp_limit_175 : (sd->status.base_level >= 100 && sd->status.base_level <= 150) ? battle_config.max_hp_limit_150 : battle_config.max_hp_limit_99));
+#else
+		sd->battle_status.max_hp = cap_value(val, 1, battle_config.max_hp_limit);
+#endif
 
-		if( sd->battle_status.max_hp < sd->battle_status.hp )
-		{
+		if (sd->battle_status.max_hp < sd->battle_status.hp) {
 			sd->battle_status.hp = sd->battle_status.max_hp;
 			clif->updatestatus(sd, SP_HP);
 		}
@@ -8279,10 +8282,9 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 		sd->battle_status.sp = cap_value(val, 0, (int)sd->battle_status.max_sp);
 		break;
 	case SP_MAXSP:
-		sd->battle_status.max_sp = cap_value(val, 1, battle_config.max_sp);
+		sd->battle_status.max_sp = cap_value(val, 1, battle_config.max_sp_limit);
 
-		if( sd->battle_status.max_sp < sd->battle_status.sp )
-		{
+		if (sd->battle_status.max_sp < sd->battle_status.sp) {
 			sd->battle_status.sp = sd->battle_status.max_sp;
 			clif->updatestatus(sd, SP_SP);
 		}

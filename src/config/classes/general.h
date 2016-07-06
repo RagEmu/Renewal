@@ -51,6 +51,13 @@
 //#define DEVOTION_REFLECT_DAMAGE
 
 /**
+ * Sets the max hp limit for specific level
+ * Official: Lv 99 = 330k, Lv 150 = 660k, 175 = 1.1m
+ * comment to disable
+ **/
+#define MAX_HP_LIMITS
+
+/**
  * No settings past this point
  **/
 

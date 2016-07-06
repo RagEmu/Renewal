@@ -2812,15 +2812,20 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 		bstatus->max_hp += 1000;
 
 	// Apply relative modifiers from equipment
-	if(sd->hprate < 0)
+	if (sd->hprate < 0)
 		sd->hprate = 0;
-	if(sd->hprate!=100)
+	if (sd->hprate!=100)
 		bstatus->max_hp = APPLY_RATE(bstatus->max_hp, sd->hprate);
-	if(battle_config.hp_rate != 100)
+	if (battle_config.hp_rate != 100)
 		bstatus->max_hp = APPLY_RATE(bstatus->max_hp, battle_config.hp_rate);
 
-	if(bstatus->max_hp > (unsigned int)battle_config.max_hp)
-		bstatus->max_hp = battle_config.max_hp;
+#ifdef MAX_HP_LIMITS
+	if (bstatus->max_hp > (sd->status.base_level >= 151 && sd->status.base_level <= 175) ? (unsigned int)battle_config.max_hp_limit_175 : (sd->status.base_level >= 100 && sd->status.base_level <= 150) ? (unsigned int)battle_config.max_hp_limit_150 : (unsigned int)battle_config.max_hp_limit_99)
+		bstatus->max_hp = (sd->status.base_level >= 151 && sd->status.base_level <= 175) ? battle_config.max_hp_limit_175 : (sd->status.base_level >= 100 && sd->status.base_level <= 150) ? battle_config.max_hp_limit_150 : battle_config.max_hp_limit_99;
+#else
+	if (bstatus->max_hp > (unsigned int)battle_config.max_hp_limit)
+		bstatus->max_hp = battle_config.max_hp_limit;
+#endif
 	else if(!bstatus->max_hp)
 		bstatus->max_hp = 1;
 
@@ -2847,16 +2852,16 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 		bstatus->max_sp += 100;
 
 	// Apply relative modifiers from equipment
-	if(sd->sprate < 0)
+	if (sd->sprate < 0)
 		sd->sprate = 0;
-	if(sd->sprate!=100)
+	if (sd->sprate!=100)
 		bstatus->max_sp = APPLY_RATE(bstatus->max_sp, sd->sprate);
-	if(battle_config.sp_rate != 100)
+	if (battle_config.sp_rate != 100)
 		bstatus->max_sp = APPLY_RATE(bstatus->max_sp, battle_config.sp_rate);
 
-	if(bstatus->max_sp > (unsigned int)battle_config.max_sp)
-		bstatus->max_sp = battle_config.max_sp;
-	else if(!bstatus->max_sp)
+	if (bstatus->max_sp > (unsigned int)battle_config.max_sp_limit)
+		bstatus->max_sp = battle_config.max_sp_limit;
+	else if (!bstatus->max_sp)
 		bstatus->max_sp = 1;
 
 	// ----- RESPAWN HP/SP -----
@@ -3795,38 +3800,46 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag) {
 	//if(flag&SCB_RACE)
 	//if(flag&SCB_RANGE)
 
-	if(flag&SCB_MAXHP) {
-		if( bl->type&BL_PC ) {
-			st->max_hp = status->get_base_maxhp(sd,st);
+	if (flag&SCB_MAXHP) {
+		if (bl->type&BL_PC) {
+			st->max_hp = status->get_base_maxhp(sd, st);
 			if (sd)
 				st->max_hp += bst->max_hp - sd->status.max_hp;
 
 			st->max_hp = status->calc_maxhp(bl, sc, st->max_hp);
 
-			if( st->max_hp > (unsigned int)battle_config.max_hp )
-				st->max_hp = (unsigned int)battle_config.max_hp;
-		} else {
+#ifdef MAX_HP_LIMITS
+			if (st->max_hp > (sd->status.base_level >= 151 && sd->status.base_level <= 175) ? (unsigned int)battle_config.max_hp_limit_175 : (sd->status.base_level >= 100 && sd->status.base_level <= 150) ? (unsigned int)battle_config.max_hp_limit_150 : (unsigned int)battle_config.max_hp_limit_99)
+				st->max_hp = (sd->status.base_level >= 151 && sd->status.base_level <= 175) ? (unsigned int)battle_config.max_hp_limit_175 : (sd->status.base_level >= 100 && sd->status.base_level <= 150) ? (unsigned int)battle_config.max_hp_limit_150 : (unsigned int)battle_config.max_hp_limit_99;
+#else
+			if (st->max_hp > (unsigned int)battle_config.max_hp_limit)
+				st->max_hp = (unsigned int)battle_config.max_hp_limit;
+#endif
+		}
+		else {
 			st->max_hp = status->calc_maxhp(bl, sc, bst->max_hp);
 		}
 
-		if( st->hp > st->max_hp ) {
-			//FIXME: Should perhaps a status_zap should be issued?
+		if (st->hp > st->max_hp) {
+			// FIXME: Should perhaps a status_zap should be issued?
 			st->hp = st->max_hp;
-			if( sd ) clif->updatestatus(sd,SP_HP);
+			if (sd)
+				clif->updatestatus(sd, SP_HP);
 		}
 	}
 
-	if(flag&SCB_MAXSP) {
-		if( bl->type&BL_PC ) {
-			st->max_sp = status->get_base_maxsp(sd,st);
+	if (flag&SCB_MAXSP) {
+		if (bl->type&BL_PC) {
+			st->max_sp = status->get_base_maxsp(sd, st);
 			if (sd)
 				st->max_sp += bst->max_sp - sd->status.max_sp;
 
 			st->max_sp = status->calc_maxsp(&sd->bl, &sd->sc, st->max_sp);
 
-			if( st->max_sp > (unsigned int)battle_config.max_sp )
-				st->max_sp = (unsigned int)battle_config.max_sp;
-		} else {
+			if (st->max_sp > (unsigned int)battle_config.max_sp_limit)
+				st->max_sp = (unsigned int)battle_config.max_sp_limit;
+		}
+		else {
 			st->max_sp = status->calc_maxsp(bl, sc, bst->max_sp);
 		}
 
@@ -12619,7 +12632,9 @@ int status_get_sc_type(sc_type type) {
 
 void status_read_job_db_sub(int idx, const char *name, struct config_setting_t *jdb)
 {
+	struct block_list *src = NULL;
 	struct config_setting_t *temp = NULL;
+	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	int i32 = 0;
 
 	struct {
@@ -12678,7 +12693,11 @@ void status_read_job_db_sub(int idx, const char *name, struct config_setting_t *
 				avg_increment = 5;
 			}
 			for ( ; i <= pc->max_level[idx][0]; i++) {
-				status->dbs->HP_table[idx][i] = min(base + avg_increment * i, battle_config.max_hp);
+#ifdef MAX_HP_LIMITS
+				status->dbs->HP_table[idx][i] = min(base + avg_increment * i, ((sd->status.base_level >= 151 && sd->status.base_level <= 175) ? battle_config.max_hp_limit_175 : (sd->status.base_level >= 100 && sd->status.base_level <= 150) ? battle_config.max_hp_limit_150 : battle_config.max_hp_limit_99));
+#else
+				status->dbs->HP_table[idx][i] = min(base + avg_increment * i, battle_config.max_hp_limit);
+#endif
 			}
 
 			for (i = 1; i <= MAX_LEVEL && status->dbs->SP_table[iidx][i]; i++) {
@@ -12693,7 +12712,7 @@ void status_read_job_db_sub(int idx, const char *name, struct config_setting_t *
 				avg_increment = 1;
 			}
 			for ( ; i <= pc->max_level[idx][0]; i++) {
-				status->dbs->SP_table[idx][i] = min(base + avg_increment * i, battle_config.max_sp);
+				status->dbs->SP_table[idx][i] = min(base + avg_increment * i, battle_config.max_sp_limit);
 			}
 		}
 	}
@@ -12719,7 +12738,11 @@ void status_read_job_db_sub(int idx, const char *name, struct config_setting_t *
 				avg_increment = 5;
 			}
 			for ( ; i <= pc->max_level[idx][0]; i++) {
-				status->dbs->HP_table[idx][i] = min(base + avg_increment * i, battle_config.max_hp);
+#ifdef MAX_HP_LIMITS
+				status->dbs->HP_table[idx][i] = min(base + avg_increment * i, ((sd->status.base_level >= 151 && sd->status.base_level <= 175) ? battle_config.max_hp_limit_175 : (sd->status.base_level >= 100 && sd->status.base_level <= 150) ? battle_config.max_hp_limit_150 : battle_config.max_hp_limit_99));
+#else
+				status->dbs->HP_table[idx][i] = min(base + avg_increment * i, battle_config.max_hp_limit);
+#endif
 			}
 		}
 	}
@@ -12745,7 +12768,7 @@ void status_read_job_db_sub(int idx, const char *name, struct config_setting_t *
 				avg_increment = 1;
 			}
 			for ( ; i <= pc->max_level[idx][0]; i++) {
-				status->dbs->SP_table[idx][i] = min(base + avg_increment * i, battle_config.max_sp);
+				status->dbs->SP_table[idx][i] = min(base + avg_increment * i, battle_config.max_sp_limit);
 			}
 		}
 	}
@@ -12776,7 +12799,11 @@ void status_read_job_db_sub(int idx, const char *name, struct config_setting_t *
 		struct config_setting_t *hp = NULL;
 		while (level <= MAX_LEVEL && (hp = libconfig->setting_get_elem(temp, level)) != NULL) {
 			i32 = libconfig->setting_get_int(hp);
-			status->dbs->HP_table[idx][++level] = min(i32, battle_config.max_hp);
+#ifdef MAX_HP_LIMITS
+			status->dbs->HP_table[idx][++level] = min(i32, ((sd->status.base_level >= 151 && sd->status.base_level <= 175) ? battle_config.max_hp_limit_175 : (sd->status.base_level >= 100 && sd->status.base_level <= 150) ? battle_config.max_hp_limit_150 : battle_config.max_hp_limit_99));
+#else
+			status->dbs->HP_table[idx][++level] = min(i32, battle_config.max_hp_limit);
+#endif
 		}
 		base = (level > 0 ? status->dbs->HP_table[idx][1] : 35); // Safe value if none are specified
 		if (level > 2) {
@@ -12787,7 +12814,11 @@ void status_read_job_db_sub(int idx, const char *name, struct config_setting_t *
 			avg_increment = 5;
 		}
 		for (++level; level <= pc->max_level[idx][0]; ++level) { /* limit only to possible maximum level of the given class */
-			status->dbs->HP_table[idx][level] = min(base + avg_increment * level, battle_config.max_hp); /* some are still empty? then let's use the average increase */
+#ifdef MAX_HP_LIMITS
+			status->dbs->HP_table[idx][level] = min(base + avg_increment * level, ((sd->status.base_level >= 151 && sd->status.base_level <= 175) ? battle_config.max_hp_limit_175 : (sd->status.base_level >= 100 && sd->status.base_level <= 150) ? battle_config.max_hp_limit_150 : battle_config.max_hp_limit_99));
+#else
+			status->dbs->HP_table[idx][level] = min(base + avg_increment * level, battle_config.max_hp_limit); /* some are still empty? then let's use the average increase */
+#endif
 		}
 	}
 
@@ -12796,7 +12827,7 @@ void status_read_job_db_sub(int idx, const char *name, struct config_setting_t *
 		struct config_setting_t *sp = NULL;
 		while (level <= MAX_LEVEL && (sp = libconfig->setting_get_elem(temp, level)) != NULL) {
 			i32 = libconfig->setting_get_int(sp);
-			status->dbs->SP_table[idx][++level] = min(i32, battle_config.max_sp);
+			status->dbs->SP_table[idx][++level] = min(i32, battle_config.max_sp_limit);
 		}
 		base = (level > 0 ? status->dbs->SP_table[idx][1] : 10); // Safe value if none are specified
 		if (level > 2) {
@@ -12807,7 +12838,7 @@ void status_read_job_db_sub(int idx, const char *name, struct config_setting_t *
 			avg_increment = 1;
 		}
 		for (++level; level <= pc->max_level[idx][0]; level++ ) {
-			status->dbs->SP_table[idx][level] = min(base + avg_increment * level, battle_config.max_sp);
+			status->dbs->SP_table[idx][level] = min(base + avg_increment * level, battle_config.max_sp_limit);
 		}
 	}
 }
