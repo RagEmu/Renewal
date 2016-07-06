@@ -100,13 +100,13 @@
 #endif // 20070227
 
 #if PACKETVER >= 20150805 /* Cart Decoration */
-	#define CART_DECORATION
+#define CART_DECORATION
 	#define MAX_CARTDECORATION_CARTS 3 // Currently there are 3 Carts available in kRO. [Frost]
 #else
 	#define MAX_CARTDECORATION_CARTS 0
 #endif
 #if PACKETVER >= 20120201 /* New Geneticist Carts */
-	#define NEW_CARTS
+#define NEW_CARTS
 	#define MAX_BASE_CARTS 9
 #else
 	#define MAX_BASE_CARTS 5
@@ -289,17 +289,17 @@ struct hplugin_data_store;
 
 enum item_types {
 	IT_HEALING = 0,
-	IT_UNKNOWN, //1
-	IT_USABLE,  //2
-	IT_ETC,     //3
-	IT_WEAPON,  //4
-	IT_ARMOR,   //5
-	IT_CARD,    //6
-	IT_PETEGG,  //7
-	IT_PETARMOR,//8
-	IT_UNKNOWN2,//9
-	IT_AMMO,    //10
-	IT_DELAYCONSUME,//11
+	IT_UNKNOWN,            //1
+	IT_USABLE,             //2
+	IT_ETC,                //3
+	IT_WEAPON,             //4
+	IT_ARMOR,              //5
+	IT_CARD,               //6
+	IT_PETEGG,             //7
+	IT_PETARMOR,           //8
+	IT_UNKNOWN2,           //9
+	IT_AMMO,               //10
+	IT_RESTRICTEDCONSUME,  //11
 	IT_CASH = 18,
 #ifndef IT_MAX
 	IT_MAX
