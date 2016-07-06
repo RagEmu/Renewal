@@ -496,7 +496,8 @@ int pc_inventory_rental_clear(struct map_session_data *sd)
 	return 1;
 }
 /* assumes i is valid (from default areas where it is called, it is) */
-void pc_rental_expire(struct map_session_data *sd, int i) {
+void pc_rental_expire(struct map_session_data *sd, int i)
+{
 	short nameid;
 
 	nullpo_retv(sd);
@@ -504,60 +505,60 @@ void pc_rental_expire(struct map_session_data *sd, int i) {
 	nameid = sd->status.inventory[i].nameid;
 
 	/* Soon to be dropped, we got plans to integrate it with item db */
-	switch( nameid ) {
+	switch (nameid) {
 		case ITEMID_REINS_OF_MOUNT:
-			status_change_end(&sd->bl,SC_ALL_RIDING,INVALID_TIMER);
+			status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER);
 			break;
 		case ITEMID_LOVE_ANGEL:
-			if( sd->status.font == 1 ) {
+			if (sd->status.font == 1) {
 				sd->status.font = 0;
 				clif->font(sd);
 			}
 			break;
 		case ITEMID_SQUIRREL:
-			if( sd->status.font == 2 ) {
+			if (sd->status.font == 2) {
 				sd->status.font = 0;
 				clif->font(sd);
 			}
 			break;
 		case ITEMID_GOGO:
-			if( sd->status.font == 3 ) {
+			if (sd->status.font == 3) {
 				sd->status.font = 0;
 				clif->font(sd);
 			}
 			break;
 		case ITEMID_PICTURE_DIARY:
-			if( sd->status.font == 4 ) {
+			if (sd->status.font == 4) {
 				sd->status.font = 0;
 				clif->font(sd);
 			}
 			break;
 		case ITEMID_MINI_HEART:
-			if( sd->status.font == 5 ) {
+			if (sd->status.font == 5) {
 				sd->status.font = 0;
 				clif->font(sd);
 			}
 			break;
 		case ITEMID_NEWCOMER:
-			if( sd->status.font == 6 ) {
+			if (sd->status.font == 6) {
 				sd->status.font = 0;
 				clif->font(sd);
 			}
 			break;
 		case ITEMID_KID:
-			if( sd->status.font == 7 ) {
+			if (sd->status.font == 7) {
 				sd->status.font = 0;
 				clif->font(sd);
 			}
 			break;
 		case ITEMID_MAGIC_CASTLE:
-			if( sd->status.font == 8 ) {
+			if (sd->status.font == 8) {
 				sd->status.font = 0;
 				clif->font(sd);
 			}
 			break;
 		case ITEMID_BULGING_HEAD:
-			if( sd->status.font == 9 ) {
+			if (sd->status.font == 9) {
 				sd->status.font = 0;
 				clif->font(sd);
 			}
@@ -567,6 +568,7 @@ void pc_rental_expire(struct map_session_data *sd, int i) {
 	clif->rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
 	pc->delitem(sd, i, sd->status.inventory[i].amount, 0, DELITEM_NORMAL, LOG_TYPE_RENTAL);
 }
+
 void pc_inventory_rentals(struct map_session_data *sd)
 {
 	int i, c = 0;

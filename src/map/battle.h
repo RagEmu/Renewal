@@ -548,7 +548,8 @@ struct Battle_Config {
 	int feature_buying_store_autotrade; // BuyingStore Autotrader [Dastgir/RagEmu]
 	int display_fake_hp_when_dead;
 	int warg_can_falcon;
-	int drop_rateincrease;
+	int drop_rate_increase;
+	int boarding_halter_speed;
 };
 
 /* criteria for battle_config.idletime_critera */

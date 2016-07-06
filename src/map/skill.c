@@ -490,10 +490,10 @@ int skillnotok (uint16 skill_id, struct map_session_data *sd)
 	 * It has been confirmed on a official server (thanks to Yommy) that item-cast skills bypass all the restrictions below
 	 * Also, without this check, an exploit where an item casting + healing (or any other kind buff) isn't deleted after used on a restricted map
 	 **/
-	if( sd->skillitem == skill_id )
+	if (sd->skillitem == skill_id)
 		return 0;
 
-	if( sd->sc.data[SC_ALL_RIDING] )
+	if (sd->sc.data[SC_ALL_RIDING])
 		return 1;//You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 
 	switch (skill_id) {

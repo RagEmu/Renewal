@@ -1963,7 +1963,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 			} else if ( skill_id != ST_CHASEWALK )
 				return 0;
 		}
-		if( sc->data[SC_ALL_RIDING] )
+		if (sc->data[SC_ALL_RIDING])
 			return 0;//New mounts can't attack nor use skills in the client; this check makes it cheat-safe [Ind]
 		
 		if (sc->data[SC_VOLCANIC_ASH] && rnd()%2 && src->type == BL_PC) { //Gain 50% of failing rate when casting skills
@@ -9682,9 +9682,9 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 	}
 
 	/* [Ind/Hercules] */
-	if( sd && status->dbs->DisplayType[type] ) {
+	if (sd && status->dbs->DisplayType[type]) {
 		int dval1 = 0, dval2 = 0, dval3 = 0;
-		switch( type ) {
+		switch (type) {
 			case SC_ALL_RIDING:
 				dval1 = 1;
 				break;
@@ -9692,7 +9692,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				dval1 = val1;
 				break;
 		}
-		status->display_add(sd,type,dval1,dval2,dval3);
+		status->display_add(sd, type, dval1, dval2, dval3);
 	}
 
 	//Those that make you stop attacking/walking....
