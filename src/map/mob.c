@@ -3920,6 +3920,11 @@ void mob_read_db_drops_sub(struct mob_db *entry, struct config_setting_t *t)
 		if (mob->get_const(drop, &i32) && i32 >= 0) {
 			value = i32;
 		}
+		if (battle_config.drop_rateincrease) {
+			if (value < 5000) {
+				value++;
+			}
+		}
 		if (value <= 0) {
 			ShowWarning("mob_read_db: wrong drop chance %d for drop item %s in monster %d\n", value, name, entry->mob_id);
 			i++;
