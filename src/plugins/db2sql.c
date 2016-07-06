@@ -248,7 +248,7 @@ int itemdb2sql_sub(struct config_setting_t *entry, int n, const char *source)
 		StrBuf->Printf(&buf, "'%s',", e_name);
 
 		// type
-		StrBuf->Printf(&buf, "'%d',", it->flag.delay_consume ? IT_DELAYCONSUME : it->type);
+		StrBuf->Printf(&buf, "'%d',", it->flag.restricted_consume ? IT_RESTRICTEDCONSUME : it->type);
 
 		// price_buy
 		StrBuf->Printf(&buf, "'%d',", it->value_buy);
