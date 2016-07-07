@@ -946,10 +946,22 @@ OnInit:
 	sellitem Pet_Incubator;
 	sellitem Backpack;
 	sellitem Rocker_Glasses;
-	sellitem Mojji;
 	sellitem Vital_Flower_;
 	sellitem Flame_Gemstone;
 	sellitem Bun_;
+	sellitem Vital_Flower;
+	sellitem Damp_Darkness;
+	sellitem Small_Snow_Flower;
+	sellitem Fresh_Plant;
+	sellitem Big_Cell;
+	sellitem Apple_Pudding;
+	sellitem Mystic_Stone;
+	sellitem Flavored_Alcohol;
+	sellitem Spirit_Liquor;
+	sellitem Pumpkin_Pie_;
+	sellitem Sunset_On_The_Rock;
+	sellitem Morning_Dew;
+	sellitem Grilled_Rice_Cake;
 }
 
 lhz_in02,286,95,4	trader	Beginner's Merchant#lhz	1_M_SIZ,{
@@ -1070,6 +1082,8 @@ OnInit:
 
 lhz_in02,87,208,3	trader	Toy Supplier#lhz	4_M_PIERROT,{
 OnInit:
+	sellitem One_Eyed_Glass;
+	sellitem Sunglasses;
 	sellitem Spinning_Eyes;
 	sellitem Eye_Bandage;
 	sellitem Luxury_Sunglasses;
@@ -1080,9 +1094,9 @@ lhz_in03,239,106,5	trader	Tool Dealer#lhz2	4_F_EINWOMAN,{
 OnInit:
 	sellitem Red_Potion;
 	sellitem Orange_Potion;
-	sellitem Green_Potion;
 	sellitem Center_Potion;
 	sellitem Awakening_Potion;
+	sellitem Empty_Bottle;
 	sellitem Wing_Of_Fly;
 	sellitem Wing_Of_Butterfly;
 	sellitem Booby_Trap;
@@ -1103,6 +1117,44 @@ OnInit:
 	sellitem Garlet;
 	sellitem Zargon;
 	sellitem Monster's_Feed;
+}
+
+lighthalzen,337,240,4	trader	Trap Specialist#lhz	1_F_01,{
+OnInit:
+	sellitem Special_Alloy_Trap;
+	sellitem Special_Alloy_Trap_Box;
+}
+
+lhz_in03,181,17,4	trader	Black Marketeer#lhz	1_M_03,{
+OnInit:
+	sellitem Flame_Thrower;
+	sellitem Accelerator;
+	sellitem Hovering_Booster;
+	sellitem Suicidal_Device;
+	sellitem Shape_Shifter;
+	sellitem Cooling_Device;
+	sellitem Mag_Field_Generator;
+	sellitem Barrier_Builder;
+	sellitem Repair_Kit;
+	sellitem Cannon_Ball;
+	sellitem Holy_Cannon_Ball;
+	sellitem Dark_Cannon_Ball;
+	sellitem Soul_Cannon_Ball;
+	sellitem Iron_Cannon_Ball;
+	sellitem Vulcan_Bullet;
+	sellitem Magic_Gear_Fuel;
+	sellitem Liquid_Condensed_Bullet;
+	sellitem Monkey_Wrench;
+	sellitem Camouflage_Generator;
+	sellitem RepairA;
+	sellitem RepairB;
+	sellitem RepairC;
+}
+
+s_atelier,15,65,5	trader	Part-Timer#sc_lgt	4_M_ORIENT02,{
+OnInit:
+	sellitem Surface_Paint;
+	sellitem Face_Paint;
 }
 
 //== Louyang ===============================================
@@ -1817,12 +1869,6 @@ OnInit:
 	sellitem Cooking_Oil;
 }
 
-lighthalzen,126,126,3	trader	Chef Assistant#lhz	4_M_01,{
-OnInit:
-	sellitem Red_Spice;
-	sellitem Yellow_Spice;
-}
-
 amatsu,206,150,3	trader	Chef Assistant#ama	4_M_01,{
 OnInit:
 	sellitem Sweet_Sauce;
@@ -2063,45 +2109,6 @@ OnInit:
 
 //== Juno ==================================================
 s_atelier,114,117,1	trader	Part-Timer#sc_yuno	4_F_03,{
-OnInit:
-	sellitem Surface_Paint;
-	sellitem Face_Paint;
-}
-
-//== Lighthalzen ===========================================
-lighthalzen,337,240,4	trader	Trap Specialist#lhz	1_F_01,{
-OnInit:
-	sellitem Special_Alloy_Trap;
-	sellitem Special_Alloy_Trap_Box;
-}
-
-lhz_in03,181,17,4	trader	Black Marketeer#lhz	1_M_03,{
-OnInit:
-	sellitem Flame_Thrower;
-	sellitem Accelerator;
-	sellitem Hovering_Booster;
-	sellitem Suicidal_Device;
-	sellitem Shape_Shifter;
-	sellitem Cooling_Device;
-	sellitem Mag_Field_Generator;
-	sellitem Barrier_Builder;
-	sellitem Repair_Kit;
-	sellitem Cannon_Ball;
-	sellitem Holy_Cannon_Ball;
-	sellitem Dark_Cannon_Ball;
-	sellitem Soul_Cannon_Ball;
-	sellitem Iron_Cannon_Ball;
-	sellitem Vulcan_Bullet;
-	sellitem Magic_Gear_Fuel;
-	sellitem Liquid_Condensed_Bullet;
-	sellitem Monkey_Wrench;
-	sellitem Camouflage_Generator;
-	sellitem RepairA;
-	sellitem RepairB;
-	sellitem RepairC;
-}
-
-s_atelier,15,65,5	trader	Part-Timer#sc_lgt	4_M_ORIENT02,{
 OnInit:
 	sellitem Surface_Paint;
 	sellitem Face_Paint;
@@ -2443,7 +2450,7 @@ OnInit:
 	sellitem Booby_Trap;
 }
 
-morocc,147,103,6	trader	Tool Dealer#moc3	4W_M_03,{
+morocc,146,103,6	trader	Tool Dealer#moc3	4W_M_03,{
 OnInit:
 	sellitem Arrow;
 	sellitem Spectacles;
@@ -2877,6 +2884,25 @@ OnInit:
 }
 
 aldebaran,165,107,2	trader	Chef Assistant#alde	4W_M_01,{
+OnInit:
+	sellitem Combination_Kit;
+	sellitem Mushroom;
+	sellitem Pot;
+	sellitem Bread;
+	sellitem Grain;
+	sellitem Cooking_Oil;
+	sellitem Plain_Sauce;
+	sellitem Hot_Sauce;
+	sellitem Sweet_Sauce;
+	sellitem Red_Spice;
+	sellitem Yellow_Spice;
+	sellitem Delicious_Fish;
+	sellitem Outdoor_Cooking_Kits;
+	sellitem Indoor_Cooking_Kits;
+	sellitem High_end_Cooking_Kits;
+}
+
+lighthalzen,126,126,3	trader	Chef Assistant#lhz	4_M_01,{
 OnInit:
 	sellitem Combination_Kit;
 	sellitem Mushroom;
