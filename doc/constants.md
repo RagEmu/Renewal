@@ -15242,7 +15242,7 @@
 - `Lover_In_Mouth`: 18546
 - `Campus_Festival`: 18547
 - `Tiny_Hat`: 18548
-- `Nabi_Hair_Pin`: 18549
+- `Butterfly_Hairpin`: 18549
 - `Asgard_Blessing`: 18550
 - `Galaxy_Circlet`: 18551
 - `Proba_Angel_Blessing`: 18552
