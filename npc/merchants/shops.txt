@@ -50,7 +50,7 @@
 //================= Description ===========================================
 //= Town shop NPCs.
 //================= Current Version =======================================
-//= 3.9
+//= 3.10
 //=========================================================================
 
 //== Alberta ===============================================
@@ -153,13 +153,14 @@ OnInit:
 	sellitem Orange_Potion;
 	sellitem Yellow_Potion;
 	sellitem White_Potion;
-	sellitem Green_Potion;
 	sellitem Center_Potion;
 	sellitem Awakening_Potion;
+	sellitem Empty_Bottle;
 	sellitem Wing_Of_Fly;
 	sellitem Wing_Of_Butterfly;
 	sellitem Spectacles;
 	sellitem Leaf_Of_Yggdrasil;
+	sellitem Arrow;
 }
 
 alde_alche,38,184,3	trader	Material Seller#alche	4_M_SAGE_C,{
@@ -1791,13 +1792,6 @@ OnInit:
 }
 
 //== Cooking Addition ======================================
-aldebaran,165,107,2	trader	Chef Assistant#alde	4W_M_01,{
-OnInit:
-	sellitem Red_Spice;
-	sellitem Yellow_Spice;
-	sellitem Bread;
-}
-
 comodo,225,164,3	trader	Chef Assistant#cmd	4_M_01,{
 OnInit:
 	sellitem Hot_Sauce;
@@ -2864,6 +2858,25 @@ OnInit:
 }
 
 payon,206,119,5	trader	Chef Assistant#pay	4_M_ORIENT02,{
+OnInit:
+	sellitem Combination_Kit;
+	sellitem Mushroom;
+	sellitem Pot;
+	sellitem Bread;
+	sellitem Grain;
+	sellitem Cooking_Oil;
+	sellitem Plain_Sauce;
+	sellitem Hot_Sauce;
+	sellitem Sweet_Sauce;
+	sellitem Red_Spice;
+	sellitem Yellow_Spice;
+	sellitem Delicious_Fish;
+	sellitem Outdoor_Cooking_Kits;
+	sellitem Indoor_Cooking_Kits;
+	sellitem High_end_Cooking_Kits;
+}
+
+aldebaran,165,107,2	trader	Chef Assistant#alde	4W_M_01,{
 OnInit:
 	sellitem Combination_Kit;
 	sellitem Mushroom;
