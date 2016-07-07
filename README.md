@@ -127,7 +127,7 @@ Examples:
 			file 'npc/custom/jobmaster.txt', line '17'. Skipping line...
 			* w1=prontera,153,193,6 script
 			* w2=Job Master
-			* w3=123,{
+			* w3=2_F_MAGICMASTER,{
 			* w4=
 
 	If you look at the error, it's telling you that you're missing (or have an extra) TAB.
