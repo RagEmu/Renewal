@@ -5738,33 +5738,29 @@ int pc_memo(struct map_session_data* sd, int pos) {
 
 	nullpo_ret(sd);
 
-	// check mapflags
-	if( sd->bl.m >= 0 && (map->list[sd->bl.m].flag.nomemo || map->list[sd->bl.m].flag.nowarpto) && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE) ) {
+	// Check mapflags
+	if (sd->bl.m >= 0 && (map->list[sd->bl.m].flag.nomemo || map->list[sd->bl.m].flag.nowarpto) && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE)) {
 		clif->skill_mapinfomessage(sd, 1); // "Saved point cannot be memorized."
 		return 0;
 	}
 
-	// check inputs
-	if( pos < -1 || pos >= MAX_MEMOPOINTS )
+	// Check inputs
+	if (pos < -1 || pos >= MAX_MEMOPOINTS)
 		return 0; // invalid input
 
-	// check required skill level
+	// Check required skill level
 	skill_lv = pc->checkskill(sd, AL_WARP);
-	if( skill_lv < 1 ) {
-		clif->skill_memomessage(sd,2); // "You haven't learned Warp."
-		return 0;
-	}
-	if( skill_lv < 2 || skill_lv - 2 < pos ) {
-		clif->skill_memomessage(sd,1); // "Skill Level is not high enough."
+
+	if (skill_lv < 2 || skill_lv - 2 < pos) {
+		clif->skill_memomessage(sd, 1); // "Skill Level is not high enough."
 		return 0;
 	}
 
-	if( pos == -1 )
-	{
+	if (pos == -1) {
 		int i;
-		// prevent memo-ing the same map multiple times
-		ARR_FIND( 0, MAX_MEMOPOINTS, i, sd->status.memo_point[i].map == map_id2index(sd->bl.m) );
-		memmove(&sd->status.memo_point[1], &sd->status.memo_point[0], (min(i,MAX_MEMOPOINTS-1))*sizeof(struct point));
+		// Prevent memo-ing the same map multiple times
+		ARR_FIND(0, MAX_MEMOPOINTS, i, sd->status.memo_point[i].map == map_id2index(sd->bl.m));
+		memmove(&sd->status.memo_point[1], &sd->status.memo_point[0], (min(i, MAX_MEMOPOINTS - 1)) * sizeof(struct point));
 		pos = 0;
 	}
 

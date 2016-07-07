@@ -17244,7 +17244,8 @@ BUILDIN(getvariableofnpc)
 /// warpportal <source x>,<source y>,"<target map>",<target x>,<target y>;
 ///
 /// @author blackhole89
-BUILDIN(warpportal) {
+BUILDIN(warpportal)
+{
 	int spx;
 	int spy;
 	unsigned short map_index;
@@ -17254,28 +17255,30 @@ BUILDIN(warpportal) {
 	struct block_list* bl;
 
 	bl = map->id2bl(st->oid);
-	if( bl == NULL ) {
+	if (bl == NULL) {
 		ShowError("script:warpportal: npc is needed\n");
 		return false;
 	}
 
-	spx = script_getnum(st,2);
-	spy = script_getnum(st,3);
-	map_index = script->mapindexname2id(st,script_getstr(st, 4));
-	tpx = script_getnum(st,5);
-	tpy = script_getnum(st,6);
+	spx = script_getnum(st, 2);
+	spy = script_getnum(st, 3);
+	map_index = script->mapindexname2id(st, script_getstr(st, 4));
+	tpx = script_getnum(st, 5);
+	tpy = script_getnum(st, 6);
 
-	if( map_index == 0 )
-		return true;// map not found
+	if (map_index == 0)
+		return true; // Map not found
 
-	if( bl->type == BL_NPC )
-		unit->bl2ud2(bl); // ensure nd->ud is safe to edit
+	if (bl->type == BL_NPC)
+		unit->bl2ud2(bl); // Ensure nd->ud is safe to edit
 
 	group = skill->unitsetting(bl, AL_WARP, 4, spx, spy, 0, 0);
-	if( group == NULL )
-		return true;// failed
-	group->val1 = (group->val1<<16)|(short)0;
-	group->val2 = (tpx<<16) | tpy;
+
+	if (group == NULL)
+		return true; // Failed
+
+	group->val1 = (group->val1 << 16) | (short)0;
+	group->val2 = (tpx << 16) | tpy;
 	group->val3 = map_index;
 
 	return true;

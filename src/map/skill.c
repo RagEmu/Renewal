@@ -502,8 +502,8 @@ int skillnotok (uint16 skill_id, struct map_session_data *sd)
 		case RETURN_TO_ELDICASTES:
 		case ALL_GUARDIAN_RECALL:
 		case ECLAGE_RECALL:
-			if(map->list[m].flag.nowarp) {
-				clif->skill_mapinfomessage(sd,0);
+			if (map->list[m].flag.nowarp) {
+				clif->skill_mapinfomessage(sd, 0);
 				return 1;
 			}
 			return 0;
@@ -3167,22 +3167,24 @@ int skill_check_unit_range (struct block_list *bl, int x, int y, uint16 skill_id
 	return map->foreachinarea(skill->check_unit_range_sub,bl->m,x-range,y-range,x+range,y+range,BL_SKILL,skill_id);
 }
 
-int skill_check_unit_range2_sub (struct block_list *bl, va_list ap) {
+int skill_check_unit_range2_sub (struct block_list *bl, va_list ap)
+{
 	uint16 skill_id;
 
-	if(bl->prev == NULL)
+	if (bl->prev == NULL)
 		return 0;
 
 	skill_id = va_arg(ap,int);
 
-	if( status->isdead(bl) && skill_id != AL_WARP )
+	if (status->isdead(bl) && skill_id != AL_WARP)
 		return 0;
 
-	if( skill_id == HP_BASILICA && bl->type == BL_PC )
+	if (skill_id == HP_BASILICA && bl->type == BL_PC)
 		return 0;
 
 	if (skill_id == AM_DEMONSTRATION && bl->type == BL_MOB && BL_UCCAST(BL_MOB, bl)->class_ == MOBID_EMPELIUM)
-		return 0; //Allow casting Bomb/Demonstration Right under emperium [Skotlex]
+		return 0; // Allow casting Bomb/Demonstration Right under emperium [Skotlex]
+
 	return 1;
 }
 
@@ -10523,14 +10525,14 @@ int skill_castend_pos(int tid, int64 tick, int id, intptr_t data)
 			}
 		}
 
-		if( sd )
-		{
-			if( ud->skill_id != AL_WARP && !skill->check_condition_castend(sd, ud->skill_id, ud->skill_lv) ) {
-				if( ud->skill_id == SA_LANDPROTECTOR )
-					clif->skill_poseffect(&sd->bl,ud->skill_id,ud->skill_lv,sd->bl.x,sd->bl.y,tick);
+		if (sd) {
+			if (ud->skill_id != AL_WARP && !skill->check_condition_castend(sd, ud->skill_id, ud->skill_lv)) {
+				if (ud->skill_id == SA_LANDPROTECTOR)
+					clif->skill_poseffect(&sd->bl, ud->skill_id, ud->skill_lv, sd->bl.x, sd->bl.y, tick);
 				break;
-			}else
-				skill->consume_requirement(sd,ud->skill_id,ud->skill_lv,1);
+			}
+			else
+				skill->consume_requirement(sd, ud->skill_id, ud->skill_lv, 1);
 		}
 
 		if( (src->type == BL_MER || src->type == BL_HOM) && !skill->check_condition_mercenary(src, ud->skill_id, ud->skill_lv, 1) )
@@ -10578,7 +10580,7 @@ int skill_castend_pos(int tid, int64 tick, int id, intptr_t data)
 		map->freeblock_lock();
 		skill->castend_pos2(src,ud->skillx,ud->skilly,ud->skill_id,ud->skill_lv,tick,0);
 
-		if( sd && sd->skillitem != AL_WARP ) // Warp-Portal thru items will clear data in skill_castend_map. [Inkfish]
+		if (sd && sd->skillitem != AL_WARP) // Warp-Portal thru items will clear data in skill_castend_map. [Inkfish]
 			sd->skillitem = sd->skillitemlv = 0;
 
 		unit->setdir(src, map->calc_dir(src, ud->skillx, ud->skilly));
@@ -10689,71 +10691,76 @@ int skill_castend_map (struct map_session_data *sd, uint16 skill_id, const char 
 			clif->refresh_storagewindow(sd);
 			break;
 
-		case AL_WARP:
-			{
+		case AL_WARP: {
 				const struct point *p[4];
 				struct skill_unit_group *group;
 				int i, lv, wx, wy;
-				int maxcount=0;
-				int x,y;
+				int maxcount = 0;
+				int x, y;
 				unsigned short map_index;
 
 				map_index = mapindex->name2id(mapname);
-				if(!map_index) { //Given map not found?
-					clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+
+				if (!map_index) { // Given map not found?
+					clif->skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 					skill_failed(sd);
 					return 0;
 				}
+
 				p[0] = &sd->status.save_point;
 				p[1] = &sd->status.memo_point[0];
 				p[2] = &sd->status.memo_point[1];
 				p[3] = &sd->status.memo_point[2];
 
-				if((maxcount = skill->get_maxcount(skill_id, sd->menuskill_val)) > 0) {
-					for(i=0;i<MAX_SKILLUNITGROUP && sd->ud.skillunit[i] && maxcount;i++) {
-						if(sd->ud.skillunit[i]->skill_id == skill_id)
+				if ((maxcount = skill->get_maxcount(skill_id, sd->menuskill_val)) > 0) {
+					for (i = 0; i < MAX_SKILLUNITGROUP && sd->ud.skillunit[i] && maxcount; i++) {
+						if (sd->ud.skillunit[i]->skill_id == skill_id)
 							maxcount--;
 					}
-					if(!maxcount) {
-						clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+					if (!maxcount) {
+						clif->skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 						skill_failed(sd);
 						return 0;
 					}
 				}
 
-				lv = sd->skillitem==skill_id?sd->skillitemlv:pc->checkskill(sd,skill_id);
+				lv = sd->skillitem == skill_id ? sd->skillitemlv : pc->checkskill(sd, skill_id);
 				wx = sd->menuskill_val>>16;
 				wy = sd->menuskill_val&0xffff;
 
-				if( lv <= 0 ) return 0;
-				if( lv > 4 ) lv = 4; // crash prevention
+				if (lv <= 0)
+					return 0;
 
-				// check if the chosen map exists in the memo list
-				ARR_FIND( 0, lv, i, map_index == p[i]->map );
-				if( i < lv ) {
-					x=p[i]->x;
-					y=p[i]->y;
-				} else {
+				if (lv > 4)
+					lv = 4; // Crash prevention
+
+				// Check if the chosen map exists in the memo list
+				ARR_FIND(0, lv, i, map_index == p[i]->map);
+				if (i < lv) {
+					x = p[i]->x;
+					y = p[i]->y;
+				}
+				else {
 					skill_failed(sd);
 					return 0;
 				}
 
-				if(!skill->check_condition_castend(sd, sd->menuskill_id, lv)) { // This checks versus skill_id/skill_lv...
+				if (!skill->check_condition_castend(sd, sd->menuskill_id, lv)) { // This checks versus skill_id/skill_lv...
 					skill_failed(sd);
 					return 0;
 				}
 
-				skill->consume_requirement(sd,sd->menuskill_id,lv,2);
+				skill->consume_requirement(sd, sd->menuskill_id, lv, 2);
 				sd->skillitem = sd->skillitemlv = 0; // Clear data that's skipped in 'skill_castend_pos' [Inkfish]
 
-				if ((group=skill->unitsetting(&sd->bl, skill_id, lv, wx, wy, 0, 0))==NULL) {
+				if ((group = skill->unitsetting(&sd->bl, skill_id, lv, wx, wy, 0, 0)) == NULL) {
 					skill_failed(sd);
 					return 0;
 				}
 
-				group->val1 = (group->val1<<16)|(short)0;
-				// record the destination coordinates
-				group->val2 = (x<<16)|y;
+				group->val1 = (group->val1<<16) | (short)0;
+				// Record the destination coordinates
+				group->val2 = (x<<16) | y;
 				group->val3 = map_index;
 			}
 			break;
@@ -11759,11 +11766,12 @@ struct skill_unit_group* skill_unitsetting(struct block_list *src, uint16 skill_
 			break;
 
 		case AL_WARP:
-			val1=skill_lv+6;
-			if(!(flag&1)) {
-				limit=2000;
-			} else { // previous implementation (not used anymore)
-				//Warp Portal morphing to active mode, extract relevant data from src. [Skotlex]
+			val1 = skill_lv + 6;
+			if (!(flag & 1)) {
+				limit = 2000;
+			}
+			else { // Previous implementation (not used anymore)
+				// Warp Portal morphing to active mode, extract relevant data from src. [Skotlex]
 				struct skill_unit *su = BL_CAST(BL_SKILL, src);
 				if (su == NULL)
 					return NULL;
@@ -11771,10 +11779,11 @@ struct skill_unit_group* skill_unitsetting(struct block_list *src, uint16 skill_
 				src = map->id2bl(group->src_id);
 				if (src == NULL)
 					return NULL;
-				val2 = group->val2; //Copy the (x,y) position you warp to
-				val3 = group->val3; //as well as the mapindex to warp to.
+				val2 = group->val2; // Copy the (x,y) position you warp to
+				val3 = group->val3; // As well as the mapindex to warp to.
 			}
 			break;
+
 		case HP_BASILICA:
 			val1 = src->id; // Store caster id.
 			break;
@@ -13982,9 +13991,9 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 			}
 			break;
 		case AL_WARP:
-			if(!battle_config.duel_allow_teleport && sd->duel_group) { // duel restriction [LuzZza]
-				char output[128]; sprintf(output, msg_sd(sd,365), skill->get_name(AL_WARP));
-				clif->message(sd->fd, output); //"Duel: Can't use %s in duel."
+			if (!battle_config.duel_allow_teleport && sd->duel_group) { // Duel restriction [LuzZza]
+				char output[128]; sprintf(output, msg_sd(sd, 365), skill->get_name(AL_WARP));
+				clif->message(sd->fd, output); // "Duel: Can't use %s in duel."
 				return 0;
 			}
 			break;
