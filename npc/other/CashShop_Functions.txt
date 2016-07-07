@@ -37,7 +37,7 @@
 //= - Neuralizer
 //= - Dungeon Teleport Scroll
 //================= Current Version =======================================
-//= 1.8
+//= 1.9
 //=========================================================================
 
 //== Kafra Card ============================================
@@ -78,12 +78,12 @@ function	script	F_CashReset	{
 	if (Class != Job_Novice && Weight == 0 && !checkmount() && !checkfalcon() && !checkcart() && !hascashmount()) {
 		resetskill;
 		sc_end SC_ALL;
-	if (countitem(Neuralizer))
-		delitem Neuralizer, 1;
-	if (countitem(F_Neuralizer))
-		delitem F_Neuralizer, 1;
-	if (countitem(E_Neuralizer))
-		delitem E_Neuralizer, 1;
+		if (countitem(Neuralizer))
+			delitem Neuralizer, 1;
+		else if (countitem(F_Neuralizer))
+			delitem F_Neuralizer, 1;
+		else if (countitem(E_Neuralizer))
+			delitem E_Neuralizer, 1;
 	}
 	return;
 }
