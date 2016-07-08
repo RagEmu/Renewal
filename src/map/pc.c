@@ -4851,7 +4851,7 @@ int pc_isUseitem(struct map_session_data *sd, int n)
 
 				ARR_FIND(0, MAX_PARTY, i, p->data[i].sd && p->data[i].sd != sd && p->data[i].sd->bl.m == m);
 
-				if (i == MAX_PARTY) {
+				if (i == MAX_PARTY || pc_isdead(sd)) {
 					clif->msgtable(sd, MSG_PARTY_NO_MEMBER_IN_MAP);
 					break;
 				}
