@@ -63,7 +63,7 @@ char char_server_pw[100] = "ragnarok";
 char char_server_db[32] = "ragnarok";
 char default_codepage[32] = ""; //Feature by irmin.
 
-unsigned int party_share_level = 10;
+unsigned int party_share_level = 15;
 
 // recv. packet list
 int inter_recv_packet_length[] = {
