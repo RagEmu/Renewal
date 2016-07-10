@@ -6439,7 +6439,7 @@ eclage,222,131,3	script	Wandering Merchant#ecl	1_M_SIGNMCNT,{
 		mes "stench of alcohol -";
 	}
 	else if (ep14_2_detect == 7) {
-		if (questprogress(9248) == 1) {
+		if (questprogress(9258) == 1) {
 			mes "- Upon getting closer,";
 			mes "I smell a terrible";
 			mes "stench of alcohol -";
@@ -6482,7 +6482,7 @@ eclage,222,131,3	script	Wandering Merchant#ecl	1_M_SIGNMCNT,{
 				case 1:
 					while (1) {
 						disable_items;
-						if (checkweight(Yggdrasilberry,2) == 0){
+						if (checkweight(Yggdrasilberry, 2) == 0){
 							mes "[Wandering Merchant]";
 							mes "You have too many";
 							mes "possessions.";
@@ -6497,12 +6497,12 @@ eclage,222,131,3	script	Wandering Merchant#ecl	1_M_SIGNMCNT,{
 							mes "All you need is 10,000zeny~";
 							close;
 						}
-						progressbar "0xFFFF00",3;
-						.@nRand = rand(1,10);
+						progressbar "0xFFFF00", 3;
+						.@nRand = rand(1, 10);
 						specialeffect2 EF_ENHANCE;
 						Zeny -= 10000;
 						if ((.@nRand > 0) && (.@nRand < 5)) {
-							getitem Center_Potion,1; //Center_Potion
+							getitem Center_Potion, 1;
 							mes "[Wandering Merchant]";
 							mes "Ohhhh~~ Unfortunately~ you got";
 							mes "1 ^006400Concentration Potion^000000";
@@ -6515,12 +6515,12 @@ eclage,222,131,3	script	Wandering Merchant#ecl	1_M_SIGNMCNT,{
 							mes "...";
 							mes "You want to give it a try?";
 							next;
-							if (select("Magic Card Album! Whoaaa!", "Is this some kind of fraud? Huh?")==1) {
+							if (select("Magic Card Album! Whoaaa!", "Is this some kind of fraud? Huh?") == 1) {
 								continue;
 							}
 						}
 						else {
-							getitem Center_Potion,2; //Center_Potion
+							getitem Center_Potion, 2;
 							mes "[Wandering Merchant]";
 							mes "Ohhhh~~ Unfortunately~ you got";
 							mes "2 ^006400Concentration Potion^000000";
@@ -6533,7 +6533,7 @@ eclage,222,131,3	script	Wandering Merchant#ecl	1_M_SIGNMCNT,{
 							mes "...";
 							mes "You want to give it a try?";
 							next;
-							if (select("Yes.", "Is this some kind of fraud?")==1) {
+							if (select("Yes.", "Is this some kind of fraud?") == 1) {
 								continue;
 							}
 						}
