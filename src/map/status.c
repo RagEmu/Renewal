@@ -1198,47 +1198,7 @@ void initChangeTables(void) {
 	status->dbs->ChangeFlagTable[SC_EL_DEFENSIVE] |= SCB_REGEN;
 	status->dbs->ChangeFlagTable[SC_EL_OFFENSIVE] |= SCB_REGEN;
 
-	/* status->dbs->DisplayType Table [Ind/Hercules] */
-	status->dbs->DisplayType[SC_ALL_RIDING]          = true;
-	status->dbs->DisplayType[SC_PUSH_CART]           = true;
-	status->dbs->DisplayType[SC_SUMMON1]             = true;
-	status->dbs->DisplayType[SC_SUMMON2]             = true;
-	status->dbs->DisplayType[SC_SUMMON3]             = true;
-	status->dbs->DisplayType[SC_SUMMON4]             = true;
-	status->dbs->DisplayType[SC_SUMMON5]             = true;
-	status->dbs->DisplayType[SC_CAMOUFLAGE]          = true;
-	status->dbs->DisplayType[SC_DUPLELIGHT]          = true;
-	status->dbs->DisplayType[SC_ORATIO]              = true;
-	status->dbs->DisplayType[SC_FROSTMISTY]          = true;
-	status->dbs->DisplayType[SC_VENOMIMPRESS]        = true;
-	status->dbs->DisplayType[SC_HALLUCINATIONWALK]   = true;
-	status->dbs->DisplayType[SC_ROLLINGCUTTER]       = true;
-	status->dbs->DisplayType[SC_BANDING]             = true;
-	status->dbs->DisplayType[SC_COLD]                = true;
-	status->dbs->DisplayType[SC_DEEP_SLEEP]          = true;
-	status->dbs->DisplayType[SC_CURSEDCIRCLE_ATKER]  = true;
-	status->dbs->DisplayType[SC_CURSEDCIRCLE_TARGET] = true;
-	status->dbs->DisplayType[SC_BLOOD_SUCKER]        = true;
-	status->dbs->DisplayType[SC__SHADOWFORM]         = true;
-	status->dbs->DisplayType[SC_MONSTER_TRANSFORM]   = true;
-
-	// Costumes
-	status->dbs->DisplayType[SC_MOONSTAR]            = true;
-	status->dbs->DisplayType[SC_SUPER_STAR]          = true;
-	status->dbs->DisplayType[SC_STRANGELIGHTS]       = true;
-	status->dbs->DisplayType[SC_DECORATION_OF_MUSIC] = true;
-	status->dbs->DisplayType[SC_LJOSALFAR]           = true;
-	status->dbs->DisplayType[SC_MERMAID_LONGING]     = true;
-	status->dbs->DisplayType[SC_HAT_EFFECT]          = true;
-	status->dbs->DisplayType[SC_FLOWERSMOKE]         = true;
-	status->dbs->DisplayType[SC_FSTONE]              = true;
-	status->dbs->DisplayType[SC_HAPPINESS_STAR]      = true;
-	status->dbs->DisplayType[SC_MAPLE_FALLS]         = true;
-	status->dbs->DisplayType[SC_TIME_ACCESSORY]      = true;
-	status->dbs->DisplayType[SC_MAGICAL_FEATHER]     = true;
-	status->dbs->DisplayType[SC_BLOSSOM_FLUTTERING]  = true;
-
-	if( !battle_config.display_hallucination ) //Disable Hallucination.
+	if (!battle_config.display_hallucination) //Disable Hallucination.
 		status->dbs->IconChangeTable[SC_ILLUSION] = SI_BLANK;
 #undef add_sc
 #undef set_sc_with_vfx
@@ -13018,6 +12978,10 @@ bool status_readdb_scconfig(char* fields[], int columns, int current) {
 	}
 
 	status->dbs->sc_conf[val] = (int)strtol(fields[1], NULL, 0);
+	if (status->dbs->sc_conf[val] & SC_VISIBLE)
+	{
+		status->dbs->DisplayType[val] = true;
+	}
 
 	return true;
 }

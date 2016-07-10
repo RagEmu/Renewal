@@ -80,6 +80,7 @@ typedef enum sc_conf_type {
 	SC_MADO_NO_RESET       = 0x040,      ///< cannot be reset when MADO Gear is taken off.
 	SC_NO_CLEAR            = 0x080,      ///< cannot be reset by 'sc_end SC_ALL' and status change clear.
 	SC_NO_BANISHING_BUSTER = 0x100,      ///< cannot be reset by Banishing Buster
+	SC_VISIBLE             = 0x200,      ///< SC Visible for all players.
 } sc_conf_type;
 
 /**
