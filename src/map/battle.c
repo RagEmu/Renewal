@@ -6901,6 +6901,7 @@ static const struct battle_data {
 	{ "homunculus_max_sp",                  &battle_config.homunculus_max_sp,               32767,  0,      SHRT_MAX,       },
 	{ "homunculus_max_parameter",           &battle_config.homunculus_max_parameter,        99,     0,      INT_MAX,        },
 	{ "homunculus_S_max_parameter",         &battle_config.homunculus_S_max_parameter,      150,    0,      INT_MAX,        },
+	{ "player_warp_facing_direction",       &battle_config.player_warp_facing_direction,    0,      0,      1,              },
 };
 #ifndef STATS_OPT_OUT
 /**

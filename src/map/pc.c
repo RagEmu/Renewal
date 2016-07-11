@@ -5610,53 +5610,59 @@ int pc_setpos(struct map_session_data* sd, unsigned short map_index, int x, int 
 		}
 	}
 
-	if( m < 0 ) {
+	if (m < 0) {
 		uint32 ip;
 		uint16 port;
-		//if can't find any map-servers, just abort setting position.
-		if(!sd->mapindex || map->mapname2ipport(map_index,&ip,&port))
+		// If can't find any map-servers, just abort setting position.
+		if (!sd->mapindex || map->mapname2ipport(map_index, &ip, &port))
 			return 2;
 
 		if (sd->npc_id)
 			npc->event_dequeue(sd);
 		npc->script_event(sd, NPCE_LOGOUT);
-		//remove from map, THEN change x/y coordinates
-		unit->remove_map_pc(sd,clrtype);
+		// Remove from map, THEN change x/y coordinates
+		unit->remove_map_pc(sd, clrtype);
 		sd->mapindex = map_index;
-		sd->bl.x=x;
-		sd->bl.y=y;
+		if (!battle_config.player_warp_facing_direction)
+			sd->ud.dir = 0; // Facing north direction
+		sd->bl.x = x;
+		sd->bl.y = y;
 		pc->clean_skilltree(sd);
-		chrif->save(sd,2);
+		chrif->save(sd, 2);
 		chrif->changemapserver(sd, ip, (short)port);
 
-		//Free session data from this map server [Kevin]
+		// Free session data from this map server [Kevin]
 		unit->free_pc(sd);
 
 		return 0;
 	}
 
-	if( x < 0 || x >= map->list[m].xs || y < 0 || y >= map->list[m].ys ) {
-		ShowError("pc_setpos: attempt to place player %s (%d:%d) on invalid coordinates (%s-%d,%d)\n", sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(map_index),x,y);
-		x = y = 0; // make it random
+	if (x < 0 || x >= map->list[m].xs || y < 0 || y >= map->list[m].ys) {
+		ShowError("pc_setpos: attempt to place player %s (%d:%d) on invalid coordinates (%s-%d,%d)\n", sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(map_index), x, y);
+		x = y = 0; // Make it random
 	}
 
-	if( x == 0 && y == 0 ) {// pick a random walkable cell
+	if (x == 0 && y == 0) { // Pick a random walkable cell
 		do {
-			x=rnd()%(map->list[m].xs-2)+1;
-			y=rnd()%(map->list[m].ys-2)+1;
+			x = rnd()%(map->list[m].xs - 2) + 1;
+			y = rnd()%(map->list[m].ys - 2) + 1;
 		} while(map->getcell(m, &sd->bl, x, y, CELL_CHKNOPASS));
 	}
 
 	if (sd->state.vending && map->getcell(m, &sd->bl, x, y, CELL_CHKNOVENDING)) {
-		clif->message (sd->fd, msg_sd(sd,204)); // "You can't open a shop on this cell."
+		clif->message (sd->fd, msg_sd(sd, 204)); // "You can't open a shop on this cell."
 		vending->close(sd);
 	}
 
-	if(sd->bl.prev != NULL){
-		unit->remove_map_pc(sd,clrtype);
-		clif->changemap(sd,m,x,y); // [MouseJstr]
-	} else if(sd->state.active)
-		//Tag player for rewarping after map-loading is done. [Skotlex]
+	if (!battle_config.player_warp_facing_direction)
+		sd->ud.dir = 0; // Facing north direction
+
+	if (sd->bl.prev != NULL){
+		unit->remove_map_pc(sd, clrtype);
+		clif->changemap(sd, m, x, y); // [MouseJstr]
+	}
+	else if(sd->state.active)
+		// Tag player for rewarping after map-loading is done. [Skotlex]
 		sd->state.rewarp = 1;
 
 	sd->mapindex = map_index;
