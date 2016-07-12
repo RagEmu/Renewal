@@ -9623,7 +9623,8 @@ void clif_parse_LoadEndAck(int fd, struct map_session_data *sd) {
 		clif->clearunit_area(&sd->bl, CLR_DEAD);
 	else {
 		skill->usave_trigger(sd);
-		sd->ud.dir = 0;/* enforce north-facing (not visually, virtually) */
+		if (battle_config.player_warp_facing_direction)
+			clif->changed_dir(&sd->bl, SELF);
 	}
 
 	// Trigger skill effects if you appear standing on them
@@ -16538,7 +16539,8 @@ void clif_party_show_picker(struct map_session_data * sd, struct item * item_dat
 /// exp type:
 ///     0 = normal exp gain/loss
 ///     1 = quest exp gain/loss
-void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, bool is_quest) {
+void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, bool is_quest)
+{
 	int fd;
 
 	nullpo_retv(sd);
@@ -16546,11 +16548,11 @@ void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, b
 	fd = sd->fd;
 
 	WFIFOHEAD(fd, packet_len(0x7f6));
-	WFIFOW(fd,0) = 0x7f6;
-	WFIFOL(fd,2) = sd->bl.id;
-	WFIFOL(fd,6) = exp;
-	WFIFOW(fd,10) = type;
-	WFIFOW(fd,12) = is_quest?1:0;// Normal exp is shown in yellow, quest exp is shown in purple.
+	WFIFOW(fd, 0) = 0x7f6;
+	WFIFOL(fd, 2) = sd->bl.id;
+	WFIFOL(fd, 6) = exp;
+	WFIFOW(fd, 10) = type;
+	WFIFOW(fd, 12) = (is_quest && type != SP_JOBEXP) ? 1 : 0;
 	WFIFOSET(fd,packet_len(0x7f6));
 }
 

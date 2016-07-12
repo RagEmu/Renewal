@@ -6737,16 +6737,17 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 /**
  * Alters EXP based on self bonuses that do not get shared with the party
  **/
-void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsigned int *job_exp, struct block_list *src) {
+void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsigned int *job_exp, struct block_list *src)
+{
 	int buff_ratio = 0, buff_job_ratio = 0, race_ratio = 0, pk_ratio = 0;
-	int64 jexp, bexp;
+	int64 bexp, jexp;
 
 	nullpo_retv(sd);
 	nullpo_retv(base_exp);
 	nullpo_retv(job_exp);
 
-	jexp = *job_exp;
 	bexp = *base_exp;
+	jexp = *job_exp;
 
 	if (src != NULL) {
 		const struct status_data *st = status->get_status_data(src);
@@ -6761,49 +6762,50 @@ void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsigned in
 		}
 #endif
 
-		//Race modifier
+		// Race modifier
 		if (sd->expaddrace[st->race])
 			race_ratio += sd->expaddrace[st->race];
 		race_ratio += sd->expaddrace[(st->mode&MD_BOSS) ? RC_BOSS : RC_NONBOSS];
 	}
 
-
-	//PK modifier
+	// PK modifier
 	/* this doesn't exist in Aegis, instead there's a CrazyKiller check which double all EXP from this point */
 	if (battle_config.pk_mode && (int)(status->get_lv(src) - sd->status.base_level) >= 20)
 		pk_ratio += 15; // pk_mode additional exp if monster >20 levels [Valaris]
 
-
-	//Buffs modifier
+	// Buffs modifier
 	if (sd->sc.data[SC_CASH_PLUSEXP]) {
-		buff_job_ratio += sd->sc.data[SC_CASH_PLUSEXP]->val1;
 		buff_ratio += sd->sc.data[SC_CASH_PLUSEXP]->val1;
+		buff_job_ratio += sd->sc.data[SC_CASH_PLUSEXP]->val1;
 	}
 	if (sd->sc.data[SC_OVERLAPEXPUP]) {
-		buff_job_ratio  += sd->sc.data[SC_OVERLAPEXPUP]->val1;
 		buff_ratio += sd->sc.data[SC_OVERLAPEXPUP]->val1;
+		buff_job_ratio  += sd->sc.data[SC_OVERLAPEXPUP]->val1;
 	}
 	if (sd->sc.data[SC_CASH_PLUSONLYJOBEXP])
 		buff_job_ratio += sd->sc.data[SC_CASH_PLUSONLYJOBEXP]->val1;
 
-	//Applying Race and PK modifier First then Premium (Perment modifier) and finally buff modifier
-	jexp += apply_percentrate64(jexp, race_ratio, 100);
-	jexp += apply_percentrate64(jexp, pk_ratio, 100);
-
+	// Applying Race and PK modifier First then Premium (Perment modifier) and finally buff modifier
 	bexp += apply_percentrate64(bexp, race_ratio, 100);
 	bexp += apply_percentrate64(bexp, pk_ratio, 100);
 
+	jexp += apply_percentrate64(jexp, race_ratio, 100);
+	jexp += apply_percentrate64(jexp, pk_ratio, 100);
 
 	if (sd->status.mod_exp != 100) {
-		jexp = apply_percentrate64(jexp, sd->status.mod_exp, 100);
 		bexp = apply_percentrate64(bexp, sd->status.mod_exp, 100);
+		jexp = apply_percentrate64(jexp, sd->status.mod_exp, 100);
 	}
 
 	bexp += apply_percentrate64(bexp, buff_ratio, 100);
 	jexp += apply_percentrate64(jexp, buff_ratio + buff_job_ratio, 100);
 
-	*job_exp = (unsigned int)cap_value(jexp, 1, UINT_MAX);
-	*base_exp = (unsigned int)cap_value(bexp, 1, UINT_MAX);
+	if (*base_exp) {
+		*base_exp = (unsigned int)cap_value(bexp, 1, UINT_MAX);
+	}
+	if (*job_exp) {
+		*job_exp = (unsigned int)cap_value(jexp, 1, UINT_MAX);
+	}
 }
 
 /**
