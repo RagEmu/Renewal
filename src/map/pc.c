@@ -1781,7 +1781,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 			{
 				// if neither 2nd nor 3rd jobchange levels are known, we have to assume a default for 2nd
 				if (!sd->change_level_3rd)
-					sd->change_level_2nd = pc->max_level[pc->class2idx(pc->mapid2jobid(sd->class_&MAPID_UPPERMASK, sd->status.sex))][1];
+					sd->change_level_2nd = pc->max_level[pc->class2idx(pc->mapid2jobid(sd->class_&MAPID_UPPERMASK, sd->status.sex))][1]; // FIXME
 				else
 					sd->change_level_2nd = 1 + skill_point + sd->status.skill_point
 						- (sd->status.job_level - 1)
@@ -6901,12 +6901,12 @@ bool pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned in
 /*==========================================
  * Returns max level for this character.
  *------------------------------------------*/
-unsigned int pc_maxbaselv(struct map_session_data *sd)
+unsigned int pc_maxbaselv(struct map_session_data *sd) // FIXME
 {
 	return pc->max_level[pc->class2idx(sd->status.class_)][0];
 }
 
-unsigned int pc_maxjoblv(struct map_session_data *sd)
+unsigned int pc_maxjoblv(struct map_session_data *sd) // FIXME
 {
 	return pc->max_level[pc->class2idx(sd->status.class_)][1];
 }
@@ -11363,9 +11363,9 @@ void pc_validate_levels(void) {
 		if (i == JOB_WEDDING || i == JOB_XMAS || i == JOB_SUMMER)
 			continue; //Classes that do not need exp tables.
 		j = pc->class2idx(i);
-		if (!pc->max_level[j][0])
+		if (pc->max_level[j][0] == 0)
 			ShowWarning("Class %s (%d) does not has a base exp table.\n", pc->job_name(i), i);
-		if (!pc->max_level[j][1])
+		if (pc->max_level[j][1] == 0)
 			ShowWarning("Class %s (%d) does not has a job exp table.\n", pc->job_name(i), i);
 	}
 }
