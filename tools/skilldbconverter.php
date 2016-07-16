@@ -34,9 +34,6 @@
 // Credits before anything else.
 printcredits();
 
-if(!isset($argv[1]))
-	gethelp();
-
 function issetarg($arg) {
 	global $argv;
 	for($i=1; $i<sizeof($argv); $i++) {
