@@ -69,6 +69,9 @@ struct core_interface *core;
 #ifdef COMMON_DB_H /* DB */
 struct db_interface *DB;
 #endif // COMMON_DB_H
+#ifdef COMMON_DES_H /* des */
+struct des_interface *des;
+#endif // COMMON_DES_H
 #ifdef MAP_DUEL_H /* duel */
 struct duel_interface *duel;
 #endif // MAP_DUEL_H
@@ -78,6 +81,9 @@ struct elemental_interface *elemental;
 #ifdef CHAR_GEOIP_H /* geoip */
 struct geoip_interface *geoip;
 #endif // CHAR_GEOIP_H
+#ifdef COMMON_GRFIO_H /* grfio */
+struct grfio_interface *grfio;
+#endif // COMMON_GRFIO_H
 #ifdef MAP_GUILD_H /* guild */
 struct guild_interface *guild;
 #endif // MAP_GUILD_H
@@ -168,12 +174,18 @@ struct mapit_interface *mapit;
 #ifdef MAP_MAPREG_H /* mapreg */
 struct mapreg_interface *mapreg;
 #endif // MAP_MAPREG_H
+#ifdef COMMON_MD5CALC_H /* md5 */
+struct md5_interface *md5;
+#endif // COMMON_MD5CALC_H
 #ifdef MAP_MERCENARY_H /* mercenary */
 struct mercenary_interface *mercenary;
 #endif // MAP_MERCENARY_H
 #ifdef MAP_MOB_H /* mob */
 struct mob_interface *mob;
 #endif // MAP_MOB_H
+#ifdef COMMON_MUTEX_H /* mutex */
+struct mutex_interface *mutex;
+#endif // COMMON_MUTEX_H
 #ifdef MAP_NPC_H /* npc_chat */
 struct npc_chat_interface *npc_chat;
 #endif // MAP_NPC_H
@@ -207,6 +219,9 @@ struct pincode_interface *pincode;
 #ifdef MAP_QUEST_H /* quest */
 struct quest_interface *quest;
 #endif // MAP_QUEST_H
+#ifdef COMMON_RANDOM_H /* rnd */
+struct rnd_interface *rnd;
+#endif // COMMON_RANDOM_H
 #ifdef MAP_SCRIPT_H /* script */
 struct script_interface *script;
 #endif // MAP_SCRIPT_H
@@ -243,6 +258,9 @@ struct sv_interface *sv;
 #ifdef COMMON_SYSINFO_H /* sysinfo */
 struct sysinfo_interface *sysinfo;
 #endif // COMMON_SYSINFO_H
+#ifdef COMMON_THREAD_H /* thread */
+struct thread_interface *thread;
+#endif // COMMON_THREAD_H
 #ifdef COMMON_TIMER_H /* timer */
 struct timer_interface *timer;
 #endif // COMMON_TIMER_H
@@ -301,6 +319,9 @@ if ((server_type&(SERVER_TYPE_ALL)) && !HPM_SYMBOL("core", core)) return "core";
 #ifdef COMMON_DB_H /* DB */
 if ((server_type&(SERVER_TYPE_ALL)) && !HPM_SYMBOL("DB", DB)) return "DB";
 #endif // COMMON_DB_H
+#ifdef COMMON_DES_H /* des */
+if ((server_type&(SERVER_TYPE_ALL)) && !HPM_SYMBOL("des", des)) return "des";
+#endif // COMMON_DES_H
 #ifdef MAP_DUEL_H /* duel */
 if ((server_type&(SERVER_TYPE_MAP)) && !HPM_SYMBOL("duel", duel)) return "duel";
 #endif // MAP_DUEL_H
@@ -310,6 +331,9 @@ if ((server_type&(SERVER_TYPE_MAP)) && !HPM_SYMBOL("elemental", elemental)) retu
 #ifdef CHAR_GEOIP_H /* geoip */
 if ((server_type&(SERVER_TYPE_CHAR)) && !HPM_SYMBOL("geoip", geoip)) return "geoip";
 #endif // CHAR_GEOIP_H
+#ifdef COMMON_GRFIO_H /* grfio */
+if ((server_type&(SERVER_TYPE_MAP)) && !HPM_SYMBOL("grfio", grfio)) return "grfio";
+#endif // COMMON_GRFIO_H
 #ifdef MAP_GUILD_H /* guild */
 if ((server_type&(SERVER_TYPE_MAP)) && !HPM_SYMBOL("guild", guild)) return "guild";
 #endif // MAP_GUILD_H
@@ -400,12 +424,18 @@ if ((server_type&(SERVER_TYPE_MAP)) && !HPM_SYMBOL("mapit", mapit)) return "mapi
 #ifdef MAP_MAPREG_H /* mapreg */
 if ((server_type&(SERVER_TYPE_MAP)) && !HPM_SYMBOL("mapreg", mapreg)) return "mapreg";
 #endif // MAP_MAPREG_H
+#ifdef COMMON_MD5CALC_H /* md5 */
+if ((server_type&(SERVER_TYPE_ALL)) && !HPM_SYMBOL("md5", md5)) return "md5";
+#endif // COMMON_MD5CALC_H
 #ifdef MAP_MERCENARY_H /* mercenary */
 if ((server_type&(SERVER_TYPE_MAP)) && !HPM_SYMBOL("mercenary", mercenary)) return "mercenary";
 #endif // MAP_MERCENARY_H
 #ifdef MAP_MOB_H /* mob */
 if ((server_type&(SERVER_TYPE_MAP)) && !HPM_SYMBOL("mob", mob)) return "mob";
 #endif // MAP_MOB_H
+#ifdef COMMON_MUTEX_H /* mutex */
+if ((server_type&(SERVER_TYPE_ALL)) && !HPM_SYMBOL("mutex", mutex)) return "mutex";
+#endif // COMMON_MUTEX_H
 #ifdef MAP_NPC_H /* npc_chat */
 if ((server_type&(SERVER_TYPE_MAP)) && !HPM_SYMBOL("npc_chat", npc_chat)) return "npc_chat";
 #endif // MAP_NPC_H
@@ -439,6 +469,9 @@ if ((server_type&(SERVER_TYPE_CHAR)) && !HPM_SYMBOL("pincode", pincode)) return 
 #ifdef MAP_QUEST_H /* quest */
 if ((server_type&(SERVER_TYPE_MAP)) && !HPM_SYMBOL("quest", quest)) return "quest";
 #endif // MAP_QUEST_H
+#ifdef COMMON_RANDOM_H /* rnd */
+if ((server_type&(SERVER_TYPE_ALL)) && !HPM_SYMBOL("rnd", rnd)) return "rnd";
+#endif // COMMON_RANDOM_H
 #ifdef MAP_SCRIPT_H /* script */
 if ((server_type&(SERVER_TYPE_MAP)) && !HPM_SYMBOL("script", script)) return "script";
 #endif // MAP_SCRIPT_H
@@ -475,6 +508,9 @@ if ((server_type&(SERVER_TYPE_ALL)) && !HPM_SYMBOL("sv", sv)) return "sv";
 #ifdef COMMON_SYSINFO_H /* sysinfo */
 if ((server_type&(SERVER_TYPE_ALL)) && !HPM_SYMBOL("sysinfo", sysinfo)) return "sysinfo";
 #endif // COMMON_SYSINFO_H
+#ifdef COMMON_THREAD_H /* thread */
+if ((server_type&(SERVER_TYPE_ALL)) && !HPM_SYMBOL("thread", thread)) return "thread";
+#endif // COMMON_THREAD_H
 #ifdef COMMON_TIMER_H /* timer */
 if ((server_type&(SERVER_TYPE_ALL)) && !HPM_SYMBOL("timer", timer)) return "timer";
 #endif // COMMON_TIMER_H
