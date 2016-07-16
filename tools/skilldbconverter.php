@@ -46,8 +46,6 @@ function issetarg($arg) {
 	return 0;
 }
 
-$renewal =  (issetarg("-re") || issetarg("--renewal"));
-$prere = (issetarg("-pre-re") || issetarg("--pre-renewal"));
 $constants = (!issetarg("-itid") && !issetarg("--use-itemid"));
 $help = (issetarg("-h") || issetarg("--help"));
 $directory = function() use($argv) {
@@ -69,7 +67,7 @@ $dir = $directory();
 if ($dir) {
 	print "Read/Write Directory has been set to '".$dir."'\n";
 	print "Please ensure all skill_db TXT files are placed in this path.\n";
-	print "Please also provide the correct version of the database (re/pre-re).\n";
+	print "Please also provide the correct version of the database.\n";
 	define('DIRPATH', $dir);
 }
 
@@ -80,22 +78,12 @@ if ($debug) {
 	$t_init = microtime_float();
 }
 
-if($help || (!$renewal && !$prere) || ($renewal && $prere)) {
+if($help) {
 	gethelp();
 }
 
-if ($renewal) {
-	print "Renewal enabled.\n";
-	print "skill_db.txt and associated files (cast, nocastdex, require & unit) will be converted.\n";
-	if(!defined('DIRPATH'))
-		define('DIRPATH', '../db/re/');
-	define('RENEWAL', true);
-} else if ($prere) {
-	print "Pre-Renewal enabled.\n";
-	print "skill_db.txt and associated files (cast, nocastdex, require & unit) will be converted.\n";
-	if(!defined('DIRPATH'))
-		define('DIRPATH', '../db/pre-re/');
-}
+define('DIRPATH', '../db/');
+define('RENEWAL', true);
 
 // check for existence of files.
 
@@ -177,7 +165,7 @@ while(!feof($skillcastdb))
 	$skcast["data1"][$i] = $arr[4];
 	$skcast["data2"][$i] = $arr[5];
 	$skcast["cooldown"][$i] = $arr[6];
-	if(defined('RENEWAL')) $skcast["fixedcast"][$i] = $arr[7];
+	$skcast["fixedcast"][$i] = $arr[7];
 
 	$i++;
 }
@@ -282,7 +270,7 @@ fclose($unitdb);
 
 $putsk = ""; // initialize variable for file_put_contents.
 // Publish all comments
-$putsk .= getcomments((defined('RENEWAL')?true:false));
+$putsk .= getcomments(true);
 
 $putsk .= "skill_db: (\n";
 // Get Main Skilldb File
@@ -363,7 +351,7 @@ while(!feof($skmain)) {
 		if($skcast['data1'][$key] !== '0') $putsk .=  "\tSkillData1: ".leveled_guessfill($skcast['data1'][$key], $max_level, $id)."\n";
 		if($skcast['data2'][$key] !== '0') $putsk .=  "\tSkillData2: ".leveled_guessfill($skcast['data2'][$key], $max_level, $id)."\n";
 		if($skcast['cooldown'][$key] !== '0') $putsk .=  "\tCoolDown: ".leveled_guessfill($skcast['cooldown'][$key], $max_level, $id)."\n";
-		if(defined('RENEWAL') && strlen($skcast['fixedcast'][$key]) > 1 && $skcast['fixedcast'][$key] !== '0')
+		if(strlen($skcast['fixedcast'][$key]) > 1 && $skcast['fixedcast'][$key] !== '0')
 			$putsk .=  "\tFixedCastTime: ".leveled_guessfill($skcast['fixedcast'][$key], $max_level, $id)."\n";
 	}
 	// Cast NoDex
@@ -908,26 +896,18 @@ function gethelp()
 {
 	print "Usage: php skilldbconverter.php [option]\n";
 	print "Options:\n";
-	print "\t-re     [--renewal]          for renewal skill database conversion.\n";
-	print "\t-pre-re [--pre-renewal]      for pre-renewal skill database conversion.\n";
 	print "\t-itid   [--use-itemid]       to use item IDs instead of constants.\n";
 	print "\t-dir    [--directory]        provide a custom directory.\n";
-	print "\t                             (Must include the correct -pre-re/-re option)\n";
 	print "\t-dbg    [--with-debug]       print debug information.\n";
 	print "\t-h      [--help]             to display this help text.\n\n";
 	print "----------------------- Additional Notes ----------------------\n";
 	print "\033[0;31mImportant!\033[0;0m\n";
-	print "* Please be advised that either and only one of the arguments -re/-pre-re\n";
-	print "  must be specified on execution.\n";
-	print "* When using the -dir option, -re/-pre-re options must be specified. \n";
-	print "* This tool isn't designed to convert renewal data to pre-renewal.\n";
 	print "* This tool should ideally be used from the 'tools/' folder, which can be found\n";
 	print "  in the root of your RagEmu installation. This tool will not delete any files\n";
 	print "  from any of the directories that it reads from or prints to.\n\n";
 	print "* Prior to using this tool, please ensure at least 30MB of free RAM.\n";
 	print "----------------------- Usage Example -------------------------\n";
 	print "- \033[0;32mRenewal Conversion\033[0;0m: php skilldbconverter.php --renewal\n";
-	print "- \033[0;32mPre-renewal Conversion\033[0;0m: php skilldbconverter.php --pre-renewal\n";
 	print "----------------------------------------------------------------\n";
 	exit;
 }
@@ -979,7 +959,7 @@ function getcomments($re)
 //= You should have received a copy of the GNU General Public License
 //= along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //==============================================================================
-//= ".($re?"Renewal":"Pre-Renewal")." Skill Database [RagEmu]
+//= Renewal Skill Database [RagEmu]
 //==============================================================================
 //= @Format Notes:
 //= - All string entries are case-sensitive and must be quoted.
