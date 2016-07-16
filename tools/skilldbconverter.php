@@ -1,19 +1,22 @@
 <?php
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-*        _   _                     _
-*       | | | |                   | |
-*       | |_| | ___ _ __ ___ _   _| | ___  ___
-*       |  _  |/ _ \ '__/ __| | | | |/ _ \/ __|
-*       | | | |  __/ | | (__| |_| | |  __/\__ \
-*       \_| |_/\___|_|  \___|\__,_|_|\___||___/
+*     ______            _____                
+*     | ___ \          |  ___|               
+*     | |_/ /__ _  __ _| |__ _ __ ___  _   _ 
+*     |    // _` |/ _` |  __| '_ ` _ \| | | |
+*     | |\ \ (_| | (_| | |__| | | | | | |_| |
+*     \_| \_\__,_|\__, \____/_| |_| |_|\__,_|
+*                  __/ |                     
+*                 |___/                      
 *
 * * * * * * * * * * * * * * License * * * * * * * * * * * * * * * * * * * * * *
-* This file is part of Hercules.
-* http://herc.ws - http://github.com/HerculesWS/Hercules
+* This file is part of RagEmu.
+* http://ragemu.org - https://github.com/RagEmu/Renewal
 *
-* Copyright (C) 2016-  Smokexyz/Hercules Dev Team
+* Copyright (C) 2016  RagEmu Dev Team
+* Copyright (C) 2016  Smokexyz/Hercules Dev Team
 *
-* Hercules is free software: you can redistribute it and/or modify
+* RagEmu is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
@@ -452,7 +455,7 @@ show_status($linecount, $linecount);
  * Print final messages and exit the script, conversion has completed.
  */
 print "\n";
-print "The skill database has been \033[1;32msuccessfully\033[0m converted to Hercules' libconfig\n";
+print "The skill database has been \033[1;32msuccessfully\033[0m converted to RagEmu' libconfig\n";
 print "format and has been saved as '".DIRPATH."skill_db.conf'.\n";
 print "The following files are now deprecated and can be deleted -\n";
 print DIRPATH."skill_db.txt\n";
@@ -863,7 +866,7 @@ function gethelp()
 	print "* When using the -dir option, -re/-pre-re options must be specified. \n";
 	print "* This tool isn't designed to convert renewal data to pre-renewal.\n";
 	print "* This tool should ideally be used from the 'tools/' folder, which can be found\n";
-	print "  in the root of your Hercules installation. This tool will not delete any files\n";
+	print "  in the root of your RagEmu installation. This tool will not delete any files\n";
 	print "  from any of the directories that it reads from or prints to.\n\n";
 	print "* Prior to using this tool, please ensure at least 30MB of free RAM.\n";
 	print "----------------------- Usage Example -------------------------\n";
@@ -875,34 +878,40 @@ function gethelp()
 
 function printcredits()
 {
-	print "      _   _                     _           \n";
-	print "     | | | |                   | |          \n";
-	print "     | |_| | ___ _ __ ___ _   _| | ___  ___ \n";
-	print "     |  _  |/ _ \ '__/ __| | | | |/ _ \/ __|\n";
-	print "     | | | |  __/ | | (__| |_| | |  __/\__ \ \n";
-	print "     \_| |_/\___|_|  \___|\__,_|_|\___||___/\n";
-	print "\033[0;36mHercules Skill Database TXT to Libconfig Converter by Smokexyz\033[0m\n";
-	print "Copyright (C) 2016  \033[0;32mHercules\033[0m\n";
+	print "     ______            _____                \n";
+	print "     | ___ \          |  ___|               \n";
+	print "     | |_/ /__ _  __ _| |__ _ __ ___  _   _ \n";
+	print "     |    // _` |/ _` |  __| '_ ` _ \| | | |\n";
+	print "     | |\ \ (_| | (_| | |__| | | | | | |_| |\n";
+	print "     \_| \_\__,_|\__, \____/_| |_| |_|\__,_|\n";
+	print "                  __/ |                     \n";
+	print "                 |___/                      \n";
+	print "\033[0;36mRagEmu Skill Database TXT to Libconfig Converter by Smokexyz\033[0m\n";
+	print "Copyright (C) 2016  \033[0;32mRagEmu\033[0m\n";
 	print "-----------------------------------------------\n\n";
 }
 
 function getcomments($re)
 {
 	return
-	"//================= Hercules Database ==========================================
-	//=       _   _                     _
-	//=      | | | |                   | |
-	//=      | |_| | ___ _ __ ___ _   _| | ___  ___
-	//=      |  _  |/ _ \ '__/ __| | | | |/ _ \/ __|
-	//=      | | | |  __/ | | (__| |_| | |  __/\__ \
-	//=      \_| |_/\___|_|  \___|\__,_|_|\___||___/
-	//================= License ====================================================
-	//= This file is part of Hercules.
-	//= http://herc.ws - http://github.com/HerculesWS/Hercules
+	"//================= RagEmu Database ==========================================
+	//=     ______            _____                
+	//=     | ___ \          |  ___|               
+	//=     | |_/ /__ _  __ _| |__ _ __ ___  _   _ 
+	//=     |    // _` |/ _` |  __| '_ ` _ \| | | |
+	//=     | |\ \ (_| | (_| | |__| | | | | | |_| |
+	//=     \_| \_\__,_|\__, \____/_| |_| |_|\__,_|
+	//=                  __/ |                     
+	//=                 |___/                      
 	//=
+	//================= License ====================================================
+	//= This file is part of RagEmu.
+	//= http://ragemu.org - https://github.com/RagEmu/Renewal
+	//=
+	//= Copyright (C) 2016  RagEmu Dev Team
 	//= Copyright (C) 2014-2016  Hercules Dev Team
 	//=
-	//= Hercules is free software: you can redistribute it and/or modify
+	//= RagEmu is free software: you can redistribute it and/or modify
 	//= it under the terms of the GNU General Public License as published by
 	//= the Free Software Foundation, either version 3 of the License, or
 	//= (at your option) any later version.
@@ -915,7 +924,7 @@ function getcomments($re)
 	//= You should have received a copy of the GNU General Public License
 	//= along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	//==============================================================================
-	//= ".($re?"Renewal":"Pre-Renewal")." Skill Database [Hercules]
+	//= ".($re?"Renewal":"Pre-Renewal")." Skill Database [RagEmu]
 	//==============================================================================
 	//= @Format Notes:
 	//= - All string entries are case-sensitive and must be quoted.
