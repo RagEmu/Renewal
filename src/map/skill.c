@@ -9248,7 +9248,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 				rate -= rnd->value( tstatus->agi / 6, tstatus->agi / 3 ) + tstatus->luk / 10 + ( dstsd ? (dstsd->max_weight / 10 - dstsd->weight / 10 ) / 100 : 0 ) + status->get_lv(bl) / 10;
 				//Finally we set the minimum success chance cap based on the caster's skill level and DEX.
 				rate = cap_value( rate, skill_lv + sstatus->dex / 20, 100);
-				if( (rnd_value(0,20000)%100) < rate){
+				if( (rnd->value(0,20000)%100) < rate){
 					clif->skill_nodamage(src,bl,skill_id,0,sc_start(src,bl,type,100,skill_lv,skill->get_time(skill_id,skill_lv)));
 				}
 				if ( tsc && tsc->data[SC__IGNORANCE] && skill_id == SC_IGNORANCE) {
@@ -10034,7 +10034,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 							sc_start(src, bl, SC_PUTTI_TAILS_NOODLES, 100, 20, 300000);
 							break;
 						case ITEMID_THROW_OVERDONE_FOOD:// Reduces all stats by random 5 - 10
-							sc_start(src, bl, SC_STOMACHACHE, 100, rnd_value(5, 10), 60000);
+							sc_start(src, bl, SC_STOMACHACHE, 100, rnd->value(5, 10), 60000);
 							break;
 					}
 				}

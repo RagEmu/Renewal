@@ -422,7 +422,7 @@ int elemental_action(struct elemental_data *ed, struct block_list *bl, int64 tic
 	ARR_FIND(0, MAX_EL_SKILL, i, ed->skill[EL_MODE_OFFENSIVE][i].id == 0);
 
 	if ((i--) > 0)
-		i = rnd_value(0, i);
+		i = rnd->value(0, i);
 
 	skill_id = ed->skill[EL_MODE_OFFENSIVE][i].id;
 	skill_lv = ed->skill[EL_MODE_OFFENSIVE][i].lv;
@@ -503,7 +503,7 @@ int elemental_change_mode_ack(struct elemental_data *ed, enum elemental_mode mod
 	ARR_FIND(1, MAX_EL_SKILL, i, ed->skill[mode][i].id == 0);
 
 	if ((i--) > 0)
-		i = rnd_value(0, i);
+		i = rnd->value(0, i);
 
 	skill_id = ed->skill[mode][i].id;
 	skill_lv = ed->skill[mode][i].lv;
