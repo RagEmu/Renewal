@@ -3914,7 +3914,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		break;
 	case KO_MUCHANAGE:
 		md.damage = skill->get_zeny(skill_id ,skill_lv);
-		md.damage =  md.damage * rnd_value( 50, 100) / 100;
+		md.damage =  md.damage * rnd->value(50, 100) / 100;
 		if (is_boss(target) || (tsd) || !pc->checkskill(sd,NJ_TOBIDOUGU))
 			md.damage = md.damage / 2;
 		break;
@@ -5815,7 +5815,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			sc->data[SC_FEARBREEZE]->val4 = 0;
 		}
 
-		if (src->type == BL_ELEM && sc->data[SC_EL_OFFENSIVE] && (rnd_value(0, 20000) % 100 >= 75)) {
+		if (src->type == BL_ELEM && sc->data[SC_EL_OFFENSIVE] && (rnd->value(0, 20000) % 100 >= 75)) {
 			struct elemental_data *ed = BL_CAST(BL_ELEM, src);
 			elemental->action(ed, target, tick);
 			return wd.dmg_lv;
