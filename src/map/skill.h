@@ -2116,7 +2116,7 @@ struct skill_interface {
 	/* run spellbook of nameid id */
 	int (*spellbook) (struct map_session_data *sd, int nameid);
 	/* */
-	int (*block_check) (struct block_list *bl, int src_id, int skill_id);
+	int (*block_check) (struct block_list *bl, sc_type type, uint16 skill_id);
 	int (*detonator) (struct block_list *bl, va_list ap);
 	bool (*check_camouflage) (struct block_list *bl, struct status_change_entry *sce);
 	int (*magicdecoy) (struct map_session_data *sd, int nameid);

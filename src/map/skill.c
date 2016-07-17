@@ -20485,7 +20485,7 @@ void skill_validate_item_requirements(struct config_setting_t *conf, struct s_sk
 			if( type[0] == 'I' && type[1] == 'D' && itemdb->exists(atoi(type+2)) )
 				sk->itemid[itx] = atoi(type+2);
 			else if(!script->get_constant(type, &sk->itemid[itx])) {
-				ShowWarning("skill_read_skilldb: Invalid required Item '%s' given for skill Id %d in '%s', skipping...\n",type, sk->nameid, DBPATH"skill_db.conf");
+				ShowWarning("skill_read_skilldb: Invalid required Item '%s' given for skill Id %d in '%s', skipping...\n",type, sk->nameid, "skill_db.conf");
 				continue;
 			}
 
