@@ -1447,13 +1447,13 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			}
 
 			for (i = 0; i < SC_MAX; i++) {
-					if ( !tsc->data[i] )
+					if (!tsc->data[i])
 						continue;
-						if ( status->get_sc_type(i)&SC_NO_BANISHING_BUSTER )
-							continue;
+					if (status->get_sc_type(i)&SC_NO_BANISHING_BUSTER)
+						continue;
 					switch (i) {
 					case SC_ASSUMPTIO:
-						if( bl->type == BL_MOB )
+						if (bl->type == BL_MOB)
 							continue;
 						break;
 					}

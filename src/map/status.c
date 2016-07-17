@@ -2151,10 +2151,10 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt) {
 	if (flag&4) {
 		// Strengthen Guardians - custom value +10% / lv
 		struct guild_castle *gc;
-		gc=guild->mapname2gc(map->list[md->bl.m].name);
-		if (!gc)
+		gc = guild->mapname2gc(map->list[md->bl.m].name);
+		if (!gc) {
 			ShowError("status_calc_mob: No castle set at map %s\n", map->list[md->bl.m].name);
-		else
+		} else {
 			if (gc->castle_id < 24 || md->class_ == MOBID_EMPELIUM) {
 				mstatus->max_hp += 50 * gc->defense;
 				mstatus->max_sp += 70 * gc->defense;
@@ -2169,6 +2169,7 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt) {
 				mstatus->rhw.atk2 += mstatus->rhw.atk2 * 10*guardup_lv/100;
 				mstatus->aspd_rate -= 100*guardup_lv;
 			}
+		}
 	}
 
 	if( opt&SCO_FIRST ) //Initial battle status
