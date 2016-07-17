@@ -59,7 +59,7 @@ bool mapif_elemental_create(struct s_elemental *ele)
 	if (SQL_ERROR == SQL->Query(inter->sql_handle,
 		"INSERT INTO `%s` (`char_id`,`kind`,`scale`,`hp`,`sp`,`max_hp`,`max_sp`,`atk`,`matk`,`aspd`,`def`,`mdef`,`flee`,`hit`,`life_time`)"
 		"VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
-		elemental_db, ele->char_id, ele->kind, ele->scale, ele->hp, ele->sp, ele->max_hp, ele->max_sp, ele->atk, ele->matk, ele->amotion,
+		elemental_db, ele->char_id, (int)ele->kind, ele->scale, ele->hp, ele->sp, ele->max_hp, ele->max_sp, ele->atk, ele->matk, ele->amotion,
 		ele->def, ele->mdef, ele->flee, ele->hit, ele->life_time)) {
 		Sql_ShowDebug(inter->sql_handle);
 		return false;
@@ -83,7 +83,7 @@ bool mapif_elemental_save(const struct s_elemental *ele)
 		"UPDATE `%s` SET `char_id` = '%d', `kind` = '%d', `scale` = '%d', `hp` = '%d', `sp` = '%d',"
 		"`max_hp` = '%d', `max_sp` = '%d', `atk` = '%d', `matk` = '%d', `aspd` = '%d', `def` = '%d',"
 		"`mdef` = '%d', `flee` = '%d', `hit` = '%d', `life_time` = '%d' WHERE `ele_id` = '%d'",
-		elemental_db, ele->char_id, ele->kind, ele->scale, ele->hp, ele->sp, ele->max_hp, ele->max_sp, ele->atk,
+		elemental_db, ele->char_id, (int)ele->kind, ele->scale, ele->hp, ele->sp, ele->max_hp, ele->max_sp, ele->atk,
 		ele->matk, ele->amotion, ele->def, ele->mdef, ele->flee, ele->hit, ele->life_time, ele->elemental_id)){
 		Sql_ShowDebug(inter->sql_handle);
 		return false;
