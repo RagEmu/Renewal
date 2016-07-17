@@ -66,6 +66,8 @@ if ($dir) {
 	print "Please ensure all skill_db TXT files are placed in this path.\n";
 	print "Please also provide the correct version of the database.\n";
 	define('DIRPATH', $dir);
+} else {
+	define('DIRPATH', '../db/');
 }
 
 $debug = (issetarg("-dbg") || issetarg("--with-debug"));
@@ -79,7 +81,6 @@ if($help) {
 	gethelp();
 }
 
-define('DIRPATH', '../db/');
 define('RENEWAL', true);
 
 // check for existence of files.
