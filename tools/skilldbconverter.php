@@ -921,6 +921,7 @@ function printcredits()
 	print "                 |___/                      \n";
 	print "\033[0;36mRagEmu Skill Database TXT to Libconfig Converter by Smokexyz\033[0m\n";
 	print "Copyright (C) 2016  \033[0;32mRagEmu\033[0m\n";
+	print "Copyright (C) 2016  \033[0;32mHercules\033[0m\n";
 	print "-----------------------------------------------\n\n";
 }
 
