@@ -349,12 +349,12 @@ void merc_hom_stats_cap_check(struct homun_data *hd)
 	hom = &hd->homunculus;
 	hom->max_hp = cap_value(hom->max_hp, 0, max_hp_limit);
 	hom->max_sp = cap_value(hom->max_sp, 0, max_sp_limit);
-	hom->str = cap_value(hom->str, 0, 10 * ((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit);
-	hom->agi = cap_value(hom->agi, 0, 10 * ((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit);
-	hom->vit = cap_value(hom->vit, 0, 10 * ((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit);
-	hom->int_ = cap_value(hom->int_, 0, 10 * ((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit);
-	hom->dex = cap_value(hom->dex, 0, 10 * ((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit);
-	hom->luk = cap_value(hom->luk, 0, 10 * ((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit);
+	hom->str = cap_value(hom->str, 0, 10 * (((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit));
+	hom->agi = cap_value(hom->agi, 0, 10 * (((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit));
+	hom->vit = cap_value(hom->vit, 0, 10 * (((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit));
+	hom->int_= cap_value(hom->int_,0, 10 * (((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit));
+	hom->dex = cap_value(hom->dex, 0, 10 * (((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit));
+	hom->luk = cap_value(hom->luk, 0, 10 * (((hd->homunculus.class_) == HT_S) ? stat_limit_S : stat_limit));
 }
 
 bool homunculus_levelup(struct homun_data *hd) {

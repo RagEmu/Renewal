@@ -68,46 +68,23 @@ OnInit:
 	initnpctimer;
 	end;
 OnTimer20000:
-<<<<<<< HEAD
-	mapannounce "airplane", "We are heading to Einbroch.", bc_map, "0x00FF00";
-	end;
-OnTimer50000:
-	mapannounce "airplane", "We will arrive in Einbroch shortly.", bc_map, "0x00FF00";
-=======
 	mapannounce("airplane", _("We are heading to Einbroch."), bc_map, "0x00ff00");
 	end;
 OnTimer50000:
 	mapannounce("airplane", _("We will arrive in Einbroch shortly."), bc_map, "0x00ff00");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer60000:
 	$@airplanelocation = 1;
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-<<<<<<< HEAD
-	mapannounce "airplane", "Welcome to Einbroch. Have a safe trip.", bc_map, "0x00FF00";
-	end;
-OnTimer70000:
-	mapannounce "airplane","Currently we are in Einbroch. The Airship will take off shortly.", bc_map, "0x00FF00";
-=======
 	mapannounce("airplane", _("Welcome to Einbroch. Have a safe trip."), bc_map, "0x00ff00");
 	end;
 OnTimer70000:
 	mapannounce("airplane", _("Currently we are in Einbroch. The Airship will take off shortly."), bc_map, "0x00ff00");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer80000:
 	donpcevent "#AirshipWarp-1::OnHide";
 	donpcevent "#AirshipWarp-2::OnHide";
-<<<<<<< HEAD
-	mapannounce "airplane", "The Airship is now taking off. Our next destination is Lighthalzen.", bc_map, "0x70DBDB";
-	end;
-OnTimer100000:
-	mapannounce "airplane", "We are heading to Lighthalzen.", bc_map, "0x70DBDB";
-	end;
-OnTimer130000:
-	mapannounce "airplane", "We will arrive in Lighthalzen shortly.", bc_map, "0x70DBDB";
-=======
 	mapannounce("airplane", _("The Airship is now taking off. Our next destination is Lighthalzen."), bc_map, "0x70dbdb");
 	end;
 OnTimer100000:
@@ -115,36 +92,19 @@ OnTimer100000:
 	end;
 OnTimer130000:
 	mapannounce("airplane", _("We will arrive in Lighthalzen shortly."), bc_map, "0x70dbdb");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer140000:
 	$@airplanelocation = 2;
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-<<<<<<< HEAD
-	mapannounce "airplane", "Welcome to Lighthalzen. Have a safe trip.", bc_map, "0x70DBDB";
-	end;
-OnTimer150000:
-	mapannounce "airplane", "Currently we are in Lighthalzen. The Airship will leave shortly.", bc_map, "0x70DBDB";
-=======
 	mapannounce("airplane", _("Welcome to Lighthalzen. Have a safe trip."), bc_map, "0x70dbdb");
 	end;
 OnTimer150000:
 	mapannounce("airplane", _("Currently we are in Lighthalzen. The Airship will leave shortly."), bc_map, "0x70dbdb");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer160000:
 	donpcevent "#AirshipWarp-1::OnHide";
 	donpcevent "#AirshipWarp-2::OnHide";
-<<<<<<< HEAD
-	mapannounce "airplane", "The Airship is leaving the ground. Our next destination is Einbroch.", bc_map, "0x00FF00";
-	end;
-OnTimer180000:
-	mapannounce "airplane", "We are heading to Einbroch.", bc_map, "0x00FF00";
-	end;
-OnTimer210000:
-	mapannounce "airplane", "We will arrive in Einbroch shortly.", bc_map, "0x00FF00";
-=======
 	mapannounce("airplane", _("The Airship is leaving the ground. Our next destination is Einbroch."), bc_map, "0x00ff00");
 	end;
 OnTimer180000:
@@ -152,36 +112,19 @@ OnTimer180000:
 	end;
 OnTimer210000:
 	mapannounce("airplane", _("We will arrive in Einbroch shortly."), bc_map, "0x00FF00");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer220000:
 	$@airplanelocation = 1;
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-<<<<<<< HEAD
-	mapannounce "airplane", "Welcome to Einbroch. Have a safe trip.", bc_map, "0x00FF00";
-	end;
-OnTimer230000:
-	mapannounce "airplane", "Currently we are in Einbroch. The Airship will take off shortly.", bc_map, "0x00FF00";
-=======
 	mapannounce("airplane", _("Welcome to Einbroch. Have a safe trip."), bc_map, "0x00ff00");
 	end;
 OnTimer230000:
 	mapannounce("airplane", _("Currently we are in Einbroch. The Airship will take off shortly."), bc_map, "0x00ff00");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer240000:
 	donpcevent "#AirshipWarp-1::OnHide";
 	donpcevent "#AirshipWarp-2::OnHide";
-<<<<<<< HEAD
-	mapannounce "airplane", "The Airship is now taking off. Our next destination is Juno.", bc_map, "0xFF8200";
-	end;
-OnTimer260000:
-	mapannounce "airplane", "We are heading to Juno.", bc_map, "0xFF8200";
-	end;
-OnTimer290000:
-	mapannounce "airplane", "We will arrive in Juno shortly.", bc_map, "0xFF8200";
-=======
 	mapannounce("airplane", _("The Airship is now taking off. Our next destination is Juno."), bc_map, "0xff8200");
 	end;
 OnTimer260000:
@@ -189,36 +132,19 @@ OnTimer260000:
 	end;
 OnTimer290000:
 	mapannounce("airplane", _("We will arrive in Juno shortly."), bc_map, "0xff8200");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer300000:
 	$@airplanelocation = 0;
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-<<<<<<< HEAD
-	mapannounce "airplane", "Welcome to Juno. Have a safe trip.", bc_map, "0xFF8200";
-	end;
-OnTimer310000:
-	mapannounce "airplane", "Currently we are in Juno. The Airship will leave shortly.", bc_map, "0xFF8200";
-=======
 	mapannounce("airplane", _("Welcome to Juno. Have a safe trip."), bc_map, "0xff8200");
 	end;
 OnTimer310000:
 	mapannounce("airplane", _("Currently we are in Juno. The Airship will leave shortly."), bc_map, "0xff8200");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer320000:
 	donpcevent "#AirshipWarp-1::OnHide";
 	donpcevent "#AirshipWarp-2::OnHide";
-<<<<<<< HEAD
-	mapannounce "airplane", "The Airship is leaving the ground. Our next destination is Hugel.", bc_map, "0xca4bf3";
-	end;
-OnTimer340000:
-	mapannounce "airplane", "We are heading to Hugel.", bc_map, "0xca4bf3";
-	end;
-OnTimer370000:
-	mapannounce "airplane", "We will arrive in Hugel shortly.", bc_map, "0xca4bf3";
-=======
 	mapannounce("airplane", _("The Airship is leaving the ground. Our next destination is Hugel."), bc_map, "0xca4bf3");
 	end;
 OnTimer340000:
@@ -226,36 +152,19 @@ OnTimer340000:
 	end;
 OnTimer370000:
 	mapannounce("airplane", _("We will arrive in Hugel shortly."), bc_map, "0xca4bf3");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer380000:
 	$@airplanelocation = 3;
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-<<<<<<< HEAD
-	mapannounce "airplane", "Welcome to Hugel. Have a safe trip.", bc_map, "0xca4bf3";
-	end;
-OnTimer390000:
-	mapannounce "airplane", "Currently we are in Hugel. The Airship will leave shortly.", bc_map, "0xca4bf3";
-=======
 	mapannounce("airplane", _("Welcome to Hugel. Have a safe trip."), bc_map, "0xca4bf3");
 	end;
 OnTimer390000:
 	mapannounce("airplane", _("Currently we are in Hugel. The Airship will leave shortly."), bc_map, "0xca4bf3");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer400000:
 	donpcevent "#AirshipWarp-1::OnHide";
 	donpcevent "#AirshipWarp-2::OnHide";
-<<<<<<< HEAD
-	mapannounce "airplane", "The Airship is leaving the ground. Our next destination is Juno.", bc_map, "0xFF8200";
-	end;
-OnTimer420000:
-	mapannounce "airplane", "We are heading to Juno.", bc_map, "0xFF8200";
-	end;
-OnTimer450000:
-	mapannounce "airplane", "We will arrive in Juno shortly.", bc_map, "0xFF8200";
-=======
 	mapannounce("airplane", _("The Airship is leaving the ground. Our next destination is Juno."), bc_map, "0xff8200");
 	end;
 OnTimer420000:
@@ -263,32 +172,20 @@ OnTimer420000:
 	end;
 OnTimer450000:
 	mapannounce("airplane", _("We will arrive in Juno shortly."), bc_map, "0xff8200");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer460000:
 	$@airplanelocation = 0;
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-<<<<<<< HEAD
-	mapannounce "airplane", "Welcome to Juno. Have a safe trip.", bc_map, "0xFF8200";
-	end;
-OnTimer470000:
-	mapannounce "airplane", "Currently we are in Juno. The Airship will leave shortly.", bc_map, "0xFF8200";
-=======
 	mapannounce("airplane", _("Welcome to Juno. Have a safe trip."), bc_map, "0xff8200");
 	end;
 OnTimer470000:
 	mapannounce("airplane", _("Currently we are in Juno. The Airship will leave shortly."), bc_map, "0xff8200");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer480000:
 	donpcevent "#AirshipWarp-1::OnHide";
 	donpcevent "#AirshipWarp-2::OnHide";
-<<<<<<< HEAD
-	mapannounce "airplane", "The Airship is leaving the ground. Our next destination is Einbroch.", bc_map, "0x00FF00";
-=======
 	mapannounce("airplane", _("The Airship is leaving the ground. Our next destination is Einbroch."), bc_map, "0x00ff00");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	stopnpctimer;
 	initnpctimer;
 }
@@ -656,19 +553,11 @@ airplane,50,66,5	script	Apple Merchant#airplane	4_M_04,{
 		}
 		else {
 			Zeny -= .@pay;
-<<<<<<< HEAD
-			getitem Apple, .@input;
-			mes "[Fruitz]";
-			mes "Thanks for stopping by";
-			mes "my shop. I hope you enjoy";
-			mes "the flavor of these Apples~!";
-=======
 			getitem Apple,.@input;
 			mes("[Fruitz]");
 			mes("Thanks for stopping by\r"
 				"my shop. I hope you enjoy\r"
 				"the flavor of these Apples~!");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 			close;
 		}
 	case 2:
@@ -699,18 +588,6 @@ airplane,50,66,5	script	Apple Merchant#airplane	4_M_04,{
 				mes("*Grind grind*");
 				mes("*Clang...!*^000000");
 				next;
-<<<<<<< HEAD
-				delitem Apple, 3;
-				delitem Empty_Bottle, 1;
-				getitem Apple_Juice, 1;
-				mes "[Fruitz]";
-				mes "There you go~";
-				mes "I hope you enjoy!";
-				mes "Please feel free to";
-				mes "stop by for your Apple";
-				mes "and Apple Juice needs";
-				mes "at anytime, adventurer~";
-=======
 				delitem Apple,3;
 				delitem Empty_Bottle,1;
 				getitem Apple_Juice,1;
@@ -721,7 +598,6 @@ airplane,50,66,5	script	Apple Merchant#airplane	4_M_04,{
 					"stop by for your Apple\r"
 					"and Apple Juice needs\r"
 					"at anytime, adventurer~");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 				close;
 			}
 		case 2:
@@ -821,46 +697,23 @@ OnEnable:
 	initnpctimer;
 	end;
 OnTimer25000:
-<<<<<<< HEAD
-	mapannounce "airplane_01", "We are heading to Izlude.", bc_map, "0x00FF00";
-	end;
-OnTimer50000:
-	mapannounce "airplane_01", "We will arrive in Izlude shortly.", bc_map, "0x00FF00";
-=======
 	mapannounce("airplane_01", _("We are heading to Izlude."), bc_map, "0x00ff00");
 	end;
 OnTimer50000:
 	mapannounce("airplane_01", _("We will arrive in Izlude shortly."), bc_map, "0x00ff00");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer60000:
 	$@airplanelocation2 = 1;
 	donpcevent "#AirshipWarp-3::OnUnhide";
 	donpcevent "#AirshipWarp-4::OnUnhide";
-<<<<<<< HEAD
-	mapannounce "airplane_01", "Welcome to Izlude. Have a safe trip.", bc_map, "0x00FF00";
-	end;
-OnTimer70000:
-	mapannounce "airplane_01", "We are currently in Izlude. The Airship will take off shortly.", bc_map, "0x00FF00";
-=======
 	mapannounce("airplane_01", _("Welcome to Izlude. Have a safe trip."), bc_map, "0x00ff00");
 	end;
 OnTimer70000:
 	mapannounce("airplane_01", _("We are currently in Izlude. The Airship will take off shortly."), bc_map, "0x00ff00");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer80000:
 	donpcevent "#AirshipWarp-3::OnHide";
 	donpcevent "#AirshipWarp-4::OnHide";
-<<<<<<< HEAD
-	mapannounce "airplane_01", "The Airship is now taking off. Our next destination is Juno.", bc_map, "0x70DBDB";
-	end;
-OnTimer105000:
-	mapannounce "airplane_01", "We are heading to Juno.", bc_map, "0x70DBDB";
-	end;
-OnTimer130000:
-	mapannounce "airplane_01", "We will arrive in Juno shortly.", bc_map, "0x70DBDB";
-=======
 	mapannounce("airplane_01", _("The Airship is now taking off. Our next destination is Juno."), bc_map, "0x70dbdb");
 	end;
 OnTimer105000:
@@ -868,36 +721,19 @@ OnTimer105000:
 	end;
 OnTimer130000:
 	mapannounce("airplane_01", _("We will arrive in Juno shortly."), bc_map, "0x70dbdb");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer140000:
 	$@airplanelocation2 = 2;
 	donpcevent "#AirshipWarp-3::OnUnhide";
 	donpcevent "#AirshipWarp-4::OnUnhide";
-<<<<<<< HEAD
-	mapannounce "airplane_01", "Welcome to Juno. Have a safe trip.", bc_map, "0x70DBDB";
-	end;
-OnTimer150000:
-	mapannounce "airplane_01", "We are currently in Juno. The Airship will leave shortly.", bc_map, "0x70DBDB";
-=======
 	mapannounce("airplane_01", _("Welcome to Juno. Have a safe trip."), bc_map, "0x70dbdb");
 	end;
 OnTimer150000:
 	mapannounce("airplane_01", _("We are currently in Juno. The Airship will leave shortly."), bc_map, "0x70dbdb");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer160000:
 	donpcevent "#AirshipWarp-3::OnHide";
 	donpcevent "#AirshipWarp-4::OnHide";
-<<<<<<< HEAD
-	mapannounce "airplane_01", "The Airship is leaving the ground. Our next destination is Rachel.", bc_map, "0xFF8200";
-	end;
-OnTimer185000:
-	mapannounce "airplane_01", "We are heading to Rachel.", bc_map, "0xFF8200";
-	end;
-OnTimer210000:
-	mapannounce "airplane_01", "We will arrive in Rachel shortly.", bc_map, "0xFF8200";
-=======
 	mapannounce("airplane_01", _("The Airship is leaving the ground. Our next destination is Rachel."), bc_map, "0xFF8200");
 	end;
 OnTimer185000:
@@ -905,32 +741,20 @@ OnTimer185000:
 	end;
 OnTimer210000:
 	mapannounce("airplane_01", _("We will arrive in Rachel shortly."), bc_map, "0xFF8200");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer220000:
 	$@airplanelocation2 = 0;
 	donpcevent "#AirshipWarp-3::OnUnhide";
 	donpcevent "#AirshipWarp-4::OnUnhide";
-<<<<<<< HEAD
-	mapannounce "airplane_01", "Welcome to Rachel. Have a safe trip.", bc_map, "0xFF8200";
-	end;
-OnTimer230000:
-	mapannounce "airplane_01", "We are currently in Rachel. The Airship will take off shortly.", bc_map, "0xFF8200";
-=======
 	mapannounce("airplane_01", _("Welcome to Rachel. Have a safe trip."), bc_map, "0xFF8200");
 	end;
 OnTimer230000:
 	mapannounce("airplane_01", _("We are currently in Rachel. The Airship will take off shortly."), bc_map, "0xFF8200");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	end;
 OnTimer240000:
 	donpcevent "#AirshipWarp-3::OnHide";
 	donpcevent "#AirshipWarp-4::OnHide";
-<<<<<<< HEAD
-	mapannounce "airplane_01", "The Airship is now taking off. Our next destination is Izlude.", bc_map, "0x00FF00";
-=======
 	mapannounce("airplane_01", _("The Airship is now taking off. Our next destination is Izlude."), bc_map, "0x00ff00");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	stopnpctimer;
 	++.moninv;
 	if (.moninv == 7) {
@@ -1086,19 +910,11 @@ airplane_01,50,66,5	script	Apple Merchant#air01	4_M_04,{
 		}
 		else {
 			Zeny -= .@pay;
-<<<<<<< HEAD
-			getitem Apple, .@input;
-			mes "[Meltz]";
-			mes "Thanks for stopping by";
-			mes "my shop. I hope you enjoy";
-			mes "the flavor of these Apples~!";
-=======
 			getitem Apple,.@input;
 			mes("[Meltz]");
 			mes("Thanks for stopping by\r"
 				"my shop. I hope you enjoy\r"
 				"the flavor of these Apples~!");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 			close;
 		}
 	case 2:
@@ -1127,21 +943,12 @@ airplane_01,50,66,5	script	Apple Merchant#air01	4_M_04,{
 				mes("*Grind* *Grind*");
 				mes("*Clang...!*^000000");
 				next;
-<<<<<<< HEAD
-				delitem Apple, 3;
-				delitem Empty_Bottle, 1;
-				getitem Apple_Juice, 1;
-				mes "[Meltz]";
-				mes "There you go~";
-				mes "Please come again.";
-=======
 				delitem Apple,3;
 				delitem Empty_Bottle,1;
 				getitem Apple_Juice,1;
 				mes("[Meltz]");
 				mes("There you go~");
 				mes("Please come again.");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 				close;
 			}
 		case 2:
@@ -1336,34 +1143,19 @@ airplane_01,32,61,4	script	Nils#ein	1_M_03,1,1,{
 					1450;
 		.@wordtest = rand(7);
 		next;
-<<<<<<< HEAD
-		mes "[Nils]";
-		mes .@line1_1$[.@wordtest];
-		mes .@line1_2$[.@wordtest];
-		mes .@line1_3$[.@wordtest];
-		.@start_time = gettime(GETTIME_HOUR) * 60 * 60 + gettime(GETTIME_MINUTE) * 60 + gettime(GETTIME_SECOND);
-=======
 		mes("[Nils]");
 		mes(.@line1_1$[.@wordtest]);
 		mes(.@line1_2$[.@wordtest]);
 		mes(.@line1_3$[.@wordtest]);
 		.@start_time = gettime(GETTIME_HOUR)*60*60 + gettime(GETTIME_MINUTE)*60 + gettime(GETTIME_SECOND);
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 		next;
 		input .@save1$;
 		.@end_time = gettime(GETTIME_HOUR) * 60 * 60 + gettime(GETTIME_MINUTE) * 60 + gettime(GETTIME_SECOND);
 		.@total_time = .@end_time - .@start_time;
-<<<<<<< HEAD
-		mes "[Nils]";
-		mes .@line2_1$[.@wordtest];
-		mes .@line2_2$[.@wordtest];
-		.@start_time = gettime(GETTIME_HOUR) * 60 * 60 + gettime(GETTIME_MINUTE) * 60 + gettime(GETTIME_SECOND);
-=======
 		mes("[Nils]");
 		mes(.@line2_1$[.@wordtest]);
 		mes(.@line2_2$[.@wordtest]);
 		.@start_time = gettime(GETTIME_HOUR)*60*60 + gettime(GETTIME_MINUTE)*60 + gettime(GETTIME_SECOND);
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 		next;
 		input .@save2$;
 		.@end_time = gettime(GETTIME_HOUR) * 60 * 60 + gettime(GETTIME_MINUTE) * 60 + gettime(GETTIME_SECOND);
@@ -1470,61 +1262,6 @@ function	script	applegamble	{
 	.@n$ = sprintf(_$("[%s]"), getarg(0));
 	switch (select("Play Dice Game", "Learn Dice Game Rules", "Cancel")) {
 	case 3:
-<<<<<<< HEAD
-		mes "[" + getarg(0) + "]";
-		mes "I'm up for a game of";
-		mes "dice whenever you feel";
-		mes "like it. Just talk to me if";
-		mes "you ever get hit with the";
-		mes "sudden urge to gamble, kay?";
-		close;
-	case 2:
-		mes "[" + getarg(0) + "]";
-		mes "The rules for the Dice game";
-		mes "are pretty simple. First, you";
-		mes "place a bet by wagering Apples.";
-		mes "You can bet a maximum of 50";
-		mes "Apples at a time. To keep things";
-		mes "legal, I can only accept Apples.";
-		next;
-		mes "[" + getarg(0) + "]";
-		mes "But hey, if all that zeny";
-		mes "is burning a hole in your";
-		mes "pocket, head over to Fruitz";
-		mes "and you can buy as many";
-		mes "Apples as you want, playah~";
-		next;
-		mes "[" + getarg(0) + "]";
-		mes "Now, we begin with me";
-		mes "rolling two 6-sided dice.";
-		mes "When it's your turn, you'll";
-		mes "roll two 6-sided dice. After";
-		mes "that, both of us will have the";
-		mes "option of rolling a third die.";
-		next;
-		mes "[" + getarg(0) + "]";
-		mes "Now here's the important";
-		mes "thing. If your total is higher";
-		mes "than 12, you'll bust, meaning";
-		mes "that you lose. Otherwise, the";
-		mes "person with the higher total";
-		mes "is the winner. Got it?";
-		next;
-		mes "[" + getarg(0) + "]";
-		mes "Now, you'll be the first";
-		mes "to decide whether or not";
-		mes "you'll roll the third die. Then,";
-		mes "depending on your result, I'll";
-		mes "roll my third die... Or maybe not.";
-		next;
-		mes "[" + getarg(0) + "]";
-		mes "When you win, you'll";
-		mes "receive twice as many";
-		mes "Apples as you wagered.";
-		mes "But if we happen to tie, you";
-		mes "get the Apples that you bet";
-		mes "returned to you. Fair, right?";
-=======
 		mes(.@n$);
 		mes("I'm up for a game of\r"
 			"dice whenever you feel\r"
@@ -1578,20 +1315,10 @@ function	script	applegamble	{
 		mes("But if we happen to tie, you\r"
 			"get the Apples that you bet\r"
 			"returned to you. Fair, right?");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 		close;
 	case 1:
 		break;
 	}
-<<<<<<< HEAD
-	mes "[" + getarg(0) + "]";
-	mes "Ooh, so you'll play with";
-	mes "me? Great! How many";
-	mes "Apples would you like to bet?";
-	mes "Remember, you can wager";
-	mes "up to 50 Apples. If you'd like";
-	mes "to cancel, please enter '0'.";
-=======
 	mes(.@n$);
 	mes("Ooh, so you'll play with\r"
 		"me? Great! How many\r"
@@ -1599,57 +1326,10 @@ function	script	applegamble	{
 	mes("Remember, you can wager\r"
 		"up to 50 Apples. If you'd like\r"
 		"to cancel, please enter '0'.");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	next;
 	while(1) {
 		input .@amount;
 		if (.@amount == 0) {
-<<<<<<< HEAD
-			mes "[" + getarg(0) + "]";
-			mes "Changed your mind?";
-			mes "I understand. Well then,";
-			mes "I hope we can play sometime.";
-			close;
-		}
-		else if (.@amount < 1 || .@amount > 50) {
-			mes "[" + getarg(0) + "]";
-			mes "You can't bet more than";
-			mes "50 Apples. Remember, we";
-			mes "need to keep these stakes";
-			mes "reasonable. Please enter";
-			mes "a value no greater than 50.";
-			next;
-			continue;
-		}
-		mes "[" + getarg(0) + "]";
-		mes "So you'll be";
-		mes "betting ^FF0000" + .@amount + "^000000 Apples.";
-		mes "Is that right?";
-		next;
-		if (select("Yes", "No") == 2) {
-			mes "[" + getarg(0) + "]";
-			mes "Mm, made a mistake?";
-			mes "Alright, please enter the";
-			mes "number of Apples you";
-			mes "wish to place in this bet";
-			next;
-			continue;
-		}
-		if (countitem(Apple) < .@amount) {
-			mes "I'm sorry, but you";
-			mes "don't seem to have";
-			mes "enough Apples for this";
-			mes "bet... You can't gamble";
-			mes "if you can't play, you know.";
-			next;
-			continue;
-		}
-		delitem Apple, .@amount;
-		mes "[" + getarg(0) + "]";
-		mes "Good!";
-		mes "Now we can start";
-		mes "this game! I'll roll first~";
-=======
 			mes(.@n$);
 			mes("Changed your mind?");
 			mes("I understand. Well then,\r"
@@ -1696,7 +1376,6 @@ function	script	applegamble	{
 		mes("Good!");
 		mes("Now we can start\r"
 			"this game! I'll roll first~");
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 		break;
 	}
 	mes("^3355FF*Rolling and rumbling*^000000");
@@ -1706,17 +1385,6 @@ function	script	applegamble	{
 	.@table2 = rand(1, 6);
 	.@tablesub = .@table1 + .@table2;
 	.@tabletotal = .@tablesub;
-<<<<<<< HEAD
-	mes "[" + getarg(0) + "]";
-	mes "I got a ^0000FF" + .@table1 + "^000000 and a ^0000FF" + .@table2 + "^000000.";
-	mes "That's a total of ^0000FF" + .@tablesub + "^000000.";
-	mes "^FF0000" + strcharinfo(0) + "^000000, now it's your turn.";
-	next;
-	select("Cast Dice.");
-	mes "^3355FF*Rolling and rumbling*^000000";
-	.@player1 = rand(1, 6);
-	.@player2 = rand(1, 6);
-=======
 	mes(.@n$);
 	mesf("I got a ^0000FF%d^000000 and a ^0000FF%d^000000.", .@table1, .@table2);
 	mesf("That's a total of ^0000FF%d^000000.", .@tablesub);
@@ -1726,7 +1394,6 @@ function	script	applegamble	{
 	mes("^3355FF*Rolling and rumbling*^000000");
 	.@player1 = rand(1,6);
 	.@player2 = rand(1,6);
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	.@playersub = .@player1 + .@player2;
 	if (.@playersub > 9 && .@amount > 39) {
 		.@player1 = rand(1, 6);
@@ -1735,18 +1402,6 @@ function	script	applegamble	{
 	}
 	.@playertotal = .@playersub;
 	next;
-<<<<<<< HEAD
-	mes "[" + getarg(0) + "]";
-	mes "^FF0000" + strcharinfo(0) + "^000000, you have ^FF0000" + .@player1 + "^000000 and ^FF0000" + .@player2 + "^000000. The total is ^FF0000" + .@playersub + "^000000 .";
-	next;
-	mes "[" + getarg(0) + "]";
-	if (.@playersub == .@tablesub) {
-		mes "Currently my total is ^0000FF" + .@tablesub + "^000000 and ^FF0000" + strcharinfo(0) + "^000000, your total is ^FF0000" + .@playersub + "^000000. We are making an even game. Would you like to cast dice again?";
-	} else if (.@playersub > .@tablesub) {
-		mes "Currently my total is ^0000FF" + .@tablesub + "^000000 and ^FF0000" + strcharinfo(0) + "^000000, your total is ^FF0000" + .@playersub + "^000000. ^FF0000" + strcharinfo(0) + "^000000, you are currently winning this game. Would you like to cast dice again?";
-	} else if (.@tablesub > .@playersub) {
-		mes "Currently my total is ^0000FF" + .@tablesub + "^000000 and ^FF0000" + strcharinfo(0) + "^000000, your total is ^FF0000" + .@playersub + "^000000. I am winning this game. Would you like to cast dice again?";
-=======
 	mes(.@n$);
 	mesf("^FF0000%s^000000, you have ^FF0000%d^000000 and ^FF0000%d^000000. The total is ^FF0000%d^000000.",
 		strcharinfo(0), .@player1, .@player2, .@playersub);
@@ -1764,24 +1419,15 @@ function	script	applegamble	{
 		mesf("Currently my total is ^0000FF%d^000000 and ^FF0000%s^000000, your total is ^FF0000%d^000000. "
 			"I am winning this game. Would you like to cast dice again?",
 			.@tablesub, strcharinfo(0), .@playersub);
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	}
 	next;
 	switch (select("Cast dice.", "Cancel.")) {
 	case 1:
-<<<<<<< HEAD
-		mes "^3355FF*Rolling and rumbling*^000000";
-		.@player3 = rand(1, 6);
-		.@playertotal += .@player3;
-		next;
-		mes "[" + getarg(0) + "]";
-=======
 		mes("^3355FF*Rolling and rumbling*^000000");
 		.@player3 = rand(1,6);
 		.@playertotal += .@player3;
 		next;
 		mes(.@n$);
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 		if (.@playertotal > 12) {
 			mesf("^FF0000%s^000000, you got ^FF0000%d^000000 and the total is now ^FF0000%d^000000. "
 				"You lost this game. I am sorry but please try again.",
@@ -1813,11 +1459,7 @@ function	script	applegamble	{
 		}
 		break;
 	case 2:
-<<<<<<< HEAD
-		mes "[" + getarg(0) + "]";
-=======
 		mes(.@n$);
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 		if (.@playersub > .@tablesub) {
 			mes("I see, you don't want to take risk of losing the game. Okay, let me cast dice again.");
 		}
@@ -1843,19 +1485,11 @@ function	script	applegamble	{
 		break;
 	}
 	next;
-<<<<<<< HEAD
-	mes "^3355FF*Rolling and rumbling*^000000";
+	mes("^3355FF*Rolling and rumbling*^000000");
 	.@table3 = rand(1, 6);
 	.@tabletotal += .@table3;
 	next;
-	mes "[" + getarg(0) + "]";
-=======
-	mes("^3355FF*Rolling and rumbling*^000000");
-	.@table3 = rand(1,6);
-	.@tabletotal += .@table3;
-	next;
 	mes(.@n$);
->>>>>>> 84d645a... HULD-compliance: updated npc/airports/
 	if (.@tabletotal > 12) {
 		mesf("I got ^0000FF%d^000000 and the total is now ^0000FF%d^000000. "
 			"I lost this game since my total exceeded 12. Let me give you my apples. "
