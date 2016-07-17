@@ -19384,7 +19384,6 @@ void skill_init_unit_layout (void)
 					static const int dx[] = {-1, 0, 1};
 					static const int dy[] = { 0, 0, 0};
 
-<<<<<<< HEAD
 					memcpy(skill->dbs->unit_layout[pos].dx,dx,sizeof(dx));
 					memcpy(skill->dbs->unit_layout[pos].dy,dy,sizeof(dy));
 				}
@@ -19411,7 +19410,6 @@ void skill_init_unit_layout_unknown(int skill_idx)
 }
 
 int skill_block_check(struct block_list *bl, sc_type type , uint16 skill_id) {
-	int inf = 0;
 	struct status_change *sc = status->get_sc(bl);
 
 	if( !sc || !bl || !skill_id )
@@ -19680,8 +19678,8 @@ bool skill_parse_row_changematerialdb(char* split[], int columns, int current) {
 	return true;
 }
 
-#define skilldb_duplicate_warning(name, setting, skill) (ShowError("skill_read_skilldb: Duplicate entry '%s' in setting '%s' for Skill Id %d in '%s', skipping...\n", name, setting, skill, "db/"DBPATH"skill_db.conf"))
-#define skilldb_invalid_error(name, setting, skill) (ShowError("skill_read_skilldb: Invalid entry '%s' in setting '%s' for Skill Id %d in '%s', skipping...\n", name, setting, skill, "db/"DBPATH"skill_db.conf"))
+#define skilldb_duplicate_warning(name, setting, skill) (ShowError("skill_read_skilldb: Duplicate entry '%s' in setting '%s' for Skill Id %d in '%s', skipping...\n", name, setting, skill, "db/skill_db.conf"))
+#define skilldb_invalid_error(name, setting, skill) (ShowError("skill_read_skilldb: Invalid entry '%s' in setting '%s' for Skill Id %d in '%s', skipping...\n", name, setting, skill, "db/skill_db.conf"))
 
 /**
  * Sets Level based configuration for skill groups from skill_db.conf [ Smokexyz/Hercules ]
@@ -20458,8 +20456,8 @@ void skill_validate_state(struct config_setting_t *conf, struct s_skill_db *sk)
 		else if (strcmpi(type,"ElementalSpirit")  == 0 ) sk->state = ST_ELEMENTALSPIRIT;
 		else if (strcmpi(type,"PoisonWeapon")     == 0 ) sk->state = ST_POISONINGWEAPON;
 		else if (strcmpi(type,"RollingCutter")    == 0 ) sk->state = ST_ROLLINGCUTTER;
-		else if (strcmpi(type,"MH_Fighting")      == 0 ) sk->state = ST_MH_FIGHTING;
-		else if (strcmpi(type,"MH_Grappling")     == 0 ) sk->state = ST_MH_GRAPPLING;
+		else if (strcmpi(type,"Fighter")          == 0 ) sk->state = ST_FIGHTER;
+		else if (strcmpi(type,"Grappler")         == 0 ) sk->state = ST_GRAPPLER;
 		else if (strcmpi(type,"Peco")             == 0 ) sk->state = ST_PECO;
 		else
 			skilldb_invalid_error(type, "State", sk->nameid);
@@ -20959,12 +20957,6 @@ bool skill_read_skilldb(const char *filename)
 
 /*===============================
  * DB reading.
- * skill_db.txt
- * skill_require_db.txt
- * skill_cast_db.txt
- * skill_castnodex_db.txt
- * skill_nocast_db.txt
- * skill_unit_db.txt
  * produce_db.txt
  * create_arrow_db.txt
  * abra_db.txt

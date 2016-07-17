@@ -638,8 +638,8 @@ function getstate($state,$id)
 	else if( strcmp($state,"elementalspirit")     == 0 ) return "ElementalSpirit";
 	else if( strcmp($state,"poisonweapon")        == 0 ) return "PoisonWeapon";
 	else if( strcmp($state,"rollingcutter")       == 0 ) return "RollingCutter";
-	else if( strcmp($state,"mh_fighting")         == 0 ) return "MH_Fighting";
-	else if( strcmp($state,"mh_grappling")        == 0 ) return "MH_Grappling";
+	else if( strcmp($state,"fighter")             == 0 ) return "Fighter";
+	else if( strcmp($state,"grappler")            == 0 ) return "Grappler";
 	else if( strcmp($state,"peco")                == 0 ) return "Peco";
 	else print "\r\033[0;31mWarning\033[0;0m - Invalid State ".$state." provided for Skill ID ".$id.", please correct this manually.\n";
 }
@@ -1135,8 +1135,8 @@ function getcomments($re)
 		                                        'PoisonWeapon' = Requires to be under Poisoning Weapon.
 		                                        'RollingCutter' = Requires at least one Rotation Counter from Rolling Cutter.
 		                                        'ElementalSpirit' = Requires to have an Elemental Spirit summoned.
-		                                        'MH_Fighting' = Requires Eleanor fighthing mode
-		                                        'MH_Grappling' = Requires Eleanor grappling mode
+		                                        'Fighter' = Requires Eleanor fighthing mode
+		                                        'Grappler' = Requires Eleanor grappling mode
 		                                        'Peco' = Requires riding a peco
 		SpiritSphereCost: Spirit Sphere Cost    (int, defaults to 0) (can be grouped by Levels)
 		Items: {
