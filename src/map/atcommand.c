@@ -1703,7 +1703,6 @@ ACMD(model)
 ACMD(bodystyle)
 {
 	int body_style = 0;
-	nullpo_retr(false, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 	
