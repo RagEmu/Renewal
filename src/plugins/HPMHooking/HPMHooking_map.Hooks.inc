@@ -71661,15 +71661,15 @@ int HP_skill_spellbook(struct map_session_data *sd, int nameid) {
 	}
 	return retVal___;
 }
-int HP_skill_block_check(struct block_list *bl, int src_id, int skill_id) {
+int HP_skill_block_check(struct block_list *bl, sc_type type, uint16 skill_id) {
 	int hIndex = 0;
 	int retVal___ = 0;
 	if( HPMHooks.count.HP_skill_block_check_pre ) {
-		int (*preHookFunc) (struct block_list **bl, int *src_id, int *skill_id);
+		int (*preHookFunc) (struct block_list **bl, sc_type *type, uint16 *skill_id);
 		*HPMforce_return = false;
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_skill_block_check_pre; hIndex++ ) {
 			preHookFunc = HPMHooks.list.HP_skill_block_check_pre[hIndex].func;
-			retVal___ = preHookFunc(&bl, &src_id, &skill_id);
+			retVal___ = preHookFunc(&bl, &type, &skill_id);
 		}
 		if( *HPMforce_return ) {
 			*HPMforce_return = false;
@@ -71677,13 +71677,13 @@ int HP_skill_block_check(struct block_list *bl, int src_id, int skill_id) {
 		}
 	}
 	{
-		retVal___ = HPMHooks.source.skill.block_check(bl, src_id, skill_id);
+		retVal___ = HPMHooks.source.skill.block_check(bl, type, skill_id);
 	}
 	if( HPMHooks.count.HP_skill_block_check_post ) {
-		int (*postHookFunc) (int retVal___, struct block_list *bl, int src_id, int skill_id);
+		int (*postHookFunc) (int retVal___, struct block_list *bl, sc_type type, uint16 skill_id);
 		for(hIndex = 0; hIndex < HPMHooks.count.HP_skill_block_check_post; hIndex++ ) {
 			postHookFunc = HPMHooks.list.HP_skill_block_check_post[hIndex].func;
-			retVal___ = postHookFunc(retVal___, bl, src_id, skill_id);
+			retVal___ = postHookFunc(retVal___, bl, type, skill_id);
 		}
 	}
 	return retVal___;
