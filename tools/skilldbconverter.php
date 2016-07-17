@@ -309,11 +309,11 @@ while(!feof($skmain)) {
 	$max = $arr[7];
 	$max = ($max < 1) ? 1 : $max;
 	$list_num = $arr[8];
-	$castcancel = $arr[9];
+	$castcancel = trim($arr[9]);
 	$cast_defence_rate = $arr[10];
 	$inf2 = $arr[11];
 	$maxcount = $arr[12];
-	$skill_type = $arr[13];
+	$skill_type = trim($arr[13]);
 	$blow_count = $arr[14];
 	$name = $arr[15];
 	if(strlen(substr($arr[16], 0, strpos($arr[16], "//"))))
