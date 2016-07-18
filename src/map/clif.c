@@ -10165,10 +10165,10 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			if( sd->sc.option&OPTION_COSTUME )
 				return;
 
-			if( (sd->sc.count && sd->sc.data[SC__MANHOLE]) || (tsc && tsc->data[SC__MANHOLE]) )
+			if ((sd->sc.count && sd->sc.data[SC__MANHOLE]) || (tsc && tsc->data[SC__MANHOLE]))
 				return;
 
-			if (!battle_config.sdelay_attack_enable && pc->checkskill(sd, SA_FREECAST) <= 0) {
+			if (!battle_config.sdelay_attack_enable && pc->checkskill(sd, SA_FREECAST) <= 0 && (skill->get_inf2(sd->ud.skill_id) & (INF2_FREE_CAST_REDUCED | INF2_FREE_CAST_NORMAL)) == 0) {
 				if (DIFF_TICK(tick, sd->ud.canact_tick) < 0) {
 					clif->skill_fail(sd, 1, USESKILL_FAIL_SKILLINTERVAL, 0);
 					return;
