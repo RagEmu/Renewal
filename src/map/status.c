@@ -4844,11 +4844,14 @@ signed short status_calc_critical(struct block_list *bl, struct status_change *s
 
 	if (!viewable) {
 		/* some statuses that are hidden in the status window */
+		if (sc->data[SC_CRITICALPERCENT]) {
+			critical += sc->data[SC_CRITICALPERCENT]->val2;
+			if (bl->type == BL_PC && BL_UCAST(BL_PC, bl)->status.weapon == W_KATAR)
+				critical *= 2;
+		}
 		return (short)cap_value(critical, 10, SHRT_MAX);
 	}
 
-	if (sc->data[SC_CRITICALPERCENT])
-		critical += sc->data[SC_CRITICALPERCENT]->val2;
 	if (sc->data[SC_FOOD_CRITICALSUCCESSVALUE])
 		critical += sc->data[SC_FOOD_CRITICALSUCCESSVALUE]->val1;
 	if (sc->data[SC_EXPLOSIONSPIRITS])
