@@ -554,7 +554,10 @@ struct Battle_Config {
 	int homunculus_max_sp;
 	int homunculus_max_parameter;
 	int homunculus_S_max_parameter;
+	// Warp Face Direction
 	int player_warp_facing_direction;
+
+	int atcommand_levelup_events;	// Enable atcommands trigger level up events for NPCs
 };
 
 /* criteria for battle_config.idletime_critera */
