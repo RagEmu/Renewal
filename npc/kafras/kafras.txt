@@ -43,6 +43,138 @@
 //== Brasilis ==============================================
 brasilis,197,221,4	script	Kafra Employee::kaf_bra	4_F_KAFRA1,{
 	cutin "kafra_01",2;
+	callfunc "F_KafSet";
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "The Kafra services";
+	mes "are always on your side.";
+	mes "How may I assist you?";
+	callfunc "F_Kafra",5,0,0,40,800;
+	savepoint "prontera",116,73;
+	callfunc "F_KafEnd",0,1,"in the city of Prontera";
+}
+
+//== Juno ==================================================
+yuno,152,187,4	script	Kafra Employee::kaf_yuno	4_F_KAFRA8,{
+	cutin "kafra_08",2;
+	callfunc "F_KafSet";
+	mes "[Kafra Employee]";
+	mes "The Kafra Corporation";
+	mes "is always working to provide";
+	mes "you with convenient services.";
+	mes "How may I be of assistance?";
+	callfunc "F_Kafra",5,0,0,40,800;
+	savepoint "yuno",158,125;
+	callfunc "F_KafEnd",0,1,"in the city of Juno";
+}
+
+yuno,327,108,4	script	Kafra Employee::kaf_yuno2	4_F_KAFRA8,{
+	cutin "kafra_08",2;
+	callfunc "F_KafSet";
+	mes "[Kafra Employee]";
+	mes "The Kafra Corporation";
+	mes "is always working to provide";
+	mes "you with convenient services.";
+	mes "How may I be of assistance?";
+	callfunc "F_Kafra",5,0,0,40,800;
+	savepoint "yuno",328,101;
+	callfunc "F_KafEnd",0,1,"in the city of Juno";
+}
+
+yuno,277,221,4	script	Kafra Employee::kaf_yuno3	4_F_KAFRA9,{
+	cutin "kafra_09",2;
+	callfunc "F_KafSet";
+	mes "[Kafra Employee]";
+	mes "The Kafra Corporation";
+	mes "is always working to provide";
+	mes "you with convenient services.";
+	mes "How may I be of assistance?";
+	callfunc "F_Kafra",5,0,0,40,800;
+	savepoint "yuno",274,229;
+	callfunc "F_KafEnd",0,1,"in the city of Juno";
+}
+
+//== Alberta ===============================================
+alberta,28,229,0	script	Kafra Employee::kaf_alberta	4_F_KAFRA2,{
+	cutin "kafra_02",2;
+	callfunc "F_KafSet";
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "Kafra's Employees are";
+	mes "always ready to serve you.";
+	mes "How can I help you today?";
+	callfunc "F_Kafra",5,0,0,50,850;
+	savepoint "alberta",31,231;
+	callfunc "F_KafEnd",0,1,"in the city of Alberta";
+}
+
+alberta,113,60,6	script	Kafra Employee::kaf_alberta2	4_F_KAFRA6,{
+	cutin "kafra_06",2;
+	callfunc "F_KafSet";
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation~";
+	mes "The Kafra Services are";
+	mes "always here to support";
+	mes "you. So how can I be";
+	mes "of service today?";
+	callfunc "F_Kafra",5,0,0,50,850;
+	savepoint "alberta",117,57;
+	callfunc "F_KafEnd",0,1,"in the city of Alberta";
+}
+
+//== Comodo ================================================
+comodo,195,150,4	script	Kafra Employee::kaf_comodo	4_F_KAFRA7,{
+	cutin "kafra_07",2;
+	callfunc "F_KafSet";
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "You know that our";
+	mes "service is always";
+	mes "on your side~";
+	callfunc "F_Kafra",5,0,1,80,1000;
+	savepoint "comodo",204,143;
+	callfunc "F_KafEnd",0,1,"in the town of Comodo";
+}
+
+cmd_fild07,136,134,4	script	Kafra Employee::kaf_cmd_fild07	4_F_KAFRA7,{
+	cutin "kafra_07",2;
+	callfunc "F_KafSet";
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "You know that our";
+	mes "service is always";
+	mes "on your side~";
+	callfunc "F_Kafra",5,0,1,80,1000;
+	savepoint "cmd_fild07",127,134;
+	callfunc "F_KafEnd",0,1,"in Pyros Lighthouse";
+}
+
+//== Izlude ================================================
+-	script	::kaf_izlude	FAKE_NPC,{
+	cutin "kafra_01",2;
+	callfunc "F_KafSet";
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "The Kafra services";
+	mes "are always on your side.";
+	mes "How may I assist you?";
+	callfunc "F_Kafra",5,0,1,40,820;
+	if (RENEWAL)
+		savepoint strnpcinfo(NPC_MAP),129,97;
+	else
+		savepoint "izlude",94,103;
+	callfunc "F_KafEnd",0,1,"in the city of Izlude";
+}
+
+//== Moscovia ==============================================
+moscovia,223,191,3	script	Kafra Employee::kaf_mosk	4_F_KAFRA4,{
+	cutin "kafra_04",2;
 	callfunc "F_Kafra",0,3,0,80,700;
 	savepoint "brasilis",195,259;
 	callfunc "F_KafEnd",0,1,"in the city of Brasilis";
