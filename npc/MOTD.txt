@@ -32,6 +32,6 @@
 
 // run when any character logs in, attached to them.
 -	script	RagEmuMOTD	FAKE_NPC,{
-	message strcharinfo(0), "Welcome to RagEmu! Enjoy! Please report any bugs you find.";
+	message strcharinfo(PC_NAME), "Welcome to RagEmu! Enjoy! Please report any bugs you find.";
 	end;
 }

@@ -140,7 +140,7 @@ in_moc_16,14,27,5	script	Assassin#realman	4_M_ACROSS,{
 			next;
 			select("New skills?");
 			mes "[Killtin]";
-			mes "That's right, "+ strcharinfo(0) +".";
+			mes "That's right, "+ strcharinfo(PC_NAME) +".";
 			mes "The first skill specifically";
 			mes "enhances the Sonic Blow";
 			mes "skill, and the second skill";
@@ -381,7 +381,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	4_F_ACROSS,{
 			mes "[Esmille]";
 			mes "Yes, that's it...!";
 			mes "Very well executed.";
-			mes "Good work, "+ strcharinfo(0) +".";
+			mes "Good work, "+ strcharinfo(PC_NAME) +".";
 			skill "AS_SONICACCEL",1,0;
 			ASSN_SK = 7;
 			next;
@@ -478,7 +478,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	4_F_ACROSS,{
 		mes "[Esmille]";
 		mes "Yes, that's it...!";
 		mes "Very well executed.";
-		mes "Good work, "+ strcharinfo(0) +".";
+		mes "Good work, "+ strcharinfo(PC_NAME) +".";
 		skill "AS_SONICACCEL",1,0;
 		ASSN_SK = 7;
 		next;
@@ -561,7 +561,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	4_F_ACROSS,{
 			mes "[Esmille]";
 			mes "Yes, that's it...!";
 			mes "Very well executed.";
-			mes "Good work, "+ strcharinfo(0) +".";
+			mes "Good work, "+ strcharinfo(PC_NAME) +".";
 			skill 1003,1,0;
 			ASSN_SK = 7;
 			next;

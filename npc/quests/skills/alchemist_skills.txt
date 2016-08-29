@@ -126,12 +126,12 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	4_M_ALCHE_D,{
 				mes "on the same project for you to";
 				mes "benefit. So, what's your name?";
 				next;
-				mes "["+ strcharinfo(0) +"]";
-				mes "I am called "+ strcharinfo(0) +".";
+				mes "["+ strcharinfo(PC_NAME) +"]";
+				mes "I am called "+ strcharinfo(PC_NAME) +".";
 				next;
 				ALCHE_SK = 2;
 				mes "[Pisruik]";
-				mes "Ah, "+ strcharinfo(0) +".";
+				mes "Ah, "+ strcharinfo(PC_NAME) +".";
 				mes "Would you please bring";
 				mes "^6600005 Yellow Gemstones^000000,";
 				mes "^6600004 Empty Potion Bottles^000000,";
@@ -714,7 +714,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	4_M_ALCHE_D,{
 				mes "That was a pretty";
 				mes "big explosion...";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ strcharinfo(PC_NAME) +"]";
 				mes "Your glasses...";
 				mes "They're broken...";
 				next;
@@ -732,7 +732,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	4_M_ALCHE_D,{
 					mes "scientific researcher.^000000";
 				}
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ strcharinfo(PC_NAME) +"]";
 				mes "Holy crap!";
 				mes "You're one";
 				mes "good looking guy!";
@@ -744,7 +744,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	4_M_ALCHE_D,{
 				mes "that you're not bleeding.";
 				mes "But are you alright?";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ strcharinfo(PC_NAME) +"]";
 				mes "Oh, I'm fine.";
 				mes "But what are you";
 				mes "going to do about";
@@ -763,7 +763,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	4_M_ALCHE_D,{
 				mes "almost blind without them.";
 				mes "I can't do very much if I can't";
 				mes "even see. I'm really sorry";
-				mes "about this, "+ strcharinfo(0) +".";
+				mes "about this, "+ strcharinfo(PC_NAME) +".";
 				close;
 			}
 			else {
@@ -818,7 +818,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	4_M_ALCHE_D,{
 				mes "That was a pretty";
 				mes "big explosion...";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ strcharinfo(PC_NAME) +"]";
 				mes "Your glasses...";
 				mes "They're broken...";
 				next;
@@ -836,7 +836,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	4_M_ALCHE_D,{
 					mes "scientific researcher.^000000";
 				}
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ strcharinfo(PC_NAME) +"]";
 				mes "Holy crap!";
 				mes "You're one";
 				mes "good looking guy!";
@@ -848,7 +848,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	4_M_ALCHE_D,{
 				mes "that you're not bleeding.";
 				mes "But are you alright?";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ strcharinfo(PC_NAME) +"]";
 				mes "Oh, I'm fine.";
 				mes "But what are you";
 				mes "going to do about";
@@ -867,7 +867,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	4_M_ALCHE_D,{
 				mes "almost blind without them.";
 				mes "I can't do very much if I can't";
 				mes "even see. I'm really sorry";
-				mes "about this, "+ strcharinfo(0) +".";
+				mes "about this, "+ strcharinfo(PC_NAME) +".";
 				close;
 			}
 			else {
@@ -893,7 +893,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	4_M_ALCHE_D,{
 					delitem Spinning_Eyes,1;
 					ALCHE_SK = 10;
 					//changes the quest steps by deicision.
-					mes "["+ strcharinfo(0) +"]";
+					mes "["+ strcharinfo(PC_NAME) +"]";
 					mes "Here, why don't you";
 					mes "check I'm carrying and";
 					mes "see if there's a pair of";
@@ -933,7 +933,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	4_M_ALCHE_D,{
 					next;
 					if (select("Sure!", "No, thanks.") == 1) {
 						mes "[Pisruik]";
-						mes "Great, "+ strcharinfo(0) +"!";
+						mes "Great, "+ strcharinfo(PC_NAME) +"!";
 						mes "I know I can trust you";
 						mes "to use this research for";
 						mes "good and noble ends. Now,";
@@ -996,7 +996,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	4_M_ALCHE_D,{
 					close;
 				}
 			}
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ strcharinfo(PC_NAME) +"]";
 			mes "Listen, you look so";
 			mes "much better when you're";
 			mes "not wearing glasses.";
@@ -1005,14 +1005,14 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	4_M_ALCHE_D,{
 			mes "Excuse me,";
 			mes "come again?";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ strcharinfo(PC_NAME) +"]";
 			mes "Hahahahhaha~!";
 			mes "No-nothing at all!";
 			close;
 		}
 		else if (ALCHE_SK == 10) {
 			mes "[Pisruik]";
-			mes "So, "+ strcharinfo(0) +",";
+			mes "So, "+ strcharinfo(PC_NAME) +",";
 			mes "Would you like me to";
 			mes "teach you the results";
 			mes "of the research I've''";
@@ -1020,7 +1020,7 @@ yuno_in04,33,108,4	script	Pisruik#qsk_al	4_M_ALCHE_D,{
 			next;
 			if (select("Yes!", "No, thanks.") == 1) {
 				mes "[Pisruik]";
-				mes "Great, "+ strcharinfo(0) +"!";
+				mes "Great, "+ strcharinfo(PC_NAME) +"!";
 				mes "I know I can trust you";
 				mes "to use this research for";
 				mes "good and noble ends. Now,";
@@ -1223,15 +1223,15 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	1_M_LIBRARYMASTER,{
 		mes "ways, would you";
 		mes "tell me your name?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + strcharinfo(PC_NAME) + "]";
 		mes "My name is...";
-		mes "" + strcharinfo(0) + ".";
+		mes "" + strcharinfo(PC_NAME) + ".";
 		next;
 		bioeth = 13;
 		skill "AM_BIOETHICS",1,0;
 		mes "[Kellasus]";
 		mes "Ah...";
-		mes "" + strcharinfo(0) + ".";
+		mes "" + strcharinfo(PC_NAME) + ".";
 		mes "I'll remember that. Goodbye";
 		mes "for now, and I hope that you";
 		mes "make a great contribution to";
@@ -1255,7 +1255,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	1_M_LIBRARYMASTER,{
 		mes "something that will benefit";
 		mes "the greater good.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + strcharinfo(PC_NAME) + "]";
 		mes "Does...";
 		mes "Does that mean";
 		mes "you'll teach me?";
@@ -1302,7 +1302,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	1_M_LIBRARYMASTER,{
 		mes "but I suppose that might be";
 		mes "how you became an Alchemist...";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + strcharinfo(PC_NAME) + "]";
 		mes "Well, I sort of came";
 		mes "here to ask about that.";
 		mes "But first, I heard a rumor";
@@ -1333,7 +1333,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	1_M_LIBRARYMASTER,{
 		mes "why are you reminding";
 		mes "me of something like this?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + strcharinfo(PC_NAME) + "]";
 		mes "You're right that the creation";
 		mes "of Homunculi brings up a moral";
 		mes "issue. But instead of morals,";
@@ -1346,7 +1346,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	1_M_LIBRARYMASTER,{
 		mes "do you mean by";
 		mes "humanitarianism?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + strcharinfo(PC_NAME) + "]";
 		mes "I believe that the";
 		mes "study of Homunculi";
 		mes "could help us discover";
@@ -1354,7 +1354,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	1_M_LIBRARYMASTER,{
 		mes "is just too much";
 		mes "potential to do good to ignore.";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ strcharinfo(PC_NAME) +"]";
 		mes "I'm not interested in";
 		mes "creating new creatures or";
 		mes "playing God. What I do want";
@@ -1362,7 +1362,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	1_M_LIBRARYMASTER,{
 		mes "regardless of the disease. No";
 		mes "matter how desperate it may be.";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ strcharinfo(PC_NAME) +"]";
 		mes "It may be immoral to";
 		mes "create experimental life";
 		mes "forms and to sacrifice them,";
@@ -1370,7 +1370,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	1_M_LIBRARYMASTER,{
 		mes "the people who may need";
 		mes "that cure I might discover...";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ strcharinfo(PC_NAME) +"]";
 		mes "When your son was";
 		mes "sick, you were willing";
 		mes "to make sacrifices to see";
@@ -1378,7 +1378,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	1_M_LIBRARYMASTER,{
 		mes "there are other people in the";
 		mes "world with worse ailments...";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ strcharinfo(PC_NAME) +"]";
 		mes "I want to study";
 		mes "Homunculi because";
 		mes "there's a chance that";
@@ -1410,7 +1410,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	1_M_LIBRARYMASTER,{
 		mes "you? I'm sorry, but I can't teach you anything related to Homunculi.";
 		mes "It especially bothers me that you know nothing at all about them...";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + strcharinfo(PC_NAME) + "]";
 		mes "But while I was gone,";
 		mes "I spent so much time";
 		mes "studying about Homunculi";
@@ -1553,7 +1553,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	1_M_LIBRARYMASTER,{
 		mes "give you some advice if you're stumped by a particular problem...";
 		next;
 		if (select("Teach me the Homunculus Skills.", "No, nothing.") == 1) {
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + strcharinfo(PC_NAME) + "]";
 			mes "I want you to";
 			mes "teach me how to";
 			mes "create a Homunculus.";
@@ -1564,7 +1564,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	1_M_LIBRARYMASTER,{
 			mes "I don't think I heard";
 			mes "what you said quite right.";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + strcharinfo(PC_NAME) + "]";
 			mes "I said...";
 			mes "I want you to";
 			mes "teach me the skills";

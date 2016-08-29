@@ -148,8 +148,8 @@ function	script	F_ClearGarbage	{
 // -- callfunc "Job_Change",<Class value>;
 // See Job_* constants in 'db/constants.conf' for Class values.
 function	script	Job_Change	{
-	jobchange getarg(0),Upper;
-	logmes "CLASS CHANGE: " +strcharinfo(0)+ " become a "+jobname(Class);
+	jobchange getarg(0), Upper; //Jobchange based on Upper
+	logmes "CLASS CHANGE: " + strcharinfo(PC_NAME) + " become a "+ jobname(Class);
 	return;
 }
 
