@@ -9,17 +9,17 @@ addons:
     - gcc-6
 
 install:
-  - ./travis.sh getplugins || true
+  - ./tools/ci/travis.sh getplugins || true
   
 before_script:
   - uname -a
-  - ./travis.sh createdb ragnarok root
-  - ./travis.sh importdb ragnarok travis
+  - ./tools/ci/travis.sh createdb ragnarok root
+  - ./tools/ci/travis.sh importdb ragnarok travis
   - mysql -u root -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis');"
 
 script:
-  - ./travis.sh build $CONFIGURE_FLAGS
-  - ./travis.sh test ragnarok travis travis
+  - ./tools/ci/travis.sh build $CONFIGURE_FLAGS
+  - ./tools/ci/travis.sh test ragnarok travis travis
   - for i in $(find ./ -maxdepth 1 -name 'core*' -print); do gdb $(pwd)/map-server core* -ex "thread apply all bt" -ex "set pagination 0" -batch; done;
 
 # We can't use this, unfortunately
