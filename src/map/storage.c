@@ -83,6 +83,7 @@ void storage_sortitem(struct item* items, unsigned int size)
 int storage_reconnect_sub(union DBKey key, struct DBData *data, va_list ap)
 {
 	struct guild_storage *stor = DB->data2ptr(data);
+	nullpo_ret(stor);
 	if (stor->dirty && stor->storage_status == 0) //Save closed storages.
 		gstorage->save(0, stor->guild_id,0);
 
@@ -90,7 +91,8 @@ int storage_reconnect_sub(union DBKey key, struct DBData *data, va_list ap)
 }
 
 //Function to be invoked upon server reconnection to char. To save all 'dirty' storages [Skotlex]
-void do_reconnect_storage(void) {
+void do_reconnect_storage(void)
+{
 	gstorage->db->foreach(gstorage->db, storage->reconnect_sub);
 }
 
@@ -142,11 +144,15 @@ int compare_item(struct item *a, struct item *b)
 /*==========================================
  * Internal add-item function.
  *------------------------------------------*/
-int storage_additem(struct map_session_data* sd, struct item* item_data, int amount) {
-	struct storage_data* stor = &sd->status.storage;
+int storage_additem(struct map_session_data* sd, struct item* item_data, int amount)
+{
+	struct storage_data* stor;
 	struct item_data *data;
 	int i;
 
+	nullpo_retr(1, sd);
+	nullpo_retr(1, item_data);
+	stor = &sd->status.storage;
 	if( item_data->nameid <= 0 || amount <= 0 )
 		return 1;
 
@@ -204,6 +210,8 @@ int storage_additem(struct map_session_data* sd, struct item* item_data, int amo
  *------------------------------------------*/
 int storage_delitem(struct map_session_data* sd, int n, int amount)
 {
+	nullpo_retr(1, sd);
+	Assert_retr(1, n >= 0 && n < MAX_STORAGE);
 	if( sd->status.storage.items[n].nameid == 0 || sd->status.storage.items[n].amount < amount )
 		return 1;
 
@@ -227,7 +235,8 @@ int storage_delitem(struct map_session_data* sd, int n, int amount)
  *   0 : fail
  *   1 : success
  *------------------------------------------*/
-int storage_storageadd(struct map_session_data* sd, int index, int amount) {
+int storage_storageadd(struct map_session_data* sd, int index, int amount)
+{
 	nullpo_ret(sd);
 
 	if( sd->status.storage.storage_amount > MAX_STORAGE )
@@ -261,6 +270,7 @@ int storage_storageget(struct map_session_data* sd, int index, int amount)
 {
 	int flag;
 
+	nullpo_ret(sd);
 	if( index < 0 || index >= MAX_STORAGE )
 		return 0;
 
@@ -314,7 +324,8 @@ int storage_storageaddfromcart(struct map_session_data* sd, int index, int amoun
  *   0 : fail
  *   1 : success
  *------------------------------------------*/
-int storage_storagegettocart(struct map_session_data* sd, int index, int amount) {
+int storage_storagegettocart(struct map_session_data* sd, int index, int amount)
+{
 	int flag = 0;
 	nullpo_ret(sd);
 
@@ -341,7 +352,8 @@ int storage_storagegettocart(struct map_session_data* sd, int index, int amount)
 /*==========================================
  * Modified By Valaris to save upon closing [massdriller]
  *------------------------------------------*/
-void storage_storageclose(struct map_session_data* sd) {
+void storage_storageclose(struct map_session_data* sd)
+{
 	nullpo_retv(sd);
 
 	clif->storageclose(sd);
@@ -355,7 +367,8 @@ void storage_storageclose(struct map_session_data* sd) {
 /*==========================================
  * When quitting the game.
  *------------------------------------------*/
-void storage_storage_quit(struct map_session_data* sd, int flag) {
+void storage_storage_quit(struct map_session_data* sd, int flag)
+{
 	nullpo_retv(sd);
 
 	if (map->save_settings&4)
@@ -383,7 +396,8 @@ struct guild_storage *guild2storage_ensure(int guild_id)
 	return gs;
 }
 
-int guild_storage_delete(int guild_id) {
+int guild_storage_delete(int guild_id)
+{
 	idb_remove(gstorage->db,guild_id);
 	return 0;
 }
@@ -504,6 +518,7 @@ int guild_storage_delitem(struct map_session_data* sd, struct guild_storage* sto
 	nullpo_retr(1, sd);
 	nullpo_retr(1, stor);
 
+	Assert_retr(1, n >= 0 && n < MAX_GUILD_STORAGE);
 	if(stor->items[n].nameid==0 || stor->items[n].amount<amount)
 		return 1;
 
@@ -704,7 +719,8 @@ int storage_guild_storagesaved(int guild_id)
 }
 
 //Close storage for sd and save it
-int storage_guild_storageclose(struct map_session_data* sd) {
+int storage_guild_storageclose(struct map_session_data* sd)
+{
 	struct guild_storage *stor;
 
 	nullpo_ret(sd);
@@ -723,7 +739,8 @@ int storage_guild_storageclose(struct map_session_data* sd) {
 	return 0;
 }
 
-int storage_guild_storage_quit(struct map_session_data* sd, int flag) {
+int storage_guild_storage_quit(struct map_session_data* sd, int flag)
+{
 	struct guild_storage *stor;
 
 	nullpo_ret(sd);
@@ -750,15 +767,21 @@ int storage_guild_storage_quit(struct map_session_data* sd, int flag) {
 
 	return 0;
 }
-void do_init_gstorage(bool minimal) {
+
+void do_init_gstorage(bool minimal)
+{
 	if (minimal)
 		return;
 	gstorage->db = idb_alloc(DB_OPT_RELEASE_DATA);
 }
-void do_final_gstorage(void) {
+
+void do_final_gstorage(void)
+{
 	db_destroy(gstorage->db);
 }
-void storage_defaults(void) {
+
+void storage_defaults(void)
+{
 	storage = &storage_s;
 
 	/* */
@@ -777,7 +800,9 @@ void storage_defaults(void) {
 	storage->sortitem = storage_sortitem;
 	storage->reconnect_sub = storage_reconnect_sub;
 }
-void gstorage_defaults(void) {
+
+void gstorage_defaults(void)
+{
 	gstorage = &gstorage_s;
 
 	/* */
