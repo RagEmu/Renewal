@@ -98,6 +98,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, unsigned int uid,
 	struct map_session_data* vsd = map->id2sd(aid);
 
 	nullpo_retv(sd);
+	nullpo_retv(data);
 
 	if (vsd == NULL || !vsd->state.vending || vsd->bl.id == sd->bl.id)
 		return; // Invalid shop
@@ -321,6 +322,7 @@ bool vending_search(struct map_session_data* sd, unsigned short nameid)
 {
 	int i;
 
+	nullpo_retr(false, sd);
 	if (!sd->state.vending) { // Not vending
 		return false;
 	}
@@ -340,6 +342,9 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 	int i, c, slot;
 	unsigned int idx, cidx;
 	struct item* it;
+
+	nullpo_retr(false, sd);
+	nullpo_retr(false, s);
 
 	if (!sd->state.vending) // Not vending
 		return true;
