@@ -104,6 +104,7 @@ void hplugin_export_symbol(void *value, const char *name)
 void *hplugin_import_symbol(char *name, unsigned int pID)
 {
 	int i;
+	nullpo_retr(NULL, name);
 	ARR_FIND(0, VECTOR_LENGTH(HPM->symbols), i, strcmp(VECTOR_INDEX(HPM->symbols, i)->name, name) == 0);
 
 	if (i != VECTOR_LENGTH(HPM->symbols))
@@ -134,6 +135,7 @@ bool hplugin_iscompatible(char* version) {
 bool hplugin_exists(const char *filename)
 {
 	int i;
+	nullpo_retr(false, filename);
 	for (i = 0; i < VECTOR_LENGTH(HPM->plugins); i++) {
 		if (strcmpi(VECTOR_INDEX(HPM->plugins, i)->filename,filename) == 0)
 			return true;
@@ -260,6 +262,7 @@ void hplugins_addToHPData(enum HPluginDataTypes type, uint32 pluginID, struct hp
 		return;
 	}
 	store = *storeptr;
+	nullpo_retv(store);
 
 	/* duplicate check */
 	ARR_FIND(0, VECTOR_LENGTH(store->entries), i, VECTOR_INDEX(store->entries, i)->pluginID == pluginID && VECTOR_INDEX(store->entries, i)->classid == classid);
@@ -448,7 +451,8 @@ bool hplugins_addconf(unsigned int pluginID, enum HPluginConfType type, char *na
 	return true;
 }
 
-struct hplugin *hplugin_load(const char* filename) {
+struct hplugin *hplugin_load(const char* filename)
+{
 	struct hplugin *plugin;
 	struct hplugin_info *info;
 	struct HPMi_interface **HPMi;
@@ -597,6 +601,7 @@ struct hplugin *hplugin_load(const char* filename) {
 void hplugin_unload(struct hplugin* plugin)
 {
 	int i;
+	nullpo_retv(plugin);
 	if (plugin->filename)
 		aFree(plugin->filename);
 	if (plugin->dll)
@@ -623,7 +628,8 @@ CMDLINEARG(loadplugin)
 /**
  * Reads the plugin configuration and loads the plugins as necessary.
  */
-void hplugins_config_read(void) {
+void hplugins_config_read(void)
+{
 	struct config_t plugins_conf;
 	struct config_setting_t *plist = NULL;
 	const char *config_filename = "conf/plugins.conf"; // FIXME hardcoded name
@@ -789,6 +795,7 @@ const char *HPM_file2ptr(const char *file)
 {
 	int i;
 
+	nullpo_retr(NULL, file);
 	ARR_FIND(0, HPM->filenames.count, i, HPM->filenames.data[i].addr == file);
 	if (i != HPM->filenames.count) {
 		return HPM->filenames.data[i].name;
@@ -802,19 +809,29 @@ const char *HPM_file2ptr(const char *file)
 
 	return HPM->filenames.data[i].name;
 }
-void* HPM_mmalloc(size_t size, const char *file, int line, const char *func) {
+
+void* HPM_mmalloc(size_t size, const char *file, int line, const char *func)
+{
 	return iMalloc->malloc(size,HPM_file2ptr(file),line,func);
 }
-void* HPM_calloc(size_t num, size_t size, const char *file, int line, const char *func) {
+
+void* HPM_calloc(size_t num, size_t size, const char *file, int line, const char *func)
+{
 	return iMalloc->calloc(num,size,HPM_file2ptr(file),line,func);
 }
-void* HPM_realloc(void *p, size_t size, const char *file, int line, const char *func) {
+
+void* HPM_realloc(void *p, size_t size, const char *file, int line, const char *func)
+{
 	return iMalloc->realloc(p,size,HPM_file2ptr(file),line,func);
 }
-void* HPM_reallocz(void *p, size_t size, const char *file, int line, const char *func) {
+
+void* HPM_reallocz(void *p, size_t size, const char *file, int line, const char *func)
+{
 	return iMalloc->reallocz(p,size,HPM_file2ptr(file),line,func);
 }
-char* HPM_astrdup(const char *p, const char *file, int line, const char *func) {
+
+char* HPM_astrdup(const char *p, const char *file, int line, const char *func)
+{
 	return iMalloc->astrdup(p,HPM_file2ptr(file),line,func);
 }
 
@@ -850,6 +867,7 @@ bool hplugins_get_battle_conf(const char *w1, int *value)
 {
 	int i;
 
+	nullpo_retr(w1, value);
 	nullpo_retr(false, value);
 
 	ARR_FIND(0, VECTOR_LENGTH(HPM->config_listeners[HPCT_BATTLE]), i, strcmpi(w1, VECTOR_INDEX(HPM->config_listeners[HPCT_BATTLE], i).key) == 0);
@@ -1013,9 +1031,11 @@ void hplugin_data_store_create(struct hplugin_data_store **storeptr, enum HPlugi
 /**
  * Called by HPM->DataCheck on a plugins incoming data, ensures data structs in use are matching!
  **/
-bool HPM_DataCheck(struct s_HPMDataCheck *src, unsigned int size, int version, char *name) {
+bool HPM_DataCheck(struct s_HPMDataCheck *src, unsigned int size, int version, char *name)
+{
 	unsigned int i, j;
 
+	nullpo_retr(false, src);
 	if (version != datacheck_version) {
 		ShowError("HPMDataCheck:%s: DataCheck API version mismatch %d != %d\n", name, datacheck_version, version);
 		return false;
@@ -1040,7 +1060,8 @@ bool HPM_DataCheck(struct s_HPMDataCheck *src, unsigned int size, int version, c
 	return true;
 }
 
-void HPM_datacheck_init(const struct s_HPMDataCheck *src, unsigned int length, int version) {
+void HPM_datacheck_init(const struct s_HPMDataCheck *src, unsigned int length, int version)
+{
 	unsigned int i;
 
 	datacheck_version = version;
@@ -1056,11 +1077,13 @@ void HPM_datacheck_init(const struct s_HPMDataCheck *src, unsigned int length, i
 	}
 }
 
-void HPM_datacheck_final(void) {
+void HPM_datacheck_final(void)
+{
 	db_destroy(datacheck_db);
 }
 
-void hpm_init(void) {
+void hpm_init(void)
+{
 	int i;
 	datacheck_db = NULL;
 	datacheck_data = NULL;
@@ -1152,6 +1175,7 @@ void hpm_final(void)
 
 	return;
 }
+
 void hpm_defaults(void)
 {
 	HPM = &HPM_s;
