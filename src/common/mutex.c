@@ -25,6 +25,7 @@
 
 #include "common/cbasetypes.h" // for WIN32
 #include "common/memmgr.h"
+#include "common/nullpo.h"
 #include "common/showmsg.h"
 #include "common/timer.h"
 
@@ -85,6 +86,7 @@ struct mutex_data *mutex_create(void)
 /// @copydoc mutex_interface::destroy()
 void mutex_destroy(struct mutex_data *m)
 {
+	nullpo_retv(m);
 #ifdef WIN32
 	DeleteCriticalSection(&m->hMutex);
 #else
@@ -97,6 +99,7 @@ void mutex_destroy(struct mutex_data *m)
 /// @copydoc mutex_interface::lock()
 void mutex_lock(struct mutex_data *m)
 {
+	nullpo_retv(m);
 #ifdef WIN32
 	EnterCriticalSection(&m->hMutex);
 #else
@@ -107,6 +110,7 @@ void mutex_lock(struct mutex_data *m)
 /// @copydoc mutex_interface::trylock()
 bool mutex_trylock(struct mutex_data *m)
 {
+	nullpo_retr(false, m);
 #ifdef WIN32
 	if (TryEnterCriticalSection(&m->hMutex) != FALSE)
 		return true;
@@ -120,6 +124,7 @@ bool mutex_trylock(struct mutex_data *m)
 /// @copydoc mutex_interface::unlock()
 void mutex_unlock(struct mutex_data *m)
 {
+	nullpo_retv(m);
 #ifdef WIN32
 	LeaveCriticalSection(&m->hMutex);
 #else
@@ -153,6 +158,7 @@ struct cond_data *cond_create(void)
 /// @copydoc mutex_interface::cond_destroy()
 void cond_destroy(struct cond_data *c)
 {
+	nullpo_retv(c);
 #ifdef WIN32
 	CloseHandle(c->events[EVENT_COND_SIGNAL]);
 	CloseHandle(c->events[EVENT_COND_BROADCAST]);
@@ -172,6 +178,7 @@ void cond_wait(struct cond_data *c, struct mutex_data *m, sysint timeout_ticks)
 	int result;
 	bool is_last = false;
 
+	nullpo_retv(c);
 	EnterCriticalSection(&c->waiters_lock);
 	c->nWaiters++;
 	LeaveCriticalSection(&c->waiters_lock);
@@ -202,6 +209,7 @@ void cond_wait(struct cond_data *c, struct mutex_data *m, sysint timeout_ticks)
 	mutex->lock(m);
 
 #else
+	nullpo_retv(m);
 	if (timeout_ticks < 0) {
 		pthread_cond_wait(&c->hCond,  &m->hMutex);
 	} else {
@@ -222,6 +230,7 @@ void cond_signal(struct cond_data *c)
 #ifdef WIN32
 #	if 0
 	bool has_waiters = false;
+	nullpo_retv(c);
 	EnterCriticalSection(&c->waiters_lock);
 	if(c->nWaiters > 0)
 		has_waiters = true;
@@ -231,6 +240,7 @@ void cond_signal(struct cond_data *c)
 #	endif // 0
 		SetEvent(c->events[EVENT_COND_SIGNAL]);
 #else
+	nullpo_retv(c);
 	pthread_cond_signal(&c->hCond);
 #endif
 }
@@ -241,6 +251,7 @@ void cond_broadcast(struct cond_data *c)
 #ifdef WIN32
 #	if 0
 	bool has_waiters = false;
+	nullpo_retv(c);
 	EnterCriticalSection(&c->waiters_lock);
 	if(c->nWaiters > 0)
 		has_waiters = true;
@@ -250,6 +261,7 @@ void cond_broadcast(struct cond_data *c)
 #	endif // 0
 		SetEvent(c->events[EVENT_COND_BROADCAST]);
 #else
+	nullpo_retv(c);
 	pthread_cond_broadcast(&c->hCond);
 #endif
 }
