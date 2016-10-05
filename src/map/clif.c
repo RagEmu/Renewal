@@ -14327,7 +14327,9 @@ void clif_ranklist_sub(unsigned char *buf, enum fame_list_type type) {
 }
 
 /// 097d <RankingType>.W {<CharName>.24B <point>L}*10 <mypoint>L (ZC_ACK_RANKING)
-void clif_ranklist(struct map_session_data *sd, enum fame_list_type type) {
+void clif_ranklist(struct map_session_data *sd, enum fame_list_type type)
+{
+#if PACKETVER >= 20120502
 	int fd;
 	int mypoint = 0;
 	int upperMask;
@@ -14351,6 +14353,7 @@ void clif_ranklist(struct map_session_data *sd, enum fame_list_type type) {
 
 	WFIFOL(fd, 284) = mypoint; //mypoint
 	WFIFOSET(fd, 288);
+#endif
 }
 
 void clif_parse_ranklist(int fd, struct map_session_data *sd) __attribute__((nonnull (2)));
@@ -17704,7 +17707,9 @@ void clif_snap( struct block_list *bl, short x, short y ) {
 	clif->send(buf,packet_len(0x8d2),bl,AREA);
 }
 
-void clif_monster_hp_bar( struct mob_data* md, struct map_session_data *sd ) {
+void clif_monster_hp_bar(struct mob_data *md, struct map_session_data *sd)
+{
+#if PACKETVER >= 20120228
 	struct packet_monster_hp p;
 
 	nullpo_retv(md);
@@ -17715,6 +17720,7 @@ void clif_monster_hp_bar( struct mob_data* md, struct map_session_data *sd ) {
 	p.MaxHP = md->status.max_hp;
 
 	clif->send(&p, sizeof(p), &sd->bl, SELF);
+#endif
 }
 
 /* [Ind/Hercules] placeholder for unsupported incoming packets (avoids server disconnecting client) */
@@ -18274,7 +18280,9 @@ void clif_parse_BankWithdraw(int fd, struct map_session_data *sd)
 }
 
 void clif_parse_BankCheck(int fd, struct map_session_data* sd) __attribute__((nonnull (2)));
-void clif_parse_BankCheck(int fd, struct map_session_data* sd) {
+void clif_parse_BankCheck(int fd, struct map_session_data* sd)
+{
+#if PACKETVER >= 20130313
 	struct packet_banking_check p;
 
 	if (!battle_config.feature_banking) {
@@ -18287,6 +18295,7 @@ void clif_parse_BankCheck(int fd, struct map_session_data* sd) {
 	p.Reason = (short)0;
 
 	clif->send(&p,sizeof(p), &sd->bl, SELF);
+#endif
 }
 
 void clif_parse_BankOpen(int fd, struct map_session_data* sd) __attribute__((nonnull (2)));
@@ -18299,7 +18308,9 @@ void clif_parse_BankClose(int fd, struct map_session_data* sd) {
 	return;
 }
 
-void clif_bank_deposit(struct map_session_data *sd, enum e_BANKING_DEPOSIT_ACK reason) {
+void clif_bank_deposit(struct map_session_data *sd, enum e_BANKING_DEPOSIT_ACK reason)
+{
+#if PACKETVER >= 20130313
 	struct packet_banking_deposit_ack p;
 
 	nullpo_retv(sd);
@@ -18309,9 +18320,12 @@ void clif_bank_deposit(struct map_session_data *sd, enum e_BANKING_DEPOSIT_ACK r
 	p.Reason = (short)reason;
 
 	clif->send(&p,sizeof(p), &sd->bl, SELF);
+#endif
 }
 
-void clif_bank_withdraw(struct map_session_data *sd,enum e_BANKING_WITHDRAW_ACK reason) {
+void clif_bank_withdraw(struct map_session_data *sd,enum e_BANKING_WITHDRAW_ACK reason)
+{
+#if PACKETVER >= 20130313
 	struct packet_banking_withdraw_ack p;
 
 	nullpo_retv(sd);
@@ -18321,6 +18335,7 @@ void clif_bank_withdraw(struct map_session_data *sd,enum e_BANKING_WITHDRAW_ACK 
 	p.Reason = (short)reason;
 
 	clif->send(&p,sizeof(p), &sd->bl, SELF);
+#endif
 }
 
 /* TODO: official response packet (tried 0x8cb/0x97b but the display was quite screwed up.) */
@@ -18577,6 +18592,7 @@ void clif_PartyLeaderChanged(struct map_session_data *sd, int prev_leader_aid, i
 void clif_parse_RouletteOpen(int fd, struct map_session_data* sd) __attribute__((nonnull (2)));
 /* Roulette System [Yommy/Hercules] */
 void clif_parse_RouletteOpen(int fd, struct map_session_data* sd) {
+#if PACKETVER >= 20140612
 	struct packet_roulette_open_ack p;
 
 	if( !battle_config.feature_roulette ) {
@@ -18595,10 +18611,13 @@ void clif_parse_RouletteOpen(int fd, struct map_session_data* sd) {
 	p.SilverPoint = pc_readglobalreg(sd, script->add_str("TmpRouletteSilver"));
 
 	clif->send(&p,sizeof(p), &sd->bl, SELF);
+#endif
 }
 
 void clif_parse_RouletteInfo(int fd, struct map_session_data* sd) __attribute__((nonnull (2)));
-void clif_parse_RouletteInfo(int fd, struct map_session_data* sd) {
+void clif_parse_RouletteInfo(int fd, struct map_session_data* sd)
+{
+#if PACKETVER >= 20140612
 	struct packet_roulette_info_ack p;
 	unsigned short i, j, count = 0;
 
@@ -18621,7 +18640,7 @@ void clif_parse_RouletteInfo(int fd, struct map_session_data* sd) {
 		}
 	}
 	clif->send(&p,sizeof(p), &sd->bl, SELF);
-	return;
+#endif
 }
 
 void clif_parse_RouletteClose(int fd, struct map_session_data* sd) __attribute__((nonnull (2)));
@@ -18695,7 +18714,9 @@ void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd) __attribut
 /**
  * Request to cash in!
  **/
-void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd) {
+void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd)
+{
+#if PACKETVER >= 20140612
 	struct packet_roulette_itemrecv_ack p;
 
 	if( !battle_config.feature_roulette ) {
@@ -18738,7 +18759,7 @@ void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd) {
 		p.Result = RECV_ITEM_FAILED;
 
 	clif->send(&p,sizeof(p), &sd->bl, SELF);
-	return;
+#endif
 }
 
 bool clif_parse_roulette_db(void) {
@@ -18833,7 +18854,9 @@ bool clif_parse_roulette_db(void) {
 /**
  *
  **/
-void clif_roulette_generate_ack(struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, short bonusItemID) {
+void clif_roulette_generate_ack(struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, short bonusItemID)
+{
+#if PACKETVER >= 20140612
 	struct packet_roulette_generate_ack p;
 
 	nullpo_retv(sd);
@@ -18847,6 +18870,7 @@ void clif_roulette_generate_ack(struct map_session_data *sd, unsigned char resul
 	p.RemainSilver = pc_readglobalreg(sd, script->add_str("TmpRouletteSilver"));
 
 	clif->send(&p,sizeof(p), &sd->bl, SELF);
+#endif
 }
 
 /**
@@ -18854,6 +18878,7 @@ void clif_roulette_generate_ack(struct map_session_data *sd, unsigned char resul
  */
 void clif_openmergeitem(int fd, struct map_session_data *sd)
 {
+#if PACKETVER > 20120228
 	int i = 0, n = 0, j = 0;
 	struct merge_item merge_items[MAX_INVENTORY];
 	struct merge_item *merge_items_[MAX_INVENTORY] = {0};
@@ -18896,6 +18921,7 @@ void clif_openmergeitem(int fd, struct map_session_data *sd)
 	for ( i = 0; i < j; i++ )
 		WFIFOW(fd,i*2+4) = merge_items_[i]->position;
 	WFIFOSET(fd,2*j+4);
+#endif
 }
 
 int clif_comparemergeitem(const void *a, const void *b)
@@ -18912,6 +18938,7 @@ int clif_comparemergeitem(const void *a, const void *b)
 
 void clif_ackmergeitems(int fd, struct map_session_data *sd)
 {
+#if PACKETVER > 20120228
 	int i = 0, n = 0, length = 0, count = 0;
 	int16 nameid = 0, indexes[MAX_INVENTORY] = {0}, amounts[MAX_INVENTORY] = {0};
 	struct item item_data;
@@ -18991,6 +19018,7 @@ void clif_ackmergeitems(int fd, struct map_session_data *sd)
 	WFIFOW(fd,4) = count;
 	WFIFOB(fd,6) = MERGEITEM_SUCCESS;
 	WFIFOSET(fd,7);
+#endif
 }
 
 void clif_cancelmergeitem (int fd, struct map_session_data *sd)
