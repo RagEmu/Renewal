@@ -102,8 +102,9 @@ struct malloc_interface {
 void malloc_defaults(void);
 
 void memmgr_report(int extra);
-#endif // RAGEMU_CORE
-
 HPShared struct malloc_interface *iMalloc;
+#else
+#define iMalloc HPMi->memmgr
+#endif // RAGEMU_CORE
 
 #endif /* COMMON_MEMMGR_H */
