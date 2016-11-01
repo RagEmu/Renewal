@@ -2113,6 +2113,8 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x0366,90,clif->pUseSkillToPosMoreInfo,2,4,6,8,10);
 	packet(0x096A,6,clif->pGetCharNameRequest,2);
 	packet(0x0368,6,clif->pSolveCharName,2);
+	packet(0x0363,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
+	packet(0x0436,4,clif->pDull); // CZ_GANGSI_RANK
 #endif
 
 //2013-03-20Ragexe (Judas + Yommy)
@@ -2143,14 +2145,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 #else // not PACKETVER_RE
 	packet(0x085D,18,clif->pPartyBookingRegisterReq,2,4);
 #endif // PACKETVER_RE
-	//packet(0x095A,8); // unknown usage
 	packet(0x0868,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x0888,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x086D,26,clif->pPartyInvite2,2);
-	//packet(0x0890,4); // unknown usage
 	packet(0x086F,26,clif->pFriendsListAdd,2);
 	packet(0x093F,5,clif->pHomMenu,2,4);
 	packet(0x0947,36,clif->pStoragePassword,0);
+	packet(0x0890,4,clif->pDull); // CZ_GANGSI_RANK
+	packet(0x095a,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
 	// Shuffle End
 
 	// New Packets
@@ -2188,14 +2190,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 #else // not PACKETVER_RE
 	packet(0x092D,18,clif->pPartyBookingRegisterReq,2,4);
 #endif // PACKETVER_RE
-	//packet(0x08AA,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0963,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x0943,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0947,26,clif->pPartyInvite2,2);
-	//packet(0x0862,4); // CZ_GANGSI_RANK
 	packet(0x0962,26,clif->pFriendsListAdd,2);
 	packet(0x0931,5,clif->pHomMenu,2,4);
 	packet(0x093E,36,clif->pStoragePassword,0);
+	packet(0x0862,4,clif->pDull); // CZ_GANGSI_RANK
+	packet(0x08aa,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
 	// Shuffle End
 #endif
 
@@ -2227,14 +2229,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 #else // not PACKETVER_RE
 	packet(0x089B,18,clif->pPartyBookingRegisterReq,2,4);
 #endif // PACKETVER_RE
-	//packet(0x0965,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x086A,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x08A9,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0950,26,clif->pPartyInvite2,2);
-	//packet(0x08AC,4); // CZ_GANGSI_RANK
 	packet(0x0362,26,clif->pFriendsListAdd,2);
 	packet(0x0926,5,clif->pHomMenu,2,4);
 	packet(0x088E,36,clif->pStoragePassword,0);
+	packet(0x08ac,4,clif->pDull); // CZ_GANGSI_RANK
+	packet(0x0965,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
 	// Shuffle End
 #endif
 
@@ -2265,14 +2267,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 #else // not PACKETVER_RE
 	packet(0x0874,18,clif->pPartyBookingRegisterReq,2,4);
 #endif // PACKETVER_RE
-	// packet(0x088E,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0958,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x0919,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x08A8,26,clif->pPartyInvite2,2);
-	// packet(0x0888,4); // CZ_GANGSI_RANK
 	packet(0x0877,26,clif->pFriendsListAdd,2);
 	packet(0x023B,5,clif->pHomMenu,2,4);
 	packet(0x0956,36,clif->pStoragePassword,0);
+	packet(0x0888,4,clif->pDull); // CZ_GANGSI_RANK
+	packet(0x088e,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
 #endif
 
 //2013-06-05Ragexe (Shakto)
@@ -2302,19 +2304,20 @@ packet(0x96e,-1,clif->ackmergeitems);
 #else // not PACKETVER_RE
 	packet(0x0365,18,clif->pPartyBookingRegisterReq,2,4);
 #endif // PACKETVER_RE
-	// packet(0x0363,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0281,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x022D,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0802,26,clif->pPartyInvite2,2);
-	// packet(0x0436,4); // CZ_GANGSI_RANK
 	packet(0x023B,26,clif->pFriendsListAdd,2);
 	packet(0x0361,5,clif->pHomMenu,2,4);
 	packet(0x0883,36,clif->pStoragePassword,0);
 	packet(0x097C,4,clif->pRanklist);
+	packet(0x0363,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
+	packet(0x0436,4,clif->pDull); // CZ_GANGSI_RANK
 #endif
 
 //2013-06-12Ragexe (Shakto)
 #if PACKETVER >= 20130612
+// most shuffle packets used from 20130605
 	packet(0x087E,5,clif->pChangeDir,2,4);
 	packet(0x0919,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0940,26,clif->pFriendsListAdd,2);
@@ -2349,14 +2352,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 #else // not PACKETVER_RE
 	packet(0x08A7,18,clif->pPartyBookingRegisterReq,2,4);
 #endif // PACKETVER_RE
-	// packet(0x087A,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0942,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x095B,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0887,26,clif->pPartyInvite2,2);
-	// packet(0x0878,4); // CZ_GANGSI_RANK
 	packet(0x0953,26,clif->pFriendsListAdd,2);
 	packet(0x02C4,5,clif->pHomMenu,2,4);
 	packet(0x0864,36,clif->pStoragePassword,0);
+	packet(0x0878,4,clif->pDull); // CZ_GANGSI_RANK
+	packet(0x087a,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
 #endif
 
 //2013-06-26Ragexe (Shakto)
@@ -2386,14 +2389,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 #else // not PACKETVER_RE
 	packet(0x0894,18,clif->pPartyBookingRegisterReq,2,4);
 #endif // PACKETVER_RE
-	// packet(0x0860,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x08A5,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x088C,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0895,26,clif->pPartyInvite2,2);
-	// packet(0x088F,4); // CZ_GANGSI_RANK
 	packet(0x08AB,26,clif->pFriendsListAdd,2);
 	packet(0x0960,5,clif->pHomMenu,2,4);
 	packet(0x0930,36,clif->pStoragePassword,0);
+	packet(0x0860,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
+	packet(0x088f,4,clif->pDull); // CZ_GANGSI_RANK
 #endif
 
 //2013-07-03Ragexe (Shakto)
@@ -2411,18 +2414,19 @@ packet(0x96e,-1,clif->ackmergeitems);
 #else // not PACKETVER_RE
 	packet(0x0365,18,clif->pPartyBookingRegisterReq,2,4);
 #endif // PACKETVER_RE
-	// packet(0x0363,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0281,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x022D,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0802,26,clif->pPartyInvite2,2);
-	// packet(0x0436,4); // CZ_GANGSI_RANK
 	packet(0x0360,26,clif->pFriendsListAdd,2);
 	packet(0x094A,5,clif->pHomMenu,2,4);
 	packet(0x0873,36,clif->pStoragePassword,0);
+	packet(0x0363,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
+	packet(0x0436,4,clif->pDull); // CZ_GANGSI_RANK
 #endif
 
 /* Bank System [Yommy/Hercules] */
 #if PACKETVER >= 20130724
+// shuffle packets not added
 	packet(0x09A6,12); // ZC_BANKING_CHECK
 	packet(0x09A7,10,clif->pBankDeposit,2,4,6);
 	packet(0x09A8,16); // ZC_ACK_BANKING_DEPOSIT
@@ -2463,14 +2467,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 #else // not PACKETVER_RE
 	packet(0x0365,18,clif->pPartyBookingRegisterReq,2,4);
 #endif // PACKETVER_RE
-	// packet(0x0363,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0281,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x022D,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0802,26,clif->pPartyInvite2,2);
-	// packet(0x0436,4); // CZ_GANGSI_RANK
 	packet(0x023B,26,clif->pFriendsListAdd,2);
 	packet(0x0361,5,clif->pHomMenu,2,4);
 	packet(0x0887,36,clif->pStoragePassword,0);
+	packet(0x0363,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
+	packet(0x0436,4,clif->pDull); // CZ_GANGSI_RANK
 #endif
 
 //2013-08-14aRagexe - Themon
@@ -2500,14 +2504,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 #else // not PACKETVER_RE
 	packet(0x0959,18,clif->pPartyBookingRegisterReq,2,4);
 #endif // PACKETVER_RE
-	// packet(0x0896,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x08A4,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x0368,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0927,26,clif->pPartyInvite2,2);
-	// packet(0x0815,4); // CZ_GANGSI_RANK
 	packet(0x0281,26,clif->pFriendsListAdd,2);
 	packet(0x0958,5,clif->pHomMenu,2,4);
 	packet(0x0885,36,clif->pStoragePassword,0);
+	packet(0x0815,4,clif->pDull); // CZ_GANGSI_RANK
+	packet(0x0896,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
 #endif
 
 // 2013-12-18bRagexe - Yommy
@@ -2533,14 +2537,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x0817,2,clif->pReqCloseBuyingStore,0);
 	packet(0x0815,-1,clif->pReqOpenBuyingStore,2,4,8,9,89);
 	packet(0x0365,18,clif->pPartyBookingRegisterReq,2,4);
-	// packet(0x0363,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0281,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x092F,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0802,26,clif->pPartyInvite2,2);
-	// packet(0x087B,4); // CZ_GANGSI_RANK
 	packet(0x08AB,26,clif->pFriendsListAdd,2);
 	packet(0x0811,5,clif->pHomMenu,2,4);
 	packet(0x085C,36,clif->pStoragePassword,0);
+	packet(0x0363,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
+	packet(0x087b,4,clif->pDull); // CZ_GANGSI_RANK
 	/* New */
 	packet(0x09d4,2,clif->pNPCShopClosed);
 	packet(0x09ce,102,clif->pGM_Monster_Item,2);
@@ -2572,14 +2576,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x0817,2,clif->pReqCloseBuyingStore,0);
 	packet(0x0815,-1,clif->pReqOpenBuyingStore,2,4,8,9,89);
 	packet(0x0365,18,clif->pPartyBookingRegisterReq,2,4);
-	// packet(0x0363,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0281,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x022d,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0802,26,clif->pPartyInvite2,2);
-	// packet(0x0436,4); // CZ_GANGSI_RANK
 	packet(0x023B,26,clif->pFriendsListAdd,2);
 	packet(0x0361,5,clif->pHomMenu,2,4);
 	packet(0x08A4,36,clif->pStoragePassword,0);
+	packet(0x0363,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
+	packet(0x0436,4,clif->pDull); // CZ_GANGSI_RANK
 	packet(0x09df,7);
 	packet(0x09cb,17);
 #endif
@@ -2607,20 +2611,21 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x094C,2,clif->pReqCloseBuyingStore,0);
 	packet(0x0365,-1,clif->pReqOpenBuyingStore,2,4,8,9,89);
 	packet(0x091F,18,clif->pPartyBookingRegisterReq,2,4);
-	// packet(0x093E,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x022D,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x089C,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x08A9,26,clif->pPartyInvite2,2);
-	// packet(0x087E,4); // CZ_GANGSI_RANK
 	packet(0x0943,26,clif->pFriendsListAdd,2);
 	packet(0x0949,5,clif->pHomMenu,2,4);
 	packet(0x091D,36,clif->pStoragePassword,0);
+	packet(0x087e,4,clif->pDull); // CZ_GANGSI_RANK
+	packet(0x093e,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
 #endif
 
 // 2014 Packet Data
 
 // 2014-01-15eRagexe - YomRawr
 #if PACKETVER >= 20140115
+// probably for some shuffle packets used wrong id
 	packet(0x0369,7,clif->pActionRequest,2,6);
 	packet(0x083C,10,clif->pUseSkillToId,2,4,6);
 	packet(0x0437,5,clif->pWalkToXY,2);
@@ -2642,11 +2647,11 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x0965,2,clif->pReqCloseBuyingStore,0);
 	packet(0x0815,-1,clif->pReqOpenBuyingStore,2,4,8,9,89);
 	packet(0x096A,18,clif->pPartyBookingRegisterReq,2,4);
-	// packet(0x088A,8); // CZ_JOIN_BATTLE_FIELD
+	// packet(0x088A,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0965,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x0966,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x095D,26,clif->pPartyInvite2,2);
-	// packet(0x095B,4); // CZ_GANGSI_RANK
+	// packet(0x095B,4,clif->pDull); // CZ_GANGSI_RANK
 	packet(0x089B,26,clif->pFriendsListAdd,2);
 	packet(0x092D,5,clif->pHomMenu,2,4);
 	packet(0x0865,36,clif->pStoragePassword,0);
@@ -2675,14 +2680,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x0817,2,clif->pReqCloseBuyingStore,0);
 	packet(0x0815,-1,clif->pReqOpenBuyingStore,2,4,8,9,89);
 	packet(0x0365,18,clif->pPartyBookingRegisterReq,2,4);
-	// packet(0x0363,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0281,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x022D,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0802,26,clif->pPartyInvite2,2);
-	// packet(0x0436,4); // CZ_GANGSI_RANK
 	packet(0x023B,26,clif->pFriendsListAdd,2);
 	packet(0x0361,5,clif->pHomMenu,2,4);
 	packet(0x0938,36,clif->pStoragePassword,0);
+	packet(0x0363,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
+	packet(0x0436,4,clif->pDull); // CZ_GANGSI_RANK
 	packet(0x09DF,7);
 #endif
 
@@ -2709,14 +2714,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x0817,2,clif->pReqCloseBuyingStore,0);
 	packet(0x0361,-1,clif->pReqOpenBuyingStore,2,4,8,9,89);
 	packet(0x0365,18,clif->pPartyBookingRegisterReq,2,4);
-	// packet(0x0363,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0281,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x0438,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0802,26,clif->pPartyInvite2,2);
-	// packet(0x0878,4); // CZ_GANGSI_RANK
 	packet(0x07E4,26,clif->pFriendsListAdd,2);
 	packet(0x0934,5,clif->pHomMenu,2,4);
 	packet(0x095e,36,clif->pStoragePassword,0);
+	packet(0x0363,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
+	packet(0x0878,4,clif->pDull); // CZ_GANGSI_RANK
 	packet(0x09DF,7);
 #endif
 
@@ -2743,14 +2748,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x0867,2,clif->pReqCloseBuyingStore,0);
 	packet(0x0944,-1,clif->pReqOpenBuyingStore,2,4,8,9,89);
 	packet(0x08AC,18,clif->pPartyBookingRegisterReq,2,4);
-	// packet(0x094C,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0883,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x0920,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0890,26,clif->pPartyInvite2,2);
-	// packet(0x088C,4); // CZ_GANGSI_RANK
 	packet(0x089A,26,clif->pFriendsListAdd,2);
 	packet(0x0896,5,clif->pHomMenu,2,4);
 	packet(0x0926,36,clif->pStoragePassword,0);
+	packet(0x088c,4,clif->pDull); // CZ_GANGSI_RANK
+	packet(0x094c,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
 	packet(0x09DF,7);
 #endif
 
@@ -2777,14 +2782,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x0817,2,clif->pReqCloseBuyingStore,0);
 	packet(0x0815,-1,clif->pReqOpenBuyingStore,2,4,8,9,89);
 	packet(0x0365,18,clif->pPartyBookingRegisterReq,2,4);
-	// packet(0x0363,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0281,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x022D,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0802,26,clif->pPartyInvite2,2);
-	// packet(0x0436,4); // CZ_GANGSI_RANK
 	packet(0x023B,26,clif->pFriendsListAdd,2);
 	packet(0x0361,5,clif->pHomMenu,2,4);
 	packet(0x095C,36,clif->pStoragePassword,0);
+	packet(0x0363,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
+	packet(0x0436,4,clif->pDull); // CZ_GANGSI_RANK
 	packet(0x09DF,7);
 #endif
 
@@ -2815,14 +2820,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x0817,2,clif->pReqCloseBuyingStore,0);
 	packet(0x0815,-1,clif->pReqOpenBuyingStore,2,4,8,9,89);
 	packet(0x0365,18,clif->pPartyBookingRegisterReq,2,4);
-	// packet(0x0363,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0281,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x086E,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0802,26,clif->pPartyInvite2,2);
-	// packet(0x0922,4); // CZ_GANGSI_RANK
 	packet(0x094B,26,clif->pFriendsListAdd,2);
 	packet(0x0364,5,clif->pHomMenu,2,4);
 	packet(0x0936,36,clif->pStoragePassword,0);
+	packet(0x0363,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
+	packet(0x0922,4,clif->pDull); // CZ_GANGSI_RANK
 	packet(0x09DF,7);
 	packet(0x0a00,269);
 	packet(0x09e5,18); // ZC_DELETEITEM_FROM_MCSTORE2
@@ -2866,18 +2871,19 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x0817,2,clif->pReqCloseBuyingStore,0);
 	packet(0x0815,-1,clif->pReqOpenBuyingStore,2,4,8,9,89);
 	packet(0x0955,18,clif->pPartyBookingRegisterReq,2,4);
-	// packet(0x092B,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0281,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x093B,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0896,26,clif->pPartyInvite2,2);
-	// packet(0x08AB,4); // CZ_GANGSI_RANK
 	packet(0x091A,26,clif->pFriendsListAdd,2);
 	packet(0x0899,5,clif->pHomMenu,2,4);
 	packet(0x0438,36,clif->pStoragePassword,0);
 	packet(0x0A01,3,clif->pHotkeyRowShift,2);
+	packet(0x08ab,4,clif->pDull); // CZ_GANGSI_RANK
+	packet(0x092b,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
 #endif
 
 #if PACKETVER >= 20150226
+// shuffle packets not added
 	packet(0x0A09,45);
 	packet(0x0A0A,47);
 	packet(0x0A0B,47);
@@ -2910,11 +2916,11 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x022D,2,clif->pReqCloseBuyingStore,0);
 	packet(0x0815,-1,clif->pReqOpenBuyingStore,2,4,8,9,89);
 	packet(0x0883,18,clif->pPartyBookingRegisterReq,2,4);
-	//packet(0x02C4,8); // CZ_JOIN_BATTLE_FIELD
+	packet(0x02C4,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0960,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x0363,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x094A,26,clif->pPartyInvite2,2);
-	//packet(0x0927,4); // CZ_GANGSI_RANK
+	packet(0x0927,4,clif->pDull); // CZ_GANGSI_RANK
 	packet(0x08A8,26,clif->pFriendsListAdd,2);
 	packet(0x0817,5,clif->pHomMenu,2,4);
 	packet(0x0923,36,clif->pStoragePassword,0);
@@ -2987,14 +2993,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x0817,2,clif->pReqCloseBuyingStore,0);
 	packet(0x0815,-1,clif->pReqOpenBuyingStore,2,4,8,9,89);
 	packet(0x0365,18,clif->pPartyBookingRegisterReq,2,4);
-//	packet(0x0363,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0281,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x022D,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0802,26,clif->pPartyInvite2,2);
-//	packet(0x0436,4); // CZ_GANGSI_RANK
 	packet(0x023B,26,clif->pFriendsListAdd,2);
 	packet(0x0361,5,clif->pHomMenu,2,4);
 	packet(0x0860,36,clif->pStoragePassword,0);
+	packet(0x0363,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
+	packet(0x0436,4,clif->pDull); // CZ_GANGSI_RANK
 #endif
 
 // 2015-10-29aRagexe
@@ -3020,14 +3026,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x0817,2,clif->pReqCloseBuyingStore,0);
 	packet(0x0815,-1,clif->pReqOpenBuyingStore,2,4,8,9,89);
 	packet(0x0365,18,clif->pPartyBookingRegisterReq,2,4);
-	packet(0x0363,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0281,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x022D,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0802,26,clif->pPartyInvite2,2);
-	packet(0x0436,4); // CZ_GANGSI_RANK
 	packet(0x023B,26,clif->pFriendsListAdd,2);
 	packet(0x0361,5,clif->pHomMenu,2,4);
-	packet(0x0960,36,clif->pStoragePassword,0);
+	packet(0x0860,36,clif->pStoragePassword,0);
+	packet(0x0363,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
+	packet(0x0436,4,clif->pDull); // CZ_GANGSI_RANK
 	packet(0x0a39,36);
 #endif
 
@@ -3053,15 +3059,16 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x0436,6,clif->pReqClickBuyingStore,2);
 	packet(0x0817,2,clif->pReqCloseBuyingStore,0);
 	packet(0x023B,-1,clif->pReqOpenBuyingStore,2,4,8,9,89);
-	packet(0x0811,18,clif->pPartyBookingRegisterReq,2,4);
-	packet(0x0939,8); // CZ_JOIN_BATTLE_FIELD
-	packet(0x093A,-1,clif->pItemListWindowSelected,2,4,8);
+	packet(0x0811,18,clif->pPartyBookingRegisterReq,2,4,6);
+	packet(0x093A,-1,clif->pItemListWindowSelected,2,4,8,12);
 	packet(0x0360,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x08A5,26,clif->pPartyInvite2,2);
-	packet(0x08A3,4); // CZ_GANGSI_RANK
 	packet(0x07EC,26,clif->pFriendsListAdd,2);
 	packet(0x088D,5,clif->pHomMenu,2,4);
-	packet(0x0940,36,clif->pStoragePassword,0);
+	packet(0x0940,36,clif->pStoragePassword,2,4,20);
+	packet(0x08a3,4,clif->pDull); // CZ_GANGSI_RANK
+	packet(0x0939,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
+	packet(0x0a39,36);
 #endif
 
 // 2015-12-16aRagexe
@@ -3087,14 +3094,14 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x083C,2,clif->pReqCloseBuyingStore,0);
 	packet(0x0870,-1,clif->pReqOpenBuyingStore,2,4,8,9,89);
 	packet(0x0365,18,clif->pPartyBookingRegisterReq,2,4);
-	packet(0x086A,8); // CZ_JOIN_BATTLE_FIELD
 	packet(0x0949,-1,clif->pItemListWindowSelected,2,4,8);
 	packet(0x0947,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x086E,26,clif->pPartyInvite2,2);
-	packet(0x0364,4); // CZ_GANGSI_RANK
 	packet(0x091D,26,clif->pFriendsListAdd,2);
 	packet(0x0362,5,clif->pHomMenu,2,4);
 	packet(0x0885,36,clif->pStoragePassword,0);
+	packet(0x0364,4,clif->pDull); // CZ_GANGSI_RANK
+	packet(0x086a,8,clif->pDull); // CZ_JOIN_BATTLE_FIELD
 #endif
 
 #if PACKETVER >= 20160316
