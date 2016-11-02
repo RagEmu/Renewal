@@ -19094,32 +19094,41 @@ const char *clif_get_bl_name(const struct block_list *bl)
  */
 void clif_navigateTo(struct map_session_data *sd, const char *map_name, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id)
 {
-#if PACKETVER >= 20111010
-	int fd = sd->fd;
+#if PACKETVER >= 20120307
+	int fd;
 
-	WFIFOHEAD(fd,27);
-	WFIFOW(fd,0) = 0x08e2;
+	nullpo_retv(sd);
+	nullpo_retv(map_name);
+	fd = sd->fd;
+	WFIFOHEAD(fd, packet_len(0x8e2));
+	WFIFOW(fd, 0) = 0x8e2;
 
-	// Details of Navigation
+	// How detailed will our navigation be?
 	if (mob_id > 0) {
 		x = 0;
 		y = 0;
-		WFIFOB(fd,2) = 3; // monster with destination field
+		WFIFOB(fd, 2) = 3; // monster with destination field
 	} else if (x > 0 && y > 0) {
-		WFIFOB(fd,2) = 0; // with coordinates
+		WFIFOB(fd, 2) = 0; // with coordinates
 	} else {
 		x = 0;
 		y = 0;
-		WFIFOB(fd,2) = 1; // without coordinates(will fail if you are already on the map)
+		WFIFOB(fd, 2) = 1; // without coordinates(will fail if you are already on the map)
 	}
 
-	WFIFOB(fd,3) = flag; // Services to be used for transporation
-	WFIFOB(fd,4) = hideWindow; // If true, navigation window will not be opened
-	safestrncpy((char*)WFIFOP(fd,5), map_name, MAP_NAME_LENGTH_EXT); // Target map
-	WFIFOW(fd,21) = x; // Target x
-	WFIFOW(fd,23) = y; // Target y
-	WFIFOW(fd,25) = mob_id; // Target mob_id
-	WFIFOSET(fd,27);
+	// Which services can be used for transportation?
+	WFIFOB(fd, 3) = flag;
+	// If this flag is set, the navigation window will not be opened up
+	WFIFOB(fd, 4) = hideWindow;
+	// Target map
+	safestrncpy((char*)WFIFOP(fd, 5), map_name, MAP_NAME_LENGTH_EXT);
+	// Target x
+	WFIFOW(fd, 21) = x;
+	// Target y
+	WFIFOW(fd, 23) = y;
+	// Target monster ID
+	WFIFOW(fd, 25) = mob_id;
+	WFIFOSET(fd, packet_len(0x8e2));
 #endif
 }
 
