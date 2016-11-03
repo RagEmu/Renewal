@@ -1376,6 +1376,7 @@ static void clif_hom_spiritball_single(int fd, struct homun_data *hd) {
  *------------------------------------------*/
 void clif_charm_single(int fd, struct map_session_data *sd)
 {
+#if PACKETVER >= 20110809
 	nullpo_retv(sd);
 	WFIFOHEAD(fd, packet_len(0x08cf));
 	WFIFOW(fd,0) = 0x08cf;
@@ -1383,6 +1384,7 @@ void clif_charm_single(int fd, struct map_session_data *sd)
 	WFIFOW(fd,6) = sd->charm_type;
 	WFIFOW(fd,8) = sd->charm_count;
 	WFIFOSET(fd, packet_len(0x08cf));
+#endif
 }
 
 /*==========================================
@@ -17577,6 +17579,7 @@ void clif_parse_SkillSelectMenu(int fd, struct map_session_data *sd) {
  *------------------------------------------*/
 void clif_charm(struct map_session_data *sd)
 {
+#if PACKETVER >= 20110809
 	unsigned char buf[10];
 
 	nullpo_retv(sd);
@@ -17586,6 +17589,7 @@ void clif_charm(struct map_session_data *sd)
 	WBUFW(buf,6) = sd->charm_type;
 	WBUFW(buf,8) = sd->charm_count;
 	clif->send(buf,packet_len(0x08cf),&sd->bl,AREA);
+#endif
 }
 
 void clif_parse_MoveItem(int fd, struct map_session_data *sd) __attribute__((nonnull (2)));
