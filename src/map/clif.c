@@ -17703,6 +17703,7 @@ void clif_favorite_item(struct map_session_data* sd, unsigned short index) {
 }
 
 void clif_snap( struct block_list *bl, short x, short y ) {
+#if PACKETVER >= 20110809
 	unsigned char buf[10];
 
 	nullpo_retv(bl);
@@ -17712,6 +17713,7 @@ void clif_snap( struct block_list *bl, short x, short y ) {
 	WBUFW(buf,8) = y;
 
 	clif->send(buf,packet_len(0x8d2),bl,AREA);
+#endif
 }
 
 void clif_monster_hp_bar(struct mob_data *md, struct map_session_data *sd)
