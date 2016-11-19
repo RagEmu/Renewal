@@ -6001,7 +6001,7 @@ void char_config_set_start_item_doram(const struct config_setting_t *setting)
 bool char_config_read_player_new(const char *filename, const struct config_t *config, bool imported)
 {
 	const struct config_setting_t *setting = NULL, *setting2 = NULL;
-	long long int i64 = 0; // TODO: Temporary until the signature of libconfig->setting_lookup_int64 is changed to take a defined-size int (int64)
+	int64 i64 = 0;
 
 	nullpo_retr(false, filename);
 	nullpo_retr(false, config);
