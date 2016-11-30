@@ -807,7 +807,7 @@ END_ZEROED_BLOCK; /* End */
 	void (*final) (void);
 
 	struct map_session_data* (*get_dummy_sd) (void);
-	int (*class2idx) (int class_);
+	int (*class2idx) (int class);
 	bool (*can_talk) (struct map_session_data *sd);
 	bool (*can_attack) ( struct map_session_data *sd, int target_id );
 
@@ -931,7 +931,7 @@ END_ZEROED_BLOCK; /* End */
 	void (*heal) (struct map_session_data *sd,unsigned int hp,unsigned int sp, int type);
 	int (*itemheal) (struct map_session_data *sd,int itemid, int hp,int sp);
 	int (*percentheal) (struct map_session_data *sd,int hp,int sp);
-	int (*jobchange) (struct map_session_data *sd,int job, int upper);
+	int (*jobchange) (struct map_session_data *sd, int class, int upper);
 	int (*setoption) (struct map_session_data *sd,int type);
 	int (*setcart) (struct map_session_data* sd, int type);
 	void (*setfalcon) (struct map_session_data *sd, bool flag);
@@ -975,10 +975,10 @@ END_ZEROED_BLOCK; /* End */
 	void (*setstand) (struct map_session_data *sd);
 	int (*candrop) (struct map_session_data *sd,struct item *item);
 
-	int (*jobid2mapid) (unsigned short b_class); // Skotlex
+	int (*jobid2mapid) (int16 class); // Skotlex
 	int (*mapid2jobid) (unsigned short class_, int sex); // Skotlex
 
-	const char * (*job_name) (int class_);
+	const char * (*job_name) (int class);
 
 	void (*setinvincibletimer) (struct map_session_data* sd, int val);
 	void (*delinvincibletimer) (struct map_session_data* sd);
@@ -998,7 +998,7 @@ END_ZEROED_BLOCK; /* End */
 	int (*inventory_rental_clear) (struct map_session_data *sd);
 	void (*inventory_rental_add) (struct map_session_data *sd, int seconds);
 
-	int (*disguise) (struct map_session_data *sd, int class_);
+	int (*disguise) (struct map_session_data *sd, int class);
 	bool (*isautolooting) (struct map_session_data *sd, int nameid);
 
 	void (*overheat) (struct map_session_data *sd, int val);
@@ -1059,7 +1059,7 @@ END_ZEROED_BLOCK; /* End */
 	int (*global_expiration_timer) (int tid, int64 tick, int id, intptr_t data);
 	void (*expire_check) (struct map_session_data *sd);
 
-	bool (*db_checkid) (unsigned int class_);
+	bool (*db_checkid) (int class);
 
 	void (*validate_levels) (void);
 
