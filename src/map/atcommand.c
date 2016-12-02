@@ -3978,7 +3978,7 @@ ACMD(mount)
 		return false;
 	}
 
-	if ((sd->class_&MAPID_THIRDMASK) == MAPID_RUNE_KNIGHT) {
+	if ((sd->job & MAPID_THIRDMASK) == MAPID_RUNE_KNIGHT) {
 		if (!pc->checkskill(sd, RK_DRAGONTRAINING)) {
 			safesnprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd, 213), skill->get_desc(RK_DRAGONTRAINING)); // You need %s to mount!
 			clif->message(fd, atcmd_output);
@@ -3993,7 +3993,7 @@ ACMD(mount)
 		}
 		return true;
 	}
-	if ((sd->class_&MAPID_THIRDMASK) == MAPID_RANGER && (!pc_isfalcon(sd) || battle_config.warg_can_falcon)) {
+	if ((sd->job & MAPID_THIRDMASK) == MAPID_RANGER && (!pc_isfalcon(sd) || battle_config.warg_can_falcon)) {
 		if (!pc->checkskill(sd, RA_WUGRIDER)) {
 			safesnprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd, 213), skill->get_desc(RA_WUGRIDER)); // You need %s to mount!
 			clif->message(fd, atcmd_output);
@@ -4012,7 +4012,7 @@ ACMD(mount)
 		}
 		return true;
 	}
-	if ((sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC) {
+	if ((sd->job & MAPID_THIRDMASK) == MAPID_MECHANIC) {
 		if (!pc_ismadogear(sd)) {
 			clif->message(sd->fd, msg_fd(fd, 1123)); // You have mounted your Mado Gear.
 			pc->setmadogear(sd, true);
@@ -4022,7 +4022,7 @@ ACMD(mount)
 		}
 		return true;
 	}
-	if (sd->class_&MAPID_SWORDMAN && sd->class_&JOBL_2) {
+	if ((sd->job & MAPID_BASEMASK) == MAPID_SWORDMAN && (sd->job & JOBL_2) != 0) {
 		if (!pc_isridingpeco(sd)) { // If actually no peco
 			if (!pc->checkskill(sd, KN_RIDING)) {
 				safesnprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd, 213), skill->get_desc(KN_RIDING)); // You need %s to mount!
