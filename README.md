@@ -83,7 +83,7 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
   3. Connect to the MySQL server as root:
     - Create a database (RagEmu): `CREATE DATABASE RagEmu;`
     - Create a user (RagEmu): `CREATE USER 'RagEmu'@'localhost' IDENTIFIED BY 'password';`.
-    - Give permissions (GRANT SELECT,INSERT,UPDATE,DELETE) to the user: `GRANT SELECT,INSERT,UPDATE,DELETE ON \`RagEmu\`.* TO 'RagEmu'@'localhost';`
+    - Give permissions (GRANT SELECT,INSERT,UPDATE,DELETE) to the user: `GRANT SELECT,INSERT,UPDATE,DELETE ON `RagEmu`.* TO 'RagEmu'@'localhost';`
   4. Connect to the MySQL server as the new user:
     - Import the .sql files in /sql-files/ into the new database.
   5. Start Visual Studio and load the provided solution:
@@ -104,7 +104,7 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
   4. Connect to the MySQL server as root:
     - Create a database (RagEmu): `CREATE DATABASE RagEmu;`
     - Create a user (RagEmu): `CREATE USER 'RagEmu'@'localhost' IDENTIFIED BY 'password';`.
-    - Give permissions (GRANT SELECT,INSERT,UPDATE,DELETE) to the user: `GRANT SELECT,INSERT,UPDATE,DELETE ON \`RagEmu\`.* TO 'RagEmu'@'localhost';`
+    - Give permissions (GRANT SELECT,INSERT,UPDATE,DELETE) to the user: `GRANT SELECT,INSERT,UPDATE,DELETE ON `RagEmu`.* TO 'RagEmu'@'localhost';`
   5. Connect to the MySQL server as the new user:
     - Import the .sql files in /sql-files/ into the new database.
   6. Enter the RagEmu directory and configure/build RagEmu
