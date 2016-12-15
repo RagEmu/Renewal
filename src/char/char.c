@@ -1573,7 +1573,7 @@ int char_make_new_char_sql(struct char_session_data* sd, const char* name_, int 
  		case JOB_NOVICE:
  			break;
  		default:
-	 		ShowWarning("char_make_new_char_sql: Detected character creation packet with invalid race(%d) on account: %d.\n", race, sd->account_id);
+	 		ShowWarning("char_make_new_char_sql: Detected character creation packet with invalid class(%d) on account: %d.\n", starting_class, sd->account_id);
  			return -2;	// Char Creation Denied
 	}
 
@@ -1646,7 +1646,7 @@ int char_make_new_char_sql(struct char_session_data* sd, const char* name_, int 
 	//Give the char the default items
 	for (i = 0; i < items_length; i++) {
 		struct start_item_s *item;
-		if (starting_job == JOB_SUMMONER) {
+		if (starting_class == JOB_SUMMONER) {
 			item = &VECTOR_INDEX(start_items_doram, i);
 		} else { //< JOB_NOVICE
 			item = &VECTOR_INDEX(start_items, i);

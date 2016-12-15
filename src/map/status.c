@@ -3907,11 +3907,11 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			amotion += (max(0xc3 - amotion, 2) * (st->aspd_rate2 + status->calc_aspd(bl, sc, 2))) / 100;
 			amotion = 10 * (200 - amotion);
 			if (sd != NULL) {
-				amotion += sd->bonus.aspd_add
+				amotion += sd->bonus.aspd_add;
 			}
 			amotion = status->calc_fix_aspd(bl, sc, amotion);
 			if (sd != NULL) {
-				bstatus->amotion = cap_value(i, (((sd->job & JOBL_THIRD) != 0 || (sd->job & MAPID_UPPERMASK) == MAPID_REBELLION) ? battle_config.max_third_aspd : battle_config.max_aspd), 2000);
+				st->amotion = cap_value(amotion, (((sd->job & JOBL_THIRD) != 0 || (sd->job & MAPID_UPPERMASK) == MAPID_REBELLION) ? battle_config.max_third_aspd : battle_config.max_aspd), 2000);
 			} else {
 				st->amotion = cap_value(amotion, battle_config.max_aspd, 2000);
 			}
@@ -6160,7 +6160,7 @@ int status_get_class(const struct block_list *bl)
 		case BL_HOM: return BL_UCCAST(BL_HOM, bl)->homunculus.class_;
 		case BL_MER: return BL_UCCAST(BL_MER, bl)->mercenary.class_;
 		case BL_NPC: return BL_UCCAST(BL_NPC, bl)->class_;
-		case BL_ELEM: return BL_UCCAST(BL_ELEM, bl)->db->vd.class_;
+		case BL_ELEM: return BL_UCCAST(BL_ELEM, bl)->db->vd.class;
 	}
 	return 0;
 }

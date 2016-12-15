@@ -9049,7 +9049,7 @@ int pc_setcart(struct map_session_data *sd,int type) {
 		default:/* everything else is an allowed ID so we can move on */
 			if (!sd->sc.data[SC_PUSH_CART]) /* first time, so fill cart data */
 				clif->cartlist(sd);
-			if ((type >= 6 && type <= 9) && (sd->class_&MAPID_THIRDMASK) != MAPID_GENETIC)
+			if ((type >= 6 && type <= 9) && (sd->job&MAPID_THIRDMASK) != MAPID_GENETIC)
 				return 0;
 			clif->updatestatus(sd, SP_CARTINFO);
 			sc_start(NULL,&sd->bl, SC_PUSH_CART, 100, type, 0);

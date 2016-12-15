@@ -3745,7 +3745,7 @@ int map_readallmaps (void) {
 		ShowStatus("Loading maps (using GRF files)...\n");
 	else {
 		char mapcachefilepath[256];
-		snprintf(mapcachefilepath, "%s/%s", map->db_path, "map_cache.dat");
+		snprintf(mapcachefilepath, 255, "%s/%s", map->db_path, "map_cache.dat");
 		ShowStatus("Loading maps (using %s as map cache)...\n", mapcachefilepath);
 		if( (fp = fopen(mapcachefilepath, "rb")) == NULL ) {
 			ShowFatalError("Unable to open map cache file "CL_WHITE"%s"CL_RESET"\n", mapcachefilepath);

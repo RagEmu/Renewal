@@ -318,7 +318,7 @@ struct party_data* inter_party_search_partyname(const char *const str)
 int inter_party_check_exp_share(struct party_data *const p)
 {
 	nullpo_ret(p);
-	return (p->party.count < 2 || p->max_lv - p->min_lv <= party_share_level);
+	return (p->party.count < 2 || (p->max_lv - p->min_lv) <= (unsigned int)party_share_level);
 }
 
 // Is there any member in the party?

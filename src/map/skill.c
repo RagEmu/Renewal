@@ -1455,7 +1455,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			if (status->isimmune(bl))
 				break;
 
-			if (dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) {
+			if (dstsd && (dstsd->job&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) {
 				if (sd)
 					clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
@@ -10337,13 +10337,14 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 					if (tsc->data[scs[i]]) status_change_end(bl, scs[i], INVALID_TIMER);
 				}
 				heal = 5 * status->get_lv(&hd->bl) + status->base_matk(&hd->bl, &hd->battle_status, status->get_lv(&hd->bl));
-				status->heal(bl,heal,0,0);
-				clif->skill_nodamage(src,src,skill_id,skill_lv,clif->skill_nodamage(src,bl,AL_HEAL,heal,1));
-				status->change_start(src,src,type,10000,skill_lv,0,0,0,skill->get_time(skill_id,skill_lv),SCFLAG_NOAVOID|SCFLAG_FIXEDTICK|SCFLAG_FIXEDRATE);
-				if( battle->check_target(src,bl,BCT_ENEMY) > 0 && !is_boss(bl) )
-					status->change_start(src,bl,type,10000,skill_lv,0,0,0,skill_get_time(skill_id,skill_lv),SCFLAG_NOAVOID|SCFLAG_FIXEDTICK|SCFLAG_FIXEDRATE);
-				skill->blockhomun_start(hd,skill_id,skill->get_cooldown(skill_id,skill_lv));
+				status->heal(bl, heal, 0, 0);
+				clif->skill_nodamage(src, src, skill_id, skill_lv, clif->skill_nodamage(src, bl, AL_HEAL, heal, 1));
+				status->change_start(src, src, type, 10000, skill_lv, 0, 0, 0, skill->get_time(skill_id, skill_lv), SCFLAG_NOAVOID | SCFLAG_FIXEDTICK | SCFLAG_FIXEDRATE);
+				if (battle->check_target(src, bl, BCT_ENEMY) > 0 && !is_boss(bl))
+					status->change_start(src, bl, type, 10000, skill_lv, 0, 0, 0, skill_get_time(skill_id, skill_lv), SCFLAG_NOAVOID | SCFLAG_FIXEDTICK | SCFLAG_FIXEDRATE);
+				skill->blockhomun_start(hd, skill_id, skill->get_cooldown(skill_id, skill_lv));
 			}
+		}
 			break;
 
 		case MH_GRANITIC_ARMOR:
