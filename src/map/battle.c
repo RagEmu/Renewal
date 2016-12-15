@@ -1704,7 +1704,7 @@ int battle_calc_skillratio(int attack_type, struct block_list *src, struct block
 					skillratio += 600;
 					break;
 				case SU_CN_METEOR:
-						skillratio += 100 + 100 * skill_lv;
+					skillratio += 100 + 100 * skill_lv;
 					break;
 				default:
 					battle->calc_skillratio_magic_unknown(&attack_type, src, target, &skill_id, &skill_lv, &skillratio, &flag);
@@ -2081,7 +2081,7 @@ int battle_calc_skillratio(int attack_type, struct block_list *src, struct block
 				case SU_PICKYPECK:
 				case SU_PICKYPECK_DOUBLE_ATK:
 					skillratio += 100 + 100 * skill_lv;
-					if (status_get_max_hp(target) / 100 <= 50)
+					if ((status_get_max_hp(target) / 100) <= 50)
 						skillratio *= 2;
 					break;
 				case SU_LUNATICCARROTBEAT:
@@ -2902,7 +2902,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				damage -= 50 * damage / 100;//50% reduction to physical ranged attacks
 		}
 		
-		if ( sc->data[SC_SU_STOOP] )
+		if (sc->data[SC_SU_STOOP])
 			damage -= damage * 90 / 100;
 
 		// Compressed code, fixed by map.h [Epoque]
@@ -3007,15 +3007,17 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				status_change_end(bl, SC_KYRIE, INVALID_TIMER);
 		}
 
-		if ((sce = sc->data[SC_TUNAPARTY]) && damage > 0) {
+		if ((sce = sc->data[SC_TUNAPARTY]) != NULL && damage > 0) {
 			clif->specialeffect(bl, 336, AREA);
 			sce->val2 -= (int)cap_value(damage, INT_MIN, INT_MAX);
-			if (sce->val2 >= 0)
+			if (sce->val2 >= 0) {
 				damage = 0;
-			else
+			} else {
 			  	damage = -sce->val2;
-			if (/*(--sce->val3) <= 0 ||*/ (sce->val2 <= 0))
+			}
+			if (sce->val2 <= 0) {
 				status_change_end(bl, SC_TUNAPARTY, INVALID_TIMER);
+			}
 		}
 
 		if( sc->data[SC_MEIKYOUSISUI] && rnd()%100 < 40 ) // custom value
@@ -4950,7 +4952,7 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 				ATK_ADDRATE(sd->bonus.long_attack_atk_rate);
 			if( sc && sc->data[SC_MTF_RANGEATK] )
 				ATK_ADDRATE(sc->data[SC_MTF_RANGEATK]->val1);// temporary it should be 'bonus.long_attack_atk_rate'
-			if (sc && sc->data[SC_ARCLOUSEDASH] && sc->data[SC_ARCLOUSEDASH]->val4) {
+			if (sc != NULL && sc->data[SC_ARCLOUSEDASH] != NULL && sc->data[SC_ARCLOUSEDASH]->val4 != 0) {
  				ATK_ADDRATE(sc->data[SC_ARCLOUSEDASH]->val4);
  			}
 			if( (i=pc->checkskill(sd,AB_EUCHARISTICA)) > 0 &&
@@ -5018,7 +5020,7 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 				wd.damage2 = battle->calc_cardfix2(src, target, wd.damage2, s_ele, nk, wd.flag);
 			}
 			if ((wd.flag&(BF_LONG|BF_MAGIC)) == BF_LONG) {
-				if (sd && pc->checkskill(sd, SU_POWEROFLIFE) > 0) {
+				if (sd != NULL && pc->checkskill(sd, SU_POWEROFLIFE) > 0) {
 					if (pc->checkskill(sd, SU_SCAROFTAROU) == 5 && pc->checkskill(sd, SU_PICKYPECK) == 5 && pc->checkskill(sd, SU_ARCLOUSEDASH) == 5 && pc->checkskill(sd, SU_LUNATICCARROTBEAT) == 5) {
 						ATK_ADDRATE(20);
 					}

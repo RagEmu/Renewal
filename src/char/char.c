@@ -1544,7 +1544,7 @@ int char_check_char_name(char * name, char * esc_name)
  *  -5: 'Symbols in Character Names are forbidden'
  *  char_id: Success
  **/
-int char_make_new_char_sql(struct char_session_data* sd, const char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style, int race, uint8 sex)
+int char_make_new_char_sql(struct char_session_data* sd, const char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style, short starting_job, uint8 sex)
 {
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
@@ -1560,8 +1560,22 @@ int char_make_new_char_sql(struct char_session_data* sd, const char* name_, int 
 	SQL->EscapeStringLen(inter->sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
 
 	flag = chr->check_char_name(name,esc_name);
-	if( flag < 0 )
+	if (flag < 0)
 		return flag;
+
+	switch (starting_job) {
+		case JOB_SUMMONER:
+			items_length = VECTOR_LENGTH(start_items_doram);
+			starting_point_map = mapindex_id2name(start_point_doram.map);
+			starting_point_x = start_point_doram.x;
+			starting_point_y = start_point_doram.y;
+			break;
+ 		case JOB_NOVICE:
+ 			break;
+ 		default:
+	 		ShowWarning("char_make_new_char_sql: Detected character creation packet with invalid race(%d) on account: %d.\n", race, sd->account_id);
+ 			return -2;	// Char Creation Denied
+	}
 
 	//check other inputs
 #if PACKETVER >= 20120307
@@ -1579,22 +1593,9 @@ int char_make_new_char_sql(struct char_session_data* sd, const char* name_, int 
 #endif
 
 	// check char slot
-	if( sd->found_char[slot] != -1 )
+	if (sd->found_char[slot] != -1)
 		return -2; /* character account limit exceeded */
 	
-	switch(race) {
-	case RACE_HUMAN:
-		break;
-	case RACE_DORAM:
-		items_length = VECTOR_LENGTH(start_items_doram);
-		starting_point_map = mapindex_id2name(start_point_doram.map);
-		starting_point_x = start_point_doram.x;
-		starting_point_y = start_point_doram.y;
-		break;
-	default:
-		ShowWarning("char_make_new_char_sql: Detected character creation packet with invalid race(%d) on account: %d.\n", race, sd->account_id);
-		return -2;
-	}
 	
 	switch(sex) {
 		case SEX_FEMALE:
@@ -1610,7 +1611,7 @@ int char_make_new_char_sql(struct char_session_data* sd, const char* name_, int 
 	if (SQL_ERROR == SQL->Query(inter->sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `class`, `zeny`, `status_point`,`str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`, `sex`) VALUES ("
 		"'%d', '%d', '%s', '%d', '%d',  '%d','%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d', '%c')",
-		char_db, sd->account_id , slot, esc_name, race, start_zeny, 48, str, agi, vit, int_, dex, luk,
+		char_db, sd->account_id , slot, esc_name, starting_job, start_zeny, 48, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
 		starting_point_map, starting_point_x, starting_point_y, starting_point_map, starting_point_x, starting_point_y, sex)) {
 			Sql_ShowDebug(inter->sql_handle);
@@ -1618,10 +1619,10 @@ int char_make_new_char_sql(struct char_session_data* sd, const char* name_, int 
 	}
 #else
 	//Insert the new char entry to the database
-	if (SQL_ERROR == SQL->Query(inter->sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
+	if (SQL_ERROR == SQL->Query(inter->sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `class`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 							   "`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
 							   "'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
-							   char_db, sd->account_id , slot, esc_name, start_zeny, str, agi, vit, int_, dex, luk,
+							   char_db, sd->account_id , slot, esc_name, starting_job, start_zeny, str, agi, vit, int_, dex, luk,
 							   (40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
 							   starting_point_map, starting_point_x, starting_point_y, starting_point_map, starting_point_x, starting_point_y)) {
 		Sql_ShowDebug(inter->sql_handle);
@@ -1645,9 +1646,9 @@ int char_make_new_char_sql(struct char_session_data* sd, const char* name_, int 
 	//Give the char the default items
 	for (i = 0; i < items_length; i++) {
 		struct start_item_s *item;
-		if (race == RACE_DORAM) {
+		if (starting_job == JOB_SUMMONER) {
 			item = &VECTOR_INDEX(start_items_doram, i);
-		} else { //< RACE_HUMAN
+		} else { //< JOB_NOVICE
 			item = &VECTOR_INDEX(start_items, i);
 		}
 		if (item->stackable) {

@@ -7493,6 +7493,8 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		// do not reset basic skill
 		if (skill_id == NV_BASIC && (sd->class_&(MAPID_BASEMASK|JOBL_2)) != MAPID_NOVICE)
 			continue;
+		if (skill_id == SU_BASIC_SKILL && (sd->class_&MAPID_BASEMASK) != MAPID_SUMMONER)
+			continue;
 
 		if( sd->status.skill[i].flag == SKILL_FLAG_PERM_GRANTED )
 			continue;
@@ -11813,7 +11815,8 @@ bool pc_db_checkid(unsigned int class_)
 		|| (class_ >= JOB_BABY_RUNE      && class_ <= JOB_BABY_MECHANIC2 )
 		|| (class_ >= JOB_SUPER_NOVICE_E && class_ <= JOB_SUPER_BABY_E   )
 		|| (class_ >= JOB_KAGEROU        && class_ <= JOB_OBORO          )
-		|| (class_ == JOB_REBELLION      || class_ ==  JOB_SUMMONER      );
+		|| (class_ == JOB_REBELLION)
+ 		|| (class_ >= JOB_SUMMONER       && class_ <  JOB_MAX            );
 }
 
 /**

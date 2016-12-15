@@ -266,6 +266,7 @@ CREATE TABLE IF NOT EXISTS `charlog` (
   `account_id` INT(11) NOT NULL DEFAULT '0',
   `char_id` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   `char_num` TINYINT(4) NOT NULL DEFAULT '0',
+  `class` MEDIUMINT(9) NOT NULL DEFAULT '0',
   `name` VARCHAR(23) NOT NULL DEFAULT '',
   `str` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   `agi` INT(11) UNSIGNED NOT NULL DEFAULT '0',
@@ -275,7 +276,7 @@ CREATE TABLE IF NOT EXISTS `charlog` (
   `luk` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   `hair` TINYINT(4) NOT NULL DEFAULT '0',
   `hair_color` INT(11) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM; 
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `elemental`
@@ -871,6 +872,7 @@ INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1460630460); -- 2016-04-1
 INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1460764800); -- 2016-04-16--00-00.sql
 INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1467934919); -- 2016-07-08--02-42.sql
 INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1467935469); -- 2016-07-08--02-51.sql
+INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1475526420); -- 2016-10-03--20-27.sql
 
 --
 -- Table structure for table `storage`
