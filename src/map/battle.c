@@ -6892,7 +6892,7 @@ static const struct battle_data {
 	/**
 	 * RagEmu
 	 **/
-	{ "feature.buying_store_autotrade",     &battle_config.feature_buying_store_autotrade,  1,      0,      1,              },
+	{ "features/buying_store_autotrade",     &battle_config.feature_buying_store_autotrade,  1,      0,      1,              },
 	{ "display_fake_hp_when_dead",          &battle_config.display_fake_hp_when_dead,       1,      0,      1,              },
 	{ "warg_can_falcon",                    &battle_config.warg_can_falcon,                 0,      0,      1,              },
 	{ "drop_rate_increase",                 &battle_config.drop_rate_increase,              0,      0,      1,              },
@@ -6902,7 +6902,7 @@ static const struct battle_data {
 	{ "homunculus_max_parameter",           &battle_config.homunculus_max_parameter,        99,     0,      INT_MAX,        },
 	{ "homunculus_S_max_parameter",         &battle_config.homunculus_S_max_parameter,      150,    0,      INT_MAX,        },
 	{ "player_warp_facing_direction",       &battle_config.player_warp_facing_direction,    0,      0,      1,              },
-	{ "atcommand_levelup_events",	        &battle_config.atcommand_levelup_events,	    0,      0,      1,				},
+	{ "atcommand_levelup_events",           &battle_config.atcommand_levelup_events,        0,      0,      1,              },
 };
 #ifndef STATS_OPT_OUT
 /**
