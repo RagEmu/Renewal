@@ -961,11 +961,6 @@ prt_lib
 prt_lib_q
 prt_q
 prt_pri00
-int_land
-int_land01
-int_land02
-int_land03
-int_land04
 lasagna
 lasa_fild01
 lasa_fild02
