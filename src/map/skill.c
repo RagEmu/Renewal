@@ -11139,7 +11139,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		case SO_WARMER:
 		case SO_CLOUD_KILL:
 			flag |= (skill_id == SO_WARMER) ? 8 : 4;
-			skill->unitsetting(src,skill_id,skill_lv,x,y,0);
+			skill->unitsetting(src, skill_id, skill_lv, x, y, 0, 0);
 			break;
 
 		case WZ_METEOR:
