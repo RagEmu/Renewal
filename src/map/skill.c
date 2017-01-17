@@ -11137,9 +11137,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			break;
 
 		case SO_WARMER:
-			flag|= 8;
-			/* Fall through */
 		case SO_CLOUD_KILL:
+			flag |= (skill_id == SO_WARMER) ? 8 : 4;
 			skill->unitsetting(src, skill_id, skill_lv, x, y, 0, 0);
 			break;
 
@@ -12365,6 +12364,7 @@ int skill_unit_onplace(struct skill_unit *src, struct block_list *bl, int64 tick
 	struct status_change *sc;
 	struct status_change *ssc;
 	struct status_change_entry *sce;
+	struct status_data *tstatus;
 	enum sc_type type;
 	uint16 skill_id;
 
@@ -12376,6 +12376,8 @@ int skill_unit_onplace(struct skill_unit *src, struct block_list *bl, int64 tick
 
 	nullpo_ret(sg=src->group);
 	nullpo_ret(ss=map->id2bl(sg->src_id));
+	
+	tstatus = status->get_status_data(bl);
 
 	if (skill->get_type(sg->skill_id) == BF_MAGIC && map->getcell(src->bl.m, &src->bl, src->bl.x, src->bl.y, CELL_CHKLANDPROTECTOR) && sg->skill_id != SA_LANDPROTECTOR)
 		return 0; //AoE skills are ineffective. [Skotlex]
@@ -12612,6 +12614,11 @@ int skill_unit_onplace(struct skill_unit *src, struct block_list *bl, int64 tick
 				sg->target_flag &= ~(BCT_NEUTRAL|BCT_GUILD);
 			if( !sce && battle->check_target(&src->bl,bl,sg->target_flag) > 0 )
 				sc_start(ss,bl,type,100,sg->skill_lv,sg->limit);
+			break;
+
+		case UNT_WARMER:
+			if (!sce && bl->type == BL_PC && !battle->check_undead(tstatus->race, tstatus->def_ele) && tstatus->race != RC_DEMON)
+				sc_start2(ss, bl, type, 100, sg->skill_lv, ss->id, skill_get_time(sg->skill_id, sg->skill_lv));
 			break;
 
 		case UNT_CATNIPPOWDER:
@@ -13311,25 +13318,6 @@ int skill_unit_onplace_timer(struct skill_unit *src, struct block_list *bl, int6
 				sg->limit = DIFF_TICK32(tick,sg->tick);
 			break;
 
-		case UNT_WARMER:
-			{
-				// It has effect on everything, including monsters, undead property and demon
-				int hp = 0;
-				struct mob_data *md = BL_CAST(BL_MOB, bl);
-				if( md && md->class_ == MOBID_EMPELIUM )
-					break;
-				if( ssc && ssc->data[SC_HEATER_OPTION] )
-					hp = tstatus->max_hp * 3 * sg->skill_lv / 100;
-				else
-					hp = tstatus->max_hp * sg->skill_lv / 100;
-				if( tstatus->hp != tstatus->max_hp )
-					clif->skill_nodamage(&src->bl, bl, AL_HEAL, hp, 0);
-				if( tsc && tsc->data[SC_AKAITSUKI] && hp )
-					hp = ~hp + 1;
-				status->heal(bl, hp, 0, 0);
-				sc_start(ss, bl, type, 100, sg->skill_lv, sg->interval + 100);
-			}
-			break;
 		case UNT_FIRE_INSIGNIA:
 		case UNT_WATER_INSIGNIA:
 		case UNT_WIND_INSIGNIA:
@@ -13574,6 +13562,7 @@ int skill_unit_onleft(uint16 skill_id, struct block_list *bl, int64 tick)
 		case HW_GRAVITATION:
 		case NJ_SUITON:
 		case SC_MAELSTROM:
+		case SO_WARMER:
 		case EL_WATER_BARRIER:
 		case EL_ZEPHYR:
 		case EL_POWER_OF_GAIA:
