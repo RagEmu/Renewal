@@ -1,7 +1,7 @@
 -- This file is part of RagEmu.
 -- http://ragemu.org - https://github.com/RagEmu/Renewal
 --
--- Copyright (C) 2016-2016  RagEmu Dev Team
+-- Copyright (C) 2016-2017  RagEmu Dev Team
 --
 -- RagEmu is free software: you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ CREATE TABLE `item_db2` (
   `equip_jobs` bigint(20) UNSIGNED DEFAULT NULL,
   `equip_upper` tinyint(8) UNSIGNED DEFAULT NULL,
   `equip_genders` tinyint(2) UNSIGNED DEFAULT NULL,
-  `equip_locations` smallint(4) UNSIGNED DEFAULT NULL,
+  `equip_locations` mediumint(8) UNSIGNED DEFAULT NULL,
   `weapon_level` tinyint(2) UNSIGNED DEFAULT NULL,
   `equip_level_min` smallint(5) UNSIGNED DEFAULT NULL,
   `equip_level_max` smallint(5) UNSIGNED DEFAULT NULL,
