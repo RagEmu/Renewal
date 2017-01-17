@@ -7846,6 +7846,11 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 			if (type != SC_GENTLETOUCH_CHANGE)
 				status_change_end(bl, SC_GENTLETOUCH_CHANGE, INVALID_TIMER);
 			break;
+		case SC_WARMER:
+			status_change_end(bl, SC_COLD, INVALID_TIMER);
+			status_change_end(bl, SC_FROSTMISTY, INVALID_TIMER);
+			status_change_end(bl, SC_FREEZE, INVALID_TIMER);
+			break;
 		case SC_INVINCIBLE:
 			status_change_end(bl, SC_INVINCIBLEOFF, INVALID_TIMER);
 			break;
@@ -9105,9 +9110,9 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				val3 = 0;
 				break;
 			case SC_WARMER:
-				status_change_end(bl, SC_FREEZE, INVALID_TIMER);
-				status_change_end(bl, SC_FROSTMISTY, INVALID_TIMER);
-				status_change_end(bl, SC_COLD, INVALID_TIMER);
+				val4 = tick / 3000;
+				tick = -1; // Duration sent to the client should be infinite
+				tick_time = 3000;
 				break;
 			case SC_STRIKING:
 				val1 = 6 - val1; //spcost = 6 - level (lvl1:5 ... lvl 5: 1)
@@ -11655,6 +11660,26 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data)
 				if( !status->charge(bl,0, sce->val1 ) )
 					break;
 				sc_timer_next(1000 + tick, status->change_timer, bl->id, data);
+				return 0;
+			}
+			break;
+		case SC_WARMER: {
+				int hp = 0;
+				struct status_change *ssc = status->get_sc(map->id2bl(sce->val2));
+				struct mob_data *md = BL_CAST(BL_MOB, bl);
+
+				if( md && md->class_ == MOBID_EMPELIUM )
+					break;
+
+				if (ssc && ssc->data[SC_HEATER_OPTION])
+					hp = st->max_hp * 3 * sce->val1 / 100;
+				else
+					hp = st->max_hp * sce->val1 / 100;
+				if (sc && sc->data[SC_AKAITSUKI] && hp)
+					hp = ~hp + 1;
+				if (st->hp != st->max_hp)
+					status_heal(bl, hp, 0, 0);
+				sc_timer_next(3000 + tick, status->change_timer, bl->id, data);
 				return 0;
 			}
 			break;
