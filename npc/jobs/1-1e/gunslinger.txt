@@ -208,7 +208,7 @@ que_ng,152,167,3	script	Master Miller	4_M_HUOLDARMY,{
 			close;
 		}
 	} else {
-		if (Class == Job_Gunslinger) {
+		if (BaseClass == Job_Gunslinger) {
 			mes "[Master Miller]";
 			mes "Oh! Long time, no see,";
 			mes "friend. How have you been?";
