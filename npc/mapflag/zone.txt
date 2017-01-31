@@ -141,6 +141,18 @@ veins	mapflag	zone	Towns
 xmas	mapflag	zone	Towns
 yuno	mapflag	zone	Towns
 
+// WoE SE
+arug_cas01	mapflag	zone	GvG2
+arug_cas02	mapflag	zone	GvG2
+arug_cas03	mapflag	zone	GvG2
+arug_cas04	mapflag	zone	GvG2
+arug_cas05	mapflag	zone	GvG2
+schg_cas01	mapflag	zone	GvG2
+schg_cas02	mapflag	zone	GvG2
+schg_cas03	mapflag	zone	GvG2
+schg_cas04	mapflag	zone	GvG2
+schg_cas05	mapflag	zone	GvG2
+
 // WoE:TE
 te_prt_gld	mapflag	zone	WoE TE
 te_prtcas01	mapflag	zone	WoE TE
