@@ -1079,9 +1079,11 @@ void clif_set_unit_idle(struct block_list* bl, struct map_session_data *tsd, enu
 #endif
 #if PACKETVER >= 20150513
 	p.body = vd->body_style;
+#endif
+/* Might be earlier, this is when the named item bug began */
+#if PACKETVER >= 20131223
 	safestrncpy(p.name, clif->get_bl_name(bl), NAME_LENGTH);
 #endif
-
 	clif->send(&p,sizeof(p),tsd?&tsd->bl:bl,target);
 
 	if (clif->isdisguised(bl)) {
@@ -1223,6 +1225,9 @@ void clif_spawn_unit(struct block_list* bl, enum send_target target) {
 #endif
 #if PACKETVER >= 20150513
 	p.body = vd->body_style;
+#endif
+/* Might be earlier, this is when the named item bug began */
+#if PACKETVER >= 20131223
 	safestrncpy(p.name, clif->get_bl_name(bl), NAME_LENGTH);
 #endif
 	if (clif->isdisguised(bl)) {
@@ -1265,7 +1270,7 @@ void clif_set_unit_walking(struct block_list* bl, struct map_session_data *tsd, 
 #endif
 #if PACKETVER >= 20131223
 	p.AID = bl->id;
-	p.GID = (tsd) ? tsd->status.char_id : 0; // CCODE
+	p.GID = (sd) ? sd->status.char_id : 0; // CCODE
 #else
 	p.GID = bl->id;
 #endif
@@ -1316,6 +1321,9 @@ void clif_set_unit_walking(struct block_list* bl, struct map_session_data *tsd, 
 #endif
 #if PACKETVER >= 20150513
 	p.body = vd->body_style;
+#endif
+/* Might be earlier, this is when the named item bug began */
+#if PACKETVER >= 20131223
 	safestrncpy(p.name, clif->get_bl_name(bl), NAME_LENGTH);
 #endif
 
